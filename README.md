@@ -5,6 +5,7 @@
 <p align="center">
   <a href=".claude/skills/3d-of-things/SKILL.md"><img src="https://img.shields.io/badge/Claude_Code-skill-1b1b19?style=flat-square&logo=claude&logoColor=white" alt="Claude Code skill"></a>
   <a href="https://threejs.org"><img src="https://img.shields.io/badge/three.js-r186-1b1b19?style=flat-square&logo=threedotjs&logoColor=white" alt="three.js r186"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-1b1b19?style=flat-square" alt="Licence MIT"></a>
   <a href="#models"><img src="https://img.shields.io/badge/models-CC0-1b1b19?style=flat-square" alt="Models CC0"></a>
   <a href="#requirements"><img src="https://img.shields.io/badge/node-%E2%89%A5%2022-1b1b19?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 22 or later"></a>
   <a href="#checks"><img src="https://img.shields.io/badge/checks-npm_run_qa-1b1b19?style=flat-square" alt="Checks: npm run qa"></a>
@@ -53,7 +54,7 @@ Then, in Claude Code, in any folder:
 /3d-of-things add a mechanical metronome
 ```
 
-Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. Outside this repository it first sets up a workspace, a clone of it, because the repository is the skill's kit; inside it, the skill is already there (`.claude/skills/3d-of-things`). `npm run export` then puts the machines on your own site ([Deploying](#deploying)). The repository is private for now, so the install and the clone work for people with access to it.
+Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. Outside this repository it first sets up a workspace, a clone of it, because the repository is the skill's kit; inside it, the skill is already there (`.claude/skills/3d-of-things`). `npm run export` then puts the machines on your own site ([Deploying](#deploying)).
 
 ## The objects
 
@@ -319,3 +320,7 @@ Any other static host works too: `npm run build` writes `dist/` with relative UR
 ## Contributing
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md): how to add or change an object, the checks a change has to pass, and the house rules.
+
+## Licence
+
+The code and the skill are [MIT](LICENSE). The models carry their own licences, all CC0, listed in [Models](#models); the ones built in code are MIT with the rest.

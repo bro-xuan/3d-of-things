@@ -24,7 +24,7 @@ Everything below runs in a 3D of Things workspace: a checkout of `bro-xuan/3d-of
   npx playwright install chromium   # for the checks, if it's missing
   npm run check                     # every object: 0 errors, 0 warnings
   ```
-  Keep the objects it comes with. If the clone is refused, the repository isn't open to this account yet: say so, and don't look for another copy.
+  Keep the objects it comes with. If the clone fails, say why and stop; don't look for another copy.
 - **On the user's own site:** `npm run export -- --out <their site>/public/<path>` builds the site for that path, checks it, copies it in as static files and prints the rewrites the host needs (README, "Deploying"). Run it again after every change; never edit the exported files.
 
 ## Size it first

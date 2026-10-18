@@ -240,7 +240,7 @@ anchors: {
         <p>Then open Claude Code in any folder and name a machine:</p>
         <pre class="block"><code>/3d-of-things add a mechanical metronome</code></pre>
         <p>The first time, Claude sets up a workspace: a copy of the repository, because the repository is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the thirteen machines as its references.<sup class="ref">7</sup> To put your machines on your own site, bake them in. The export builds the site for that path, checks it, copies it in as static files and prints the two rewrites your host needs.</p>
-        <aside class="note"><span class="note__n">7</span>The repository is private for now, so the command works for people with access to it. Without Claude Code the same stages run by hand: <code>npm run new</code>, <code>npm run models:build</code>, <code>npm run check</code>, <code>npm run qa</code>.</aside>
+        <aside class="note"><span class="note__n">7</span>Without Claude Code the same stages run by hand, in a clone of <a href="https://github.com/bro-xuan/3d-of-things">the repository</a>: <code>npm run new</code>, <code>npm run models:build</code>, <code>npm run check</code>, <code>npm run qa</code>.</aside>
         <pre class="block"><code>npm run export -- --out ../my-site/public/machines</code></pre>
       </section>
 
@@ -268,7 +268,7 @@ anchors: {
           <dt>Is it accessible?</dt>
           <dd>The viewer answers the keyboard (arrow keys turn the model, W switches the look, Esc closes the tour), every step is reachable from the step bar, and reduced motion turns the flights and sweeps off.</dd>
           <dt>What’s the licence?</dt>
-          <dd>Every model is CC0, and its credit is on its page. The code’s licence hasn’t been decided yet.</dd>
+          <dd>MIT, for the code, the skill and the models built in code. Every downloaded model is CC0, and its credit is on its page.</dd>
           <dt>How do I get the best result?</dt>
           <dd>Name the exact machine and what should move, give any numbers you know, and look hard at the first version.</dd>
         </dl>
@@ -278,6 +278,7 @@ anchors: {
     <footer class="colophon flow">
       <p><a class="wordmark" href="%OBJECTS%"><span class="wordmark__mark">3D</span> of Things</a></p>
       <p>Made with <code>/3d-of-things</code>, the skill on this page. Models from <a href="https://polyhaven.com">Poly Haven</a> (CC0) or built in code for this site. Tesla and the Roadster’s name are trademarks of Tesla, Inc.; the Roadster here is an illustration. Set in Fraunces, Instrument Sans and IBM Plex Mono.</p>
+      <p><a href="https://github.com/bro-xuan/3d-of-things">Source on GitHub</a> · MIT</p>
     </footer>
 
     <script type="module" src="/src/skill/main.ts"></script>

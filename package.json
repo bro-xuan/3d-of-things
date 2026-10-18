@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "A free, browser-based library of machines you can take apart in 3D.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
