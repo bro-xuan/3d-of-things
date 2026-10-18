@@ -1,5 +1,5 @@
 // The skill's page (skill.html): the site's fonts, its own stylesheet, the live watch at the top,
-// and a masthead that names the section in view while the contents mark it.
+// the install line's copy button, and a masthead that names the section in view.
 import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/instrument-sans';
 import '@fontsource/ibm-plex-mono/400.css';
@@ -10,17 +10,28 @@ import { mountLive } from './live';
 const live = document.querySelector<HTMLElement>('.live');
 if (live) mountLive(live);
 
-const sections = [...document.querySelectorAll<HTMLElement>('section[data-n]')];
-const here = document.querySelector<HTMLElement>('.masthead__section');
-const links = new Map([...document.querySelectorAll<HTMLAnchorElement>('.toc a')].map((a) => [a.hash.slice(1), a]));
-
-function show(section: HTMLElement | null) {
-  for (const [id, link] of links) {
-    if (id === section?.id) link.setAttribute('aria-current', 'location');
-    else link.removeAttribute('aria-current');
-  }
-  if (here) here.textContent = section ? `${section.dataset.n} ${section.querySelector('h2')?.lastChild?.textContent ?? ''}` : '';
+// Copies the text of the element its data-copy names, and says so for a moment. Where the
+// clipboard is out of reach, it selects the text instead, ready to copy by hand.
+for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+  let reset = 0;
+  button.addEventListener('click', async () => {
+    const source = document.querySelector(button.dataset.copy!);
+    if (!source) return;
+    const copied = await navigator.clipboard?.writeText(source.textContent ?? '').then(() => true, () => false);
+    if (!copied) {
+      const range = document.createRange();
+      range.selectNodeContents(source);
+      getSelection()?.removeAllRanges();
+      getSelection()?.addRange(range);
+    }
+    button.textContent = copied ? 'Copied' : 'Selected';
+    clearTimeout(reset);
+    reset = window.setTimeout(() => (button.textContent = 'Copy'), 1600);
+  });
 }
+
+const sections = [...document.querySelectorAll<HTMLElement>('main section[id]')];
+const here = document.querySelector<HTMLElement>('.masthead__section');
 
 // A section counts as in view while it crosses a line a third of the way down the window.
 const inView = new Set<HTMLElement>();
@@ -30,7 +41,8 @@ const observer = new IntersectionObserver(
       if (entry.isIntersecting) inView.add(entry.target as HTMLElement);
       else inView.delete(entry.target as HTMLElement);
     }
-    show(sections.find((s) => inView.has(s)) ?? null);
+    const section = sections.find((s) => inView.has(s));
+    if (here) here.textContent = section?.querySelector('h2')?.textContent ?? '';
   },
   { rootMargin: '-33% 0px -66% 0px' },
 );

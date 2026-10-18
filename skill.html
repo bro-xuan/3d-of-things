@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#f3efe6" />
-    <title>3D of Things · a skill for Claude Code</title>
-    <meta name="description" content="Name a machine in one line, and Claude builds it in 3D, takes it apart and shows how it works: the standard procedure behind 3D of Things, as a Claude Code skill." />
+    <title>3D of Things · a skill for coding agents</title>
+    <meta name="description" content="Name a machine in one line, and your agent builds it in 3D, takes it apart and shows how it works: the standard procedure behind 3D of Things, as an agent skill for Claude Code, Codex, Cursor and more." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body class="td">
@@ -21,14 +21,20 @@
     </header>
 
     <main id="content" tabindex="-1">
-      <header class="hero flow">
-        <div class="hero__top">
+      <header class="hero">
+        <div class="hero__inner">
           <div class="hero__text">
-            <p class="eyebrow"><span>3D of Things</span><span>18 October 2026</span></p>
-            <h1 class="hero__title">3D of Things <span class="hero__kind">· a skill for Claude Code</span></h1>
-            <p class="hero__tagline">Name a machine in one line, and Claude builds it in 3D, <em>takes it apart</em> and shows how it works.</p>
+            <h1 class="hero__title">3D of Things <span class="hero__kind">A skill for coding agents</span></h1>
+            <p class="hero__tagline">Name a machine in one line, and your agent builds it in 3D, <em>takes it apart</em> and shows how it works.</p>
+            <div class="install">
+              <pre><code id="install-line">npx skills add <span class="install__repo">bro-xuan/3d-of-things</span></code></pre>
+              <button type="button" class="install__copy" data-copy="#install-line">Copy</button>
+            </div>
+            <p class="hero__then">Then ask for a machine: <code>/3d-of-things add a mechanical metronome</code></p>
+            <p class="hero__agents">Installs into Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and dozens of other agents. Written and timed in Claude Code.</p>
           </div>
           <figure class="live" data-state="loading" aria-labelledby="live-caption">
+            <div class="live__layer" aria-hidden="true"></div>
             <div class="live__stage">
               <img class="live__poster" src="/posters/pocket-watch-1280.webp" width="1280" height="1280" fetchpriority="high" alt="" />
               <div class="live__viewer" tabindex="0" aria-label="The pocket watch, live. Drag it, or use the arrow keys, to turn it."></div>
@@ -40,84 +46,109 @@
               <button type="button" class="live__key" data-act="apart" aria-pressed="false" disabled><kbd>E</kbd>Apart</button>
               <p class="live__readout">6 beats a second</p>
             </div>
-            <figcaption id="live-caption" class="live__caption">The collection’s pocket watch, live. The case is glass, the red line is the power from the crown to the balance, and the hands show your time.</figcaption>
+            <figcaption id="live-caption" class="live__caption">The collection’s pocket watch, live. The case is glass, the red line is the power from the crown to the balance, and the hands show your time. <a href="%OBJECTS%#/thing/pocket-watch">Open its page</a></figcaption>
             <p class="visually-hidden" aria-live="polite" data-announce></p>
           </figure>
         </div>
-        <ul class="hero__thumbs" aria-label="Five more of the objects">
-          <li><a href="%OBJECTS%#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-thumb.webp" width="240" height="240" alt="The Leica M3 rangefinder camera" /><span>Rangefinder</span></a></li>
-          <li><a href="%OBJECTS%#/thing/reflex-camera"><img src="/posters/reflex-camera-thumb.webp" width="240" height="240" alt="The medium-format SLR" /><span>SLR</span></a></li>
-          <li><a href="%OBJECTS%#/thing/tesla-roadster"><img src="/posters/tesla-roadster-thumb.webp" width="240" height="240" alt="The 2026 Tesla Roadster" /><span>Roadster</span></a></li>
-          <li><a href="%OBJECTS%#/thing/family-car"><img src="/posters/family-car-thumb.webp" width="240" height="240" alt="The family car" /><span>Family car</span></a></li>
-          <li><a href="%OBJECTS%#/thing/washing-machine"><img src="/posters/washing-machine-thumb.webp" width="240" height="240" alt="The washing machine" /><span>Washer</span></a></li>
-        </ul>
-        <p class="hero__meta"><span>/3d-of-things</span><a href="%OBJECTS%#/">13 objects, all live</a><span>by 3D of Things</span><a href="#install">Install ↓</a></p>
       </header>
 
-      <nav class="toc flow" aria-label="Contents">
-        <ol>
-          <li><a href="#machines"><span>01</span> Machines, not shells</a></li>
-          <li><a href="#prompt"><span>02</span> Writing a prompt</a></li>
-          <li><a href="#stages"><span>03</span> What Claude does</a></li>
-          <li><a href="#rules"><span>04</span> The rules of a teardown</a></li>
-          <li><a href="#objects"><span>05</span> Thirteen machines, up close</a></li>
-          <li><a href="#inside"><span>06</span> Inside, generated</a></li>
-          <li><a href="#checks"><span>07</span> The checks</a></li>
-          <li><a href="#time"><span>08</span> How long it takes</a></li>
-          <li><a href="#install"><span>09</span> Install</a></li>
-          <li><a href="#limits"><span>10</span> Limits</a></li>
-          <li><a href="#questions"><span>11</span> Questions</a></li>
-        </ol>
-      </nav>
+      <div class="sheet">
+        <section class="band" id="objects">
+          <div class="band__head">
+            <h2>The collection</h2>
+            <p>The watch above and twelve more. Each opens on its own page, ready to turn, take apart and run; point at one here to see its insides.</p>
+          </div>
+          <ul class="objects cells">
+            <li><a href="%OBJECTS%#/thing/hand-drill"><span class="objects__pics"><img src="/posters/hand-drill-800.webp" width="800" height="800" loading="lazy" alt="The hand drill, assembled: a crank, a big gear wheel and the chuck on a frame." /><img src="/posters/hand-drill-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Hand drill</span><span class="objects__hook">An 80-tooth wheel on a 24-tooth pinion: the bit turns three and a third times for each turn of the handle.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/binoculars"><span class="objects__pics"><img src="/posters/binoculars-800.webp" width="800" height="800" loading="lazy" alt="A pair of vintage binoculars." /><img src="/posters/binoculars-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Binoculars</span><span class="objects__hook">Prisms fold the light and turn the picture the right way up.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/microscope"><span class="objects__pics"><img src="/posters/microscope-800.webp" width="800" height="800" loading="lazy" alt="A vintage microscope on its stand." /><img src="/posters/microscope-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Microscope</span><span class="objects__hook">Two lenses in a tube, each magnifying what the one before made.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/film-projector"><span class="objects__pics"><img src="/posters/film-projector-800.webp" width="800" height="800" loading="lazy" alt="An 8 mm film projector with its reels." /><img src="/posters/film-projector-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Film projector</span><span class="objects__hook">A claw pulls the film down only while the shutter is shut.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/drill-press"><span class="objects__pics"><img src="/posters/drill-press-800.webp" width="800" height="800" loading="lazy" alt="A drill press on its column." /><img src="/posters/drill-press-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Drill press</span><span class="objects__hook">Move the belt between the stepped pulleys and watch the spindle speed change.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/rangefinder-camera"><span class="objects__pics"><img src="/posters/rangefinder-camera-800.webp" width="800" height="800" loading="lazy" alt="The Leica M3 rangefinder camera with its lens." /><img src="/posters/rangefinder-camera-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Rangefinder camera</span><span class="objects__hook">A Leica M3 opened along its seams: cloth curtains, film path, rangefinder optics, a nine-blade iris.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/reflex-camera"><span class="objects__pics"><img src="/posters/reflex-camera-800.webp" width="800" height="800" loading="lazy" alt="The medium-format SLR with its lens and film magazine." /><img src="/posters/reflex-camera-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Medium-format SLR</span><span class="objects__hook">Built entirely in code after the Hasselblad 500C/M, in the order of its service manual’s timing chart.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/tesla-roadster"><span class="objects__pics"><img src="/posters/tesla-roadster-800.webp" width="800" height="800" loading="lazy" alt="The 2026 Tesla Roadster." /><img src="/posters/tesla-roadster-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Tesla Roadster</span><span class="objects__hook">The fans that suck it onto the road and the air thrusters that make it fly.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/family-car"><span class="objects__pics"><img src="/posters/family-car-800.webp" width="800" height="800" loading="lazy" alt="A green 1970s family saloon." /><img src="/posters/family-car-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Family car</span><span class="objects__hook">A two-litre four, a four-speed gearbox and a differential you can take round a bend.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/washing-machine"><span class="objects__pics"><img src="/posters/washing-machine-800.webp" width="800" height="800" loading="lazy" alt="A white front-loading washing machine." /><img src="/posters/washing-machine-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Washing machine</span><span class="objects__hook">A belt from a fast motor turns the drum, and a tub on springs carries 25 kg of concrete.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/bicycle-pump"><span class="objects__pics"><img src="/posters/bicycle-pump-800.webp" width="800" height="800" loading="lazy" alt="A floor pump for bicycle tyres, its handle up." /><img src="/posters/bicycle-pump-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Bicycle pump</span><span class="objects__hook">A cup seal that folds one way and a ball valve that keeps the tyre’s air in.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/garden-sprinkler"><span class="objects__pics"><img src="/posters/garden-sprinkler-800.webp" width="800" height="800" loading="lazy" alt="A yellow garden sprinkler on wheels, with a turning arm." /><img src="/posters/garden-sprinkler-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Garden sprinkler</span><span class="objects__hook">No motor: two jets of water push the arm round, the way a rocket flies.</span></a></li>
+          </ul>
+        </section>
 
-      <section class="flow" id="machines" data-n="01">
-        <h2><span class="num">01</span>Machines, not shells</h2>
-        <p>The skill rests on one rule, written at the top of its instructions, above everything else:</p>
-        <blockquote class="rule-quote">
-          <p>Real insides, really moving.</p>
-          <cite>SKILL.md, “The one idea”</cite>
-        </blockquote>
-        <p>A model that only shows its outside is a catalogue picture. A page explains a machine when its insides are true and they work: the real number of teeth on each wheel, the real distance from lens to film, the real order a shutter’s parts move in, all driven by the same numbers the charts show.</p>
-        <p>The site went wrong in two ways before the rule existed. The first was a <strong>shell</strong>. Its first pocket watch was a fine model of a case, a dial and three hands with nothing inside, so “Take it apart” pulled the hands off and stopped. The fix was to cut the case open along its own edges and build the movement in code: a barrel and mainspring, a train of 80/10, 75/10 and 84/7 teeth, and a Swiss lever escapement beating six times a second.<sup class="ref">1</sup></p>
-        <aside class="note"><span class="note__n">1</span>AI part-splitting tools were looked at and turned down. They cut a shell into plausible pieces, but they don’t know how a watch works, so they invent the inside.</aside>
-        <p>The second was a <strong>list</strong>. Twenty lettered parts on an exploded model say what is there, not how it works. The fix was order: the parts grouped as the energy flows, from the mainspring to the hands, and a tour that follows the same chain one step at a time.</p>
-      </section>
+        <section class="band" id="machines">
+          <div class="band__head">
+            <h2>Real insides, really moving</h2>
+            <p>The one rule at the top of the skill’s instructions. A model that only shows its outside is a catalogue picture; a page explains a machine when its insides are true and they work.</p>
+          </div>
+          <div class="versus cells">
+            <figure>
+              <img src="/posters/pocket-watch-800.webp" width="800" height="800" loading="lazy" alt="The pocket watch, closed: a case, a dial and three hands." />
+              <figcaption><b>The shell</b> The first pocket watch was a fine model of a case, a dial and three hands with nothing inside. “Take it apart” pulled the hands off and stopped.</figcaption>
+            </figure>
+            <figure>
+              <img src="/posters/pocket-watch-exploded-800.webp" width="800" height="800" loading="lazy" alt="The pocket watch taken apart: case, dial, barrel, gear train, pallet fork and balance spread out in a line." />
+              <figcaption><b>The machine</b> The case cut open along its own edges and the movement built in code: a barrel and mainspring, a train of 80/10, 75/10 and 84/7 teeth, and a Swiss lever escapement beating six times a second.<sup class="ref">1</sup></figcaption>
+            </figure>
+          </div>
+          <div class="prose">
+            <p>The other way a page fails is as a <strong>list</strong>. Twenty lettered parts on an exploded model say what is there and explain nothing. So the parts are grouped as the energy flows, from the mainspring to the hands, and the tour follows the same chain one step at a time. Every object keeps to the same eight rules:</p>
+            <aside class="note"><span class="note__n">1</span>AI part-splitting tools were looked at and turned down. They cut a shell into plausible pieces, but they don’t know how a watch works, so they invent the inside.</aside>
+          </div>
+          <ul class="rules">
+            <li><b>True insides</b><span>Built from real numbers, teeth, focal lengths, timings, each with its source. What’s simplified is said on the page.</span></li>
+            <li><b>Numbers from the model</b><span>Every chart and readout reads the same maths that moves the parts.</span></li>
+            <li><b>Follow the energy</b><span>Groups, callouts, the order parts come off and the tour all run from source to output.</span></li>
+            <li><b>Named parts</b><span>Every mesh belongs to a named part with a line on what it does: 8 to 20 parts in 4 to 8 groups.</span></li>
+            <li><b>Solid and whole</b><span>The model is never faded or clipped at the page’s edge, and it’s framed whole at rest.</span></li>
+            <li><b>Control time</b><span>Slow motion, hold to run, sliders. Nothing important happens only in a fast loop.</span></li>
+            <li><b>Free licences</b><span>CC0 or CC BY, checkable at the source, credited exactly.</span></li>
+            <li><b>Variety</b><span>Each new object differs from the last in mechanism and shape.</span></li>
+          </ul>
+          <p class="after">Each object also corrects one common misconception. Wind a watch tighter and it doesn’t tick faster: the balance sets the rate, and the spring only keeps it going.</p>
+        </section>
 
-      <section class="flow" id="prompt" data-n="02">
-        <h2><span class="num">02</span>Writing a prompt</h2>
-        <p>The prompt is the machine, not the drawing. Name it as exactly as you can and say what should move; finding the numbers is Claude’s job.</p>
-        <dl class="prompts">
-          <dt>Name the machine</dt>
-          <dd><code>/3d-of-things add a mechanical metronome</code></dd>
-          <dt>Say what should move</dt>
-          <dd><code>/3d-of-things a sewing machine: the needle, the shuttle hook and the feed dog working together</code></dd>
-          <dt>Start from a free model</dt>
-          <dd><code>/3d-of-things take apart Poly Haven’s vintage video camera, like the Leica</code></dd>
-          <dt>Check what’s there</dt>
-          <dd><code>/3d-of-things the SLR’s winding step has a label floating somewhere: check everything still works</code></dd>
-        </dl>
-        <p>It sizes the job before anything else, in one of four tiers. <strong>Sourced</strong>: a free model whose parts are already separate. <strong>Opened</strong>: a free shell, cut open and given its insides in code. <strong>Built</strong>: no usable model, so the whole thing is generated. <strong>Machine</strong>: several systems with physics of their own, like a car that flies. A Machine isn’t started without asking; Claude first proposes a smaller version that keeps the core of the idea.<sup class="ref">2</sup></p>
-        <aside class="note"><span class="note__n">2</span>For anything current, a car shown last week or a new camera, Claude searches the latest reveal before modelling it, because its training may predate it.</aside>
-      </section>
+        <section class="band" id="prompt">
+          <div class="band__head">
+            <h2>Writing a prompt</h2>
+            <p>Name the machine as exactly as you can and say what should move. Finding the numbers is the agent’s job.</p>
+          </div>
+          <dl class="prompts">
+            <div><dt>Name the machine</dt><dd><code>/3d-of-things add a mechanical metronome</code></dd></div>
+            <div><dt>Say what should move</dt><dd><code>/3d-of-things a sewing machine: the needle, the shuttle hook and the feed dog working together</code></dd></div>
+            <div><dt>Start from a free model</dt><dd><code>/3d-of-things take apart Poly Haven’s vintage video camera, like the Leica</code></dd></div>
+            <div><dt>Check what’s there</dt><dd><code>/3d-of-things the SLR’s winding step has a label floating somewhere: check everything still works</code></dd></div>
+          </dl>
+          <div class="prose">
+            <p>Before anything else it sizes the job, in one of four tiers, and says the budget in its first message. A machine with several systems of its own isn’t started without asking: the agent proposes a smaller version that keeps the core of the idea first.<sup class="ref">2</sup></p>
+            <aside class="note"><span class="note__n">2</span>For anything current, a car shown last week or a new camera, it searches the latest reveal before modelling, because its training may predate it.</aside>
+          </div>
+          <ol class="tiers cells">
+            <li><img src="/posters/garden-sprinkler-exploded-800.webp" width="800" height="800" loading="lazy" alt="The garden sprinkler taken apart." /><b>Sourced</b><span>A free model whose parts are already separate. Content and tour only.</span><i>15–30 min</i></li>
+            <li><img src="/posters/bicycle-pump-exploded-800.webp" width="800" height="800" loading="lazy" alt="The bicycle pump taken apart." /><b>Opened</b><span>A free shell, cut open in code and given its insides.</span><i>15–60 min</i></li>
+            <li><img src="/posters/washing-machine-exploded-800.webp" width="800" height="800" loading="lazy" alt="The washing machine taken apart." /><b>Built</b><span>No usable model, so the whole object is generated in code.</span><i>25–60 min</i></li>
+            <li><img src="/posters/tesla-roadster-exploded-800.webp" width="800" height="800" loading="lazy" alt="The Tesla Roadster taken apart." /><b>Machine</b><span>Several systems with physics of their own, like a car that flies.</span><i>2 h and up</i></li>
+          </ol>
+        </section>
 
-      <section class="flow" id="stages" data-n="03">
-        <h2><span class="num">03</span>What Claude does</h2>
-        <p>Between your line and the finished page, Claude works through eight stages. Each ends with a check, and most of the quality is decided in the first two, before any geometry exists.</p>
-        <ol class="stages" start="0">
-          <li><strong>Brief.</strong> Exactly which object, whether it differs from what’s on the site, the energy chain in a line, and a short plan.</li>
-          <li><strong>Truth sheet.</strong> Sources, real numbers, the energy chain, one misconception to correct, the parts in groups, the tour. A research subagent does the digging.</li>
-          <li><strong>Scaffold.</strong> <code>npm run new</code> writes the object’s folder, builds a first model and page, and checks it, in seconds.<sup class="ref">3</sup></li>
-          <li><strong>Model.</strong> The shell cut open, or the whole object generated with the kit. The build fails on any clash, and on any explode path that would pass one part through another.</li>
-          <li><strong>Content.</strong> The words and the tour, placed by points the build names, never by pasted coordinates.</li>
-          <li><strong>Mechanism.</strong> Only for a kind the site doesn’t have yet. Everything that exists is reused first.</li>
-          <li><strong>Check.</strong> <code>npm run check</code> and <code>npm run qa</code>, until both pass and every contact sheet has been read.</li>
-          <li><strong>Ship.</strong> Posters, the README, the production build.</li>
-        </ol>
-        <aside class="note"><span class="note__n">3</span>The scaffold starts a built object as a working demo, a crank turning a 40-tooth gear that drives a 16-tooth one, so every field has an example and the page opens in about two seconds.</aside>
-        <p>Placing things used to cost time too: a callout’s position typed as three decimals, then nudged after every look. Now the generator names its points and the content file uses the names, so a changed layout moves everything with it.</p>
-        <figure class="code">
-          <figcaption>objects/&lt;slug&gt;/generate.mjs, then content.mjs</figcaption>
-          <pre><code><span class="c">// The build names the points the page will need…</span>
+        <section class="band" id="stages">
+          <div class="band__head">
+            <h2>What the agent does</h2>
+            <p>Eight stages between your line and the finished page. Each ends with a check, and most of the quality is decided in the first two, before any geometry exists.</p>
+          </div>
+          <ol class="stages cells" start="0">
+            <li><b>Brief</b><span>Exactly which object, whether it differs from what’s on the site, the energy chain in a line, a short plan.</span><i>5 min</i></li>
+            <li><b>Truth sheet</b><span>Sources, real numbers, the energy chain, one misconception, the parts in groups, the tour.</span><i>15 min</i></li>
+            <li><b>Scaffold</b><span><code>npm run new</code> writes the object’s folder, a first model and page, and checks them.</span><i>2 min</i></li>
+            <li><b>Model</b><span>The shell cut open, or the whole object generated with the kit. Any clash fails the build.</span><i>The long one</i></li>
+            <li><b>Content</b><span>The words and the tour, placed by points the build names, never by pasted coordinates.</span><i>15 min</i></li>
+            <li><b>Mechanism</b><span>Only for a kind the site doesn’t have yet. Everything that exists is reused first.</span><i>When needed</i></li>
+            <li><b>Check</b><span><code>npm run check</code> and <code>npm run qa</code>, until both pass and every contact sheet has been read.</span><i>10 min</i></li>
+            <li><b>Ship</b><span>Posters, the README, the production build.</span><i>5 min</i></li>
+          </ol>
+          <div class="split">
+            <p>Placing things used to cost time too: a callout’s position typed as three decimals, then nudged after every look. Now the generator names its points and the content file uses the names, so a changed layout moves everything with it.</p>
+            <figure class="code">
+              <figcaption>objects/&lt;slug&gt;/generate.mjs, then content.mjs</figcaption>
+              <pre><code><span class="c">// The build names the points the page will need…</span>
 anchors: {
   handle: toModel([cx, cy + L.handle, 14]),
   small_face: toModel([sx, sy, -17]),
@@ -126,160 +157,172 @@ anchors: {
 <span class="c">// …and the content file places things by name.</span>
 { title: 'Crank', node: 'crank', ride: true,
   position: at('handle'), camera: pose(at('handle'), [-24, 18], 1.5) }</code></pre>
-        </figure>
-      </section>
+            </figure>
+          </div>
+        </section>
 
-      <section class="flow" id="rules" data-n="04">
-        <h2><span class="num">04</span>The rules of a teardown</h2>
-        <p>Every object follows the same rules. They are what make a page read as a real machine at work rather than a model with labels.</p>
-        <ul class="rules wide">
-          <li><h3>True insides</h3><p>Built from real numbers, teeth, focal lengths, timings, each with its source. What’s simplified is said on the page.</p></li>
-          <li><h3>Numbers from the model</h3><p>Every chart and readout reads the same maths that moves the parts.</p></li>
-          <li><h3>Follow the energy</h3><p>Groups, callouts, the order parts come off and the tour all run from source to output.</p></li>
-          <li><h3>Parts, not meshes</h3><p>Every mesh belongs to a named part with a line on what it does: 8 to 20 parts in 4 to 8 groups.</p></li>
-          <li><h3>Solid and whole</h3><p>The model is never faded or clipped at the page’s edge, and it’s framed whole at rest.</p></li>
-          <li><h3>Control time</h3><p>Slow motion, hold to run, sliders. Nothing important happens only in a fast loop.</p></li>
-          <li><h3>Free licences</h3><p>CC0 or CC BY, checkable at the source, credited exactly.</p></li>
-          <li><h3>Variety</h3><p>Each new object differs from the last in mechanism and shape.</p></li>
-        </ul>
-        <p>One misconception per object is stated and corrected. Wind a watch tighter and it doesn’t tick faster: the balance sets the rate, not the spring.</p>
-      </section>
-
-      <section class="flow" id="objects" data-n="05">
-        <h2><span class="num">05</span>Thirteen machines, up close</h2>
-        <p>The collection reads best one machine at a time. Each opens on its own page, ready to turn, take apart and run.</p>
-        <ul class="objects wide">
-          <li><a href="%OBJECTS%#/thing/hand-drill"><img src="/posters/hand-drill-800.webp" width="800" height="800" loading="lazy" alt="The hand drill, assembled: a crank, a big gear wheel and the chuck on a frame." /><span class="objects__fig">Fig. 01</span><span class="objects__title">Hand Drill</span><span class="objects__hook">An 80-tooth wheel on a 24-tooth pinion: the bit turns three and a third times for each turn of the handle.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/pocket-watch"><img src="/posters/pocket-watch-800.webp" width="800" height="800" loading="lazy" alt="The pocket watch, closed, its dial showing the time." /><span class="objects__fig">Fig. 02</span><span class="objects__title">Pocket Watch</span><span class="objects__hook">A 26-part movement generated inside a Poly Haven case, running in step with your clock.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/binoculars"><img src="/posters/binoculars-800.webp" width="800" height="800" loading="lazy" alt="A pair of vintage binoculars." /><span class="objects__fig">Fig. 03</span><span class="objects__title">Binoculars</span><span class="objects__hook">Prisms fold the light and turn the picture the right way up.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/microscope"><img src="/posters/microscope-800.webp" width="800" height="800" loading="lazy" alt="A vintage microscope on its stand." /><span class="objects__fig">Fig. 04</span><span class="objects__title">Microscope</span><span class="objects__hook">Two lenses in a tube, each magnifying what the one before made.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/film-projector"><img src="/posters/film-projector-800.webp" width="800" height="800" loading="lazy" alt="An 8 mm film projector with its reels." /><span class="objects__fig">Fig. 05</span><span class="objects__title">Film Projector</span><span class="objects__hook">A claw pulls the film down only while the shutter is shut.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/drill-press"><img src="/posters/drill-press-800.webp" width="800" height="800" loading="lazy" alt="A drill press on its column." /><span class="objects__fig">Fig. 06</span><span class="objects__title">Drill Press</span><span class="objects__hook">Move the belt between the stepped pulleys and watch the spindle speed change.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-800.webp" width="800" height="800" loading="lazy" alt="The Leica M3 rangefinder camera with its lens." /><span class="objects__fig">Fig. 07</span><span class="objects__title">Rangefinder Camera</span><span class="objects__hook">A Leica M3 opened along its seams: cloth curtains, film path, rangefinder optics, a nine-blade iris.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/reflex-camera"><img src="/posters/reflex-camera-800.webp" width="800" height="800" loading="lazy" alt="The medium-format SLR with its lens and film magazine." /><span class="objects__fig">Fig. 08</span><span class="objects__title">Medium-Format SLR</span><span class="objects__hook">Built entirely in code after the Hasselblad 500C/M, in the order of its service manual’s timing chart.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/tesla-roadster"><img src="/posters/tesla-roadster-800.webp" width="800" height="800" loading="lazy" alt="The 2026 Tesla Roadster." /><span class="objects__fig">Fig. 09</span><span class="objects__title">Tesla Roadster</span><span class="objects__hook">The fans that suck it onto the road and the air thrusters that make it fly.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/family-car"><img src="/posters/family-car-800.webp" width="800" height="800" loading="lazy" alt="A green 1970s family saloon." /><span class="objects__fig">Fig. 10</span><span class="objects__title">Family Car</span><span class="objects__hook">A two-litre four, a four-speed gearbox and a differential you can take round a bend.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/washing-machine"><img src="/posters/washing-machine-800.webp" width="800" height="800" loading="lazy" alt="A white front-loading washing machine." /><span class="objects__fig">Fig. 11</span><span class="objects__title">Washing Machine</span><span class="objects__hook">Built in code: a belt from a fast motor turns the drum, and a tub on springs carries 25 kg of concrete.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/bicycle-pump"><img src="/posters/bicycle-pump-800.webp" width="800" height="800" loading="lazy" alt="A floor pump for bicycle tyres, its handle up." /><span class="objects__fig">Fig. 12</span><span class="objects__title">Bicycle Pump</span><span class="objects__hook">A cup seal that folds one way and a ball valve that keeps the tyre’s air in.</span></a></li>
-          <li><a href="%OBJECTS%#/thing/garden-sprinkler"><img src="/posters/garden-sprinkler-800.webp" width="800" height="800" loading="lazy" alt="A yellow garden sprinkler on wheels, with a turning arm." /><span class="objects__fig">Fig. 13</span><span class="objects__title">Garden Sprinkler</span><span class="objects__hook">No motor: two jets of water push the arm round, the way a rocket flies.</span></a></li>
-        </ul>
-      </section>
-
-      <section class="flow" id="inside" data-n="06">
-        <h2><span class="num">06</span>Inside, generated</h2>
-        <p>Most free models are shells. Three of the thirteen objects had their insides generated inside a downloaded case, and four were generated whole. Each was laid out from published numbers, and each page says what was simplified.</p>
-        <figure class="wide shot">
-          <img src="/skill/hero-watch-escapement.webp" width="1600" height="1000" loading="lazy" alt="The pocket watch in How it works: the case turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid, beside a timing chart of one swing of the balance." />
-          <figcaption><strong>The watch’s escapement.</strong> At each beat the pallet fork lets the escape wheel slip half a tooth, and the tooth gives the balance a push. The chart is drawn from the same beat count that turns the wheels.</figcaption>
-        </figure>
-        <p><strong>The pocket watch</strong> was a closed case. Its build step cuts the case along the mesh’s own edge loops, adds the inside surfaces a shell never had, and builds about twenty parts from real tooth counts. In the viewer, every wheel follows one beat count taken from your clock, so the train stays in mesh at any time of day and in slow motion.</p>
-        <figure class="pair wide">
-          <figure class="shot">
-            <img src="/skill/tour-leica-rangefinder.webp" width="960" height="600" loading="lazy" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter, with a chart of the two images in the viewfinder." />
-            <figcaption><strong>The Leica’s rangefinder.</strong> Two windows 68.5 mm apart; a lens on a roller arm, moved by the lens’s own cam, lays one picture over the other.</figcaption>
+        <section class="band" id="inside">
+          <div class="band__head">
+            <h2>Building the insides</h2>
+            <p>Most free models are shells. Three of the thirteen had their insides generated inside a downloaded case, and four were generated whole, each laid out from published numbers.</p>
+          </div>
+          <figure class="plate">
+            <img src="/skill/hero-watch-escapement.webp" width="1600" height="1000" loading="lazy" alt="The pocket watch in How it works: the case turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid, beside a timing chart of one swing of the balance." />
+            <figcaption><b>The watch’s escapement</b><span>At each beat the pallet fork lets the escape wheel slip half a tooth, and the tooth gives the balance a push. The chart is drawn from the same beat count that turns the wheels.</span></figcaption>
           </figure>
-          <figure class="shot">
-            <img src="/skill/tour-slr-winding.webp" width="960" height="600" loading="lazy" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key, with a chart of each gear's turns." />
-            <figcaption><strong>The SLR’s winding.</strong> One turn of the knob winds the drive key back 30/35 of a turn, through gears sized from the factory’s service manual.</figcaption>
+          <div class="columns">
+            <p><strong>The pocket watch</strong> was a closed case. Its build cuts the case along the mesh’s own edge loops, adds the inside surfaces a shell never had, and builds about twenty parts from real tooth counts. Every wheel follows one beat count taken from your clock, so the train stays in mesh at any time of day and in slow motion.</p>
+            <p><strong>The Leica M3</strong> was a shell too: its build cuts it along the seams of the top cover and base plate, thickens each piece inward, and builds the cloth shutter, the film path, the rangefinder optics and a nine-blade iris. <strong>The medium-format SLR</strong> had no free model at all, so all of it is code, laid out from the service manual of the Hasselblad 500C/M.<sup class="ref">3</sup></p>
+          </div>
+          <div class="pair cells">
+            <figure>
+              <img src="/skill/tour-leica-rangefinder.webp" width="960" height="600" loading="lazy" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter, with a chart of the two images in the viewfinder." />
+              <figcaption><b>The Leica’s rangefinder</b> Two windows 68.5 mm apart; a lens on a roller arm, moved by the lens’s own cam, lays one picture over the other.</figcaption>
+            </figure>
+            <figure>
+              <img src="/skill/tour-slr-winding.webp" width="960" height="600" loading="lazy" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key, with a chart of each gear's turns." />
+              <figcaption><b>The SLR’s winding</b> One turn of the knob winds the drive key back 30/35 of a turn, through gears sized from the factory’s service manual.<sup class="ref">3</sup></figcaption>
+            </figure>
+          </div>
+          <div class="split split--image">
+            <figure>
+              <img src="/skill/tour-roadster-suction.webp" width="960" height="600" loading="lazy" alt="The Roadster's suction fans: blue air lines run from under the floor to four fans in the tail, with a chart of the pressure above and below the car." />
+              <figcaption><b>The Roadster’s suction</b> Four ducted fans pull the air from under the sealed floor. About 6 kPa less underneath is two tonnes of downforce, parked or moving.</figcaption>
+            </figure>
+            <div>
+              <p><strong>The cars</strong> are lofted from a few curves per car and cut into the panels that come off. Under the 2026 Roadster are the fans, two carbon tanks of air at 690 bar and ten nozzles, laid out from Tesla’s launch and its patent; under the family car, a two-litre four firing 1, 3, 4, 2, a four-speed gearbox and a differential.</p>
+              <aside class="note"><span class="note__n">3</span>The SLR’s release runs in the order of the factory’s timing chart: the lens’s shutter shuts and the drive key turns to 117°, the iris stops down, the mirror swings up, the flaps open, the key reaches 268° and the shutter fires.</aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="band" id="checks">
+          <div class="band__head">
+            <h2>The checks</h2>
+            <p>Agents build quickly and see slowly, so three scripts do the looking. All three read the object’s own content file, so a new object is checked without new code.</p>
+          </div>
+          <ul class="checks cells">
+            <li><code>npm run check</code><span>Under a second, no browser. Every name the content uses exists in the model, every mesh belongs to a part, every point sits on the model.</span></li>
+            <li><code>npm run qa</code><span>The real page in headless Chromium: every callout, tour step and experiment. It holds the buttons, moves the sliders, fires the shutters, and fails if a readout never changes.</span></li>
+            <li><code>npm run models:build</code><span>Fails if any part crosses another at rest, or if taking it apart would pass one part through another.</span></li>
+          </ul>
+          <div class="prose">
+            <p>Headless Chromium used to draw with software WebGL, at about 460 ms a frame. On the Mac’s GPU it takes 18 to 23 ms, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all thirteen in under two.<sup class="ref">4</sup></p>
+            <aside class="note"><span class="note__n">4</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown. Once found, it was a one-line fix.</aside>
+          </div>
+          <figure class="plate">
+            <img src="/skill/qa-tour-sheet.webp" width="1400" height="994" loading="lazy" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled with its step." />
+            <figcaption><b>One run, one sheet</b><span>The SLR’s seven tour steps as the runner saw them. Step 5, Winding, shows one of its two labels; the runner failed it.</span></figcaption>
           </figure>
-        </figure>
-        <p><strong>The Leica M3</strong> was a shell too: its build cuts it along the seams of the top cover and base plate, thickens each piece inward, and builds the cloth shutter, the film path, the rangefinder optics and a nine-blade iris. <strong>The medium-format SLR</strong> had no free model at all, so all of it is code, laid out from the service manual of the Hasselblad 500C/M.<sup class="ref">4</sup></p>
-        <aside class="note"><span class="note__n">4</span>Its release runs in the order of the factory’s timing chart: the lens’s shutter shuts and the drive key turns to 117°, the iris stops down, the mirror swings up, the flaps open, the key reaches 268° and the shutter fires.</aside>
-        <figure class="wide shot">
-          <img src="/skill/tour-roadster-suction.webp" width="960" height="600" loading="lazy" alt="The Roadster's suction fans: blue air lines run from under the floor to four fans in the tail, with a chart of the pressure above and below the car." />
-          <figcaption><strong>The Roadster’s suction.</strong> Four ducted fans pull the air from under the sealed floor. About 6 kPa less underneath is two tonnes of downforce, parked or moving.</figcaption>
-        </figure>
-        <p><strong>The cars</strong> are lofted from a few curves per car and cut into the panels that come off. Under the 2026 Roadster are the fans, two carbon tanks of air at 690 bar and ten nozzles, laid out from Tesla’s launch and its patent; under the family car, a two-litre four firing 1, 3, 4, 2, a four-speed gearbox and a differential.</p>
-      </section>
+        </section>
 
-      <section class="flow" id="checks" data-n="07">
-        <h2><span class="num">07</span>The checks</h2>
-        <p>Claude builds quickly and sees slowly, so the checks do the looking. All three are driven by the object’s own content file, so a new object is checked without new code.</p>
-        <ul class="checks">
-          <li><code>npm run check</code> <span>Under a second, no browser. Every name the content uses exists in the model, every mesh belongs to a part, every point sits on the model, every chart and experiment exists.</span></li>
-          <li><code>npm run qa</code> <span>The real page in headless Chromium: every callout, every tour step and every experiment. It holds the hold buttons, moves the sliders, fires the shutters, and fails if a readout never changes. Then the phone layout and reduced motion.</span></li>
-          <li><code>npm run models:build</code> <span>Fails if any part crosses another at rest, or if taking it apart would pass one part through another.</span></li>
-        </ul>
-        <p>Headless Chromium used to draw with software WebGL, at about <strong>460 ms a frame</strong>. On the Mac’s GPU it takes <strong>18 to 23 ms</strong>, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all thirteen in under two.<sup class="ref">5</sup></p>
-        <aside class="note"><span class="note__n">5</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown. Once found, it was a one-line fix.</aside>
-        <figure class="wide shot">
-          <img src="/skill/qa-tour-sheet.webp" width="1400" height="994" loading="lazy" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled with its step." />
-          <figcaption><strong>One run, one sheet.</strong> The SLR’s seven tour steps as the runner saw them. Step 5, Winding, shows one of its two labels; the runner failed it.</figcaption>
-        </figure>
-      </section>
+        <section class="band" id="time">
+          <div class="band__head">
+            <h2>How long it takes</h2>
+            <p>Active time in Claude Code, measured from the session logs with <code>npm run timing</code>, idle gaps left out.</p>
+          </div>
+          <figure class="times" aria-describedby="times-note">
+            <div class="times__axis" aria-hidden="true"><span style="--at: 0">0</span><span style="--at: 30">30 min</span><span style="--at: 60">1 h</span><span style="--at: 90">1 h 30</span><span style="--at: 120">2 h</span></div>
+            <p class="times__group">Before the procedure, checked by hand</p>
+            <ul>
+              <li style="--min: 107" tabindex="0"><b>Pocket watch movement</b><span class="times__bar"></span><span class="times__val">1 h 47</span><span class="times__tip">Opened · 1 h 47 active, 27% of it checking</span></li>
+              <li style="--min: 127" tabindex="0"><b>Leica M3</b><span class="times__bar"></span><span class="times__val">2 h 07</span><span class="times__tip">Opened · 2 h 07 active, 37% of it checking</span></li>
+              <li style="--min: 119" tabindex="0"><b>Medium-format SLR</b><span class="times__bar"></span><span class="times__val">1 h 59</span><span class="times__tip">Built · 1 h 59 active, 33% of it checking</span></li>
+              <li style="--min: 96" tabindex="0"><b>2026 Roadster</b><span class="times__bar"></span><span class="times__val">57 + 39 min</span><span class="times__tip">Machine, rebuilt from the 2017 car · two sessions, 24–32% checking</span></li>
+            </ul>
+            <p class="times__group">With the procedure, 18 October 2026</p>
+            <ul>
+              <li style="--min: 24" tabindex="0" class="is-new"><b>Washing machine</b><span class="times__bar"></span><span class="times__val">24 min</span><span class="times__tip">Built · 24 min active, 38% of it checking</span></li>
+              <li style="--min: 15" tabindex="0" class="is-new"><b>Bicycle pump</b><span class="times__bar"></span><span class="times__val">15 min</span><span class="times__tip">Opened · 15 min active, 38% of it checking</span></li>
+              <li style="--min: 15" tabindex="0" class="is-new"><b>Garden sprinkler</b><span class="times__bar"></span><span class="times__val">15 min</span><span class="times__tip">Sourced · 15 min active, 46% of it checking</span></li>
+            </ul>
+          </figure>
+          <div class="prose" id="times-note">
+            <p>Before the procedure, a third of every build went on checking by hand, with a new browser script for each object waiting on software rendering, and another sixth on re-reading code to remember how things fit together. The checks, the scaffold, the kit and the skill’s references removed most of both. The three objects built with them took 15 to 24 minutes each, all three in one 70-minute session. Checking is still the biggest stage, but now it’s reading contact sheets and fixing what they show.<sup class="ref">5</sup></p>
+            <aside class="note"><span class="note__n">5</span>They were simpler machines than the watch or the cameras. Nothing that dense has been built with the procedure yet; the next one will be measured and added here.</aside>
+          </div>
+          <details class="table">
+            <summary>The numbers as a table</summary>
+            <table>
+              <thead><tr><th scope="col">Object</th><th scope="col">Tier</th><th scope="col">Active time</th><th scope="col">Of that, checking</th></tr></thead>
+              <tbody>
+                <tr class="table__group"><th colspan="4" scope="colgroup">Before the procedure, checked by hand</th></tr>
+                <tr><th scope="row">Pocket watch movement</th><td>Opened</td><td>1 h 47</td><td>27%</td></tr>
+                <tr><th scope="row">Leica M3</th><td>Opened</td><td>2 h 07</td><td>37%</td></tr>
+                <tr><th scope="row">Medium-format SLR</th><td>Built</td><td>1 h 59</td><td>33%</td></tr>
+                <tr><th scope="row">2026 Roadster, rebuilt from the 2017 car</th><td>Machine</td><td>57 min + 39 min</td><td>24–32%</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="table__group"><th colspan="4" scope="colgroup">With the procedure, 18 October 2026</th></tr>
+                <tr><th scope="row">Washing machine</th><td>Built</td><td>24 min</td><td>38%</td></tr>
+                <tr><th scope="row">Bicycle pump</th><td>Opened</td><td>15 min</td><td>38%</td></tr>
+                <tr><th scope="row">Garden sprinkler</th><td>Sourced</td><td>15 min</td><td>46%</td></tr>
+              </tbody>
+            </table>
+          </details>
+        </section>
 
-      <section class="flow" id="time" data-n="08">
-        <h2><span class="num">08</span>How long it takes</h2>
-        <p>Detail costs time, and real numbers beat a guess. These are Claude’s active times, measured from the session logs with <code>npm run timing</code>, idle gaps left out.</p>
-        <div class="table wide" role="region" aria-label="Build times" tabindex="0">
-          <table>
-            <thead><tr><th scope="col">Object</th><th scope="col">Tier</th><th scope="col">Active time</th><th scope="col">Of that, checking</th></tr></thead>
-            <tbody>
-              <tr class="table__group"><th colspan="4" scope="colgroup">Before the procedure: checked by hand</th></tr>
-              <tr><th scope="row">Pocket watch movement</th><td>Opened</td><td>1 h 47</td><td>27%</td></tr>
-              <tr><th scope="row">Leica M3</th><td>Opened</td><td>2 h 07</td><td>37%</td></tr>
-              <tr><th scope="row">Medium-format SLR</th><td>Built</td><td>1 h 59</td><td>33%</td></tr>
-              <tr><th scope="row">2026 Roadster, rebuilt from the 2017 car</th><td>Machine</td><td>57 min + 39 min</td><td>24–32%</td></tr>
-            </tbody>
-            <tbody>
-              <tr class="table__group"><th colspan="4" scope="colgroup">With the procedure, 18 October 2026</th></tr>
-              <tr><th scope="row">Washing machine</th><td>Built</td><td><strong>24 min</strong></td><td>38%</td></tr>
-              <tr><th scope="row">Bicycle pump</th><td>Opened</td><td><strong>15 min</strong></td><td>38%</td></tr>
-              <tr><th scope="row">Garden sprinkler</th><td>Sourced</td><td><strong>15 min</strong></td><td>46%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>Before the procedure, a third of every build went on checking by hand, with a new browser script for each object waiting on software rendering, and another sixth on re-reading code to remember how things fit together. The checks, the scaffold, the kit and the skill’s references removed most of both. The three objects built with them took 15 to 24 minutes each, all three in one 70-minute session, with each one’s research running in a subagent alongside. Checking is still the biggest stage, but now it’s reading contact sheets and fixing what they show.<sup class="ref">6</sup></p>
-        <aside class="note"><span class="note__n">6</span>They were simpler machines than the watch or the cameras. Nothing that dense has been built with the procedure yet; the next one will be measured and added here.</aside>
-      </section>
+        <section class="band band--ink" id="install">
+          <div class="band__head">
+            <h2>Install</h2>
+            <p>One command adds the skill to your agent. The first time you ask for a machine, it sets up a workspace: a copy of the repository, which is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the thirteen machines as its references.</p>
+          </div>
+          <ol class="steps cells">
+            <li>
+              <b>Add the skill</b>
+              <div class="install">
+                <pre><code id="install-line-2">npx skills add <span class="install__repo">bro-xuan/3d-of-things</span></code></pre>
+                <button type="button" class="install__copy" data-copy="#install-line-2">Copy</button>
+              </div>
+              <span>Into Claude Code, Codex, Cursor, Gemini CLI, Copilot and the other agents <code>npx skills</code> supports.</span>
+            </li>
+            <li>
+              <b>Name a machine</b>
+              <pre><code>/3d-of-things add a mechanical metronome</code></pre>
+              <span>Open your agent in any folder. Without one, the same stages run by hand in a clone of <a href="https://github.com/bro-xuan/3d-of-things">the repository</a>.</span>
+            </li>
+            <li>
+              <b>Put it on your site</b>
+              <pre><code>npm run export -- --out ../my-site/public/machines</code></pre>
+              <span>Builds the site for that path, checks it, copies it in as static files and prints the two rewrites your host needs.</span>
+            </li>
+          </ol>
+        </section>
 
-      <section class="flow" id="install" data-n="09">
-        <h2><span class="num">09</span>Install</h2>
-        <p>Add the skill to Claude Code with one command:</p>
-        <pre class="block"><code>npx skills add bro-xuan/3d-of-things</code></pre>
-        <p>Then open Claude Code in any folder and name a machine:</p>
-        <pre class="block"><code>/3d-of-things add a mechanical metronome</code></pre>
-        <p>The first time, Claude sets up a workspace: a copy of the repository, because the repository is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the thirteen machines as its references.<sup class="ref">7</sup> To put your machines on your own site, bake them in. The export builds the site for that path, checks it, copies it in as static files and prints the two rewrites your host needs.</p>
-        <aside class="note"><span class="note__n">7</span>Without Claude Code the same stages run by hand, in a clone of <a href="https://github.com/bro-xuan/3d-of-things">the repository</a>: <code>npm run new</code>, <code>npm run models:build</code>, <code>npm run check</code>, <code>npm run qa</code>.</aside>
-        <pre class="block"><code>npm run export -- --out ../my-site/public/machines</code></pre>
-      </section>
+        <section class="band" id="limits">
+          <div class="band__head">
+            <h2>Limits</h2>
+            <p>Agents are good at building these and less good at seeing them. A part can be right in every number and still look wrong; the fixes that mattered most came from someone watching the model play and saying what felt off: a watch that faded into the page’s edge, seven cars that looked the same.</p>
+          </div>
+          <ul class="limits cells">
+            <li><b>Free models only</b><span>CC0 or CC BY, checkable at the source. Most are shells, so most objects need their insides generated, and that’s the slow part.</span></li>
+            <li><b>Simplified insides</b><span>Real dimensions and timing, but not every screw, and each page says what was left out.</span></li>
+            <li><b>Careful takes time</b><span>A simple machine takes 15 to 25 minutes. The watch took nearly two hours before the procedure, and a vehicle with physics of its own takes longer.</span></li>
+            <li><b>WebGL needed</b><span>Without it, each page shows its poster. Treat the first version as a draft: turn it, take it apart, say what’s wrong, ask again.</span></li>
+          </ul>
+        </section>
 
-      <section class="flow" id="limits" data-n="10">
-        <h2><span class="num">10</span>Limits</h2>
-        <p>Claude is good at building these and less good at seeing them. A part can be right in every number and still look wrong, and the fixes that mattered most came from someone watching the model play and saying what felt off: a watch that faded into the page’s edge, seven cars that looked the same.</p>
-        <ul class="plain">
-          <li><strong>Free models only.</strong> CC0 or CC BY, checkable at the source. Most free models are shells, so most objects need their insides generated, which is the slow part.</li>
-          <li><strong>Generated insides are simplified,</strong> and each page says what was left out. They follow real dimensions and timing, not every screw.</li>
-          <li><strong>It’s careful, not instant.</strong> A simple machine takes 15 to 25 minutes of Claude’s time. One as dense as the watch took nearly two hours before the procedure existed, and a vehicle with physics of its own takes longer.</li>
-          <li><strong>It needs WebGL.</strong> Without it, each page shows its poster.</li>
-        </ul>
-        <p>So treat the first version as a draft. Open it, turn it, take it apart, say what’s wrong, and ask again.</p>
-      </section>
+        <section class="band" id="questions">
+          <div class="band__head">
+            <h2>Questions</h2>
+          </div>
+          <dl class="faq">
+            <div><dt>Which agents does it work with?</dt><dd>It’s an agent skill: a folder with a <code>SKILL.md</code> and its references. <code>npx skills add</code> installs it into Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and dozens of others. It was written and timed in Claude Code; its steps are shell commands and a browser, so an agent that can run commands can follow them.</dd></div>
+            <div><dt>Does it work outside this repository?</dt><dd>Yes. It sets up a workspace the first time and builds there, with this site’s viewer, pipeline and checks; <code>npm run export</code> then puts the machines on any static host, Next.js and Vercel included.</dd></div>
+            <div><dt>Can I change an object later?</dt><dd>Yes. An object’s words and placement live in its <code>content.mjs</code> and its geometry in the generator beside it. Change a number in the generator and everything placed by name moves with it; then run the checks again.</dd></div>
+            <div><dt>Will it slow the page down?</dt><dd>Models are 0.8 to 2.9 MB, compressed with meshopt and WebP. The gallery is plain HTML, and three.js loads only when an object page opens, after its poster is on screen.</dd></div>
+            <div><dt>Is it accessible?</dt><dd>The viewer answers the keyboard (arrow keys turn the model, W switches the look, Esc closes the tour), every step is reachable from the step bar, and reduced motion turns the flights and sweeps off.</dd></div>
+            <div><dt>What’s the licence?</dt><dd>MIT, for the code, the skill and the models built in code. Every downloaded model is CC0, and its credit is on its page.</dd></div>
+          </dl>
+        </section>
 
-      <section class="flow" id="questions" data-n="11">
-        <h2><span class="num">11</span>Questions</h2>
-        <dl class="faq">
-          <dt>Does it work outside this repository?</dt>
-          <dd>Yes. Installed with the command above, it sets up a workspace the first time and builds there, with this site’s viewer, pipeline and checks; <code>npm run export</code> then puts the machines on any static host, Next.js and Vercel included.</dd>
-          <dt>Can I change an object later?</dt>
-          <dd>Yes. An object’s words and placement live in its <code>content.mjs</code> and its geometry in the generator beside it. Change a number in the generator and everything placed by name moves with it; then run the checks again.</dd>
-          <dt>Will it slow the page down?</dt>
-          <dd>Models are 0.8 to 2.9 MB, compressed with meshopt and WebP. The gallery is plain HTML, and three.js loads only when an object page opens, after its poster is on screen.</dd>
-          <dt>Is it accessible?</dt>
-          <dd>The viewer answers the keyboard (arrow keys turn the model, W switches the look, Esc closes the tour), every step is reachable from the step bar, and reduced motion turns the flights and sweeps off.</dd>
-          <dt>What’s the licence?</dt>
-          <dd>MIT, for the code, the skill and the models built in code. Every downloaded model is CC0, and its credit is on its page.</dd>
-          <dt>How do I get the best result?</dt>
-          <dd>Name the exact machine and what should move, give any numbers you know, and look hard at the first version.</dd>
-        </dl>
-      </section>
+        <footer class="band colophon">
+          <p><a class="wordmark" href="%OBJECTS%"><span class="wordmark__mark">3D</span> of Things</a></p>
+          <p>Made with <code>/3d-of-things</code>, the skill on this page. Models from <a href="https://polyhaven.com">Poly Haven</a> (CC0) or built in code for this site. Tesla and the Roadster’s name are trademarks of Tesla, Inc.; the Roadster here is an illustration.</p>
+          <p><a href="https://github.com/bro-xuan/3d-of-things">Source on GitHub</a> · MIT · Updated 18 October 2026</p>
+        </footer>
+      </div>
     </main>
-
-    <footer class="colophon flow">
-      <p><a class="wordmark" href="%OBJECTS%"><span class="wordmark__mark">3D</span> of Things</a></p>
-      <p>Made with <code>/3d-of-things</code>, the skill on this page. Models from <a href="https://polyhaven.com">Poly Haven</a> (CC0) or built in code for this site. Tesla and the Roadster’s name are trademarks of Tesla, Inc.; the Roadster here is an illustration. Set in Fraunces, Instrument Sans and IBM Plex Mono.</p>
-      <p><a href="https://github.com/bro-xuan/3d-of-things">Source on GitHub</a> · MIT</p>
-    </footer>
 
     <script type="module" src="/src/skill/main.ts"></script>
   </body>

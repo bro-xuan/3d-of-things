@@ -1,6 +1,7 @@
-/* The skill's page (skill.html): the site's workshop-manual look (warm paper, ink type, hairline rules,
-   vermilion accents) as an editorial single column, section numbers and notes in the margins on
-   wide screens. Tokens copied from src/styles/main.css. Sizes in rem against a viewport-scaled root. */
+/* The skill's page (skill.html): the site's workshop-manual look (warm paper, ink type, hairlines,
+   one vermilion accent). Under a full-width hero with the live watch, the page is a drawing sheet:
+   a ruled frame with registration marks where each band meets its edges, and the content laid out
+   in ruled cells. Tokens copied from src/styles/main.css. Sizes in rem against a viewport-scaled root. */
 
 :root {
   color-scheme: light;
@@ -24,7 +25,10 @@
 
   --gutter: clamp(1rem, 3vw, 2.75rem);
   --header-h: 3.75rem;
-  --shadow-soft: 0 0.15rem 0.5rem oklch(0.25 0.02 60 / 0.12), 0 0.05rem 0.1rem oklch(0.25 0.02 60 / 0.1);
+  /* The sheet, and how far its content keeps from the sheet's edges. */
+  --sheet: 84rem;
+  --pad: clamp(1rem, 4vw, 3.5rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
@@ -53,7 +57,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.0625rem;
-  line-height: 1.62;
+  line-height: 1.6;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -88,6 +92,10 @@ main:focus {
   outline: none;
 }
 
+p {
+  margin: 0 0 1rem;
+}
+
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -110,6 +118,42 @@ code {
   padding: 0.05em 0.3em;
   border-radius: 0.2rem;
   background: var(--paper-sunk);
+}
+
+pre {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 0.3rem;
+  background: var(--paper-raised);
+  font: 400 0.9rem/1.6 var(--font-mono);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+pre .c {
+  color: var(--ink-3);
+}
+
+strong {
+  font-weight: 600;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ------------------------------------------------------------- masthead */
@@ -151,15 +195,19 @@ code {
 
 .masthead__here {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.6rem;
   min-width: 0;
   margin: 0 auto 0 1.25rem;
   overflow: hidden;
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.9rem;
   color: var(--ink-3);
   white-space: nowrap;
+}
+
+@media (max-width: 30rem) {
+  .masthead__here {
+    visibility: hidden;
+  }
 }
 
 .masthead__name {
@@ -179,7 +227,7 @@ code {
 
 .masthead__section:not(:empty)::before {
   content: '/';
-  margin-right: 0.75rem;
+  margin-right: 0.6rem;
   color: var(--rule-strong);
 }
 
@@ -199,82 +247,34 @@ code {
   color: var(--ink);
 }
 
-/* ---------------------------------------------------------- the columns */
+/* ---------------------------------------------------------------- hero */
 
-/* Narrow: one column. Wide: a margin for section numbers, the text, and a margin for notes. */
-.flow {
-  display: grid;
-  grid-template-columns: [full-start] var(--gutter) [main-start] minmax(0, 1fr) [main-end] var(--gutter) [full-end];
+/* The 3D layer spans the whole hero, so the watch can swing and come apart past its own box. */
+.hero {
+  position: relative;
 }
 
-.flow > * {
-  grid-column: main;
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: var(--sheet);
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 4rem) var(--pad) clamp(2.5rem, 5vw, 4.5rem);
 }
 
 @media (min-width: 64rem) {
-  .flow {
-    grid-template-columns:
-      [full-start] minmax(var(--gutter), 1fr)
-      [num-start] 4.5rem
-      [main-start] minmax(0, 40rem)
-      [main-end] 2.5rem
-      [note-start] minmax(0, 15rem)
-      [note-end] minmax(var(--gutter), 1fr)
-      [full-end];
+  .hero__inner {
+    grid-template-columns: minmax(0, 36rem) minmax(0, 1fr);
+    align-items: center;
+    min-height: calc(100svh - var(--header-h));
   }
-
-  .flow > .note {
-    grid-column: note;
-  }
-
-  .flow > .wide {
-    grid-column: num-start / note-end;
-  }
-}
-
-main > section {
-  padding-block: clamp(2.5rem, 6vw, 5rem);
-  border-top: 1px solid var(--rule);
-}
-
-main > section > p,
-main > section > ul,
-main > section > ol,
-main > section > dl,
-main > section > blockquote,
-main > section > figure,
-main > section > pre,
-main > section > div {
-  margin: 0 0 1.25rem;
-}
-
-/* ---------------------------------------------------------------- hero */
-
-.hero {
-  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
-}
-
-.eyebrow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 0 0 1.25rem;
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.eyebrow span + span::before {
-  content: '/';
-  margin-right: 0.75rem;
-  color: var(--rule-strong);
 }
 
 .hero__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-size: clamp(3rem, 7vw, 6.25rem);
   font-weight: 360;
   line-height: 0.95;
   letter-spacing: -0.035em;
@@ -283,8 +283,8 @@ main > section > div {
 
 .hero__kind {
   display: block;
-  margin-top: 0.6rem;
-  font-size: 0.34em;
+  margin-top: 0.8rem;
+  font-size: 0.32em;
   font-style: italic;
   font-weight: 340;
   letter-spacing: -0.01em;
@@ -292,51 +292,83 @@ main > section > div {
 }
 
 .hero__tagline {
-  max-width: 30ch;
   margin: 1.75rem 0 2.25rem;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
   font-weight: 380;
   line-height: 1.25;
   letter-spacing: -0.015em;
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .hero__tagline em {
   color: var(--accent-ink);
 }
 
-@media (min-width: 64rem) {
-  .hero > * {
-    grid-column: num-start / note-end;
-  }
+.hero__then {
+  margin: 0.85rem 0 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
 }
 
-/* The title beside the live watch on wide screens, above it on narrow ones. */
-.hero__top {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: center;
-  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+.hero__then code {
+  display: inline-block;
+  margin-top: 0.3rem;
+  white-space: nowrap;
 }
 
-.hero__top .hero__tagline {
-  margin-bottom: 0;
+.hero__agents {
+  max-width: 30rem;
+  margin: 1.5rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-3);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
-/* Wide, the watch takes everything right of the title, out to the page's edge, as tall as the window allows. */
-@media (min-width: 64rem) {
-  .hero > .hero__top {
-    grid-column: num-start / full-end;
-    grid-template-columns: minmax(0, 27rem) minmax(0, 1fr);
-    padding-right: var(--gutter);
-  }
+/* The one line to install it, with a button that copies it. */
+.install {
+  display: flex;
+  align-items: stretch;
+  max-width: 30rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.3rem;
+  background: var(--paper-raised);
+}
 
-  .hero__top .live__stage {
-    width: 100%;
-    height: min(76svh, 48rem);
-    aspect-ratio: auto;
-  }
+.install pre {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border: 0;
+  background: none;
+  white-space: pre-wrap;
+}
+
+/* On a phone the line breaks before the repository, not inside it. */
+.install__repo {
+  white-space: nowrap;
+}
+
+.install__copy {
+  flex: none;
+  padding: 0 0.95rem;
+  border: 0;
+  border-left: 1px solid var(--rule-strong);
+  border-radius: 0 0.3rem 0.3rem 0;
+  background: none;
+  color: var(--ink-2);
+  font: 500 0.875rem/1 var(--font-body);
+  cursor: pointer;
+  transition:
+    background 150ms,
+    color 150ms;
+}
+
+.install__copy:hover {
+  background: var(--paper-sunk);
+  color: var(--ink);
 }
 
 /* ------------------------------------------------------- the live watch */
@@ -345,11 +377,43 @@ main > section > div {
   margin: 0;
 }
 
+/* Where the watch is drawn: the whole hero, under nothing you press (it takes no pointer). */
+.live__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Where the watch stands at rest. It clips the pointer surface the viewer stretches to the layer's size,
+   so dragging works on the watch, not across the text. */
 .live__stage {
   position: relative;
   width: min(100%, 70svh);
   aspect-ratio: 1;
   margin-inline: auto;
+  overflow: hidden;
+  overflow: clip;
+}
+
+@media (min-width: 64rem) {
+  .live__stage {
+    width: 100%;
+    height: min(72svh, 48rem);
+    aspect-ratio: auto;
+  }
+
+  .live__controls,
+  .live__caption {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+}
+
+.live__stage:has(.live__viewer:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 0.25rem;
 }
 
 .live__poster {
@@ -358,7 +422,7 @@ main > section > div {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 700ms var(--ease);
 }
 
 .live[data-state='ready'] .live__poster {
@@ -368,7 +432,6 @@ main > section > div {
 .live__viewer {
   position: absolute;
   inset: 0;
-  border-radius: 0.5rem;
   outline: none;
   cursor: grab;
 }
@@ -377,17 +440,12 @@ main > section > div {
   cursor: grabbing;
 }
 
-.live__viewer:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 0.25rem;
-}
-
 .live .viewer__canvas {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 700ms var(--ease);
 }
 
 .live .viewer__canvas.is-shown {
@@ -424,12 +482,11 @@ main > section > div {
 .live__hint {
   position: absolute;
   bottom: 0.25rem;
-  left: 0;
+  left: 50%;
+  translate: -50% 0;
   margin: 0;
-  font: 500 0.8rem/1.3 var(--font-mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: var(--ink-3);
+  font-size: 0.85rem;
   pointer-events: none;
   transition: opacity 400ms;
 }
@@ -494,11 +551,6 @@ main > section > div {
   color: var(--accent-ink);
 }
 
-.live__key:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
 .live__key:disabled {
   opacity: 0.45;
   cursor: default;
@@ -525,188 +577,153 @@ main > section > div {
   line-height: 1.5;
 }
 
-.visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+/* ---------------------------------------------------------- the sheet */
+
+.sheet {
+  max-width: var(--sheet);
+  margin-inline: auto;
 }
 
-.hero__thumbs {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.5rem, 2vw, 1.5rem);
-  max-width: 48rem;
-  margin: 0 0 1.5rem;
-  padding: 0;
-  list-style: none;
+/* The frame shows once there's paper on either side of it. */
+@media (min-width: 88rem) {
+  .sheet {
+    border-inline: 1px solid var(--rule);
+  }
 }
 
-.hero__thumbs a {
+.band {
+  position: relative;
+  padding: clamp(3rem, 7vw, 6rem) var(--pad);
+  border-top: 1px solid var(--rule);
+}
+
+/* Registration marks where the band's rule meets the sheet's edges. */
+@media (min-width: 88rem) {
+  .band::before,
+  .band::after {
+    content: '';
+    position: absolute;
+    top: -0.4rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    background:
+      linear-gradient(var(--mark, var(--ink-3)), var(--mark, var(--ink-3))) center / 100% 1px no-repeat,
+      linear-gradient(var(--mark, var(--ink-3)), var(--mark, var(--ink-3))) center / 1px 100% no-repeat;
+  }
+
+  .band::before {
+    left: -0.4rem;
+  }
+
+  .band::after {
+    right: -0.4rem;
+  }
+}
+
+/* A band that ends in cells or a plate closes on them: their last rule is the next band's. */
+.band:has(> .cells:last-child, > .plate:last-child) {
+  padding-bottom: 0;
+}
+
+.band > .cells:last-child,
+.band > .plate:last-child {
+  border-bottom: 0;
+}
+
+/* A band opens with its heading on the left and what it's about on the right. */
+.band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0.4rem;
-  justify-items: center;
-  text-decoration: none;
+  gap: 1rem 4rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 
-.hero__thumbs img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: contain;
-  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero__thumbs a:hover img {
-  translate: 0 -0.3rem;
-}
-
-.hero__thumbs span {
-  font: 500 0.8rem/1.3 var(--font-mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--ink-3);
-}
-
-/* On a phone a fifth of the row is narrower than "Rangefinder": the pictures speak for themselves. */
-@media (max-width: 40rem) {
-  .hero__thumbs span {
-    display: none;
+@media (min-width: 52rem) {
+  .band__head {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: end;
   }
 }
-
-.hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  margin: 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--rule);
-  color: var(--ink-2);
-  font-size: 0.95rem;
-}
-
-/* ------------------------------------------------------------ contents */
-
-.toc {
-  padding-bottom: clamp(2rem, 5vw, 3.5rem);
-}
-
-.toc ol {
-  columns: 2 15rem;
-  column-gap: 2.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 64rem) {
-  .toc ol {
-    grid-column: num-start / note-end;
-    columns: 3 14rem;
-  }
-}
-
-.toc li {
-  break-inside: avoid;
-  border-bottom: 1px solid var(--rule);
-}
-
-.toc a {
-  display: flex;
-  gap: 0.9rem;
-  padding: 0.55rem 0;
-  text-decoration: none;
-  color: var(--ink-2);
-}
-
-.toc a span {
-  font: 500 0.8rem/1.9 var(--font-mono);
-  color: var(--ink-3);
-}
-
-.toc a:hover,
-.toc a[aria-current] {
-  color: var(--ink);
-}
-
-.toc a[aria-current] span {
-  color: var(--accent-ink);
-}
-
-/* ------------------------------------------------------------ sections */
 
 h2 {
-  position: relative;
-  margin: 0 0 1.5rem;
+  margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
-  font-weight: 380;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+  font-weight: 370;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
-.num {
-  display: block;
-  margin-bottom: 0.6rem;
-  font: 500 0.8rem/1 var(--font-mono);
-  letter-spacing: 0.06em;
-  color: var(--accent-ink);
+.band__head code {
+  white-space: nowrap;
+}
+
+.band__head p {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* Ruled cells: a grid whose gaps are the rules. They run out to the sheet's edges. */
+.cells {
+  display: grid;
+  gap: 1px;
+  margin: 0 calc(-1 * var(--pad));
+  padding: 0;
+  list-style: none;
+  background: var(--rule);
+  border-block: 1px solid var(--rule);
+}
+
+.cells > * {
+  margin: 0;
+  padding: clamp(1.1rem, 2vw, 1.6rem) clamp(1rem, 2vw, 1.6rem);
+  background: var(--paper);
+}
+
+/* Text set beside the margin notes: a readable column, and the notes to its right on wide screens. */
+.prose {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 4rem;
+  margin-block: clamp(2rem, 4vw, 3rem);
+}
+
+.prose > p {
+  max-width: 40rem;
 }
 
 @media (min-width: 64rem) {
-  .num {
-    position: absolute;
-    right: calc(100% + 1.4rem);
-    top: 0.55em;
-    margin: 0;
-    font-size: 0.95rem;
+  .prose {
+    grid-template-columns: minmax(0, 40rem) minmax(0, 16rem);
   }
-}
 
-h3 {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 420;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-}
+  .prose > p {
+    grid-column: 1;
+  }
 
-strong {
-  font-weight: 600;
+  .prose > .note {
+    grid-column: 2;
+    grid-row: 1;
+  }
 }
 
 .ref {
   margin-left: 0.1em;
   font: 500 0.8rem/0 var(--font-mono);
-  color: var(--accent-ink);
+  color: var(--ink-3);
 }
 
-/* Notes: in the margin beside the paragraph they follow on wide screens, inline under it on narrow ones. */
 .note {
   align-self: start;
-  margin: -0.25rem 0 1.5rem;
-  padding-left: 0.9rem;
-  border-left: 1px solid var(--rule-strong);
+  margin: 0.25rem 0 0;
   color: var(--ink-2);
   font-size: 0.875rem;
   line-height: 1.5;
-}
-
-@media (min-width: 64rem) {
-  .note {
-    margin: 0.2rem 0 0;
-    padding-left: 0;
-    border-left: 0;
-  }
 }
 
 .note__n {
@@ -714,274 +731,604 @@ strong {
   min-width: 1.2rem;
   margin-right: 0.35rem;
   font: 500 0.8rem/1 var(--font-mono);
-  color: var(--accent-ink);
+  color: var(--ink-3);
 }
 
 .note code {
   font-size: 0.92em;
-  white-space: nowrap;
 }
 
-.rule-quote {
-  margin-inline: 0;
-  padding: 1.25rem 0 1.25rem 1.5rem;
-  border-left: 3px solid var(--accent);
-}
-
-.rule-quote p {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
-  font-weight: 420;
-  font-style: italic;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.rule-quote cite {
-  font: 500 0.8rem/1.4 var(--font-mono);
-  font-style: normal;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-/* ---------------------------------------------------------------- prompts */
-
-.prompts {
-  display: grid;
-  gap: 0;
-  border-top: 1px solid var(--rule);
-}
-
-.prompts dt {
-  padding-top: 0.9rem;
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.prompts dd {
-  margin: 0.35rem 0 0;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.prompts code {
+/* A label in a cell or a caption: what it is, in the sans, before the text. */
+.cells b,
+.plate b,
+.split figure b {
   display: block;
-  padding: 0.6rem 0.8rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cells span,
+.cells figcaption {
+  color: var(--ink-2);
+  font-size: 0.95rem;
   line-height: 1.5;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
 }
 
-/* ---------------------------------------------------------------- stages */
-
-.stages {
-  counter-reset: stage -1;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--rule);
-}
-
-.stages li {
-  counter-increment: stage;
-  position: relative;
-  padding: 0.75rem 0 0.75rem 2rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-/* The stage's number hangs in its own column; the text after it flows as one paragraph. */
-.stages li::before {
-  content: counter(stage);
-  position: absolute;
-  left: 0;
-  top: 0.75rem;
-  font: 500 0.95rem/1.7 var(--font-mono);
-  color: var(--accent-ink);
-}
-
-.stages li strong {
-  margin-right: 0.3rem;
-}
-
-/* ------------------------------------------------------------------- code */
-
-.code figcaption {
-  margin-bottom: 0.5rem;
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.04em;
+/* What a cell costs or takes, pinned to its foot. */
+.cells i {
+  display: block;
+  margin-top: auto;
+  padding-top: 1rem;
   color: var(--ink-3);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
 }
 
-pre {
-  margin: 0;
-  padding: 1rem 1.15rem;
-  overflow-x: auto;
-  border: 1px solid var(--rule);
-  border-radius: 0.35rem;
+/* ---------------------------------------------------------- collection */
+
+.objects {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 40rem) {
+  .objects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .objects {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.objects > li {
+  padding: 0;
+}
+
+.objects a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem) clamp(1rem, 2vw, 1.6rem) clamp(1.1rem, 2vw, 1.6rem);
+  text-decoration: none;
+  transition: background 250ms;
+}
+
+.objects a:hover,
+.objects a:focus-visible {
   background: var(--paper-raised);
-  font: 400 0.9rem/1.6 var(--font-mono);
+  color: inherit;
 }
 
-pre code {
-  padding: 0;
-  background: none;
-  font-size: inherit;
+.objects a:focus-visible {
+  outline-offset: -2px;
 }
 
-pre .c {
-  color: var(--ink-3);
+/* The poster, and the same object taken apart over it, shown while you point at it. */
+.objects__pics {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  margin-bottom: 0.5rem;
 }
 
-/* ------------------------------------------------------------------ rules */
+.objects__pics img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition:
+    opacity 450ms var(--ease),
+    scale 700ms var(--ease);
+}
+
+.objects__pics img + img {
+  opacity: 0;
+  scale: 0.94;
+}
+
+.objects a:hover .objects__pics img:first-child,
+.objects a:focus-visible .objects__pics img:first-child {
+  opacity: 0;
+  scale: 1.04;
+}
+
+.objects a:hover .objects__pics img + img,
+.objects a:focus-visible .objects__pics img + img {
+  opacity: 1;
+  scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .objects__pics img,
+  .objects__pics img + img {
+    scale: 1 !important;
+  }
+}
+
+.objects .objects__title {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 420;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------- the one rule */
+
+.versus {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 40rem) {
+  .versus {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.versus img {
+  width: min(100%, 26rem);
+  aspect-ratio: 1;
+  margin: 0 auto 0.75rem;
+  object-fit: contain;
+}
+
+.versus figcaption {
+  max-width: 32rem;
+}
 
 .rules {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--ink);
 }
 
-.rules li {
-  padding: 1.25rem 1.25rem 1.5rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.rules p {
-  margin: 0;
-  color: var(--ink-2);
-}
-
-/* ---------------------------------------------------------------- objects */
-
-.objects {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.75rem 1rem;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 48rem) {
-  .objects {
-    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-    gap: 2rem 1.5rem;
+@media (min-width: 52rem) {
+  .rules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 4rem;
   }
 }
 
-.objects a {
+.rules li {
   display: grid;
-  gap: 0.3rem;
-  align-content: start;
-  height: 100%;
-  text-decoration: none;
+  gap: 0.2rem 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
 }
 
-.objects img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: contain;
-  margin-bottom: 0.25rem;
-  border-radius: 0.35rem;
-  background: var(--paper-raised);
-  box-shadow: inset 0 0 0 1px var(--rule);
-  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+@media (min-width: 30rem) {
+  .rules li {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
 }
 
-.objects a:hover img {
-  translate: 0 -0.25rem;
+.rules b {
+  font-weight: 600;
 }
 
-.objects__fig {
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+.rules span {
+  color: var(--ink-2);
 }
 
-.objects__title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 420;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+.after {
+  max-width: 40rem;
+  margin: 1.5rem 0 0;
 }
 
-.objects__hook {
+/* -------------------------------------------------------------- prompts */
+
+.prompts {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.prompts > div {
+  display: grid;
+  gap: 0.4rem 2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 52rem) {
+  .prompts > div {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.prompts dt {
   color: var(--ink-2);
   font-size: 0.95rem;
-  line-height: 1.45;
 }
 
-/* ---------------------------------------------------------------- figures */
-
-.shot {
+.prompts dd {
   margin: 0;
 }
 
-.shot img {
-  width: 100%;
-  border-radius: 0.35rem;
-  box-shadow: var(--shadow-soft), 0 0 0 1px var(--rule);
+.prompts code {
+  padding: 0;
+  background: none;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-.shot figcaption {
-  max-width: 44rem;
-  margin-top: 0.75rem;
+/* The four tiers, each with an object built at that tier, taken apart. */
+.tiers {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 64rem) {
+  .tiers {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tiers li {
+  display: flex;
+  flex-direction: column;
+}
+
+.tiers img {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 0.5rem;
+  object-fit: contain;
+}
+
+.tiers b {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 420;
+  letter-spacing: -0.015em;
+}
+
+/* --------------------------------------------------------------- stages */
+
+.stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  counter-reset: stage -1;
+}
+
+@media (min-width: 64rem) {
+  .stages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stages li {
+  display: flex;
+  flex-direction: column;
+  min-height: 13rem;
+  counter-increment: stage;
+}
+
+.stages li::before {
+  content: counter(stage);
+  margin-bottom: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 330;
+  line-height: 1;
+  color: var(--ink-3);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem 4rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 64rem) {
+  .split {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  .split--image {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+
+.split > p {
+  max-width: 34rem;
+}
+
+.code {
+  margin: 0;
+}
+
+.code figcaption {
+  margin-bottom: 0.5rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  color: var(--ink-3);
+}
+
+/* ----------------------------------------------------------- the insides */
+
+/* A picture across the whole sheet, with its caption in a ruled bar under it. */
+.plate {
+  margin: 0 calc(-1 * var(--pad));
+  border-block: 1px solid var(--rule);
+}
+
+.plate img {
+  width: 100%;
+}
+
+.plate figcaption {
+  display: grid;
+  gap: 0.25rem 4rem;
+  padding: 0.9rem var(--pad);
+  border-top: 1px solid var(--rule);
   color: var(--ink-2);
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
-.shot figcaption strong {
-  color: var(--ink);
+@media (min-width: 52rem) {
+  .plate figcaption {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
 }
 
-main > section > figure.shot {
-  margin-block: 0.75rem 2rem;
+.plate figcaption b {
+  margin: 0;
+}
+
+.plate figcaption span {
+  max-width: 38rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 4rem;
+  margin-block: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 52rem) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .pair {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-  gap: 1.5rem;
-  margin-block: 0.75rem 2rem;
+  grid-template-columns: minmax(0, 1fr);
 }
 
-/* ----------------------------------------------------------------- checks */
+@media (min-width: 40rem) {
+  .pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pair img,
+.split--image img {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+.split--image figure {
+  margin: 0;
+}
+
+.split--image figcaption {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------- checks */
 
 .checks {
-  display: grid;
-  gap: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.checks li {
-  display: grid;
-  gap: 0.35rem;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--rule);
+@media (min-width: 52rem) {
+  .checks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .checks code {
-  justify-self: start;
-  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
 }
 
 .checks span {
-  color: var(--ink-2);
+  display: block;
 }
 
-/* ------------------------------------------------------------------ table */
+/* ------------------------------------------------------------ build times */
 
-.table {
-  overflow-x: auto;
+/* One bar per object, its length the active time on a scale to 130 minutes, with the value at its tip
+   and, when you point at it or focus it, the tier and the share spent checking. */
+.times {
+  --max: 130;
+  --label: 13rem;
+  --room: 6.5rem;
+  position: relative;
+  margin: 0;
+  padding-top: 1.75rem;
+}
+
+.times__axis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--label) + 1rem);
+  right: 0;
+  pointer-events: none;
+}
+
+.times__axis span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--at) / var(--max) * (100% - var(--room)));
+  padding-left: 0.35rem;
+  border-left: 1px solid var(--rule);
+  color: var(--ink-3);
+  font-size: 0.8rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.times__group {
+  position: relative;
+  margin: 1.25rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 420;
+}
+
+.times ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.times li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: center;
+  min-height: 2.5rem;
+}
+
+.times li > b {
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.times__bar,
+.times__val {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: start;
+}
+
+.times__bar {
+  width: calc(var(--min) / var(--max) * (100% - var(--room)));
+  height: 1.1rem;
+  border-radius: 0 4px 4px 0;
+  background: var(--ink-3);
+  transition: background 150ms;
+}
+
+.times li.is-new .times__bar {
+  background: var(--accent);
+}
+
+.times__val {
+  margin-left: calc(var(--min) / var(--max) * (100% - var(--room)) + 0.6rem);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.times li.is-new .times__val {
+  font-weight: 600;
+}
+
+.times__tip {
+  position: absolute;
+  left: calc(var(--label) + 1rem);
+  top: calc(100% - 0.35rem);
+  z-index: 3;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  max-width: calc(100% - var(--label) - 1rem);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+
+.times li:hover .times__tip,
+.times li:focus-visible .times__tip {
+  opacity: 1;
+}
+
+.times li:hover .times__bar {
+  background: var(--ink-2);
+}
+
+.times li.is-new:hover .times__bar {
+  background: var(--accent-strong);
+}
+
+/* On a phone the name goes above its bar. */
+@media (max-width: 40rem) {
+  .times {
+    --label: 0rem;
+  }
+
+  .times__axis {
+    left: 0;
+  }
+
+  .times__axis span:nth-child(even) {
+    display: none;
+  }
+
+  .times li {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 0.3rem;
+  }
+
+  .times li > b {
+    position: relative;
+    font-size: 0.9rem;
+  }
+
+  .times__bar,
+  .times__val {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .times__tip {
+    left: 0;
+  }
+}
+
+details.table {
+  margin-top: 1.5rem;
+}
+
+details.table summary {
+  display: inline-block;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+details.table[open] summary {
+  margin-bottom: 1rem;
 }
 
 table {
@@ -992,7 +1339,7 @@ table {
 
 th,
 td {
-  padding: 0.7rem 1rem 0.7rem 0;
+  padding: 0.6rem 1rem 0.6rem 0;
   border-bottom: 1px solid var(--rule);
   text-align: left;
   vertical-align: top;
@@ -1000,85 +1347,187 @@ td {
 
 thead th {
   border-bottom: 1px solid var(--ink);
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--ink-3);
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 tbody th {
   font-weight: 500;
 }
 
-td:nth-child(3) {
-  white-space: nowrap;
-}
-
-/* A row naming the group of rows under it. */
 .table__group th {
   padding-top: 1.4rem;
   border-bottom-color: var(--rule-strong);
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 420;
 }
 
-td strong {
-  font-weight: 600;
-  color: var(--accent-ink);
+/* --------------------------------------------------------------- install */
+
+/* The one band in ink: what to type. */
+.band--ink {
+  --rule: oklch(0.36 0.016 62);
+  --mark: var(--paper);
+  background: var(--ink);
+  color: var(--paper);
 }
 
-/* ------------------------------------------------------- install, limits */
-
-.block {
-  margin-bottom: 1.25rem;
+.band--ink .band__head p,
+.band--ink .cells span {
+  color: oklch(0.8 0.012 75);
 }
 
-.plain {
-  padding-left: 1.1rem;
+.band--ink .cells > * {
+  background: var(--ink);
 }
 
-.plain li {
-  margin-bottom: 0.6rem;
+.band--ink .cells b {
+  color: var(--paper);
 }
 
-.plain li::marker {
-  color: var(--accent);
+.band--ink pre,
+.band--ink .install {
+  border-color: oklch(0.42 0.016 62);
+  background: oklch(0.28 0.017 60);
+  color: var(--paper);
 }
 
-/* ---------------------------------------------------------------- questions */
+.band--ink .install pre {
+  background: none;
+}
+
+.band--ink .install__copy {
+  border-color: oklch(0.42 0.016 62);
+  color: oklch(0.85 0.01 75);
+}
+
+.band--ink .install__copy:hover {
+  background: oklch(0.34 0.017 60);
+  color: var(--paper);
+}
+
+.band--ink code {
+  background: oklch(0.32 0.017 60);
+}
+
+.band--ink pre code {
+  background: none;
+}
+
+.band--ink a:hover {
+  color: oklch(0.78 0.12 50);
+}
+
+.steps {
+  grid-template-columns: minmax(0, 1fr);
+  counter-reset: step;
+}
+
+@media (min-width: 64rem) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 330;
+  line-height: 1;
+  color: oklch(0.62 0.014 70);
+}
+
+.steps b {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 420;
+  letter-spacing: -0.015em;
+}
+
+.steps pre {
+  white-space: pre-wrap;
+}
+
+/* ---------------------------------------------------------------- limits */
+
+.limits {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 40rem) {
+  .limits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .limits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.limits b {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 420;
+  letter-spacing: -0.015em;
+}
+
+/* -------------------------------------------------------------- questions */
 
 .faq {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 4rem;
+  margin: 0;
+}
+
+@media (min-width: 52rem) {
+  .faq {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.faq > div {
+  padding: 1.25rem 0 1.5rem;
   border-top: 1px solid var(--rule);
 }
 
 .faq dt {
-  padding-top: 1rem;
+  margin-bottom: 0.5rem;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 420;
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
 
 .faq dd {
-  margin: 0.4rem 0 0;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--rule);
+  margin: 0;
   color: var(--ink-2);
 }
 
-/* ---------------------------------------------------------------- colophon */
+/* ------------------------------------------------------------------ colophon */
 
 .colophon {
   padding-block: 2.5rem 4rem;
-  border-top: 1px solid var(--ink);
   color: var(--ink-2);
   font-size: 0.95rem;
 }
 
 .colophon p {
-  margin: 0 0 0.75rem;
   max-width: 44rem;
+  margin: 0 0 0.75rem;
 }

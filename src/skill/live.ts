@@ -14,6 +14,9 @@ const BEATS = 6;
 export function mountLive(figure: HTMLElement): void {
   const q = <T extends HTMLElement>(selector: string) => figure.querySelector<T>(selector)!;
   const viewport = q('.live__viewer');
+  // Drawn across the whole hero and framed in the stage, so the watch can swing and come apart past the stage's edges.
+  const layer = q('.live__layer');
+  const stage = q('.live__stage');
   const readout = q('.live__readout');
   const announce = q('[data-announce]');
   const button = (act: string) => q<HTMLButtonElement>(`[data-act="${act}"]`);
@@ -124,7 +127,7 @@ export function mountLive(figure: HTMLElement): void {
     let ViewerImpl: typeof Viewer;
     try {
       ({ Viewer: ViewerImpl } = await import('../viewer/Viewer'));
-      viewer = new ViewerImpl(viewport, { reducedMotion: prefersReducedMotion(), onInteract: () => figure.classList.add('is-touched') });
+      viewer = new ViewerImpl(viewport, { host: layer, frame: stage, reducedMotion: prefersReducedMotion(), onInteract: () => figure.classList.add('is-touched') });
     } catch (error) {
       // No WebGL, or the viewer didn't arrive: the poster stays.
       console.error(error);
