@@ -38,5 +38,7 @@ export default defineConfig({
     target: 'es2022',
     // The object-page chunk is three.js (~200 kB gzipped). It's lazy-loaded and prefetched while the gallery is idle.
     chunkSizeWarningLimit: 900,
+    // teardown.html is the teardown skill's page.
+    rollupOptions: { input: { main: 'index.html', teardown: 'teardown.html' } },
   },
 });

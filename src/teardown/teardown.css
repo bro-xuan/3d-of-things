@@ -1,0 +1,844 @@
+/* The teardown skill's page: the site's workshop-manual look (warm paper, ink type, hairline rules,
+   vermilion accents) as an editorial single column, section numbers and notes in the margins on
+   wide screens. Tokens copied from src/styles/main.css. Sizes in rem against a viewport-scaled root. */
+
+:root {
+  color-scheme: light;
+
+  --paper: oklch(0.958 0.011 84);
+  --paper-raised: oklch(0.982 0.007 84);
+  --paper-sunk: oklch(0.928 0.014 82);
+  --ink: oklch(0.24 0.017 60);
+  --ink-2: oklch(0.4 0.016 62);
+  --ink-3: oklch(0.5 0.015 65);
+  --rule: oklch(0.86 0.013 80);
+  --rule-strong: oklch(0.74 0.015 75);
+  --accent: oklch(0.6 0.185 38);
+  --accent-strong: oklch(0.54 0.18 36);
+  --accent-ink: oklch(0.5 0.165 35);
+  --accent-wash: oklch(0.935 0.035 58);
+
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter: clamp(1rem, 3vw, 2.75rem);
+  --header-h: 3.75rem;
+  --shadow-soft: 0 0.15rem 0.5rem oklch(0.25 0.02 60 / 0.12), 0 0.05rem 0.1rem oklch(0.25 0.02 60 / 0.1);
+}
+
+html {
+  font-size: clamp(16px, 1.15vw, 24px);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-wash);
+}
+
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.6rem;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.05em 0.3em;
+  border-radius: 0.2rem;
+  background: var(--paper-sunk);
+}
+
+/* ------------------------------------------------------------- masthead */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: var(--header-h);
+  padding-inline: var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wordmark__mark {
+  padding: 0.2rem 0.32rem 0.16rem;
+  border: 1.5px solid currentColor;
+  border-radius: 0.2rem;
+  font: 500 0.8rem/1 var(--font-mono);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+.masthead__here {
+  display: flex;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0 auto 0 1.25rem;
+  overflow: hidden;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.masthead__name {
+  color: var(--ink);
+}
+
+.masthead__section {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 48rem) {
+  .masthead__section {
+    display: none;
+  }
+}
+
+.masthead__section:not(:empty)::before {
+  content: '/';
+  margin-right: 0.75rem;
+  color: var(--rule-strong);
+}
+
+.masthead__nav {
+  display: flex;
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.masthead__nav a {
+  padding-block: 0.3rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.masthead__nav a:hover {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------- the columns */
+
+/* Narrow: one column. Wide: a margin for section numbers, the text, and a margin for notes. */
+.flow {
+  display: grid;
+  grid-template-columns: [full-start] var(--gutter) [main-start] minmax(0, 1fr) [main-end] var(--gutter) [full-end];
+}
+
+.flow > * {
+  grid-column: main;
+}
+
+@media (min-width: 64rem) {
+  .flow {
+    grid-template-columns:
+      [full-start] minmax(var(--gutter), 1fr)
+      [num-start] 4.5rem
+      [main-start] minmax(0, 40rem)
+      [main-end] 2.5rem
+      [note-start] minmax(0, 15rem)
+      [note-end] minmax(var(--gutter), 1fr)
+      [full-end];
+  }
+
+  .flow > .note {
+    grid-column: note;
+  }
+
+  .flow > .wide {
+    grid-column: num-start / note-end;
+  }
+}
+
+main > section {
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+  border-top: 1px solid var(--rule);
+}
+
+main > section > p,
+main > section > ul,
+main > section > ol,
+main > section > dl,
+main > section > blockquote,
+main > section > figure,
+main > section > pre,
+main > section > div {
+  margin: 0 0 1.25rem;
+}
+
+/* ---------------------------------------------------------------- hero */
+
+.hero {
+  padding-block: clamp(3rem, 9vw, 7rem) clamp(2rem, 5vw, 3.5rem);
+}
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.eyebrow span + span::before {
+  content: '/';
+  margin-right: 0.75rem;
+  color: var(--rule-strong);
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 360;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero__kind {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.34em;
+  font-style: italic;
+  font-weight: 340;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+
+.hero__tagline {
+  max-width: 30ch;
+  margin: 1.75rem 0 2.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 380;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.hero__tagline em {
+  color: var(--accent-ink);
+}
+
+@media (min-width: 64rem) {
+  .hero > * {
+    grid-column: num-start / note-end;
+  }
+}
+
+.hero__thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  max-width: 48rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__thumbs a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4rem;
+  justify-items: center;
+  text-decoration: none;
+}
+
+.hero__thumbs img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__thumbs a:hover img {
+  translate: 0 -0.3rem;
+}
+
+.hero__thumbs span {
+  font: 500 0.8rem/1.3 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink-3);
+}
+
+/* On a phone a fifth of the row is narrower than "Rangefinder": the pictures speak for themselves. */
+@media (max-width: 40rem) {
+  .hero__thumbs span {
+    display: none;
+  }
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------------ contents */
+
+.toc {
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.toc ol {
+  columns: 2 15rem;
+  column-gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 64rem) {
+  .toc ol {
+    grid-column: num-start / note-end;
+    columns: 3 14rem;
+  }
+}
+
+.toc li {
+  break-inside: avoid;
+  border-bottom: 1px solid var(--rule);
+}
+
+.toc a {
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.55rem 0;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+
+.toc a span {
+  font: 500 0.8rem/1.9 var(--font-mono);
+  color: var(--ink-3);
+}
+
+.toc a:hover,
+.toc a[aria-current] {
+  color: var(--ink);
+}
+
+.toc a[aria-current] span {
+  color: var(--accent-ink);
+}
+
+/* ------------------------------------------------------------ sections */
+
+h2 {
+  position: relative;
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  font-weight: 380;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.num {
+  display: block;
+  margin-bottom: 0.6rem;
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--accent-ink);
+}
+
+@media (min-width: 64rem) {
+  .num {
+    position: absolute;
+    right: calc(100% + 1.4rem);
+    top: 0.55em;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 420;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.ref {
+  margin-left: 0.1em;
+  font: 500 0.8rem/0 var(--font-mono);
+  color: var(--accent-ink);
+}
+
+/* Notes: in the margin beside the paragraph they follow on wide screens, inline under it on narrow ones. */
+.note {
+  align-self: start;
+  margin: -0.25rem 0 1.5rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--rule-strong);
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 64rem) {
+  .note {
+    margin: 0.2rem 0 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.note__n {
+  display: inline-block;
+  min-width: 1.2rem;
+  margin-right: 0.35rem;
+  font: 500 0.8rem/1 var(--font-mono);
+  color: var(--accent-ink);
+}
+
+.note code {
+  font-size: 0.92em;
+  white-space: nowrap;
+}
+
+.rule-quote {
+  margin-inline: 0;
+  padding: 1.25rem 0 1.25rem 1.5rem;
+  border-left: 3px solid var(--accent);
+}
+
+.rule-quote p {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  font-weight: 420;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.rule-quote cite {
+  font: 500 0.8rem/1.4 var(--font-mono);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------------------------------------------------------------- prompts */
+
+.prompts {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.prompts dt {
+  padding-top: 0.9rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.prompts dd {
+  margin: 0.35rem 0 0;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.prompts code {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------- stages */
+
+.stages {
+  counter-reset: stage -1;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.stages li {
+  counter-increment: stage;
+  position: relative;
+  padding: 0.75rem 0 0.75rem 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* The stage's number hangs in its own column; the text after it flows as one paragraph. */
+.stages li::before {
+  content: counter(stage);
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  font: 500 0.95rem/1.7 var(--font-mono);
+  color: var(--accent-ink);
+}
+
+.stages li strong {
+  margin-right: 0.3rem;
+}
+
+/* ------------------------------------------------------------------- code */
+
+.code figcaption {
+  margin-bottom: 0.5rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+pre {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 0.35rem;
+  background: var(--paper-raised);
+  font: 400 0.9rem/1.6 var(--font-mono);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+pre .c {
+  color: var(--ink-3);
+}
+
+/* ------------------------------------------------------------------ rules */
+
+.rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+
+.rules li {
+  padding: 1.25rem 1.25rem 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rules p {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+/* ---------------------------------------------------------------- objects */
+
+.objects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .objects {
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 2rem 1.5rem;
+  }
+}
+
+.objects a {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  height: 100%;
+  text-decoration: none;
+}
+
+.objects img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin-bottom: 0.25rem;
+  border-radius: 0.35rem;
+  background: var(--paper-raised);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.objects a:hover img {
+  translate: 0 -0.25rem;
+}
+
+.objects__fig {
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.objects__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 420;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.objects__hook {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------- figures */
+
+.shot {
+  margin: 0;
+}
+
+.shot img {
+  width: 100%;
+  border-radius: 0.35rem;
+  box-shadow: var(--shadow-soft), 0 0 0 1px var(--rule);
+}
+
+.shot figcaption {
+  max-width: 44rem;
+  margin-top: 0.75rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.shot figcaption strong {
+  color: var(--ink);
+}
+
+main > section > figure.shot {
+  margin-block: 0.75rem 2rem;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.5rem;
+  margin-block: 0.75rem 2rem;
+}
+
+/* ----------------------------------------------------------------- checks */
+
+.checks {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.checks li {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.checks code {
+  justify-self: start;
+  font-size: 0.9rem;
+}
+
+.checks span {
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------ table */
+
+.table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+thead th {
+  border-bottom: 1px solid var(--ink);
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+tbody th {
+  font-weight: 500;
+}
+
+td:nth-child(3) {
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------- install, limits */
+
+.block {
+  margin-bottom: 1.25rem;
+}
+
+.plain {
+  padding-left: 1.1rem;
+}
+
+.plain li {
+  margin-bottom: 0.6rem;
+}
+
+.plain li::marker {
+  color: var(--accent);
+}
+
+/* ---------------------------------------------------------------- questions */
+
+.faq {
+  border-top: 1px solid var(--rule);
+}
+
+.faq dt {
+  padding-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 420;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.faq dd {
+  margin: 0.4rem 0 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+
+/* ---------------------------------------------------------------- colophon */
+
+.colophon {
+  padding-block: 2.5rem 4rem;
+  border-top: 1px solid var(--ink);
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+.colophon p {
+  margin: 0 0 0.75rem;
+  max-width: 44rem;
+}
