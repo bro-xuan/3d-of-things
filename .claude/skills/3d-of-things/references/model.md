@@ -17,7 +17,7 @@ Don't use: the Khronos glTF sample CAD assemblies (their READMEs carry no licenc
 
 ## The kit
 
-`scripts/kit/index.mjs` is the one import. Its building blocks live where the objects that grew them keep them, so those models rebuild byte for byte.
+`scripts/kit/index.mjs` is the one import. Its building blocks were grown by the earlier objects and live in `scripts/kit/` now, shared by every model built in code, so a change to one must leave those models byte for byte the same (`npm run reproduce -- --models` rebuilds them all and fails on any difference).
 
 | Namespace / export | What's in it |
 |---|---|
@@ -28,7 +28,7 @@ Don't use: the Khronos glTF sample CAD assemblies (their READMEs carry no licenc
 | `shapes` | `roundedBox(geo, xs, ys, zs, r)` (every edge rounded: castings), `flutes` (knurling), `band`/`face` (rings and engraved scales), `roundRect`, `projectUVs`, `tube(geo, path, r)` (wires, springs, cables), `helix` (a coil's centreline), `conicalGear`, `openHoles(mesh, holes)` with `sdCircle`/`sdRect` |
 | `surgery` | For a downloaded shell: `readMesh(primitive)` (mm), `cut(mesh, f)` (split along f = 0), `pick(mesh, keep)`, `islands`/`islandBounds`, `merge`, `solidify(mesh, thickness)` (an inner skin and a rim on every cut edge), `fromGeo`, `writePrimitive` |
 | `textures`, `finishes` | PNG painters: `leatherGrain`, `engraving` (SVG scales), `screenMarkings`, `rollFilm`; `genevaStripes`, `perlage` (normal maps) |
-| `loft`, `curve`, `lines` | Lofted bodies through profile curves (a car's shell; scripts/cars/body.mjs) |
+| `loft`, `curve`, `lines` | Lofted bodies through profile curves (a car's shell; scripts/kit/cars/body.mjs, the car builder's) |
 | `wheels` | `tyreSize`, `tyre`, `rim`, `brakeDisc`, `caliper` |
 | `Part` | `new Part(name, { parent, extras })`; `part.geo(materialKey)` returns that material's `Geo` |
 | `materialKit(doc)` | `material(name, hex, metallic, roughness)`, `glass(name, hex, { index })`, `texture(name, png)`, `textured(…)`, `tile(info, scale)` |
@@ -37,22 +37,22 @@ Don't use: the Khronos glTF sample CAD assemblies (their READMEs carry no licenc
 | `modelSpace(scene)` | `{ toModel, unit, space, mmPerUnit, realSize }` |
 | `runChecks({ label, pieces, contacts, data, parentOf, mmPerUnit, check, log })` | The clash and explode checks (below) |
 | `inModel(hints, ms)` | A nested hints object into model space: points through `toModel`, lengths scaled, axes kept |
-| `checkClashes`, `checkExplode`, `extensionFor`, `irisAngle`, `clothPath` | The checks themselves; thin-lens extension and iris angles; cloth curtains between rollers |
+| `checkClashes`, `checkExplode` | The checks themselves |
 
-When a new object needs a building block, add it to the kit (a module in `scripts/kit/`, exported from `index.mjs`) rather than to the object's folder, so the next object has it.
+When a new object needs a building block, add it to the kit (a module in `scripts/kit/`, exported from `index.mjs`) rather than to the object's folder, so the next object has it. Objects import from the kit, never from each other: what's in an object's folder is that object's alone (the Leica's thin-lens `extensionFor`, iris `irisAngle` and cloth `clothPath` are in objects/rangefinder-camera/mechanism.mjs, laid out for its lens and shutter; copy the idea, or lift it into the kit with its numbers as parameters).
 
 ## Building in code (tier C)
 
-The scaffold's `generate.mjs` is the smallest complete example: numbers (`L`), `CONTACTS`, `buildParts()`, `generate()` returning `{ doc, hints }`. The full ones are scripts/hasselblad/ (a camera: cast shell, mirror box, lens with leaf shutter and iris, film magazine) and scripts/cars/ (a lofted body cut into panels, a powertrain, an aero system).
+The scaffold's `generate.mjs` is the smallest complete example: numbers (`L`), `CONTACTS`, `buildParts()`, `generate()` returning `{ doc, hints }`. The full ones are objects/reflex-camera/ (a camera: cast shell, mirror box, lens with leaf shutter and iris, film magazine) and the car builder in scripts/kit/cars/ that objects/family-car/ and objects/tesla-roadster/ run on their specs (a lofted body cut into panels, a powertrain, an aero system).
 
-- Lay out from the truth sheet's numbers in one place (`L`, or a `layout.mjs`), and derive positions from them (gear centres from `centreDistance`, a lens's extension from `extensionFor`).
+- Lay out from the truth sheet's numbers in one place (`L`, or a `layout.mjs`), and derive positions from them (gear centres from `centreDistance`, a lens's extension from the thin-lens formula, as the cameras' `extensionFor` does).
 - One `Part` per piece that moves or comes off. Nest a part under what it rides on (`parent`), so it moves with it and the explode check knows.
 - Materials are named after the object (`leica_chrome`), since names are global in the viewer.
 - Return hints: `space`, `pivots` (each moving part's axis point), `anchors` (every point the content places: callout markers, tag positions, flow points), and the numbers the content and charts need (teeth, ratios, travel).
 
 ## Opening a shell (tier B)
 
-scripts/camera/augment.mjs (the Leica) is the full example, scripts/watch/augment.mjs the other.
+objects/rangefinder-camera/augment.mjs (the Leica) is the full example, objects/pocket-watch/augment.mjs the other.
 
 1. Read the shell's primitives with `surgery.readMesh` (mm) and find where it splits: `npm run models:inspect`, `surgery.islands` for loose pieces, and sections along an axis for seams.
 2. Cut along planes (`surgery.cut`, then `surgery.pick` by side) into the parts that come off (cover, base plate, door), and `solidify` each so it has a thickness and a rim along the cut.

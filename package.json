@@ -16,6 +16,7 @@
     "posters": "node scripts/capture-posters.mjs",
     "new": "node scripts/new-object.mjs",
     "check": "node scripts/check-content.mjs",
+    "reproduce": "node scripts/reproduce.mjs",
     "qa": "node scripts/qa/run.mjs",
     "timing": "node scripts/timing.mjs",
     "truth": "node scripts/truth-tables.mjs",

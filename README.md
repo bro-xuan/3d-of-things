@@ -177,17 +177,17 @@ Measured with `npm run timing -- --item <slug>`, which counts the calls that tou
 ├── content/<slug>.json         one file per object: text, parts, callouts, motions, tour, credit
 ├── public/models/<slug>.glb    compressed models (meshopt geometry, WebP textures)
 ├── public/posters/             gallery posters and tray thumbnails, rendered from the models
-├── objects/<slug>/             made with the skill: truth sheet, content builder, generator
+├── objects/<slug>/             every object: truth sheet, content builder, and its generate.mjs or augment.mjs
 ├── scripts/
 │   ├── build-models.mjs        generate or augment, check, compress, write hints
 │   ├── check-content.mjs       npm run check: content against model, no browser
+│   ├── reproduce.mjs           npm run reproduce: rebuild every content file (and model) and diff
 │   ├── qa/                     npm run qa: browser checks, GPU launch, contact sheets
-│   ├── kit/                    the generator kit: building blocks, assembly, checks
+│   ├── kit/                    the generator kit: building blocks, assembly, checks; cars/ the car builder
 │   ├── new-object.mjs          npm run new: scaffold an object from the skill's templates
 │   ├── timing.mjs              npm run timing: where a build's time went
 │   ├── truth-tables.mjs        npm run truth: the truth sheet's parts and tour tables, from what was built
-│   ├── export-site.mjs         npm run export: the site built to live inside another one (afrodance.fun)
-│   └── watch/ camera/ hasselblad/ cars/   the generators of the objects built before the skill
+│   └── export-site.mjs         npm run export: the site built to live inside another one (afrodance.fun)
 ├── src/
 │   ├── pages/                  gallery, object page, about, the 3D layer, How it works
 │   ├── viewer/                 the three.js viewer and the mechanisms (clockwork, cameras, aerocar)
@@ -202,9 +202,9 @@ The site is static (Vite, TypeScript and three.js, no framework, no backend). Ro
 
 <br>
 
-The Poly Haven watch is a closed case with three hands, so the movement inside is generated: `scripts/watch/` runs as a build step (`build.augment` in `content/pocket-watch.json`). It cuts the case into the pieces that come apart (crystal, dial, case back, crown) along the mesh's own edge loops, adds the inside surfaces a closed shell never had, and builds about 20 parts from real tooth counts: barrel and mainspring, a centre-seconds train (80/10, 75/10, 84/7), a Swiss lever escapement at 21,600 beats an hour, balance and hairspring, motion works and keyless winding. The build fails if any two parts overlap, if anything pokes through the domed case back, if the explode in the content file would pass one part through another, or if the model's bounds move (which would shift every position in the content file).
+The Poly Haven watch is a closed case with three hands, so the movement inside is generated: `objects/pocket-watch/augment.mjs` runs as a build step (`build.augment` in `content/pocket-watch.json`). It cuts the case into the pieces that come apart (crystal, dial, case back, crown) along the mesh's own edge loops, adds the inside surfaces a closed shell never had, and builds about 20 parts from real tooth counts: barrel and mainspring, a centre-seconds train (80/10, 75/10, 84/7), a Swiss lever escapement at 21,600 beats an hour, balance and hairspring, motion works and keyless winding. The build fails if any two parts overlap, if anything pokes through the domed case back, if the explode in the content file would pass one part through another, or if the model's bounds move (which would shift every position in the content file).
 
-In the viewer, every wheel, the pallet fork, the balance and the hairspring are driven from one beat count taken from the visitor's clock, so the train stays in mesh at any time of day and in slow motion. The keyless works turn too: winding the crown in "How it works" turns the stem's winding pinion, the crown wheel and the ratchet wheel (each its own node), rocks the click over the ratchet's teeth and coils the mainspring tighter, and the balance swings wider or narrower with what's left in the spring (but at the same rate). The timing lives in `src/viewer/clockwork.ts`, which the charts read too. The design lives in `scripts/watch/movement.mjs` (`layout` for positions, the `H` table for heights); after changing it, `npm run models:build -- pocket-watch` prints the moving parts' axes in model space, for the content file's `motion` pivots.
+In the viewer, every wheel, the pallet fork, the balance and the hairspring are driven from one beat count taken from the visitor's clock, so the train stays in mesh at any time of day and in slow motion. The keyless works turn too: winding the crown in "How it works" turns the stem's winding pinion, the crown wheel and the ratchet wheel (each its own node), rocks the click over the ratchet's teeth and coils the mainspring tighter, and the balance swings wider or narrower with what's left in the spring (but at the same rate). The timing lives in `src/viewer/clockwork.ts`, which the charts read too. The design lives in `objects/pocket-watch/movement.mjs` (`layout` for positions, the `H` table for heights); after changing it, `npm run models:build -- pocket-watch` writes the moving parts' axes in model space to `objects/pocket-watch/hints.json`, for the content file's `motion` pivots.
 
 </details>
 
@@ -213,7 +213,7 @@ In the viewer, every wheel, the pallet fork, the balance and the hairspring are 
 
 <br>
 
-The Poly Haven camera is a Leica M3 as a closed shell: body, top cover and base in one mesh, a lens, and a strap lying in front of it. `scripts/camera/` runs as its build step (`build.augment` in `content/rangefinder-camera.json`). It cuts the shell along planes at the cover's and the base plate's seams (splitting the triangles that cross, so the texture carries on across the cut) into the top cover, the body, the base plate and the back door, and gives each its inside: the shell thickened inward with a rim along every cut edge (`surgery.mjs`). The windows' fake dark boxes become openings, the lens comes apart into the parts that turn and slide when it focuses, and the strap goes (its rings stay on the lugs).
+The Poly Haven camera is a Leica M3 as a closed shell: body, top cover and base in one mesh, a lens, and a strap lying in front of it. `objects/rangefinder-camera/augment.mjs` runs as its build step (`build.augment` in `content/rangefinder-camera.json`). It cuts the shell along planes at the cover's and the base plate's seams (splitting the triangles that cross, so the texture carries on across the cut) into the top cover, the body, the base plate and the back door, and gives each its inside: the shell thickened inward with a rim along every cut edge (the kit's `surgery.mjs`). The windows' fake dark boxes become openings, the lens comes apart into the parts that turn and slide when it focuses, and the strap goes (its rings stay on the lugs).
 
 `mechanism.mjs` then builds what's inside, laid out like an M3 (the film 27.8 mm behind the bayonet's face, the rangefinder's windows 68.5 mm apart): the shutter's two cloth curtains on their rollers in front of a 24 × 36 mm gate, the film from its cassette over an eight-tooth sprocket to the take-up spool, the advance gears, the rangefinder (window prism, the moving lens on the roller arm that rides the lens's cam, the frame-line mirror and mask, the beam splitter and finder lenses), and the lens's nine-blade iris. The build fails if any generated part crosses another piece at rest, or if the explode in the content file would pass one piece through another (both checked on the meshes themselves, in 3D).
 
@@ -226,7 +226,7 @@ In the viewer, the camera's parts don't move with time but with its controls: `s
 
 <br>
 
-There is no free model of a Hasselblad to start from, so the whole camera is generated: `scripts/hasselblad/` runs as its build step (`build.generate` in `content/reflex-camera.json`) and returns a glTF document instead of editing a downloaded one. `layout.mjs` holds the dimensions that matter: the lens's flange 74.9 mm from the film, a 56 mm square picture, a screen as far from the lens (by way of the mirror) as the film is. `body.mjs` builds the cast shell (a box rounded on every edge, its openings cut with the rangefinder's surgery tools and thickened inward), leatherette, the chassis (bayonet plate, mirror box, rear plate), the mirror hinged at its top back edge, the two rear flaps, the winding gears on the right-hand wall (sized so one turn of the knob turns the drive key back 30/35 of a turn, the 309° a release spins it) and the knob. `lens.mjs` builds an 80 mm f/2.8 of the Planar type with a five-blade leaf shutter and a five-blade iris, with engraved scales drawn as SVG; `back.mjs` the film magazine (insert, rollers, 120 spools, the film's path as tangents between them, gears from the body, frame counter, dark slide); `finder.mjs` the folded hood. The same clash and explode-path checks as the rangefinder's run on it.
+There is no free model of a Hasselblad to start from, so the whole camera is generated: `objects/reflex-camera/generate.mjs` runs as its build step (`build.generate` in `content/reflex-camera.json`) and returns a glTF document instead of editing a downloaded one. `layout.mjs` holds the dimensions that matter: the lens's flange 74.9 mm from the film, a 56 mm square picture, a screen as far from the lens (by way of the mirror) as the film is. `body.mjs` builds the cast shell (a box rounded on every edge, its openings cut with the kit's surgery tools and thickened inward), leatherette, the chassis (bayonet plate, mirror box, rear plate), the mirror hinged at its top back edge, the two rear flaps, the winding gears on the right-hand wall (sized so one turn of the knob turns the drive key back 30/35 of a turn, the 309° a release spins it) and the knob. `lens.mjs` builds an 80 mm f/2.8 of the Planar type with a five-blade leaf shutter and a five-blade iris, with engraved scales drawn as SVG; `back.mjs` the film magazine (insert, rollers, 120 spools, the film's path as tangents between them, gears from the body, frame counter, dark slide); `finder.mjs` the folded hood. The same clash and explode-path checks as the rangefinder's run on it.
 
 In the viewer, `src/viewer/reflexcamera.ts` runs the release in the order of the factory service manual's timing chart: the lens's shutter shuts and the drive key turns to 117°, the iris stops down, the mirror swings up, the flaps open, the key reaches 268° and the shutter fires; letting go closes the flaps and the key ends at 309°. One turn of the knob lowers the mirror, turns the key back (cocking and opening the lens) and winds on a frame; the dark slide locks the release. The charts in `src/charts/reflex.ts` draw from the same functions.
 
@@ -237,11 +237,11 @@ In the viewer, `src/viewer/reflexcamera.ts` runs the release in the order of the
 
 <br>
 
-Both cars are generated by `scripts/cars/` (`build.generate` in the content file, with `build.car` naming a spec in `scripts/cars/specs/`). A spec is a car's dimensions (length, wheelbase, track, wheels and tyres) and its shape, drawn as a few (z, value) curves: for the lower body the sill, the widest point, the beltline's crease, the wings' crowns and the bonnet and deck down the middle; for the canopy its foot, the glass line and the roof. `body.mjs` lofts both through those curves, and `generate.mjs` cuts out the panels that come off (doors, bonnet, boot, bumpers) along the loft's own rows and stations, so every seam is a clean line; cuts the wheel arches and any openings the spec lists; and picks out the lights, trim and glass. `fittings.mjs` adds what an older car has bolted on, and `interior.mjs` builds the seats, dashboard, screen and steering wheel. The same clash and explode-path checks as the cameras' run on both.
+Both cars are generated by the car builder in `scripts/kit/cars/`, which each car's build step (`objects/<slug>/generate.mjs`, `build.generate` in the content file) runs on that car's spec, `objects/<slug>/spec.mjs`. A spec is a car's dimensions (length, wheelbase, track, wheels and tyres) and its shape, drawn as a few (z, value) curves: for the lower body the sill, the widest point, the beltline's crease, the wings' crowns and the bonnet and deck down the middle; for the canopy its foot, the glass line and the roof. `body.mjs` lofts both through those curves, and `generate.mjs` cuts out the panels that come off (doors, bonnet, boot, bumpers) along the loft's own rows and stations, so every seam is a clean line; cuts the wheel arches and any openings the spec lists; and picks out the lights, trim and glass. `fittings.mjs` adds what an older car has bolted on, and `interior.mjs` builds the seats, dashboard, screen and steering wheel. The same clash and explode-path checks as the cameras' run on both.
 
 Under the Roadster's body `platform.mjs` builds an electric car's skateboard: a thick pack of 4680 cells in the floor, a drive unit for each rear wheel, half shafts, double wishbones and coil-overs, the steering rack and the orange high-voltage cables. `aero.mjs` builds what makes the 2026 car different, laid out from Tesla's descriptions and its "Electric Fan Car" patent: four ducted fans in the tail fed by a duct from an inlet in the floor, skirts round the sealed floor, two carbon-wound air tanks (about 600 litres), the compressor, the valve block and the lines, and ten de Laval nozzles. Under the family car's, `engine.mjs` builds a two-litre four (a crankshaft with its counterweights, pistons on their rods, an overhead camshaft whose lobes are set round it in the firing order 1-3-4-2), the clutch, a four-speed gearbox with real tooth counts, the propshaft, and a live rear axle with its differential (a 10-tooth pinion and a 39-tooth crown wheel).
 
-The content files are written by `node scripts/cars/content.mjs <car>` (always name the car). In the viewer, the family car's pistons and rods follow the crank and its valves the camshaft (`src/viewer/rig.ts`); the Roadster's fans, skirts and wing move by controls that `src/viewer/aerocar.ts` sets as it runs the suction, the tanks emptying, a standing start on the rear thrusters, and two flights flown by the car's computer; `src/viewer/jets.ts` draws each nozzle's jet.
+Each car's content file is written by its `objects/<slug>/content.mjs`, which runs the build for where the parts sit. In the viewer, the family car's pistons and rods follow the crank and its valves the camshaft (`src/viewer/rig.ts`); the Roadster's fans, skirts and wing move by controls that `src/viewer/aerocar.ts` sets as it runs the suction, the tanks emptying, a standing start on the rear thrusters, and two flights flown by the car's computer; `src/viewer/jets.ts` draws each nozzle's jet.
 
 </details>
 
@@ -265,11 +265,13 @@ npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/obje
 
 The model build has its own checks: it fails if any generated part crosses another at rest, or if the content file's explode would pass one part through another.
 
+Every content file is written by its object's builder, so `npm run reproduce` runs them all again and fails if any file comes out different; `npm run reproduce -- --models` rebuilds every model first, the check for a change to the kit. CI (`.github/workflows/ci.yml`) runs the type-check, `npm run check`, `npm run reproduce` and the build on every push and pull request. The browser checks need a GPU and the model rebuild the downloaded sources, so those run locally.
+
 ## Requirements
 
 | | Needed for | Notes |
 |---|---|---|
-| **Node.js 22+** | everything | Built and tested on Node 25. |
+| **Node.js 22+** | everything | Built and tested on Node 25; CI runs Node 22. |
 | **Playwright's Chromium** | `qa`, `posters` | `npx playwright install chromium` if it's missing. On a Mac it draws with the GPU through Metal; elsewhere it falls back to SwiftShader (slower). |
 | **[Claude Code](https://code.claude.com/docs/en/overview)** | the skill | `npx skills add bro-xuan/3d-of-things`, or open it in this repository; then type `/3d-of-things`. |
 
@@ -296,9 +298,9 @@ npm run preview    # serve dist/
 | Film Projector | [Filmstrip Projector 8mm](https://polyhaven.com/a/filmstrip_projector_8mm) | PeterM | CC0 1.0 |
 | Drill Press | [Drill Press 01](https://polyhaven.com/a/drill_press_01) | Viktor | CC0 1.0 |
 | Rangefinder Camera | [Camera 01](https://polyhaven.com/a/Camera_01) (body, lens and dials); shutter, film transport, rangefinder optics and iris built for this site | Rajil Jose Macatangay | CC0 1.0 |
-| Medium-Format SLR | built in code for this site (`scripts/hasselblad/`), after the Hasselblad 500C/M | 3D of Things | CC0 1.0 |
-| Tesla Roadster | built in code for this site (`scripts/cars/`) from Tesla's October 2026 launch photographs and figures | 3D of Things | CC0 1.0 |
-| Family Car | built in code for this site (`scripts/cars/`), a typical rear-wheel-drive saloon of the 1970s and 80s; no particular make | 3D of Things | CC0 1.0 |
+| Medium-Format SLR | built in code for this site (`objects/reflex-camera/`), after the Hasselblad 500C/M | 3D of Things | CC0 1.0 |
+| Tesla Roadster | built in code for this site (`objects/tesla-roadster/`, `scripts/kit/cars/`) from Tesla's October 2026 launch photographs and figures | 3D of Things | CC0 1.0 |
+| Family Car | built in code for this site (`objects/family-car/`, `scripts/kit/cars/`), a typical rear-wheel-drive saloon of the 1970s and 80s; no particular make | 3D of Things | CC0 1.0 |
 | Washing Machine | built in code for this site (`objects/washing-machine/`), a typical European front-loader; no particular make | 3D of Things | CC0 1.0 |
 | Bicycle Pump | [Tire Pump](https://polyhaven.com/a/tire_pump); piston, cup seal, air passage and ball valve built for this site | Garrison Gager | CC0 1.0 |
 | Garden Sprinkler | [Garden Sprinkler 01](https://polyhaven.com/a/garden_sprinkler_01) | Amal Kumar | CC0 1.0 |

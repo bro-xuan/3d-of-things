@@ -1,7 +1,7 @@
 // Checks content files against their models, without a browser, in about a second:
 // every node a content file names exists, every mesh belongs to a part, positions
-// sit on the model, charts and experiments exist, the credit is complete, and the
-// object's posters are there.
+// sit on the model, charts and experiments exist, the credit is complete, the object's
+// posters are there, and its builder and truth sheet sit in objects/<slug>/.
 //
 //   npm run check                 # every object
 //   npm run check -- slug         # just one
@@ -230,6 +230,9 @@ for (const { slug, data } of things) {
     for (const key of ['generate', 'augment']) {
       if (data.build?.[key] && !(await exists(path.join(ROOT, data.build[key])))) result.errors.push(`build.${key}: ${data.build[key]} not found`);
     }
+    // The standard layout: the content file is written by objects/<slug>/content.mjs, from the truth sheet beside it.
+    if (!(await exists(path.join(ROOT, 'objects', slug, 'content.mjs')))) result.errors.push(`layout: no objects/${slug}/content.mjs, so content/${slug}.json can't be rebuilt (npm run reproduce)`);
+    if (!(await exists(path.join(ROOT, 'objects', slug, 'TRUTH.md')))) result.warnings.push(`layout: no objects/${slug}/TRUTH.md (the truth sheet; template in .claude/skills/3d-of-things/templates/)`);
   } catch (e) {
     result.errors.push(`could not check: ${e.message}`);
   }

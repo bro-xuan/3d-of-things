@@ -45,8 +45,8 @@ The long stage. Build in passes and look after each one (`npm run qa -- <slug> -
 
 Rules:
 
-- Tier B: read the shell's meshes, cut them into the parts that come off, thicken the cut pieces (`surgery.solidify`) and remove the fake insides (dark boxes behind windows). Then generate the insides. scripts/camera/augment.mjs is the full example.
-- Tier C: scripts/hasselblad/ (a camera) and scripts/cars/ (a lofted body, a powertrain) are the full examples; the scaffold's demo is the smallest.
+- Tier B: read the shell's meshes, cut them into the parts that come off, thicken the cut pieces (`surgery.solidify`) and remove the fake insides (dark boxes behind windows). Then generate the insides. objects/rangefinder-camera/augment.mjs is the full example.
+- Tier C: objects/reflex-camera/ (a camera) and the car builder in scripts/kit/cars/ (a lofted body, a powertrain), run by objects/family-car/ and objects/tesla-roadster/, are the full examples; the scaffold's demo is the smallest.
 - Every moving part is its own Part (node), nested under what it rides on (`parent`). Return each pivot, axis and point the content needs in the hints, by name.
 - The build fails on clashes and on explode paths that cross. Fix the geometry; add a pair to `CONTACTS` only when the parts truly touch (gears in mesh, a pin in its hole, a part sitting on another). `--no-check` is for a quick look mid-change only.
 - Keep the model under ~3 MB and ~100 nodes (`models:build` prints the size).
@@ -80,9 +80,10 @@ Read every contact sheet the runner prints, against the review list in reference
 
 ```sh
 npm run qa -- --all --quick
+npm run reproduce              # every content file rebuilt from its builder; -- --models after a kit change
 ```
 
-**Exit:** 0 failed for the object and for the regression, every warning explained, the sheets reviewed.
+**Exit:** 0 failed for the object and for the regression, `reproduce` identical, every warning explained, the sheets reviewed.
 
 ## 7. Ship (5 min)
 
@@ -96,17 +97,22 @@ npm run qa -- --all --quick
 
 ## Changing an existing object
 
-The objects built before this procedure keep their own layout:
+Every object has the same layout, whenever it was built:
 
-| Object | Model built by | Content written by |
-|---|---|---|
-| hand-drill, drill-press, film-projector, microscope, binoculars | Poly Haven, no build step | `content/<slug>.json`, by hand |
-| pocket-watch | `scripts/watch/` (augment) | `.cache/watch/content.mjs`, outside git and stale: re-running it drops the keyless-winding motions, so edit the JSON |
-| rangefinder-camera | `scripts/camera/` (augment) | `.cache/camera/content.mjs` with `.cache/camera/hints.json`, outside git |
-| reflex-camera | `scripts/hasselblad/` (generate) | `.cache/hasselblad/content.mjs` with its `hints.json`, outside git |
-| family-car, tesla-roadster | `scripts/cars/` (generate, a spec in `specs/`) | `node scripts/cars/content.mjs <car>`. Always name the car: with no argument it writes the 2017 Roadster over the live one |
+| In `objects/<slug>/` | What it is |
+|---|---|
+| `TRUTH.md` | The truth sheet. The ten objects built before this procedure got theirs on 18 October 2026, reconstructed from the shipped page and its code (no new research), so they're thinner than a researched one. |
+| `content.mjs` | Writes `content/<slug>.json`: edit this, never the JSON. |
+| `generate.mjs` or `augment.mjs`, and the object's own modules | The model's build step (`build.generate` or `build.augment`). A Poly Haven model with its parts already separate has none. |
+| `hints.json` | Where the build put things, written by `npm run models:build -- <slug>` for the content builder. |
 
-For any change: edit, `npm run models:build -- <slug>` if the model changed, rewrite the content, `npm run check -- <slug>`, `npm run qa -- <slug>`, then `npm run qa -- --all --quick`.
+Code shared by more than one object is in the kit, `scripts/kit/`. The two cars run the car builder in `scripts/kit/cars/` on their own `spec.mjs`, and their content builders run the build (without the checks) for its hints. Three things to know about the older objects:
+
+- The content builders of the five Poly Haven objects, the pocket watch, the Leica and the SLR were converted key for key from their hand-written JSON, so their positions and cameras are still typed in model space. A change that moves a part means placing what's on it again, from `hints.json` or the model (`placer(nodeBounds)`), as the newer builders do.
+- `objects/tesla-roadster/2017/` is the 2017 Roadster the page showed before the 2026 car, kept as the car builder's example of a plain electric car. Running its `content.mjs` writes over the live page.
+- The old content builders under `.cache/watch/`, `.cache/camera/` and `.cache/hasselblad/` (outside git) are superseded: don't run them.
+
+For any change: edit, `npm run models:build -- <slug>` if the model changed, `node objects/<slug>/content.mjs`, `npm run check -- <slug>`, `npm run qa -- <slug>`, then `npm run qa -- --all --quick` and `npm run reproduce` (with `-- --models` after a change to the kit, which every model built in code shares).
 
 ## How long it takes
 

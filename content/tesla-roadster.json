@@ -1678,7 +1678,7 @@
     }
   },
   "build": {
-    "generate": "scripts/cars/generate.mjs",
+    "generate": "objects/tesla-roadster/generate.mjs",
     "car": "roadster"
   }
 }

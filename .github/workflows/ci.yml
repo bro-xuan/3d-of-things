@@ -1,0 +1,24 @@
+# The checks every push and pull request must pass, without a browser or a GPU: types, the static
+# content checks, every content file rebuilt from its builder (npm run reproduce), and the production
+# build. The models aren't rebuilt here: they're only known to rebuild byte for byte on the Mac they're made on
+# (sharp's WebP encoder is native code), so `npm run reproduce -- --models` runs there, with the browser checks.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run check
+      - run: npm run reproduce
+      - run: npm run build

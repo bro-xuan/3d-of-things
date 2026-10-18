@@ -31,11 +31,13 @@ The [`/3d-of-things` skill](.claude/skills/3d-of-things/SKILL.md) is the standar
 
 ## Changing an object
 
-Edit the source, not the output: for an object in `objects/<slug>/`, its `content.mjs` writes `content/<slug>.json` and its generator writes the model. The objects built before the skill keep their own layout, listed in [the procedure](.claude/skills/3d-of-things/references/procedure.md#changing-an-existing-object). Rebuild what you changed, then check that object and the rest:
+Edit the source, not the output: every object's `objects/<slug>/content.mjs` writes `content/<slug>.json`, and its `generate.mjs` or `augment.mjs` builds the model. Rebuild what you changed, then check that object and the rest:
 
 ```sh
+npm run models:build -- <slug> && node objects/<slug>/content.mjs
 npm run qa -- <slug>
 npm run qa -- --all --quick
+npm run reproduce
 ```
 
 ## The checks
@@ -44,6 +46,7 @@ A change is ready when:
 
 - `npm run build` passes (type-check and production build);
 - `npm run check` reports no errors;
+- `npm run reproduce` passes: every content file is what its builder writes (with `-- --models` after a change to the kit: every model too);
 - `npm run qa -- --all --quick` passes, and `npm run qa -- <slug>` for every object you touched;
 - `npm run models:build -- <slug>` passes its clash and explode checks for every model you touched, without `--no-check`.
 
@@ -57,4 +60,5 @@ When a check is missing, add it to `scripts/qa/run.mjs` or `scripts/check-conten
 - **Follow the energy** in the groups, callouts, explode order and tour.
 - **One voice**: plain, physical, exact, British spelling, the number that makes it real.
 - **Sizes in rem** with the page's viewport-scaled root size; no small fixed pixel sizes.
-- **The kit's building blocks are shared.** `scripts/kit/` re-exports modules that existing models are built from, so a change to one (say `scripts/camera/solids.mjs`) must leave those models byte for byte the same: rebuild them and compare, or add a new function instead.
+- **The kit's building blocks are shared.** The modules in `scripts/kit/` are what existing models are built from, so a change to one (say `scripts/kit/solids.mjs`) must leave those models byte for byte the same: `npm run reproduce -- --models` rebuilds them all and fails on any difference. Otherwise add a new function instead.
+- **Objects import from the kit, never from each other.** Code one object needs stays in its `objects/<slug>/`; once a second object needs it, move it into the kit.

@@ -2782,7 +2782,7 @@
     }
   },
   "build": {
-    "generate": "scripts/cars/generate.mjs",
+    "generate": "objects/family-car/generate.mjs",
     "car": "family-car"
   }
 }

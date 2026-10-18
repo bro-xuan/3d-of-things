@@ -1660,6 +1660,7 @@
     }
   },
   "build": {
-    "generate": "scripts/hasselblad/generate.mjs"
+    "generate": "objects/reflex-camera/generate.mjs",
+    "hints": "objects/reflex-camera/hints.json"
   }
 }

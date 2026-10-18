@@ -2,7 +2,7 @@
 // gives it the insides a closed shell never had. It runs on the Poly Haven glTF before compression.
 //
 // It starts as a pass-through, so the page works from the first build. The usual shape, from the
-// Leica's (scripts/camera/augment.mjs, the full example) and the watch's (scripts/watch/augment.mjs):
+// Leica's (objects/rangefinder-camera/augment.mjs, the full example) and the watch's (objects/pocket-watch/augment.mjs):
 //   1. Read the shell's meshes as pieces in mm: surgery.readMesh(primitive), with { generated: false }.
 //   2. Cut them along planes into the parts that come off (surgery.cut, then surgery.pick by side),
 //      and thicken each cut piece inward with a rim on its cut edge (surgery.solidify), so it isn't hollow.

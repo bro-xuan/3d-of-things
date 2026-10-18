@@ -1030,7 +1030,8 @@
     17
   ],
   "build": {
-    "augment": "scripts/watch/augment.mjs"
+    "augment": "objects/pocket-watch/augment.mjs",
+    "hints": "objects/pocket-watch/hints.json"
   },
   "motionLabel": "Slow motion",
   "slowMotion": {

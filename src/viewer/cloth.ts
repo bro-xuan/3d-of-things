@@ -22,7 +22,7 @@ export interface ClothLayout {
  * Where a curtain lies with its edge bar at x = `edge`: for arc length u from its home roller's
  * innermost turn, a point in the x–z plane and the way its front face looks. Wound on a roller it
  * follows an Archimedean spiral; between the rollers it runs straight. The same sums as clothPath in
- * scripts/camera/mechanism.mjs, which laid the curtain out at rest.
+ * objects/rangefinder-camera/mechanism.mjs, which laid the curtain out at rest.
  */
 export function clothPath(c: ClothLayout, edge: number) {
   const k = c.layer / (Math.PI * 2);

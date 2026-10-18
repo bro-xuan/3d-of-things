@@ -41,7 +41,7 @@ Model space: x and z centred on the model, y = 0 at its lowest point, scaled so 
 | `explodeDuration` | ms for "Take it apart" (default 1300) | 1700–3200 for many stages. |
 | `facts` | 4–6 `{ label, value }` | "Beat" / "6 ticks a second". The real size is worth one. |
 | `credit` | Who made the model, licence, source | `polyHaven(id, title, authors)` or `builtInCode(title, sources)`. `models:fetch` checks Poly Haven authors against the API. `extra: { label, text }` adds a line (what was built for this site, what it was laid out from). |
-| `build` | For the build only | `generate` or `augment` (a script path), `hints` (where to write the hints), `car` (a spec for scripts/cars), `textureSize` (default 2048). |
+| `build` | For the build only | `generate` or `augment` (a script path), `hints` (where to write the hints), `car` (a car's name in its model, for the cars built with scripts/kit/cars/), `textureSize` (default 2048). |
 
 ### Parts (`parts[]`)
 

@@ -1,6 +1,6 @@
 // Helpers for an object's content builder (objects/<slug>/content.mjs), which writes
 // content/<slug>.json from the object's text and the build's hints, so no model-space number
-// is ever pasted by hand. Lifted from scripts/cars/content.mjs.
+// is ever pasted by hand. Lifted from the cars' content builders (objects/family-car/content.mjs and the rest).
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

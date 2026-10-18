@@ -54,7 +54,7 @@ Work in this order. Write the truth sheet before any geometry: most of the quali
    `npm run models:build -- <slug> && node objects/<slug>/content.mjs && npm run check -- <slug>`, then `npm run qa -- <slug> --model` to see it (views and explode, ~15 s). The build fails on any clash between parts and on any explode path that passes one part through another; fix the geometry, and list only true contacts (gears in mesh, a pin in its hole) in `CONTACTS`.
 4. **Content (15 min, can run alongside 3).** `objects/<slug>/content.mjs` writes `content/<slug>.json`: hook, summary, facts, parts with `about`, callouts, motions, the tour. Positions come from the hints' anchors (or `placer(nodeBounds)` for a downloaded model), never typed. Follow references/explaining.md for order and voice and references/content.md for every field.
 5. **Mechanism (only for a new kind).** Reuse what exists first: time-driven spins and clock trains, crank and cam motions, `control` motions (turn, slide, curve, cloth, scroll), the generic charts (`ladder`, `bars`, `timing`) and experiments (`run`, `speeds`). A genuinely new mechanism gets a three-free module in `src/viewer/` that the charts read too; references/mechanisms.md lists every place it has to be wired.
-6. **Check (10 min).** `npm run check -- <slug>` (static, 1 s), then `npm run qa -- <slug>` (browser, about a minute): every callout, tour step and experiment, the phone layout and reduced motion. Read the contact sheets it prints; open a single shot only to look closer. Fix, re-run, until it passes with no warnings you can't explain. Then `npm run qa -- --all --quick` in the background for the other objects.
+6. **Check (10 min).** `npm run check -- <slug>` (static, 1 s), then `npm run qa -- <slug>` (browser, about a minute): every callout, tour step and experiment, the phone layout and reduced motion. Read the contact sheets it prints; open a single shot only to look closer. Fix, re-run, until it passes with no warnings you can't explain. Then `npm run qa -- --all --quick` in the background for the other objects, and `npm run reproduce` (every content file rebuilt from its builder; add `-- --models` if you changed the kit).
 7. **Ship (5 min).** `npm run posters -- <slug>`, `npm run truth -- <slug>` (the sheet's parts and tour tables, from what was built), add the object to the README's models table and its list, `npm run build`, update the memory notes, and tell the user what's on the page and what's simplified. Commit only when the user asks. To put it live, `npm run export` bakes the site into afrodance.fun (references/procedure.md).
 
 ## What makes it fast
@@ -66,7 +66,7 @@ The procedure is fast because nothing is done twice and the machine does the loo
 - **Static before browser:** `npm run check` catches unknown nodes, meshes in no part, off-model points, unknown charts and experiments and unfinished text in a second.
 - **Read contact sheets, not screenshots:** the runner tiles every view into a few labelled sheets and frames failures in red.
 - **No pasted numbers:** the generator names its points; the content builder uses the names. A changed layout moves everything with it.
-- **The kit, not copies:** `scripts/kit/` has every building block the earlier generators grew (gears, shafts, rounded boxes, tubes, lofts, surgery, materials, assembly, checks). Import from it; add a block there when a new object needs one.
+- **The kit, not copies:** `scripts/kit/` has every building block the earlier generators grew (gears, shafts, rounded boxes, tubes, lofts, surgery, materials, assembly, checks). Import from it; add a block there when a new object needs one. Objects import from the kit, never from each other.
 - **Parallel tracks:** research in a subagent during the scaffold; the regression pass in the background during review.
 - **Keep the context lean:** pipe builds through `tail`, keep logs to summaries, and read the references when a stage needs them, not up front.
 
@@ -90,6 +90,7 @@ The procedure is fast because nothing is done twice and the machine does the loo
 | `npm run models:build -- <slug> [--no-check]` | Build (fetch first for Poly Haven), check clashes and explode paths, write hints | 1–5 s |
 | `node objects/<slug>/content.mjs` | Write `content/<slug>.json` from the text and the hints | < 1 s |
 | `npm run check [-- <slug>]` | Static content checks against the model | < 1 s |
+| `npm run reproduce [-- --models]` | Every object's content builder run again (with `--models`, every model rebuilt first); fails if a byte changed | 4 s (30 s) |
 | `npm run qa -- <slug> [--model\|--quick\|--only …]` | Browser checks, contact sheets, report, exit code | 15–70 s |
 | `npm run qa -- --all --quick` | Regression over every object, and the skill's page | ~100 s |
 | `npm run qa -- --skill` | The skill's page and its live watch | ~15 s |

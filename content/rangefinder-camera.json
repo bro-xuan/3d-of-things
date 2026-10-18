@@ -668,7 +668,8 @@
     }
   },
   "build": {
-    "augment": "scripts/camera/augment.mjs"
+    "augment": "objects/rangefinder-camera/augment.mjs",
+    "hints": "objects/rangefinder-camera/hints.json"
   },
   "motion": [
     {

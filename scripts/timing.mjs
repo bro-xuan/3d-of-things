@@ -30,7 +30,7 @@ function stageOf(name, input = {}) {
   if (name === 'Bash') {
     const c = String(input.command ?? '');
     if (/capture-posters|npm run (-s )?posters/.test(c)) return ['ship', 'posters'];
-    if (/npm run (-s )?(check|qa)\b|check-content|scripts\/qa\//.test(c)) return ['check', 'check & qa runner'];
+    if (/npm run (-s )?(check|qa|reproduce)\b|check-content|reproduce\.mjs|scripts\/qa\//.test(c)) return ['check', 'check & qa runner'];
     if (/playwright|chromium|qa\/|qa-|drive\.mjs|shoot\.mjs|page\.mjs|tour\.mjs|callouts|screenshot|clock-|experiments\.mjs|lighthouse/i.test(c)) return ['check', 'hand-made browser QA'];
     if (/models:build|build-models|\/build\.mjs|generate\.mjs|contacts\.mjs|clash/.test(c)) return ['model', 'model build'];
     if (/content[-\w]*\.mjs/.test(c)) return ['content', 'content build'];
@@ -43,9 +43,11 @@ function stageOf(name, input = {}) {
   if (name === 'Read') return /\.(png|jpe?g|webp)$/i.test(input.file_path ?? '') ? ['check', 'look at screenshots'] : ['orientation', 'read code'];
   if (/^(Edit|Write|MultiEdit|NotebookEdit)$/.test(name)) {
     const p = String(input.file_path ?? '');
+    if (/\/objects\/[^/]+\/TRUTH\.md$/.test(p)) return ['research', 'write truth sheet'];
     if (/\/content\/|content[-\w]*\.mjs|hints\.json/.test(p)) return ['content', 'write content'];
     if (/\.cache\/|scripts\/qa\//.test(p)) return ['check', 'write QA tools'];
-    if (/\/scripts\//.test(p)) return ['model', 'write model code'];
+    // The kit and the tools (scripts/), and an object's build code (objects/<slug>/generate.mjs, augment.mjs, their modules).
+    if (/\/scripts\/|\/objects\/.+\.mjs$/.test(p)) return ['model', 'write model code'];
     if (/src\/charts/.test(p)) return ['mechanism', 'write charts'];
     if (/\/src\//.test(p)) return ['mechanism', 'write viewer code'];
     return ['other', 'write other'];

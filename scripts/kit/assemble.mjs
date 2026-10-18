@@ -1,11 +1,11 @@
 // The glue every model built in code needs, written once: materials, parts into glTF nodes,
-// model space, and the clash and explode checks. Lifted from scripts/hasselblad/generate.mjs
-// and scripts/cars/generate.mjs, which keep their own copies so their models don't change.
+// model space, and the clash and explode checks. Lifted from objects/reflex-camera/generate.mjs
+// and scripts/kit/cars/generate.mjs, which keep their own copies so their models don't change.
 import { Document, getBounds } from '@gltf-transform/core';
 import { KHRMaterialsIOR, KHRMaterialsTransmission, KHRTextureTransform } from '@gltf-transform/extensions';
-import { fromGeo, merge, writePrimitive } from '../camera/surgery.mjs';
-import { Part, checkClashes, checkExplode } from '../camera/mechanism.mjs';
-import { box } from '../camera/solids.mjs';
+import { fromGeo, merge, writePrimitive } from './surgery.mjs';
+import { Part, checkClashes, checkExplode } from './parts.mjs';
+import { box } from './solids.mjs';
 
 /** A '#rrggbb' colour as linear RGB, as glTF wants it. */
 export const srgb = (hex) => [0, 2, 4].map((i) => ((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))(parseInt(hex.slice(i + 1, i + 3), 16) / 255));
@@ -129,7 +129,7 @@ export function modelSpace(scene) {
 }
 
 /** Hints in model space: points (3-vectors) through toModel, lengths named in `lengths` scaled; directions
- *  (`axis`, `dir`, `jet`) stay as they are. From scripts/cars/generate.mjs. */
+ *  (`axis`, `dir`, `jet`) stay as they are. From scripts/kit/cars/generate.mjs. */
 export function inModel(h, { toModel, scale }, lengths = ['r', 'L', 'drop', 'rise', 'lift', 'throw', 'rod']) {
   const walk = (v, key) => {
     if (Array.isArray(v) && v.length === 3 && v.every((c) => typeof c === 'number') && !['axis', 'dir', 'jet'].includes(key)) return toModel(v);

@@ -1,5 +1,5 @@
 // Meshing gears: where the second of a pair goes, and how to turn it so its teeth fall between
-// the first one's. Lifted from scripts/watch/movement.mjs (meshPhase), which keeps its own copy.
+// the first one's. Lifted from objects/pocket-watch/movement.mjs (meshPhase), which keeps its own copy.
 const TAU = Math.PI * 2;
 
 /** Centre distance of two gears in mesh (same module), in mm. */
