@@ -41,13 +41,19 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-Add an object. In Claude Code, in this repository:
+Add an object. Install the skill once:
+
+```sh
+npx skills add bro-xuan/3d-of-things
+```
+
+Then, in Claude Code, in any folder:
 
 ```text
 /3d-of-things add a mechanical metronome
 ```
 
-Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. The skill comes with the repository: there's nothing else to install.
+Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. Outside this repository it first sets up a workspace, a clone of it, because the repository is the skill's kit; inside it, the skill is already there (`.claude/skills/3d-of-things`). `npm run export` then puts the machines on your own site ([Deploying](#deploying)). The repository is private for now, so the install and the clone work for people with access to it.
 
 ## The objects
 
@@ -123,9 +129,9 @@ It sizes each object first:
 
 | Tier | What | Examples | Budget |
 |---|---|---|---|
-| **A · Sourced** | A CC0 model with its parts as separate nodes | hand drill, microscope | 30–45 min |
-| **B · Opened** | A CC0 shell, cut open in code, the insides generated | pocket watch, Leica M3 | 60–75 min |
-| **C · Built** | No usable model: the whole object generated in code | the SLR, the family car | 60–80 min |
+| **A · Sourced** | A CC0 model with its parts as separate nodes | garden sprinkler, hand drill | 15–30 min |
+| **B · Opened** | A CC0 shell, cut open in code, the insides generated | bicycle pump, pocket watch | 15–60 min |
+| **C · Built** | No usable model: the whole object generated in code | washing machine, the SLR | 25–60 min |
 | **D · Machine** | Several systems with their own physics | the 2026 Roadster | 2 h+, proposed as a C first |
 
 Then it works through eight stages, each with an exit check:
@@ -245,7 +251,8 @@ Two checkers, both driven by the content file, so a new object is checked with n
 ```sh
 npm run check                 # every object against its model, no browser: under a second
 npm run qa -- reflex-camera   # callouts, tour steps, experiments, phone: about a minute
-npm run qa -- --all --quick   # every object, three at a time: under two minutes
+npm run qa -- --all --quick   # every object, three at a time, and the skill's page: under two minutes
+npm run qa -- --skill         # the skill's page: its live watch winds, slows and comes apart
 npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects   # a built or live copy
 ```
 
@@ -263,7 +270,7 @@ The model build has its own checks: it fails if any generated part crosses anoth
 |---|---|---|
 | **Node.js 22+** | everything | Built and tested on Node 25. |
 | **Playwright's Chromium** | `qa`, `posters` | `npx playwright install chromium` if it's missing. On a Mac it draws with the GPU through Metal; elsewhere it falls back to SwiftShader (slower). |
-| **[Claude Code](https://code.claude.com/docs/en/overview)** | the skill | Open it in this repository and type `/3d-of-things`. |
+| **[Claude Code](https://code.claude.com/docs/en/overview)** | the skill | `npx skills add bro-xuan/3d-of-things`, or open it in this repository; then type `/3d-of-things`. |
 
 ```sh
 npm run build      # type-check, then build to dist/
@@ -274,7 +281,7 @@ npm run preview    # serve dist/
 
 - **Free models only.** CC0 or CC BY, checkable at the source. Most free models are shells, so most objects need their insides generated, which is the slow part.
 - **Generated insides are simplified**, and each page says what was left out. They follow real dimensions and real timing, not every screw.
-- **It's careful, not instant.** A good object takes about an hour of Claude's time; a vehicle with its own physics, more.
+- **It's careful, not instant.** A simple machine takes 15 to 25 minutes of Claude's time. One as dense as the watch took nearly two hours before the procedure existed, and a vehicle with its own physics takes longer.
 - **3D needs WebGL.** Without it, each page shows its poster.
 
 ## Models

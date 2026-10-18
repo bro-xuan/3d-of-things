@@ -213,28 +213,35 @@ anchors: {
         <p>Detail costs time, and real numbers beat a guess. These are Claude’s active times, measured from the session logs with <code>npm run timing</code>, idle gaps left out.</p>
         <div class="table wide" role="region" aria-label="Build times" tabindex="0">
           <table>
-            <thead><tr><th scope="col">Object</th><th scope="col">Tier</th><th scope="col">Active time</th><th scope="col">Of that, checking by hand</th></tr></thead>
+            <thead><tr><th scope="col">Object</th><th scope="col">Tier</th><th scope="col">Active time</th><th scope="col">Of that, checking</th></tr></thead>
             <tbody>
+              <tr class="table__group"><th colspan="4" scope="colgroup">Before the procedure: checked by hand</th></tr>
               <tr><th scope="row">Pocket watch movement</th><td>Opened</td><td>1 h 47</td><td>27%</td></tr>
               <tr><th scope="row">Leica M3</th><td>Opened</td><td>2 h 07</td><td>37%</td></tr>
               <tr><th scope="row">Medium-format SLR</th><td>Built</td><td>1 h 59</td><td>33%</td></tr>
               <tr><th scope="row">2026 Roadster, rebuilt from the 2017 car</th><td>Machine</td><td>57 min + 39 min</td><td>24–32%</td></tr>
             </tbody>
+            <tbody>
+              <tr class="table__group"><th colspan="4" scope="colgroup">With the procedure, 18 October 2026</th></tr>
+              <tr><th scope="row">Washing machine</th><td>Built</td><td><strong>24 min</strong></td><td>38%</td></tr>
+              <tr><th scope="row">Bicycle pump</th><td>Opened</td><td><strong>15 min</strong></td><td>38%</td></tr>
+              <tr><th scope="row">Garden sprinkler</th><td>Sourced</td><td><strong>15 min</strong></td><td>46%</td></tr>
+            </tbody>
           </table>
         </div>
-        <p>The pattern held across every build: a third of the time went on checking by hand, with a new browser script for every object, each waiting on software rendering, and another sixth on re-reading code to remember how things fit together. The checks, the scaffold, the kit and the skill’s references remove most of both. The target for an Opened or Built object is about an hour. The next object will be measured and added here.</p>
+        <p>Before the procedure, a third of every build went on checking by hand, with a new browser script for each object waiting on software rendering, and another sixth on re-reading code to remember how things fit together. The checks, the scaffold, the kit and the skill’s references removed most of both. The three objects built with them took 15 to 24 minutes each, all three in one 70-minute session, with each one’s research running in a subagent alongside. Checking is still the biggest stage, but now it’s reading contact sheets and fixing what they show.<sup class="ref">6</sup></p>
+        <aside class="note"><span class="note__n">6</span>They were simpler machines than the watch or the cameras. Nothing that dense has been built with the procedure yet; the next one will be measured and added here.</aside>
       </section>
 
       <section class="flow" id="install" data-n="09">
         <h2><span class="num">09</span>Install</h2>
-        <p>The skill lives in the repository, because the repository is its kit: the viewer, the model pipeline, the generator kit and the checks.<sup class="ref">6</sup></p>
-        <aside class="note"><span class="note__n">6</span>The repository is private for now. Without Claude Code the same stages run by hand: <code>npm run new</code>, <code>npm run models:build</code>, <code>npm run check</code>, <code>npm run qa</code>.</aside>
-        <pre class="block"><code>git clone https://github.com/bro-xuan/3d-of-things.git
-cd 3d-of-things
-npm install
-npx playwright install chromium   <span class="c"># for the checks, if it's missing</span></code></pre>
-        <p>Then open Claude Code in the folder and name a machine:</p>
+        <p>Add the skill to Claude Code with one command:</p>
+        <pre class="block"><code>npx skills add bro-xuan/3d-of-things</code></pre>
+        <p>Then open Claude Code in any folder and name a machine:</p>
         <pre class="block"><code>/3d-of-things add a mechanical metronome</code></pre>
+        <p>The first time, Claude sets up a workspace: a copy of the repository, because the repository is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the thirteen machines as its references.<sup class="ref">7</sup> To put your machines on your own site, bake them in. The export builds the site for that path, checks it, copies it in as static files and prints the two rewrites your host needs.</p>
+        <aside class="note"><span class="note__n">7</span>The repository is private for now, so the command works for people with access to it. Without Claude Code the same stages run by hand: <code>npm run new</code>, <code>npm run models:build</code>, <code>npm run check</code>, <code>npm run qa</code>.</aside>
+        <pre class="block"><code>npm run export -- --out ../my-site/public/machines</code></pre>
       </section>
 
       <section class="flow" id="limits" data-n="10">
@@ -243,7 +250,7 @@ npx playwright install chromium   <span class="c"># for the checks, if it's miss
         <ul class="plain">
           <li><strong>Free models only.</strong> CC0 or CC BY, checkable at the source. Most free models are shells, so most objects need their insides generated, which is the slow part.</li>
           <li><strong>Generated insides are simplified,</strong> and each page says what was left out. They follow real dimensions and timing, not every screw.</li>
-          <li><strong>It’s careful, not instant.</strong> A good object takes about an hour of Claude’s time; a vehicle with physics of its own, more.</li>
+          <li><strong>It’s careful, not instant.</strong> A simple machine takes 15 to 25 minutes of Claude’s time. One as dense as the watch took nearly two hours before the procedure existed, and a vehicle with physics of its own takes longer.</li>
           <li><strong>It needs WebGL.</strong> Without it, each page shows its poster.</li>
         </ul>
         <p>So treat the first version as a draft. Open it, turn it, take it apart, say what’s wrong, and ask again.</p>
@@ -253,7 +260,7 @@ npx playwright install chromium   <span class="c"># for the checks, if it's miss
         <h2><span class="num">11</span>Questions</h2>
         <dl class="faq">
           <dt>Does it work outside this repository?</dt>
-          <dd>Not yet. It builds pages for this site, with this site’s viewer, pipeline and checks; the repository is its kit.</dd>
+          <dd>Yes. Installed with the command above, it sets up a workspace the first time and builds there, with this site’s viewer, pipeline and checks; <code>npm run export</code> then puts the machines on any static host, Next.js and Vercel included.</dd>
           <dt>Can I change an object later?</dt>
           <dd>Yes. An object’s words and placement live in its <code>content.mjs</code> and its geometry in the generator beside it. Change a number in the generator and everything placed by name moves with it; then run the checks again.</dd>
           <dt>Will it slow the page down?</dt>

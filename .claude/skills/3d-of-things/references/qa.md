@@ -36,6 +36,7 @@ npm run qa -- <slug>                    # everything
 npm run qa -- <slug> --model            # the model only, for the geometry loop (~15 s)
 npm run qa -- <slug> --only tour,try    # some sections
 npm run qa -- --all --quick             # load, rest and tour for every object (~100 s, 3 at a time)
+npm run qa -- --skill                   # the skill's page: its live watch winds, slows, comes apart; the wheel scrolls (~15 s)
 npm run qa -- <slug> --software         # SwiftShader, to compare
 npm run qa -- --all --deployed --url http://localhost:3017/3d-of-everything/objects
                                         # a built copy, served (or the live site): load, rest and tour

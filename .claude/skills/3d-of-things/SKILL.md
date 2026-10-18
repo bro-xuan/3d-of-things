@@ -1,7 +1,7 @@
 ---
 name: 3d-of-things
-description: Add a real machine to 3D of Things the standard way, as a 3D model that comes apart into named parts with real insides, callouts, scale drawings and a step-by-step "How it works" tour with live charts and experiments. Use it whenever someone asks to add, build, model, open up, take apart or explain an object, machine, instrument, camera, watch, engine or vehicle on this site, even if they only name the thing ("do a Leica M6", "add a sewing machine"). Also use it to change or check an existing object page ("the SLR's tour is broken", "does everything still work?"). Covers sourcing a CC0 model or generating one in code, the content file, mechanisms, the tour, the automated checks and shipping.
-compatibility: Written for Claude Code in this repository. Needs Node 22+, the repo's npm dependencies, and a Playwright Chromium for the browser checks (it uses the Mac's GPU when there is one).
+description: Add a real machine to 3D of Things the standard way, as a 3D model that comes apart into named parts with real insides, callouts, scale drawings and a step-by-step "How it works" tour with live charts and experiments. Use it whenever someone asks to add, build, model, open up, take apart or explain an object, machine, instrument, camera, watch, engine or vehicle in 3D, even if they only name the thing ("do a Leica M6", "add a sewing machine"), in this repository or in any other folder (it sets up a 3D of Things workspace first). Also use it to change or check an existing object page ("the SLR's tour is broken", "does everything still work?") or to put the machines on another site. Covers sourcing a CC0 model or generating one in code, the content file, mechanisms, the tour, the automated checks and shipping.
+compatibility: Written for Claude Code. Works in a 3D of Things workspace (a checkout of bro-xuan/3d-of-things) and sets one up when run anywhere else. Needs git, Node 22+, and a Playwright Chromium for the browser checks (it uses the Mac's GPU when there is one).
 ---
 
 # 3D of Things
@@ -12,15 +12,30 @@ compatibility: Written for Claude Code in this repository. Needs Node 22+, the r
 
 **Real insides, really moving.** The object explains itself when its insides are true and they work: real tooth counts, real focal lengths, real timing, driven by the same numbers the charts show. A shell with labels is a catalogue, not an explanation. When a model has no insides, generate them in code from the truth sheet; never invent them, and never let an AI segmenter guess them.
 
+## Where to work
+
+Everything below runs in a 3D of Things workspace: a checkout of `bro-xuan/3d-of-things`. Its code is this skill's kit (the viewer, the model pipeline, the generator kit, the checks) and its objects are the references the procedure reuses.
+
+- **In a workspace** (this folder or a parent has a `package.json` named `3d-of-things`): work there. If the workspace's own `.claude/skills/3d-of-things/SKILL.md` differs from this copy, follow the workspace's; it matches the code beside it.
+- **Anywhere else**, set one up before the brief. Ask where if it isn't obvious; by default it goes in `./3d-of-things`:
+  ```sh
+  git clone --depth 1 https://github.com/bro-xuan/3d-of-things.git 3d-of-things
+  cd 3d-of-things && npm install
+  npx playwright install chromium   # for the checks, if it's missing
+  npm run check                     # every object: 0 errors, 0 warnings
+  ```
+  Keep the objects it comes with. If the clone is refused, the repository isn't open to this account yet: say so, and don't look for another copy.
+- **On the user's own site:** `npm run export -- --out <their site>/public/<path>` builds the site for that path, checks it, copies it in as static files and prints the rewrites the host needs (README, "Deploying"). Run it again after every change; never edit the exported files.
+
 ## Size it first
 
-Name the tier in your first message, with its budget. These are active times for the whole procedure, measured on the objects built so far (see "How long it takes" in references/procedure.md).
+Name the tier in your first message, with its budget. These are active times for the whole procedure. Measured with it on 18 October 2026: garden sprinkler (A) 15 min, bicycle pump (B) 15 min, washing machine (C) 24 min. A dense mechanism (a watch movement, a camera's shutter) sits at the top of its range; none has been timed with the procedure yet, so measure the next one (`npm run timing`, "How long it takes" in references/procedure.md).
 
 | Tier | What | Examples | Budget |
 |---|---|---|---|
-| **A · Sourced** | A CC0 model with its parts as separate, named nodes. Content and tour only. | hand drill, microscope, binoculars | 30–45 min |
-| **B · Opened** | A CC0 shell, cut open in code, with the insides generated. | pocket watch, Leica M3 | 60–75 min |
-| **C · Built** | No usable model: the whole object generated in code. | Hasselblad SLR, family car | 60–80 min |
+| **A · Sourced** | A CC0 model with its parts as separate, named nodes. Content and tour only. | garden sprinkler, hand drill, microscope | 15–30 min |
+| **B · Opened** | A CC0 shell, cut open in code, with the insides generated. | bicycle pump, pocket watch, Leica M3 | 15–60 min |
+| **C · Built** | No usable model: the whole object generated in code. | washing machine, Hasselblad SLR, family car | 25–60 min |
 | **D · Machine** | Several systems with their own physics (a vehicle that flies, a plant). | 2026 Roadster | 2 h+ |
 
 - Tier D: don't start it. Propose a C version that keeps the core idea, list what D would add, and build D only if the user chooses it.
@@ -76,7 +91,8 @@ The procedure is fast because nothing is done twice and the machine does the loo
 | `node objects/<slug>/content.mjs` | Write `content/<slug>.json` from the text and the hints | < 1 s |
 | `npm run check [-- <slug>]` | Static content checks against the model | < 1 s |
 | `npm run qa -- <slug> [--model\|--quick\|--only …]` | Browser checks, contact sheets, report, exit code | 15–70 s |
-| `npm run qa -- --all --quick` | Regression over every object | ~100 s |
+| `npm run qa -- --all --quick` | Regression over every object, and the skill's page | ~100 s |
+| `npm run qa -- --skill` | The skill's page and its live watch | ~15 s |
 | `npm run posters -- <slug>` | Gallery posters and tray thumbnail | ~7 s |
 | `npm run export -- --out <host>/public/3d-of-everything` | Bake the site into afrodance.fun (absolute URLs under the mount) | ~3 s |
 | `npm run qa -- --all --deployed --url <gallery>` | The baked copy, served: load, rest and tour, no dev hooks | ~95 s |
