@@ -182,7 +182,7 @@ anchors: {
           <li><code>npm run models:build</code> <span>Fails if any part crosses another at rest, or if taking it apart would pass one part through another.</span></li>
         </ul>
         <p>Headless Chromium used to draw with software WebGL, at about <strong>460 ms a frame</strong>. On the Mac’s GPU it takes <strong>18 to 23 ms</strong>, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all ten in under two.<sup class="ref">5</sup></p>
-        <aside class="note"><span class="note__n">5</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown.</aside>
+        <aside class="note"><span class="note__n">5</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown. Once found, it was a one-line fix.</aside>
         <figure class="wide shot">
           <img src="/teardown/qa-tour-sheet.webp" width="1400" height="994" loading="lazy" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled with its step." />
           <figcaption><strong>One run, one sheet.</strong> The SLR’s seven tour steps as the runner saw them. Step 5, Winding, shows one of its two labels; the runner failed it.</figcaption>

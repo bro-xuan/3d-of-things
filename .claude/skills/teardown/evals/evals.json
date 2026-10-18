@@ -21,8 +21,8 @@
     },
     {
       "id": 4,
-      "prompt": "the SLR's winding step has a label floating somewhere, can you check everything still works?",
-      "expected_output": "Runs npm run check -- reflex-camera (which reports the 'Flaps’ spring' tag 37 units off the model) and npm run qa -- reflex-camera (one tag of two shown in step 5). Finds the content source in .cache/hasselblad/content.mjs (outside git), fixes the tag's position to a named point in model space, regenerates the content, and re-runs both checks to zero failures, then npm run qa -- --all --quick for the rest.",
+      "prompt": "the SLR's winding step looks off, can you check everything still works?",
+      "expected_output": "Runs npm run check -- reflex-camera and npm run qa -- reflex-camera, reads the contact sheets (the winding step's tags, flow lines and chart) and reports what it found with the checks' output. Anything that fails is fixed at its source: for the SLR that is .cache/hasselblad/content.mjs (outside git), never a hand edit of content/reflex-camera.json that the next regeneration would undo, and positions are given in model space from named points (the 'Flaps’ spring' tag once sat 37 units off the model because the builder passed millimetres). It regenerates the content, re-runs both checks to zero failures, then npm run qa -- --all --quick for the rest.",
       "files": []
     },
     {
