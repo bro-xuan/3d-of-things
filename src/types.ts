@@ -207,7 +207,7 @@ export interface Jet {
   group: 'rear' | 'lift' | 'yaw';
 }
 
-export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars' | 'home';
+export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars' | 'home' | 'sound' | 'tools' | 'electric';
 
 export interface Thing {
   slug: string;

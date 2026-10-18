@@ -8,6 +8,9 @@ export const categories: { id: CategoryId; label: string }[] = [
   { id: 'cameras', label: 'Cameras' },
   { id: 'cars', label: 'Cars' },
   { id: 'home', label: 'Home & garden' },
+  { id: 'sound', label: 'Sound & music' },
+  { id: 'tools', label: 'Tools' },
+  { id: 'electric', label: 'Electricity' },
 ];
 
 const files = import.meta.glob<Omit<Thing, 'slug'>>('../content/*.json', { eager: true, import: 'default' });
