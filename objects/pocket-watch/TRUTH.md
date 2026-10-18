@@ -171,7 +171,7 @@ Said on the page too (`credit.extra` or the text).
 - **Mainspring:** drawn part wound at 30 h (`REST_RESERVE`), with 10.5 turns. The callout's "about half a metre long" is not checked against the drawn spring.
 - **Jewels:** the model has hole jewels at both pivots of the third, escape, pallet and balance arbors and at the fourth wheel's top pivot, plus the two pallet stones and the impulse jewel. The callout's "fifteen or so" and "17 jewels" are about "a good watch", not this model.
 - **Drawn for the screen:** the parts inside (`inside: true`) move only while they can be seen, and a runaway train is drawn no faster than 2.4 turns a second.
-- **Placement:** content.mjs still types its positions and cameras in model space, carried over from the hand-written JSON, rather than placing them from the build's named points (content.mjs header).
+- **Placement:** content.mjs takes the moving parts' pivots and the tour's power paths from the hints, and places the callouts inside the case from the movement's layout. Still typed in model space: the movement frame's scale and origin, the hands' pivot, the crown and bow callouts and the tour's tags (content.mjs header).
 - **Sources:** none are cited for the mechanism or the numbers.
 
 ## 10. Log

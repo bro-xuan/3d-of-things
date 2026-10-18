@@ -108,9 +108,9 @@ Every object has the same layout, whenever it was built:
 
 Code shared by more than one object is in the kit, `scripts/kit/`. The two cars run the car builder in `scripts/kit/cars/` on their own `spec.mjs`, and their content builders run the build (without the checks) for its hints. Three things to know about the older objects:
 
-- The content builders of the five Poly Haven objects, the pocket watch, the Leica and the SLR were converted key for key from their hand-written JSON, so their positions and cameras are still typed in model space. A change that moves a part means placing what's on it again, from `hints.json` or the model (`placer(nodeBounds)`), as the newer builders do.
+- The content builders of the five Poly Haven objects were converted key for key from their hand-written JSON, so their positions and cameras are still typed in model space. A change that moves a part means placing what's on it again, from `hints.json` or the model (`placer(nodeBounds)`), as the newer builders do. The pocket watch's, the Leica's and the SLR's are the builders their pages were made with: motions and tours come from the hints, and the points are given in the movement's or the camera's millimetres. What each still types in model space is listed in its header (the Leica's callouts, the watch's crown and bow callouts and tour tags).
 - `objects/tesla-roadster/2017/` is the 2017 Roadster the page showed before the 2026 car, kept as the car builder's example of a plain electric car. Running its `content.mjs` writes over the live page.
-- The old content builders under `.cache/watch/`, `.cache/camera/` and `.cache/hasselblad/` (outside git) are superseded: don't run them.
+- The copies of the watch's, the Leica's and the SLR's builders left under `.cache/watch/`, `.cache/camera/` and `.cache/hasselblad/` (outside git) are older than the ones in `objects/` and write the old paths: don't run them.
 
 For any change: edit, `npm run models:build -- <slug>` if the model changed, `node objects/<slug>/content.mjs`, `npm run check -- <slug>`, `npm run qa -- <slug>`, then `npm run qa -- --all --quick` and `npm run reproduce` (with `-- --models` after a change to the kit, which every model built in code shares).
 

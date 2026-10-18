@@ -152,7 +152,7 @@ Settings as the steps start (content: `settings`): Lens at ∞ and f/1.4; Rangef
 - Not animated: the Shutter speed dial (the page says it doesn't turn when the shutter fires; it doesn't turn when a speed is picked either) and the Rewind knob. B is on the page but not among the code's speeds.
 - The mask carries only the 50 mm frame lines (mechanism.mjs).
 - The shutter step "runs slowed down" (content: tour Shutter); the viewfinder chart is drawn about 32° across, "a closer view than the finder's own" (camera.ts).
-- The page's positions and cameras are typed in model space, not placed from the build's named points (content.mjs header).
+- The callouts' positions and cameras are typed in model space, not placed from the build's named points; the motions come from the hints and the tour's points are given in the camera frame's millimetres (content.mjs header).
 
 ## 10. Log
 
