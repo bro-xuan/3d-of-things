@@ -1,0 +1,571 @@
+{
+  "order": 13,
+  "title": "Garden Sprinkler",
+  "hook": "No motor: two jets of water push the arm round, the same way a rocket flies.",
+  "category": "home",
+  "summary": [
+    "A sprinkler has to spread water over a lawn evenly, using nothing but the pressure in the hose. This one does it with no motor at all: the water leaving the arm pushes it round.",
+    "Water from the hose comes up a column in the middle of the wheeled frame and into the arm through a swivel. At each end of the arm a nozzle points the water outwards, a little up and a little sideways.",
+    "Squirting water backwards pushes the nozzle forwards, as a rocket’s exhaust pushes the rocket. On this model the arm turns at about 170 rpm, where the push at 2 bar settles once friction and the water’s own swing have taken their share."
+  ],
+  "model": "models/garden-sprinkler.glb",
+  "viewAngle": [
+    -32,
+    22
+  ],
+  "explodeAngle": [
+    -36,
+    26
+  ],
+  "facts": [
+    {
+      "label": "Jets",
+      "value": "19 m/s at 2 bar"
+    },
+    {
+      "label": "Water",
+      "value": "about 11 litres a minute"
+    },
+    {
+      "label": "Spin",
+      "value": "about 170 rpm"
+    },
+    {
+      "label": "Throw",
+      "value": "about 7 m, a circle 14 m across"
+    },
+    {
+      "label": "Real size",
+      "value": "35 × 20 × 25 cm"
+    }
+  ],
+  "parts": [
+    {
+      "node": "garden_sprinkler_01_body_main",
+      "label": "Frame and column",
+      "group": "Water in",
+      "about": "The hose screws on at the front. The water turns up the column in the middle to the swivel at its top.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "garden_sprinkler_01_spinner",
+      "label": "Arm",
+      "group": "Spin",
+      "about": "Hollow, with its hub on the column. Water pressure lifts the hub onto a washer that seals the joint and takes the arm’s weight as it turns.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2943,
+      "window": [
+        0.3,
+        0.7
+      ]
+    },
+    {
+      "node": "garden_sprinkler_01_nozel_left",
+      "label": "Left nozzle",
+      "group": "Jets",
+      "about": "Points the water outwards, 20° up and a little sideways. The sideways part of the jet is what turns the arm.",
+      "direction": [
+        -1,
+        0,
+        0.09
+      ],
+      "distance": 0.2102,
+      "window": [
+        0,
+        0.3
+      ]
+    },
+    {
+      "node": "garden_sprinkler_01_nozel_right",
+      "label": "Right nozzle",
+      "group": "Jets",
+      "about": "The same as the left one, pointing the other way round, so the two pushes add up to a turn.",
+      "direction": [
+        1,
+        0,
+        -0.09
+      ],
+      "distance": 0.2102,
+      "window": [
+        0,
+        0.3
+      ]
+    },
+    {
+      "node": "garden_sprinkler_01_wheels",
+      "label": "Wheels",
+      "group": "Frame",
+      "about": "Two wheels at the back, so it can be pulled by the hose to the next patch of lawn.",
+      "direction": [
+        0,
+        -0.6,
+        -0.8
+      ],
+      "distance": 0.2522,
+      "window": [
+        0.5,
+        0.8
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Nozzles",
+      "text": "Each squirts about 5.7 litres a minute at 19 m/s. Pushing the water out backwards pushes the nozzle forwards with about 1.8 newtons: the air plays no part in it.",
+      "node": "garden_sprinkler_01_nozel_left",
+      "position": [
+        -0.7231,
+        0.8198,
+        0.1691
+      ],
+      "camera": {
+        "position": [
+          -1.959,
+          1.8198,
+          1.3931
+        ],
+        "target": [
+          -0.8457,
+          0.8198,
+          0.0663
+        ]
+      }
+    },
+    {
+      "title": "Swivel",
+      "text": "The arm’s hub sits on the column. Water pressure lifts it onto a washer, which seals the joint and makes the face it turns on.",
+      "node": "garden_sprinkler_01_spinner",
+      "position": [
+        0,
+        0.597,
+        0.1018
+      ],
+      "camera": {
+        "position": [
+          -0.8512,
+          2.1128,
+          1.8385
+        ],
+        "target": [
+          0,
+          0.7021,
+          0.0934
+        ]
+      }
+    },
+    {
+      "title": "Hose connector",
+      "text": "At 3 bar at the tap, about 2 bar is left at the nozzles once the hose, the tap and the swivel have taken their share.",
+      "node": "garden_sprinkler_01_body_main",
+      "position": [
+        0,
+        0.2438,
+        0.5138
+      ],
+      "camera": {
+        "position": [
+          1.4377,
+          1.1429,
+          2.223
+        ],
+        "target": [
+          -0.1358,
+          0.2438,
+          0.6496
+        ]
+      }
+    },
+    {
+      "title": "Wheels",
+      "text": "Pull it by the hose and it rolls to the next patch, still turning.",
+      "node": "garden_sprinkler_01_wheels",
+      "position": [
+        0.6306,
+        0.1555,
+        -0.369
+      ],
+      "camera": {
+        "position": [
+          -1.2397,
+          0.9426,
+          -2.1379
+        ],
+        "target": [
+          0,
+          0.156,
+          -0.3675
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "garden_sprinkler_01_spinner",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        0,
+        0.7021,
+        0.0934
+      ],
+      "speed": -2.767
+    }
+  ],
+  "motionLabel": "Turn on the tap",
+  "how": [
+    {
+      "label": "The idea",
+      "title": "Pushed round by its own water",
+      "text": [
+        "Water comes up the column into the arm and leaves through the two nozzles. Each nozzle throws its water outwards and a little sideways, and as it does, the water pushes back on it.",
+        "The two pushes point opposite ways at opposite ends of the arm, so together they turn it. Nothing else drives it: no motor, no gears."
+      ],
+      "angle": [
+        -30,
+        26
+      ],
+      "focus": [
+        "garden_sprinkler_01_spinner",
+        "garden_sprinkler_01_nozel_left",
+        "garden_sprinkler_01_nozel_right"
+      ],
+      "carries": "water",
+      "flow": [
+        [
+          0,
+          0.2438,
+          0.5138
+        ],
+        [
+          0,
+          0.2186,
+          0.1018
+        ],
+        [
+          0,
+          0.597,
+          0.1018
+        ],
+        [
+          0,
+          0.7021,
+          0.0934
+        ],
+        {
+          "node": "garden_sprinkler_01_spinner",
+          "at": [
+            -0.3153,
+            0.7399,
+            0.1228
+          ],
+          "ride": true
+        },
+        {
+          "node": "garden_sprinkler_01_nozel_left",
+          "at": [
+            -0.7231,
+            0.8198,
+            0.1691
+          ],
+          "ride": true
+        }
+      ],
+      "flows": [
+        [
+          [
+            0,
+            0.597,
+            0.1018
+          ],
+          [
+            0,
+            0.7021,
+            0.0934
+          ],
+          {
+            "node": "garden_sprinkler_01_spinner",
+            "at": [
+              0.3153,
+              0.7399,
+              0.064
+            ],
+            "ride": true
+          },
+          {
+            "node": "garden_sprinkler_01_nozel_right",
+            "at": [
+              0.7231,
+              0.8198,
+              0.0177
+            ],
+            "ride": true
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "node": "garden_sprinkler_01_nozel_left",
+          "text": "19 m/s jet",
+          "at": [
+            -0.7231,
+            0.8198,
+            0.1691
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Water in",
+      "title": "Up the column, through the swivel",
+      "text": [
+        "The hose screws on at the front of the frame. The water turns up the column in the middle and into the arm’s hub, which turns on the top of the column.",
+        "At 3 bar at the tap, about 2 bar is left by the time the water reaches the nozzles, and the two of them pass about 11 litres a minute."
+      ],
+      "angle": [
+        -12,
+        18
+      ],
+      "focus": [
+        "garden_sprinkler_01_body_main",
+        "garden_sprinkler_01_spinner"
+      ],
+      "carries": "water",
+      "flow": [
+        [
+          0,
+          0.2438,
+          0.5138
+        ],
+        [
+          0,
+          0.2186,
+          0.1018
+        ],
+        [
+          0,
+          0.597,
+          0.1018
+        ],
+        [
+          0,
+          0.7021,
+          0.0934
+        ]
+      ],
+      "tags": [
+        {
+          "node": "garden_sprinkler_01_body_main",
+          "text": "Hose in",
+          "at": [
+            0,
+            0.2438,
+            0.5138
+          ]
+        },
+        {
+          "node": "garden_sprinkler_01_spinner",
+          "text": "Swivel",
+          "at": [
+            0,
+            0.597,
+            0.1018
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The push",
+      "title": "A rocket on a stick",
+      "text": [
+        "A nozzle squirting water backwards is pushed forwards, just as a rocket is pushed by its exhaust: it is the water leaving that pushes, not the water pressing on the air. A sprinkler would turn in a vacuum.",
+        "More pressure means faster jets and a harder push, so the arm turns faster and the water goes further. Pick a pressure."
+      ],
+      "angle": [
+        -34,
+        30
+      ],
+      "fill": 0.8,
+      "focus": [
+        "garden_sprinkler_01_spinner",
+        "garden_sprinkler_01_nozel_left",
+        "garden_sprinkler_01_nozel_right"
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "How far it throws",
+        "caption": "From the middle to where 2 mm drops land, in still air.",
+        "unit": "Metres",
+        "follow": "selected",
+        "bars": [
+          {
+            "label": "1 bar",
+            "value": 5.2,
+            "note": "82 rpm"
+          },
+          {
+            "label": "2 bar",
+            "value": 6.8,
+            "note": "166 rpm"
+          },
+          {
+            "label": "3 bar",
+            "value": 7.8,
+            "note": "224 rpm"
+          }
+        ]
+      },
+      "try": "speeds",
+      "spin": [
+        "garden_sprinkler_01_spinner"
+      ],
+      "speeds": [
+        {
+          "label": "1 bar",
+          "factor": 0.4939759036144578,
+          "note": "Jets at 14 m/s, 0.9 N each: the arm turns at about 80 rpm."
+        },
+        {
+          "label": "2 bar",
+          "factor": 1,
+          "note": "Jets at 19 m/s, 1.8 N each: about 170 rpm, water out to 7 m."
+        },
+        {
+          "label": "3 bar",
+          "factor": 1.3493975903614457,
+          "note": "Jets at 24 m/s, 2.7 N each: about 220 rpm, water out to nearly 8 m."
+        }
+      ]
+    },
+    {
+      "label": "Speed",
+      "title": "Where the push goes",
+      "text": [
+        "Why doesn’t the arm spin faster and faster? Every drop entering at the middle has to be swung out to the tip at the arm’s speed, and that takes most of the push: at 166 rpm about three quarters of it. Friction in the swivel takes most of the rest.",
+        "Turned fully sideways, the same nozzles would spin the arm at well over 1,000 rpm, but the faster they move, the more their own speed cancels the jets’ and the water drops short. A slight angle throws further."
+      ],
+      "angle": [
+        -30,
+        34
+      ],
+      "focus": [
+        "garden_sprinkler_01_spinner",
+        "garden_sprinkler_01_nozel_left",
+        "garden_sprinkler_01_nozel_right",
+        "garden_sprinkler_01_body_main"
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Where the push goes at 166 rpm",
+        "caption": "Shares of the jets’ turning push, 0.13 N·m in all.",
+        "unit": "% of the push",
+        "bars": [
+          {
+            "label": "Swinging water out",
+            "value": 76
+          },
+          {
+            "label": "Swivel friction",
+            "value": 23
+          },
+          {
+            "label": "Air on the arm",
+            "value": 1.5
+          }
+        ],
+        "picked": 0
+      }
+    },
+    {
+      "label": "Throw",
+      "title": "20° up and a little to the side",
+      "text": [
+        "Water needs height to travel, so the nozzles tip up 20°. With no air it would carry 25 m; drag on the drops brings it down to about 7 m, a wetted circle 14 m across.",
+        "Run backwards, sucking water in, a sprinkler turns the other way, about 40 times slower: a puzzle Feynman posed, settled by experiment in 2024."
+      ],
+      "angle": [
+        -36,
+        18
+      ],
+      "focus": [
+        "garden_sprinkler_01_spinner",
+        "garden_sprinkler_01_nozel_left",
+        "garden_sprinkler_01_nozel_right"
+      ],
+      "carries": "water",
+      "flow": [
+        [
+          0,
+          0.7021,
+          0.0934
+        ],
+        {
+          "node": "garden_sprinkler_01_spinner",
+          "at": [
+            -0.3153,
+            0.7399,
+            0.1228
+          ],
+          "ride": true
+        },
+        {
+          "node": "garden_sprinkler_01_nozel_left",
+          "at": [
+            -0.7231,
+            0.8198,
+            0.1691
+          ],
+          "ride": true
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Turning the nozzles sideways",
+        "caption": "The more sideways the nozzles point, the faster the arm turns and the shorter the throw (2 bar, 2 mm drops).",
+        "unit": "Metres thrown",
+        "bars": [
+          {
+            "label": "13°",
+            "value": 6.8,
+            "note": "166 rpm"
+          },
+          {
+            "label": "60°",
+            "value": 6.4,
+            "note": "1,063 rpm"
+          },
+          {
+            "label": "75°",
+            "value": 5,
+            "note": "1,347 rpm"
+          },
+          {
+            "label": "90°",
+            "value": 2.5,
+            "note": "1,474 rpm"
+          }
+        ],
+        "picked": 0
+      }
+    }
+  ],
+  "credit": {
+    "title": "Garden Sprinkler 01",
+    "author": "Amal Kumar",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/garden_sprinkler_01"
+  }
+}

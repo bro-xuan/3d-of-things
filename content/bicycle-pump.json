@@ -1,0 +1,1174 @@
+{
+  "order": 12,
+  "title": "Bicycle Pump",
+  "hook": "Air only goes into the tyre at the very end of each push, once the barrel’s pressure beats the tyre’s.",
+  "category": "home",
+  "summary": [
+    "A tyre is already full of air, at six or seven times the pressure around it, and a pump has to push more in. It does that by squeezing a barrel of air until it is at a higher pressure than the tyre, then letting it through a one-way valve.",
+    "Pushing the handle drives a piston down the barrel. A rubber cup on the piston seals as it goes down and folds to let air past on the way back up; a ball valve in the base lets the air out to the hose and stops the tyre’s air coming back.",
+    "So air only flows into the tyre in the last part of each stroke, and pumping gets harder as the tyre fills: at 6 bar the piston needs 424 newtons, the weight of 43 kg. On this model the handle, the piston and the valve move with the stroke’s real timing."
+  ],
+  "model": "models/bicycle-pump.glb",
+  "viewAngle": [
+    -28,
+    12
+  ],
+  "explodeAngle": [
+    -34,
+    14
+  ],
+  "explodeDuration": 2400,
+  "facts": [
+    {
+      "label": "Bore",
+      "value": "30 mm"
+    },
+    {
+      "label": "Stroke",
+      "value": "42 cm, about 300 cm³ of air"
+    },
+    {
+      "label": "Push at 6 bar",
+      "value": "424 N, like 43 kg"
+    },
+    {
+      "label": "Road tyre",
+      "value": "about 24 strokes to 7 bar"
+    },
+    {
+      "label": "Real size",
+      "value": "26 × 58 cm"
+    }
+  ],
+  "parts": [
+    {
+      "node": "plunger",
+      "label": "Handle and piston",
+      "group": "Push",
+      "about": "The T-handle, its rod and, at the rod’s foot, the piston with its rubber cup. Your weight goes down the rod.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3859,
+      "window": [
+        0,
+        0.45
+      ]
+    },
+    {
+      "node": "top_cap",
+      "label": "Top cap",
+      "group": "Push",
+      "about": "Guides the rod. Air gets into the barrel round it on every upstroke. Unscrew it and the whole plunger lifts out.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3859,
+      "window": [
+        0,
+        0.45
+      ]
+    },
+    {
+      "node": "barrel",
+      "label": "Barrel",
+      "group": "Squeeze",
+      "about": "A tube 30 mm across inside. A full stroke sweeps about 300 cm³ of air.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "base",
+      "label": "Base",
+      "group": "Valve",
+      "about": "You stand on it. A passage inside takes the air from the barrel’s foot across to the hose.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.2316,
+      "window": [
+        0.6,
+        0.85
+      ]
+    },
+    {
+      "node": "check_valve",
+      "label": "Ball valve",
+      "group": "Valve",
+      "about": "A rubber ball on a seat in the outlet. Air lifts it to get out; between strokes the tyre’s pressure presses it back down.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "hose",
+      "label": "Hose",
+      "group": "Out",
+      "about": "Carries the air from the base to the head. It holds the tyre’s pressure between strokes.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.1737,
+      "window": [
+        0.5,
+        0.7
+      ]
+    },
+    {
+      "node": "head",
+      "label": "Head",
+      "group": "Out",
+      "about": "A lever squeezes a rubber gasket round the tyre’s valve stem. A pin inside holds a Schrader valve open; a Presta valve is pushed open by the pump’s own air.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.2702,
+      "window": [
+        0.45,
+        0.62
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Handle",
+      "text": "Two hands and most of your weight. At 6 bar the piston needs 424 newtons to move, and every bar more adds another 71.",
+      "node": "plunger",
+      "ride": true,
+      "position": [
+        0.1737,
+        1.9199,
+        -0.0314
+      ],
+      "camera": {
+        "position": [
+          -0.3481,
+          2.1883,
+          0.7506
+        ],
+        "target": [
+          0,
+          1.9102,
+          -0.0314
+        ]
+      }
+    },
+    {
+      "title": "Top cap",
+      "text": "The rod slides through it. On every upstroke air comes in here, round the rod, into the barrel above the piston.",
+      "node": "top_cap",
+      "position": [
+        0.0347,
+        0.9937,
+        -0.0314
+      ],
+      "camera": {
+        "position": [
+          -0.2584,
+          1.1991,
+          0.4162
+        ],
+        "target": [
+          0,
+          1.011,
+          -0.0314
+        ]
+      }
+    },
+    {
+      "title": "Piston and cup",
+      "text": "The rubber cup’s lip faces down. Going down, the squeezed air presses it against the barrel and it seals; coming up, it folds inward and lets air past.",
+      "node": "plunger",
+      "position": [
+        0.0289,
+        0.9068,
+        -0.0314
+      ],
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -0.187,
+          0.9936,
+          0.4112
+        ],
+        "target": [
+          0.0289,
+          0.9068,
+          -0.0314
+        ]
+      }
+    },
+    {
+      "title": "Barrel",
+      "text": "30 mm across inside and 42 cm of stroke: about 300 cm³ of air each time, squeezed into a tyre that already holds a litre or more.",
+      "node": "barrel",
+      "position": [
+        0.0318,
+        0.27,
+        -0.0314
+      ],
+      "camera": {
+        "position": [
+          -0.6614,
+          0.7736,
+          1.1692
+        ],
+        "target": [
+          0.0318,
+          0.5788,
+          -0.0314
+        ]
+      }
+    },
+    {
+      "title": "Ball valve",
+      "text": "Hidden in the base, under the hose: a rubber ball on a seat. It only lifts when the air in the barrel is at a higher pressure than the tyre’s.",
+      "node": "base",
+      "position": [
+        0,
+        0.1157,
+        0.0342
+      ],
+      "camera": {
+        "position": [
+          -0.3222,
+          0.3597,
+          0.4776
+        ],
+        "target": [
+          0,
+          0.1157,
+          0.0342
+        ]
+      }
+    },
+    {
+      "title": "Head",
+      "text": "The lever presses a gasket round the valve stem so the air can only go one way, into the tyre.",
+      "node": "head",
+      "position": [
+        0.1544,
+        0.82,
+        0.0024
+      ],
+      "camera": {
+        "position": [
+          0.376,
+          0.8981,
+          0.3862
+        ],
+        "target": [
+          0.1544,
+          0.82,
+          0.0024
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "stroke",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0,
+        0.5788,
+        -0.0314
+      ],
+      "speed": 0.5
+    },
+    {
+      "node": "plunger",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "crank": "stroke",
+      "along": [
+        0,
+        1,
+        0
+      ],
+      "throw": 0.4052,
+      "rod": 7.7187,
+      "phase": 0
+    },
+    {
+      "node": "check_valve",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "cam": "stroke",
+      "along": [
+        0,
+        1,
+        0
+      ],
+      "lift": 0.0039,
+      "phase": -158,
+      "duration": 44
+    }
+  ],
+  "motionLabel": "Pump",
+  "how": [
+    {
+      "label": "The idea",
+      "title": "Squeezing air into air",
+      "text": [
+        "A road bike’s tyre holds air at about 7 bar, seven times the pressure of the air outside. To get more in, the pump has to squeeze its own air until it is at an even higher pressure, and then open a door to the tyre.",
+        "That is all a pump is: a barrel, a piston to squeeze, and a valve that only opens one way."
+      ],
+      "angle": [
+        -26,
+        12
+      ],
+      "focus": [
+        "plunger",
+        "barrel"
+      ],
+      "tags": [
+        {
+          "node": "barrel",
+          "text": "30 mm bore",
+          "at": [
+            0.0318,
+            0.5788,
+            -0.0314
+          ]
+        },
+        {
+          "node": "plunger",
+          "text": "Piston",
+          "at": [
+            0.0289,
+            0.9358,
+            -0.0314
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Push",
+      "title": "Your weight on 7 cm²",
+      "text": [
+        "The piston’s face is 7 cm². The air under it pushes back with the pressure times that area, so at 6 bar the handle needs 424 newtons: the weight of 43 kg. At 8 bar it needs 565, nearly all of a 70 kg rider.",
+        "That, not the pump, is what limits a floor pump: you stand on the base and lean your weight on the handle. Hold the button and pump."
+      ],
+      "angle": [
+        -24,
+        10
+      ],
+      "fill": 0.78,
+      "focus": [
+        "plunger",
+        "barrel",
+        "top_cap"
+      ],
+      "flow": [
+        [
+          0,
+          1.9102,
+          -0.0314
+        ],
+        [
+          0,
+          1.3506,
+          -0.0314
+        ],
+        [
+          0,
+          0.9261,
+          -0.0314
+        ],
+        {
+          "node": "plunger",
+          "at": [
+            0.0289,
+            0.9358,
+            -0.0314
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Push needed on the handle",
+        "caption": "Pressure times the piston’s 7.07 cm², against a 70 kg person’s weight.",
+        "unit": "Newtons",
+        "bars": [
+          {
+            "label": "2 bar",
+            "value": 141
+          },
+          {
+            "label": "4 bar",
+            "value": 283
+          },
+          {
+            "label": "6 bar",
+            "value": 424
+          },
+          {
+            "label": "8 bar",
+            "value": 565
+          },
+          {
+            "label": "70 kg",
+            "value": 687,
+            "note": "body weight"
+          }
+        ],
+        "picked": 2
+      },
+      "try": "run",
+      "count": [
+        {
+          "node": "stroke",
+          "label": "Strokes"
+        }
+      ]
+    },
+    {
+      "label": "Squeeze",
+      "title": "The valve opens at the very end",
+      "text": [
+        "Going down, the piston squeezes the barrel’s air into less and less room. Its pressure only passes the tyre’s, 6 bar, once the air is in a seventh of its first volume: after about 86% of the stroke. Until then the ball valve stays shut and nothing goes in.",
+        "So most of each push only squeezes; the last 6 cm or so actually fill the tyre. The fuller the tyre, the later the valve opens."
+      ],
+      "angle": [
+        -20,
+        8
+      ],
+      "fill": 0.8,
+      "rate": 0.4,
+      "focus": [
+        "plunger",
+        "barrel",
+        "check_valve"
+      ],
+      "carries": "air",
+      "flow": [
+        {
+          "node": "plunger",
+          "at": [
+            0,
+            0.8933,
+            -0.0314
+          ]
+        },
+        [
+          0,
+          0.0578,
+          -0.0314
+        ],
+        [
+          0,
+          0.05,
+          0.0024
+        ],
+        {
+          "node": "check_valve",
+          "at": [
+            0,
+            0.079,
+            0.0342
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "check_valve",
+          "text": "Ball valve",
+          "at": [
+            0,
+            0.079,
+            0.0342
+          ]
+        }
+      ],
+      "chart": {
+        "type": "timing",
+        "title": "One stroke, slowed down",
+        "caption": "The air under the piston against a tyre at 6 bar: the valve opens only when the barrel catches up. The cursor follows the pump.",
+        "node": "stroke",
+        "perTurn": 1,
+        "bands": [
+          [
+            0.377,
+            0.5,
+            "into the tyre"
+          ]
+        ],
+        "lanes": [
+          {
+            "name": "Handle",
+            "points": [
+              [
+                0,
+                1
+              ],
+              [
+                0.020833333333333332,
+                0.996
+              ],
+              [
+                0.041666666666666664,
+                0.983
+              ],
+              [
+                0.0625,
+                0.962
+              ],
+              [
+                0.08333333333333333,
+                0.933
+              ],
+              [
+                0.10416666666666667,
+                0.897
+              ],
+              [
+                0.125,
+                0.854
+              ],
+              [
+                0.14583333333333334,
+                0.804
+              ],
+              [
+                0.16666666666666666,
+                0.75
+              ],
+              [
+                0.1875,
+                0.691
+              ],
+              [
+                0.20833333333333334,
+                0.629
+              ],
+              [
+                0.22916666666666666,
+                0.565
+              ],
+              [
+                0.25,
+                0.5
+              ],
+              [
+                0.2708333333333333,
+                0.435
+              ],
+              [
+                0.2916666666666667,
+                0.371
+              ],
+              [
+                0.3125,
+                0.309
+              ],
+              [
+                0.3333333333333333,
+                0.25
+              ],
+              [
+                0.3541666666666667,
+                0.196
+              ],
+              [
+                0.375,
+                0.146
+              ],
+              [
+                0.3958333333333333,
+                0.103
+              ],
+              [
+                0.4166666666666667,
+                0.067
+              ],
+              [
+                0.4375,
+                0.038
+              ],
+              [
+                0.4583333333333333,
+                0.017
+              ],
+              [
+                0.4791666666666667,
+                0.004
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                0.5208333333333334,
+                0.004
+              ],
+              [
+                0.5416666666666666,
+                0.017
+              ],
+              [
+                0.5625,
+                0.038
+              ],
+              [
+                0.5833333333333334,
+                0.067
+              ],
+              [
+                0.6041666666666666,
+                0.103
+              ],
+              [
+                0.625,
+                0.146
+              ],
+              [
+                0.6458333333333334,
+                0.196
+              ],
+              [
+                0.6666666666666666,
+                0.25
+              ],
+              [
+                0.6875,
+                0.309
+              ],
+              [
+                0.7083333333333334,
+                0.371
+              ],
+              [
+                0.7291666666666666,
+                0.435
+              ],
+              [
+                0.75,
+                0.5
+              ],
+              [
+                0.7708333333333334,
+                0.565
+              ],
+              [
+                0.7916666666666666,
+                0.629
+              ],
+              [
+                0.8125,
+                0.691
+              ],
+              [
+                0.8333333333333334,
+                0.75
+              ],
+              [
+                0.8541666666666666,
+                0.804
+              ],
+              [
+                0.875,
+                0.854
+              ],
+              [
+                0.8958333333333334,
+                0.897
+              ],
+              [
+                0.9166666666666666,
+                0.933
+              ],
+              [
+                0.9375,
+                0.962
+              ],
+              [
+                0.9583333333333334,
+                0.983
+              ],
+              [
+                0.9791666666666666,
+                0.996
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "notes": [
+              [
+                0.25,
+                "down"
+              ],
+              [
+                0.75,
+                "up"
+              ]
+            ]
+          },
+          {
+            "name": "Barrel’s air",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.020833333333333332,
+                0.001
+              ],
+              [
+                0.041666666666666664,
+                0.003
+              ],
+              [
+                0.0625,
+                0.007
+              ],
+              [
+                0.08333333333333333,
+                0.012
+              ],
+              [
+                0.10416666666666667,
+                0.019
+              ],
+              [
+                0.125,
+                0.029
+              ],
+              [
+                0.14583333333333334,
+                0.041
+              ],
+              [
+                0.16666666666666666,
+                0.056
+              ],
+              [
+                0.1875,
+                0.074
+              ],
+              [
+                0.20833333333333334,
+                0.098
+              ],
+              [
+                0.22916666666666666,
+                0.128
+              ],
+              [
+                0.25,
+                0.167
+              ],
+              [
+                0.2708333333333333,
+                0.217
+              ],
+              [
+                0.2916666666666667,
+                0.283
+              ],
+              [
+                0.3125,
+                0.373
+              ],
+              [
+                0.3333333333333333,
+                0.5
+              ],
+              [
+                0.3541666666666667,
+                0.685
+              ],
+              [
+                0.375,
+                0.971
+              ],
+              [
+                0.3958333333333333,
+                1
+              ],
+              [
+                0.4166666666666667,
+                1
+              ],
+              [
+                0.4375,
+                1
+              ],
+              [
+                0.4583333333333333,
+                1
+              ],
+              [
+                0.4791666666666667,
+                1
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                0.5208333333333334,
+                0
+              ],
+              [
+                0.5416666666666666,
+                0
+              ],
+              [
+                0.5625,
+                0
+              ],
+              [
+                0.5833333333333334,
+                0
+              ],
+              [
+                0.6041666666666666,
+                0
+              ],
+              [
+                0.625,
+                0
+              ],
+              [
+                0.6458333333333334,
+                0
+              ],
+              [
+                0.6666666666666666,
+                0
+              ],
+              [
+                0.6875,
+                0
+              ],
+              [
+                0.7083333333333334,
+                0
+              ],
+              [
+                0.7291666666666666,
+                0
+              ],
+              [
+                0.75,
+                0
+              ],
+              [
+                0.7708333333333334,
+                0
+              ],
+              [
+                0.7916666666666666,
+                0
+              ],
+              [
+                0.8125,
+                0
+              ],
+              [
+                0.8333333333333334,
+                0
+              ],
+              [
+                0.8541666666666666,
+                0
+              ],
+              [
+                0.875,
+                0
+              ],
+              [
+                0.8958333333333334,
+                0
+              ],
+              [
+                0.9166666666666666,
+                0
+              ],
+              [
+                0.9375,
+                0
+              ],
+              [
+                0.9583333333333334,
+                0
+              ],
+              [
+                0.9791666666666666,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "notes": [
+              [
+                0.377,
+                "6 bar"
+              ]
+            ]
+          },
+          {
+            "name": "Valve open",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.372,
+                0
+              ],
+              [
+                0.377,
+                1
+              ],
+              [
+                0.495,
+                1
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Refill",
+      "title": "The cup folds on the way up",
+      "text": [
+        "Pulling the handle up leaves a growing empty space under the piston. The cup’s lip faces down, so now it folds inward and lets air past from above, where it came in round the rod at the top cap.",
+        "Going down again, the squeezed air pushes the lip out against the barrel’s wall and it seals: the cup is the pump’s inlet valve."
+      ],
+      "angle": [
+        -28,
+        14
+      ],
+      "fill": 0.78,
+      "focus": [
+        "plunger",
+        "top_cap",
+        "barrel"
+      ],
+      "carries": "air",
+      "flow": [
+        [
+          0,
+          1.011,
+          -0.0314
+        ],
+        [
+          0,
+          0.9261,
+          -0.0314
+        ],
+        {
+          "node": "plunger",
+          "at": [
+            0.0289,
+            0.9358,
+            -0.0314
+          ]
+        },
+        {
+          "node": "plunger",
+          "at": [
+            0,
+            0.8933,
+            -0.0314
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "plunger",
+          "text": "Cup seal",
+          "at": [
+            0.0289,
+            0.9068,
+            -0.0314
+          ]
+        },
+        {
+          "node": "top_cap",
+          "text": "Air in",
+          "at": [
+            0.0347,
+            0.9937,
+            -0.0314
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Out",
+      "title": "Through the ball, the hose and the head",
+      "text": [
+        "Once the ball lifts, the air runs across the base, up the hose and through the head into the tyre’s valve. Between strokes the tyre’s pressure pushes the ball back on its seat, so nothing leaks back while you lift the handle.",
+        "The head’s lever squeezes a gasket round the valve stem. A Schrader valve, as on a car, is held open by a pin in the head; a Presta valve opens when the pump’s pressure beats the tyre’s."
+      ],
+      "angle": [
+        26,
+        14
+      ],
+      "fill": 0.82,
+      "focus": [
+        "base",
+        "check_valve",
+        "hose",
+        "head"
+      ],
+      "carries": "air",
+      "flow": [
+        [
+          0,
+          0.0578,
+          -0.0314
+        ],
+        [
+          0,
+          0.05,
+          0.0024
+        ],
+        {
+          "node": "check_valve",
+          "at": [
+            0,
+            0.079,
+            0.0342
+          ]
+        },
+        [
+          0,
+          0.1157,
+          0.0342
+        ],
+        [
+          0.0579,
+          0.5788,
+          0.0178
+        ],
+        [
+          0.1158,
+          1.0515,
+          0.0178
+        ],
+        [
+          0.1544,
+          0.82,
+          0.0024
+        ]
+      ],
+      "tags": [
+        {
+          "node": "head",
+          "text": "Head",
+          "at": [
+            0.1544,
+            0.82,
+            0.0024
+          ]
+        },
+        {
+          "node": "check_valve",
+          "text": "Ball valve",
+          "at": [
+            0,
+            0.079,
+            0.0342
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Filling",
+      "title": "Two dozen strokes for a road tyre",
+      "text": [
+        "A road tyre holds about a litre of air; to bring it to 7 bar the pump has to push in seven more litres of outside air, about 24 strokes. A wide mountain-bike tyre holds five times as much, but needs only 2 bar.",
+        "Squeezing warms the air, by a couple of hundred degrees for an instant at the barrel’s foot, though it is only a fraction of a gram. After a whole tyre the bottom of the barrel feels warm."
+      ],
+      "angle": [
+        -30,
+        10
+      ],
+      "focus": [
+        "barrel",
+        "base",
+        "plunger"
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Strokes to fill",
+        "caption": "From flat, with about 300 cm³ of outside air a stroke.",
+        "unit": "Strokes",
+        "bars": [
+          {
+            "label": "Road 700×25",
+            "value": 24,
+            "note": "7 bar"
+          },
+          {
+            "label": "MTB 29×2.3",
+            "value": 35,
+            "note": "2 bar"
+          }
+        ]
+      }
+    }
+  ],
+  "credit": {
+    "title": "Tire Pump",
+    "author": "Garrison Gager",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/tire_pump",
+    "extra": {
+      "label": "Built for this site",
+      "text": "The piston and its cup seal, the passage through the base and the ball valve."
+    }
+  },
+  "build": {
+    "augment": "objects/bicycle-pump/augment.mjs",
+    "hints": "objects/bicycle-pump/hints.json"
+  }
+}

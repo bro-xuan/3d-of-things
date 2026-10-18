@@ -1,0 +1,1471 @@
+{
+  "order": 11,
+  "title": "Washing Machine",
+  "hook": "Washes by dropping your clothes about fifty times a minute, then spins at 1,400 to throw the water out.",
+  "category": "home",
+  "summary": [
+    "Getting dirt out of cloth takes four things: something to loosen it, heat, time and movement. A washing machine brings all four, and the movement is the clever part: the clothes are washed by falling.",
+    "A valve lets water in through the detergent drawer, and a heater under the drum warms it. A motor under the tub turns the drum through a belt, three ridges inside lift the clothes, and the tub that holds the water hangs on springs, stands on dampers and carries a block of concrete. A pump empties it.",
+    "Below about 60 turns a minute the clothes tumble through the water; above that they are pinned to the drum’s wall, which is what spinning uses to fling the water out through the holes. On this model the drum, the belt and the motor turn at their real ratio."
+  ],
+  "model": "models/washing-machine.glb",
+  "viewAngle": [
+    -30,
+    14
+  ],
+  "explodeAngle": [
+    -38,
+    18
+  ],
+  "explodeDuration": 3000,
+  "facts": [
+    {
+      "label": "Load",
+      "value": "8 kg of dry washing"
+    },
+    {
+      "label": "Drum",
+      "value": "57 litres, 47 cm across"
+    },
+    {
+      "label": "Spin",
+      "value": "up to 1,400 rpm"
+    },
+    {
+      "label": "Belt",
+      "value": "motor turns 10.8× faster"
+    },
+    {
+      "label": "Real size",
+      "value": "60 × 85 × 60 cm"
+    }
+  ],
+  "parts": [
+    {
+      "node": "fascia",
+      "label": "Control panel",
+      "group": "Controls",
+      "about": "The programme dial and the display. Behind it a circuit board runs the programme: when to open the valve, heat, turn the drum and pump.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.7341,
+      "window": [
+        0.22,
+        0.42
+      ]
+    },
+    {
+      "node": "control_board",
+      "label": "Control board",
+      "group": "Controls",
+      "about": "The machine’s timer: it reads the water level and temperature and switches the valve, the heater, the motor and the pump in turn.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.261,
+      "window": [
+        0.4,
+        0.55
+      ]
+    },
+    {
+      "node": "inlet_valve",
+      "label": "Inlet valve",
+      "group": "Water in",
+      "about": "Two electric valves on the cold supply. Each one feeds a different compartment of the drawer, so the right powder goes in at the right time.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "drawer",
+      "label": "Detergent drawer",
+      "group": "Water in",
+      "about": "Three compartments: prewash, main wash and softener. Water from the valve sluices one out at a time, down into the tub.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.6199,
+      "window": [
+        0.03,
+        0.2
+      ]
+    },
+    {
+      "node": "dispenser",
+      "label": "Drawer housing",
+      "group": "Water in",
+      "about": "The box the drawer slides into. Water runs out of its back, down a wide hose into the top of the tub.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.4078,
+      "window": [
+        0.22,
+        0.4
+      ]
+    },
+    {
+      "node": "hoses",
+      "label": "Hoses",
+      "group": "Water in",
+      "about": "Valve to drawer, drawer to tub, tub to pump and pump to the drain. The drain hose rises above the water level before it leaves, so the tub can’t siphon itself empty.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "heater",
+      "label": "Heater",
+      "group": "Water in",
+      "about": "A 2 kW element in the sump, under the drum, where the water lies. A sensor beside it tells the board when the water is warm enough.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0
+    },
+    {
+      "node": "motor",
+      "label": "Motor",
+      "group": "Drive",
+      "about": "A small, fast motor bolted under the tub, so it swings with it. Carbon brushes feed its spinning coils.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "motor_rotor",
+      "label": "Motor’s rotor",
+      "group": "Drive",
+      "about": "The part that turns, with a small pulley on its end. It runs about 10.8 times as fast as the drum.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "belt",
+      "label": "Belt",
+      "group": "Drive",
+      "about": "A ribbed rubber belt from the motor’s small pulley to the drum’s big one: a gearbox in one part.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "pulley",
+      "label": "Drum pulley",
+      "group": "Drive",
+      "about": "Bolted to the end of the drum’s shaft, behind the tub. Its size against the motor’s pulley sets the ratio.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "drum",
+      "label": "Drum",
+      "group": "Drum",
+      "about": "Stainless steel, punched with small holes. Water gets in and out through them; clothes can’t.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.4568,
+      "window": [
+        0.74,
+        0.96
+      ]
+    },
+    {
+      "node": "spider",
+      "label": "Spider and shaft",
+      "group": "Drum",
+      "about": "A three-armed aluminium casting on the drum’s back, with the steel shaft that runs through the tub’s bearings to the pulley.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0
+    },
+    {
+      "node": "tub_front",
+      "label": "Tub, front half",
+      "group": "Suspension",
+      "about": "The outer drum that holds the water. It doesn’t turn, but it swings on its springs. The sump and the heater are in its bottom.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.7504,
+      "window": [
+        0.5,
+        0.72
+      ]
+    },
+    {
+      "node": "tub_rear",
+      "label": "Tub, back half",
+      "group": "Suspension",
+      "about": "Carries the bearings in its hub, the motor underneath and the springs’ lugs on top.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "bearings",
+      "label": "Bearings",
+      "group": "Suspension",
+      "about": "Two ball bearings in the tub’s hub carry the drum’s shaft, sealed against the water inside.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "springs",
+      "label": "Springs",
+      "group": "Suspension",
+      "about": "The tub hangs from the cabinet’s top on two springs. They let it swing a few millimetres while the drum spins, so the cabinet doesn’t.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "dampers",
+      "label": "Dampers",
+      "group": "Suspension",
+      "about": "Two friction struts under the tub. They soak up the swinging, most of all as the drum speeds up through the speed where the tub would rock hardest.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "counterweight",
+      "label": "Counterweight",
+      "group": "Suspension",
+      "about": "A block of concrete on the tub’s top, about 12.5 kg. It makes the swinging mass heavy, so an uneven load shakes it less.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3752,
+      "window": [
+        0.42,
+        0.58
+      ]
+    },
+    {
+      "node": "front_weight",
+      "label": "Front counterweight",
+      "group": "Suspension",
+      "about": "A second block round the tub’s mouth, about 12.5 kg, which also brings the swinging mass’s centre forward, under the door.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0
+    },
+    {
+      "node": "bellows",
+      "label": "Door seal",
+      "group": "Suspension",
+      "about": "A rubber bellows from the tub’s mouth to the cabinet’s front. It keeps the water in and lets the tub move while the cabinet stands still.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.8483,
+      "window": [
+        0.44,
+        0.66
+      ]
+    },
+    {
+      "node": "drain_pump",
+      "label": "Drain pump",
+      "group": "Water out",
+      "about": "A small pump under the front, with a filter you can unscrew behind the flap to catch coins and buttons.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.4078,
+      "window": [
+        0.5,
+        0.7
+      ]
+    },
+    {
+      "node": "pump_impeller",
+      "label": "Impeller",
+      "group": "Water out",
+      "about": "Four vanes spun by the pump’s motor fling the water out to the drain hose.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0
+    },
+    {
+      "node": "door",
+      "label": "Door",
+      "group": "Cabinet",
+      "about": "Its glass bowl reaches back into the seal and presses against it, so the water stays in the drum.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.2284,
+      "window": [
+        0.1,
+        0.32
+      ],
+      "then": {
+        "direction": [
+          1,
+          0,
+          0.2
+        ],
+        "distance": 0.9788
+      }
+    },
+    {
+      "node": "front_panel",
+      "label": "Front panel",
+      "group": "Cabinet",
+      "about": "Enamelled steel with the door’s opening and the pump’s flap.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.9299,
+      "window": [
+        0.22,
+        0.42
+      ]
+    },
+    {
+      "node": "top_lid",
+      "label": "Worktop",
+      "group": "Cabinet",
+      "about": "Two screws at the back hold it; it is the first thing off in a repair.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.4894,
+      "window": [
+        0,
+        0.18
+      ]
+    },
+    {
+      "node": "side_left",
+      "label": "Left side",
+      "group": "Cabinet",
+      "about": "Enamelled sheet steel on a frame.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.5384,
+      "window": [
+        0,
+        0.18
+      ]
+    },
+    {
+      "node": "side_right",
+      "label": "Right side",
+      "group": "Cabinet",
+      "about": "Enamelled sheet steel on a frame.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.5384,
+      "window": [
+        0,
+        0.18
+      ]
+    },
+    {
+      "node": "back_panel",
+      "label": "Back panel",
+      "group": "Cabinet",
+      "about": "The water and the drain hose pass through it.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.5384,
+      "window": [
+        0,
+        0.18
+      ]
+    },
+    {
+      "node": "frame",
+      "label": "Frame",
+      "group": "Cabinet",
+      "about": "A base with four corner posts and two top rails, from which the springs hang.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Detergent drawer",
+      "text": "Water from the valve runs through one compartment at a time and carries its powder down into the tub: prewash, main wash, then softener for the last rinse.",
+      "node": "drawer",
+      "position": [
+        -0.31,
+        1.3426,
+        0.4674
+      ],
+      "camera": {
+        "position": [
+          -0.6317,
+          1.6477,
+          1.0724
+        ],
+        "target": [
+          -0.31,
+          1.3426,
+          0.4674
+        ]
+      }
+    },
+    {
+      "title": "Door and seal",
+      "text": "The glass bowl reaches back into a rubber bellows and presses on it. The bellows keeps the water in while letting the tub swing on its springs.",
+      "node": "door",
+      "position": [
+        0.3295,
+        0.8483,
+        0.5278
+      ],
+      "camera": {
+        "position": [
+          -0.0786,
+          1.0014,
+          1.5378
+        ],
+        "target": [
+          0.3295,
+          0.8483,
+          0.5278
+        ]
+      }
+    },
+    {
+      "title": "Drum and lifters",
+      "text": "Three ridges inside lift the clothes as the drum turns and drop them back into the water. That fall, over and over, is most of the washing.",
+      "node": "drum",
+      "position": [
+        0,
+        1.0278,
+        0.0367
+      ],
+      "explode": 0.73,
+      "camera": {
+        "position": [
+          -0.2074,
+          0.8467,
+          0.5414
+        ],
+        "target": [
+          0,
+          0.7178,
+          -0.0285
+        ]
+      }
+    },
+    {
+      "title": "Heater",
+      "text": "A 2 kW element lies in the sump under the drum, where the water collects. Warming the water itself from 15 to 40 °C takes about ten minutes; with the clothes, drum and tub soaking up heat as well, nearer twenty.",
+      "node": "heater",
+      "position": [
+        0,
+        0.3344,
+        0.2684
+      ],
+      "explode": 0.42,
+      "camera": {
+        "position": [
+          -0.3473,
+          0.4457,
+          0.9804
+        ],
+        "target": [
+          0,
+          0.3344,
+          0.2684
+        ]
+      }
+    },
+    {
+      "title": "Motor and belt",
+      "text": "A small fast motor under the tub drives the drum through a belt. Its pulley is 10.8 times smaller than the drum’s, so at 1,400 rpm on the drum the motor runs at about 15,000.",
+      "node": "motor",
+      "position": [
+        -0.1387,
+        0.1876,
+        -0.2684
+      ],
+      "explode": 0.2,
+      "camera": {
+        "position": [
+          -0.7312,
+          0.1384,
+          -0.6623
+        ],
+        "target": [
+          -0.0489,
+          0.2773,
+          -0.2684
+        ]
+      }
+    },
+    {
+      "title": "Springs and dampers",
+      "text": "The tub hangs on two springs and stands on two friction dampers. Together they let it shake a few millimetres while the cabinet stays put.",
+      "node": "springs",
+      "position": [
+        -0.301,
+        0.177,
+        -0.0938
+      ],
+      "explode": 0.73,
+      "camera": {
+        "position": [
+          -1.3487,
+          0.9357,
+          1.3337
+        ],
+        "target": [
+          -0.3263,
+          0.6852,
+          -0.1264
+        ]
+      }
+    },
+    {
+      "title": "Counterweight",
+      "text": "About 25 kg of concrete in two blocks, on top and round the front. It doesn’t hold the machine down: it rides on the springs with the tub and makes it heavy, so a lopsided load moves it less.",
+      "node": "counterweight",
+      "position": [
+        0,
+        1.2105,
+        0.1346
+      ],
+      "explode": 0.42,
+      "camera": {
+        "position": [
+          -1.4521,
+          2.2429,
+          0.3906
+        ],
+        "target": [
+          0,
+          1.2105,
+          0.1346
+        ]
+      }
+    },
+    {
+      "title": "Drain pump",
+      "text": "A small pump under the front empties the tub between washes and during the spin. The filter behind the flap catches coins, buttons and hair grips before they reach it.",
+      "node": "drain_pump",
+      "position": [
+        0.31,
+        0.1762,
+        0.2814
+      ],
+      "explode": 0.42,
+      "camera": {
+        "position": [
+          0.6455,
+          0.3818,
+          1.0348
+        ],
+        "target": [
+          0.31,
+          0.1762,
+          0.2814
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "drum",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0,
+        0.7178,
+        -0.0285
+      ],
+      "speed": 0.9
+    },
+    {
+      "node": "pulley",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0,
+        0.7178,
+        -0.0285
+      ],
+      "speed": 0.9
+    },
+    {
+      "node": "motor_rotor",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0489,
+        0.1876,
+        -0.0285
+      ],
+      "speed": 9.692
+    },
+    {
+      "node": "pump_impeller",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.31,
+        0.1142,
+        0.2814
+      ],
+      "speed": 3
+    }
+  ],
+  "motionLabel": "Run the drum",
+  "how": [
+    {
+      "label": "The idea",
+      "title": "Washed by falling",
+      "text": [
+        "A wash needs four things: detergent to loosen the dirt, heat, time, and movement to work the water through the cloth. The machine supplies them one after another, under the board’s control.",
+        "The movement comes from the drum. Turning slowly, about ten seconds one way, a pause, then ten seconds the other, its three ridges carry the clothes up the side and let them fall back through the water."
+      ],
+      "angle": [
+        -26,
+        16
+      ],
+      "focus": [
+        "drum",
+        "spider",
+        "tub_front",
+        "tub_rear"
+      ],
+      "tags": [
+        {
+          "node": "drum",
+          "text": "57 litre drum",
+          "at": [
+            0,
+            1.1012,
+            -0.0938
+          ]
+        }
+      ],
+      "chart": {
+        "type": "timing",
+        "title": "A 40 °C cotton wash",
+        "caption": "Roughly what the board switches, and when, over about two and a half hours.",
+        "lanes": [
+          {
+            "name": "Water in",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.01,
+                1
+              ],
+              [
+                0.05,
+                1
+              ],
+              [
+                0.06,
+                0
+              ],
+              [
+                0.56,
+                0
+              ],
+              [
+                0.57,
+                1
+              ],
+              [
+                0.6,
+                1
+              ],
+              [
+                0.61,
+                0
+              ],
+              [
+                0.7,
+                0
+              ],
+              [
+                0.71,
+                1
+              ],
+              [
+                0.74,
+                1
+              ],
+              [
+                0.75,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "name": "Heater",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.06,
+                0
+              ],
+              [
+                0.07,
+                1
+              ],
+              [
+                0.2,
+                1
+              ],
+              [
+                0.21,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          },
+          {
+            "name": "Drum",
+            "points": [
+              [
+                0,
+                0.3
+              ],
+              [
+                0.54,
+                0.3
+              ],
+              [
+                0.55,
+                0.15
+              ],
+              [
+                0.57,
+                0.3
+              ],
+              [
+                0.68,
+                0.3
+              ],
+              [
+                0.69,
+                0.15
+              ],
+              [
+                0.71,
+                0.3
+              ],
+              [
+                0.82,
+                0.3
+              ],
+              [
+                0.83,
+                0.45
+              ],
+              [
+                0.86,
+                0.45
+              ],
+              [
+                0.88,
+                1
+              ],
+              [
+                0.97,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "notes": [
+              [
+                0.3,
+                "tumble"
+              ],
+              [
+                0.92,
+                "spin"
+              ]
+            ]
+          },
+          {
+            "name": "Pump",
+            "points": [
+              [
+                0,
+                0
+              ],
+              [
+                0.54,
+                0
+              ],
+              [
+                0.55,
+                1
+              ],
+              [
+                0.57,
+                0
+              ],
+              [
+                0.68,
+                0
+              ],
+              [
+                0.69,
+                1
+              ],
+              [
+                0.71,
+                0
+              ],
+              [
+                0.82,
+                0
+              ],
+              [
+                0.83,
+                1
+              ],
+              [
+                0.98,
+                1
+              ],
+              [
+                0.99,
+                0
+              ],
+              [
+                1,
+                0
+              ]
+            ]
+          }
+        ],
+        "bands": [
+          [
+            0.88,
+            0.97,
+            "spin"
+          ]
+        ]
+      }
+    },
+    {
+      "label": "Water in",
+      "title": "In through the drawer",
+      "text": [
+        "The board opens an inlet valve. Mains pressure pushes water through the drawer, through whichever compartment that valve feeds, and the powder goes down the hose with it into the tub.",
+        "A pressure sensor on a thin tube from the sump feels the water’s depth and closes the valve. A wash uses about 12 litres at a time; the whole programme about 45."
+      ],
+      "angle": [
+        -34,
+        22
+      ],
+      "focus": [
+        "inlet_valve",
+        "hoses",
+        "dispenser",
+        "drawer"
+      ],
+      "carries": "water",
+      "flow": [
+        [
+          0.261,
+          1.3002,
+          -0.5327
+        ],
+        [
+          0.261,
+          1.3247,
+          -0.4772
+        ],
+        [
+          -0.0979,
+          1.3247,
+          -0.2896
+        ],
+        [
+          -0.2447,
+          1.3296,
+          -0.0938
+        ],
+        [
+          -0.31,
+          1.3508,
+          0.1672
+        ],
+        [
+          -0.3263,
+          1.1974,
+          -0.0579
+        ],
+        [
+          -0.2447,
+          1.0938,
+          -0.0579
+        ]
+      ],
+      "tags": [
+        {
+          "node": "inlet_valve",
+          "text": "Inlet valve",
+          "at": [
+            0.261,
+            1.3247,
+            -0.4772
+          ]
+        },
+        {
+          "node": "drawer",
+          "text": "Main wash compartment",
+          "at": [
+            -0.31,
+            1.3426,
+            0.4674
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Heat",
+      "title": "Heated in the sump",
+      "text": [
+        "The heater lies in the sump, the pocket at the bottom of the tub where the water collects under the drum. A sensor beside it reports the temperature to the board, which switches the heater off when the water is warm enough.",
+        "Heating takes most of a wash’s electricity: warming 12 litres by 25 degrees takes about 1.3 MJ, a third of a kilowatt-hour. A 90 °C wash needs three times as much."
+      ],
+      "angle": [
+        -18,
+        10
+      ],
+      "fill": 0.7,
+      "focus": [
+        "heater"
+      ],
+      "frame": [
+        "tub_front"
+      ],
+      "tags": [
+        {
+          "node": "heater",
+          "text": "2 kW element",
+          "at": [
+            0,
+            0.3198,
+            0.0693
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Minutes to heat the water",
+        "caption": "Twelve litres from 15 °C with a 2 kW heater, ignoring what the drum and tub soak up.",
+        "unit": "Minutes",
+        "bars": [
+          {
+            "label": "30 °C",
+            "value": 6.3
+          },
+          {
+            "label": "40 °C",
+            "value": 10.5
+          },
+          {
+            "label": "60 °C",
+            "value": 18.8
+          },
+          {
+            "label": "90 °C",
+            "value": 31.4
+          }
+        ],
+        "picked": 1
+      }
+    },
+    {
+      "label": "Drive",
+      "title": "A belt for a gearbox",
+      "text": [
+        "The motor under the tub turns fast and weakly; the drum needs to turn slowly and hard. A belt from the motor’s small pulley to the drum’s big one trades one for the other: the motor turns 10.8 times for each turn of the drum.",
+        "Hold the button and count. At the full 1,400 rpm spin the motor is doing about 15,000."
+      ],
+      "angle": [
+        -150,
+        14
+      ],
+      "fill": 0.72,
+      "focus": [
+        "motor",
+        "motor_rotor",
+        "belt",
+        "pulley",
+        "spider"
+      ],
+      "flow": [
+        [
+          -0.1387,
+          0.1876,
+          -0.2684
+        ],
+        [
+          -0.0489,
+          0.1664,
+          -0.4984
+        ],
+        [
+          0.1028,
+          0.4527,
+          -0.4984
+        ],
+        [
+          0.2284,
+          0.7178,
+          -0.4886
+        ],
+        [
+          0,
+          0.7178,
+          -0.5049
+        ]
+      ],
+      "tags": [
+        {
+          "node": "motor_rotor",
+          "text": "Motor",
+          "at": [
+            -0.0489,
+            0.2773,
+            -0.2684
+          ]
+        },
+        {
+          "node": "pulley",
+          "text": "Drum pulley",
+          "at": [
+            0,
+            0.9462,
+            -0.4984
+          ]
+        }
+      ],
+      "chart": {
+        "type": "ladder",
+        "title": "Turns a minute, motor to drum",
+        "caption": "The belt divides the motor’s speed by 10.8: the dials turn with the motor and the drum.",
+        "unit": "Turns a minute at full spin",
+        "ticks": [
+          0,
+          5000,
+          10000,
+          15000
+        ],
+        "rungs": [
+          {
+            "name": "Motor",
+            "value": 15077,
+            "note": "15,077 rpm",
+            "node": "motor_rotor"
+          },
+          {
+            "name": "Drum",
+            "value": 1400,
+            "note": "1,400 rpm",
+            "step": "÷10.8",
+            "node": "drum"
+          }
+        ]
+      },
+      "try": "run",
+      "count": [
+        {
+          "node": "motor_rotor",
+          "label": "Motor"
+        },
+        {
+          "node": "drum",
+          "label": "Drum"
+        }
+      ]
+    },
+    {
+      "label": "Tumble or spin",
+      "title": "Below 62 rpm it washes, above it it spins",
+      "text": [
+        "At 54 rpm the clothes ride up the side and fall off before the top: the drum’s wall pushes them round with less than their own weight. At about 62 rpm it pushes with exactly their weight, and from there up they stay pinned to the wall and stop moving.",
+        "That is why spinning doesn’t wash. Its job is the opposite: at 1,400 rpm the wall presses the clothes outward with about 515 times their weight, and the water, free to move, flies out through the holes. Pick a speed."
+      ],
+      "angle": [
+        -12,
+        8
+      ],
+      "fill": 0.8,
+      "rate": 0.15,
+      "focus": [
+        "drum",
+        "spider"
+      ],
+      "tags": [
+        {
+          "node": "drum",
+          "text": "Lifter",
+          "at": [
+            0,
+            1.0278,
+            0.0367
+          ]
+        }
+      ],
+      "chart": {
+        "type": "ladder",
+        "title": "How hard the wall pushes",
+        "caption": "Times the clothes’ own weight, at the drum’s wall; above 1 they can’t fall.",
+        "unit": "Times their weight (g)",
+        "scale": "log",
+        "rungs": [
+          {
+            "name": "54 rpm",
+            "value": 0.77,
+            "note": "0.77 g"
+          },
+          {
+            "name": "90 rpm",
+            "value": 2.13,
+            "note": "2.13 g"
+          },
+          {
+            "name": "800 rpm",
+            "value": 168,
+            "note": "168 g"
+          },
+          {
+            "name": "1,400 rpm",
+            "value": 515,
+            "note": "515 g"
+          }
+        ]
+      },
+      "try": "speeds",
+      "spin": [
+        "drum",
+        "pulley",
+        "motor_rotor"
+      ],
+      "speeds": [
+        {
+          "label": "54 rpm",
+          "factor": 1,
+          "note": "Washing: the clothes are lifted and fall back through the water."
+        },
+        {
+          "label": "90 rpm",
+          "factor": 1.6666666666666667,
+          "note": "Spreading the load: pinned to the wall, the clothes settle evenly before the spin."
+        },
+        {
+          "label": "800 rpm",
+          "factor": 14.814814814814815,
+          "note": "Spinning: 168 times their weight presses the water out through the holes."
+        },
+        {
+          "label": "1,400 rpm",
+          "factor": 25.925925925925927,
+          "note": "Full spin: about 500 times their weight. Shown slowed down."
+        }
+      ]
+    },
+    {
+      "label": "Suspension",
+      "title": "A heavy tub on springs",
+      "text": [
+        "A load is never quite even. Half a kilo of wet jeans off-centre at 1,400 rpm pulls on the tub with about 2,500 newtons, a quarter of a tonne, changing direction 23 times a second. The tub hangs on springs and stands on dampers so that it can swing instead of the cabinet.",
+        "The concrete is there for that swing, not to hold the machine down: once the drum is turning fast, the tub moves by about the off-centre mass times its distance divided by the whole swinging mass. Make the tub heavier and it shakes less."
+      ],
+      "angle": [
+        -48,
+        14
+      ],
+      "fill": 0.75,
+      "focus": [
+        "springs",
+        "dampers",
+        "counterweight",
+        "front_weight",
+        "tub_front",
+        "tub_rear"
+      ],
+      "tags": [
+        {
+          "node": "springs",
+          "text": "Spring",
+          "at": [
+            -0.3508,
+            1.1631,
+            -0.1591
+          ]
+        },
+        {
+          "node": "dampers",
+          "text": "Damper",
+          "at": [
+            -0.301,
+            0.177,
+            -0.0938
+          ]
+        },
+        {
+          "node": "counterweight",
+          "text": "Concrete",
+          "at": [
+            0,
+            1.2105,
+            0.1346
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "How far the tub shakes at full spin",
+        "caption": "Half a kilo off-centre on a 23.5 cm drum, with the wet washing; the tub, drum and motor weigh about 20 kg.",
+        "unit": "Shake, mm",
+        "bars": [
+          {
+            "label": "No concrete",
+            "value": 3.7,
+            "note": "32 kg swinging"
+          },
+          {
+            "label": "With 25 kg",
+            "value": 2.1,
+            "note": "57 kg swinging"
+          }
+        ],
+        "picked": 1
+      }
+    },
+    {
+      "label": "Water out",
+      "title": "Pumped out, then spun",
+      "text": [
+        "Between stages and all through the spin, the pump under the front empties the sump. It pushes the water up the hose to above the tub’s water line before it drops to the drain, so nothing siphons out while the machine fills.",
+        "The faster the spin, the less water stays in the clothes, and the less the dryer or the washing line has to do. Spin speed is on the energy label for that reason."
+      ],
+      "angle": [
+        38,
+        10
+      ],
+      "fill": 0.75,
+      "focus": [
+        "drain_pump",
+        "pump_impeller",
+        "hoses",
+        "tub_front"
+      ],
+      "carries": "water",
+      "flow": [
+        [
+          0,
+          0.2594,
+          0.0693
+        ],
+        [
+          0.31,
+          0.1762,
+          0.2814
+        ],
+        [
+          0.3981,
+          0.1142,
+          0.2814
+        ],
+        [
+          0.434,
+          0.1077,
+          -0.2243
+        ],
+        [
+          0.4274,
+          0.6526,
+          -0.4739
+        ],
+        [
+          0.4209,
+          1.3051,
+          -0.4788
+        ]
+      ],
+      "tags": [
+        {
+          "node": "drain_pump",
+          "text": "Drain pump",
+          "at": [
+            0.31,
+            0.1762,
+            0.2814
+          ]
+        },
+        {
+          "node": "drain_pump",
+          "text": "Filter",
+          "at": [
+            0.31,
+            0.1142,
+            0.4462
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Water left in the clothes",
+        "caption": "As a share of their dry weight, after the spin; typical figures, and makers quote 52–54 % at 1,400.",
+        "unit": "% of dry weight",
+        "bars": [
+          {
+            "label": "800",
+            "value": 75
+          },
+          {
+            "label": "1,000",
+            "value": 62
+          },
+          {
+            "label": "1,200",
+            "value": 57
+          },
+          {
+            "label": "1,400",
+            "value": 53
+          }
+        ],
+        "picked": 3
+      }
+    }
+  ],
+  "credit": {
+    "title": "Washing machine, a typical European front-loader",
+    "author": "3D of Things",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "built in code for this site",
+    "sourceUrl": "",
+    "extra": {
+      "label": "Sources",
+      "text": "Laid out from manufacturers’ published dimensions, service manuals and spare-parts drawings for 7 kg, 1,400 rpm belt-driven machines; no particular make."
+    }
+  },
+  "build": {
+    "generate": "objects/washing-machine/generate.mjs",
+    "hints": "objects/washing-machine/hints.json"
+  }
+}
