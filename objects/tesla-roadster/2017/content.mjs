@@ -1,9 +1,14 @@
 // The 2017 Roadster, which this page showed before the 2026 car replaced it, kept as the example of a
 // plain electric car on the kit's car builder (no engine, no aero): its text (below), its spec,
 // and where the build puts its wheels and motors in model space (it runs the build, without the checks).
-// Not part of the site: running it writes content/tesla-roadster.json over the live 2026 page.
-//   node objects/tesla-roadster/2017/content.mjs
+// Not part of the site: it writes content/tesla-roadster.json over the live 2026 page, so it runs only when asked to.
+//   node objects/tesla-roadster/2017/content.mjs --overwrite
 import { writeContent } from '../../../scripts/kit/content.mjs';
+
+if (!process.argv.includes('--overwrite')) {
+  console.error('The 2017 Roadster writes content/tesla-roadster.json over the live 2026 page. Pass --overwrite if that is what you want.');
+  process.exit(1);
+}
 import generate from './generate.mjs';
 import spec from './spec.mjs';
 
