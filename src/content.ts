@@ -6,6 +6,7 @@ export const categories: { id: CategoryId; label: string }[] = [
   { id: 'time', label: 'Timekeeping' },
   { id: 'cameras', label: 'Cameras' },
   { id: 'cars', label: 'Cars' },
+  { id: 'home', label: 'Home & garden' },
 ];
 
 const files = import.meta.glob<Omit<Thing, 'slug'>>('../content/*.json', { eager: true, import: 'default' });

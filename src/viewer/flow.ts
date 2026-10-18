@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { OVERLAY_LAYER } from './looks';
 
 const SAMPLES = 180;
-const COLOURS = { power: new Color('#d24f1f'), light: new Color('#e09a12'), air: new Color('#2f78b8') };
+const COLOURS = { power: new Color('#d24f1f'), light: new Color('#e09a12'), air: new Color('#2f78b8'), water: new Color('#1b93a6') };
 const PAPER = new Color('#fbf8f1');
 
 /**
@@ -75,7 +75,7 @@ export class Flow {
   rides = false;
 
   /** Shows a path through these anchors (objects that ride with the parts), drawing it in from the start; none hides it. */
-  set(anchors: Object3D[] | null, { animate = true, carries = 'power' as 'power' | 'light' | 'air' } = {}): void {
+  set(anchors: Object3D[] | null, { animate = true, carries = 'power' as 'power' | 'light' | 'air' | 'water' } = {}): void {
     for (const anchor of this.anchors) anchor.removeFromParent();
     this.anchors = anchors && anchors.length > 1 ? anchors : [];
     this.rides = this.anchors.some((anchor) => anchor.userData.rides);

@@ -348,7 +348,9 @@ export class Mechanism {
       const driverName = motion.crank ?? motion.cam;
       const driver = driverName ? resolve(driverName) : undefined;
       if (driver) {
-        const along = rig.vectorToParent(new Vector3(...(motion.along ?? [0, 1, 0]))).normalize();
+        // A model-space unit vector in the parent's frame: its length carries the scale, so `throw`, `rod` and `lift`
+        // (model units) move the part the right distance whatever the parent's units.
+        const along = rig.vectorToParent(new Vector3(...(motion.along ?? [0, 1, 0])).normalize());
         const phase = ((motion.phase ?? 0) * Math.PI) / 180;
         if (motion.crank) this.sliders.push({ rig, crank: rigs.get(driver), along, r: motion.throw ?? 0, l: motion.rod ?? 1, phase, rocks: !!motion.rocks });
         else {

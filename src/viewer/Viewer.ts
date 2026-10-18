@@ -1044,7 +1044,7 @@ export class Viewer {
   }
 
   /** The paths the power (or the light) takes, drawn through the parts; none hides them. */
-  setFlow(paths: FlowPoint[][] = [], carries: 'power' | 'light' | 'air' = 'power'): void {
+  setFlow(paths: FlowPoint[][] = [], carries: 'power' | 'light' | 'air' | 'water' = 'power'): void {
     paths = paths.filter((path) => path.length > 1);
     while (this.flows.length < paths.length) {
       const flow = new Flow(this.scene);

@@ -152,9 +152,9 @@ export interface Step {
   flow?: FlowPoint[];
   /** More paths drawn the same way (the second barrel of a pair of binoculars). */
   flows?: FlowPoint[][];
-  /** What the path is: power (a vermilion line, smoothed), light (amber rays, straight between reflections) or air (a blue
-   *  line, smoothed). Default power. */
-  carries?: 'power' | 'light' | 'air';
+  /** What the path is: power (a vermilion line, smoothed), light (amber rays, straight between reflections), air (a blue
+   *  line, smoothed) or water (a teal line, smoothed). Default power. */
+  carries?: 'power' | 'light' | 'air' | 'water';
   /** Labels on parts. */
   tags?: Tag[];
   /** How fast the mechanism runs: 1 is real time, less is slow motion. Defaults to 1. */
@@ -207,7 +207,7 @@ export interface Jet {
   group: 'rear' | 'lift' | 'yaw';
 }
 
-export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars';
+export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars' | 'home';
 
 export interface Thing {
   slug: string;
