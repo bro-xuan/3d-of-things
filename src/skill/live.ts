@@ -71,7 +71,8 @@ export function mountLive(figure: HTMLElement): void {
   function update() {
     const state = viewer?.mechanismState;
     if (!state) return;
-    const pace = slow ? `${BEATS * (thing.slowMotion?.rate ?? 0.05)} beats a second, slowed` : `${BEATS} beats a second`;
+    // Rounded, since 6 × 0.05 comes out as 0.30000000000000004.
+    const pace = slow ? `${Math.round(BEATS * (thing.slowMotion?.rate ?? 0.05) * 100) / 100} beats a second, slowed` : `${BEATS} beats a second`;
     const full = state.reserve >= FULL_RESERVE - 0.05;
     const power = full ? `fully wound, ${FULL_RESERVE} h` : `power left ${Math.max(0, Math.round(state.reserve))} h`;
     const text = `${pace} · ${power}${state.winding && !full ? ' · winding' : ''}`;
