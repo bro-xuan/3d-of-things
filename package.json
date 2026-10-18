@@ -12,7 +12,12 @@
     "models:fetch": "node scripts/fetch-models.mjs",
     "models:build": "node scripts/build-models.mjs",
     "models:inspect": "node scripts/inspect-model.mjs",
-    "posters": "node scripts/capture-posters.mjs"
+    "posters": "node scripts/capture-posters.mjs",
+    "new": "node scripts/new-object.mjs",
+    "check": "node scripts/check-content.mjs",
+    "qa": "node scripts/qa/run.mjs",
+    "timing": "node scripts/timing.mjs",
+    "truth": "node scripts/truth-tables.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

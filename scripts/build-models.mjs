@@ -10,13 +10,17 @@
 // A content file can name a script under build.augment that edits the model
 // first (the pocket watch uses one to open its case and add a movement), or
 // one under build.generate that builds the whole model itself, with no source
-// (the reflex camera).
+// (the reflex camera). Either returns model-space hints (pivots, axes, points
+// for the content file); with build.hints set, they're written to that file,
+// where the object's content builder reads them.
+//
+//   npm run models:build -- slug --no-check   # report clashes instead of failing (while iterating)
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, prune, textureCompress, meshopt } from '@gltf-transform/functions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
-import { mkdir, readdir, stat } from 'node:fs/promises';
+import { mkdir, readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { listThings, polyHavenId, polyHavenCacheDir, PUBLIC_DIR, ROOT } from './lib.mjs';
@@ -37,7 +41,9 @@ async function dirSize(dir) {
 }
 
 const mb = (bytes) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
-const things = await listThings(process.argv.slice(2));
+const args = process.argv.slice(2);
+const check = !args.includes('--no-check');
+const things = await listThings(args.filter((arg) => !arg.startsWith('--')));
 let failures = 0;
 
 for (const { slug, data } of things) {
@@ -50,18 +56,25 @@ for (const { slug, data } of things) {
   try {
     const srcDir = id ? polyHavenCacheDir(id) : null;
     let doc;
+    const hints = [];
     if (generator) {
       const { default: generate } = await import(pathToFileURL(path.join(ROOT, generator)).href);
-      const built = await generate({ data });
+      const built = await generate({ data, check });
       doc = built.doc;
-      if (built.hints) console.log(`  model-space hints: ${JSON.stringify(built.hints)}`);
+      if (built.hints) hints.push(built.hints);
     } else {
       doc = await io.read(path.join(srcDir, `${id}.gltf`));
     }
     if (data.build?.augment) {
       const { default: augment } = await import(pathToFileURL(path.join(ROOT, data.build.augment)).href);
-      const hints = await augment(doc, { data });
-      if (hints) console.log(`  model-space hints: ${JSON.stringify(hints)}`);
+      const more = await augment(doc, { data, check });
+      if (more) hints.push(more);
+    }
+    if (hints.length && data.build?.hints) {
+      await writeFile(path.join(ROOT, data.build.hints), JSON.stringify(Object.assign({}, ...hints), null, 2) + '\n');
+      console.log(`  hints → ${data.build.hints}`);
+    } else {
+      for (const h of hints) console.log(`  model-space hints: ${JSON.stringify(h)}`);
     }
     const textureSize = data.build?.textureSize ?? MAX_TEXTURE;
     await doc.transform(

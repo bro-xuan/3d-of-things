@@ -1,0 +1,41 @@
+{
+  "skill_name": "teardown",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "add a mechanical metronome",
+      "expected_output": "Names it tier C (or B if a CC0 shell exists on Poly Haven) with its budget, posts a brief (the energy chain: wound spring → escapement → pendulum with sliding weight → tick), and carries on. A truth sheet in objects/<slug>/TRUTH.md cites real numbers (tempo range, weight positions for marked tempos, escape wheel teeth). The model is generated with the kit: the pendulum's period follows from the sliding weight, every moving part is its own node, the build's clash and explode checks pass without --no-check, and content/<slug>.json is written by objects/<slug>/content.mjs from named anchors. The tour (5–7 steps) follows the energy chain, corrects one misconception (the spring doesn't set the tempo, the weight's position does), and has a 'speeds' or 'run' experiment whose readout changes. npm run check and npm run qa pass, the contact sheets were read, posters made, the README updated. No one-off QA script was written.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Poly Haven has a vintage video camera (vintage_video_camera). Can you take it apart like the Leica?",
+      "expected_output": "Recognises a single-mesh shell, so tier B, not A, says the budget, and scaffolds with npm run new -- <slug> --tier B --polyhaven vintage_video_camera. Its augment.mjs cuts the shell along its seams with the kit's surgery (cut, pick, solidify), removes any faked inside, and generates the spring motor, claw and rotary shutter from cited numbers (16 mm film, frame pitch 7.62 mm, frame rate). The credit names both Poly Haven authors; the explode and clash checks pass; the tour shows the intermittent motion with a timing chart in step with the shutter. npm run qa passes with sheets reviewed.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "add the new iPhone's camera module",
+      "expected_output": "Searches the latest reveal before anything else (training data may predate it), says which figures are Apple's claims, and checks the licence situation: no CC0 model, so built in code (tier C) or a scoped proposal. Says the trademark is used as an illustration. Doesn't invent unpublished internals: what's simplified is stated on the page.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "the SLR's winding step has a label floating somewhere, can you check everything still works?",
+      "expected_output": "Runs npm run check -- reflex-camera (which reports the 'Flaps’ spring' tag 37 units off the model) and npm run qa -- reflex-camera (one tag of two shown in step 5). Finds the content source in .cache/hasselblad/content.mjs (outside git), fixes the tag's position to a named point in model space, regenerates the content, and re-runs both checks to zero failures, then npm run qa -- --all --quick for the rest.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "add all the Leica rangefinders, M2 to M6",
+      "expected_output": "Doesn't build five near-identical cameras. Points out the M3 is already on the site, proposes one that differs in mechanism (for example the M6's light meter) or a different kind of camera, and checks in before building more than one of a kind.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "make a Saturn V rocket that launches",
+      "expected_output": "Sizes it tier D, doesn't start it, gives the estimate, proposes a tier C version that keeps the core idea (say, one F-1 engine's turbopump and combustion cycle, or the staging sequence) and lists what the full version would add. Builds only the version the user picks.",
+      "files": []
+    }
+  ]
+}
