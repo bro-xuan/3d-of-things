@@ -1480,6 +1480,18 @@ export class Viewer {
     }
   };
 
+  /** Stops drawing while the model is out of sight (the skill page's live watch), and picks up where it was. */
+  setPaused(paused: boolean): void {
+    if (this.disposed || paused === (this.frame === 0)) return;
+    if (paused) {
+      cancelAnimationFrame(this.frame);
+      this.frame = 0;
+      return;
+    }
+    this.lastFrame = performance.now();
+    this.frame = requestAnimationFrame(this.loop);
+  }
+
   render(): void {
     if (this.shadowDirty) {
       this.shadow.render(this.renderer, this.scene);

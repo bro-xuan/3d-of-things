@@ -1,10 +1,14 @@
-// The skill's page (skill.html): the site's fonts, its own stylesheet, and a masthead
-// that names the section in view while the contents mark it.
+// The skill's page (skill.html): the site's fonts, its own stylesheet, the live watch at the top,
+// and a masthead that names the section in view while the contents mark it.
 import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/instrument-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import './skill.css';
+import { mountLive } from './live';
+
+const live = document.querySelector<HTMLElement>('.live');
+if (live) mountLive(live);
 
 const sections = [...document.querySelectorAll<HTMLElement>('section[data-n]')];
 const here = document.querySelector<HTMLElement>('.masthead__section');

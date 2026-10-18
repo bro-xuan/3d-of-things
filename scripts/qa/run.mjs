@@ -12,6 +12,7 @@
 //                                          # a built or live copy (no dev hooks): load, rest and tour
 //   npm run qa -- --all --jobs 4           # objects checked side by side (default 3 with --all)
 //   npm run qa -- slug --retina            # shots at 2× (fine detail, README pictures)
+//   npm run qa -- --skill                  # the skill's page and its live watch (--all includes it)
 //
 // Output goes to .cache/qa/<slug>/ (or --out): <slug>-*.png contact sheets, one PNG per shot
 // in shots/, and report.json. Read the sheets first; open a single shot only to look closer.
@@ -20,6 +21,7 @@ import path from 'node:path';
 import { listThings, ROOT } from '../lib.mjs';
 import { launch, ready, serve, watchConsole } from './browser.mjs';
 import { contactSheet } from './sheet.mjs';
+import { checkSkill } from './skill.mjs';
 
 const args = process.argv.slice(2);
 const flag = (name) => args.includes(name);
@@ -39,16 +41,18 @@ const outRoot = path.resolve(ROOT, opt('--out') ?? '.cache/qa');
 // Dev warnings that mean the content file and the model disagree: these fail a check.
 const FATAL_WARNINGS = /no node named|in no part|no chart called|is missing:|unknown category/;
 
-const things = await listThings(flag('--all') ? [] : slugs);
-if (!things.length) {
-  console.error('Name an object (npm run qa -- <slug>) or pass --all.');
+const skill = flag('--skill') || flag('--all');
+const things = flag('--all') || slugs.length ? await listThings(flag('--all') ? [] : slugs) : [];
+if (!things.length && !skill) {
+  console.error('Name an object (npm run qa -- <slug>), or pass --skill or --all.');
   process.exit(2);
 }
 
 const started = Date.now();
 const { server, base } = opt('--url') ? { server: null, base: new URL(opt('--url')).href } : await serve();
 const { browser, renderer, gpu } = await launch({ gpu: !flag('--software') && process.env.QA_GPU !== '0' });
-console.log(`qa: ${things.length} object${things.length > 1 ? 's' : ''} · ${gpu ? 'GPU' : 'software GL (slow)'}: ${renderer}`);
+const what = [things.length && `${things.length} object${things.length > 1 ? 's' : ''}`, skill && "the skill's page"].filter(Boolean).join(' and ');
+console.log(`qa: ${what} · ${gpu ? 'GPU' : 'software GL (slow)'}: ${renderer}`);
 
 let failures = 0;
 const queue = [...things];
@@ -61,6 +65,11 @@ try {
       console.log(lines.join('\n'));
     }
   }));
+  if (skill) {
+    const { failed, lines } = await checkSkill({ browser, base, outRoot, renderer, gpu, retina: flag('--retina') });
+    failures += failed;
+    console.log(lines.join('\n'));
+  }
 } finally {
   await browser.close();
   await server?.close();

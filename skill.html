@@ -22,15 +22,34 @@
 
     <main id="content" tabindex="-1">
       <header class="hero flow">
-        <p class="eyebrow"><span>3D of Things</span><span>18 October 2026</span></p>
-        <h1 class="hero__title">3D of Things <span class="hero__kind">· a skill for Claude Code</span></h1>
-        <p class="hero__tagline">Name a machine in one line, and Claude builds it in 3D, <em>takes it apart</em> and shows how it works.</p>
-        <ul class="hero__thumbs" aria-label="Five of the objects">
-          <li><a href="%OBJECTS%#/thing/pocket-watch"><img src="/posters/pocket-watch-thumb.webp" width="240" height="240" alt="The pocket watch" /><span>Pocket watch</span></a></li>
+        <div class="hero__top">
+          <div class="hero__text">
+            <p class="eyebrow"><span>3D of Things</span><span>18 October 2026</span></p>
+            <h1 class="hero__title">3D of Things <span class="hero__kind">· a skill for Claude Code</span></h1>
+            <p class="hero__tagline">Name a machine in one line, and Claude builds it in 3D, <em>takes it apart</em> and shows how it works.</p>
+          </div>
+          <figure class="live" data-state="loading" aria-labelledby="live-caption">
+            <div class="live__stage">
+              <img class="live__poster" src="/posters/pocket-watch-1280.webp" width="1280" height="1280" fetchpriority="high" alt="" />
+              <div class="live__viewer" tabindex="0" aria-label="The pocket watch, live. Drag it, or use the arrow keys, to turn it."></div>
+              <p class="live__hint" aria-hidden="true">Drag to turn</p>
+            </div>
+            <div class="live__controls">
+              <button type="button" class="live__key" data-act="wind" title="Press and hold to wind" disabled><kbd>W</kbd>Hold to wind</button>
+              <button type="button" class="live__key" data-act="slow" aria-pressed="false" disabled><kbd>S</kbd>Slow</button>
+              <button type="button" class="live__key" data-act="apart" aria-pressed="false" disabled><kbd>E</kbd>Apart</button>
+              <p class="live__readout">6 beats a second</p>
+            </div>
+            <figcaption id="live-caption" class="live__caption">The collection’s pocket watch, live. The case is glass, the red line is the power from the crown to the balance, and the hands show your time.</figcaption>
+            <p class="visually-hidden" aria-live="polite" data-announce></p>
+          </figure>
+        </div>
+        <ul class="hero__thumbs" aria-label="Five more of the objects">
           <li><a href="%OBJECTS%#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-thumb.webp" width="240" height="240" alt="The Leica M3 rangefinder camera" /><span>Rangefinder</span></a></li>
           <li><a href="%OBJECTS%#/thing/reflex-camera"><img src="/posters/reflex-camera-thumb.webp" width="240" height="240" alt="The medium-format SLR" /><span>SLR</span></a></li>
           <li><a href="%OBJECTS%#/thing/tesla-roadster"><img src="/posters/tesla-roadster-thumb.webp" width="240" height="240" alt="The 2026 Tesla Roadster" /><span>Roadster</span></a></li>
           <li><a href="%OBJECTS%#/thing/family-car"><img src="/posters/family-car-thumb.webp" width="240" height="240" alt="The family car" /><span>Family car</span></a></li>
+          <li><a href="%OBJECTS%#/thing/washing-machine"><img src="/posters/washing-machine-thumb.webp" width="240" height="240" alt="The washing machine" /><span>Washer</span></a></li>
         </ul>
         <p class="hero__meta"><span>/3d-of-things</span><a href="%OBJECTS%#/">13 objects, all live</a><span>by 3D of Things</span><a href="#install">Install ↓</a></p>
       </header>
