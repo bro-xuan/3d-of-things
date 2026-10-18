@@ -1,0 +1,602 @@
+{
+  "order": 3,
+  "title": "Binoculars",
+  "hook": "Two small telescopes side by side, with prisms that fold the light and turn the picture the right way up.",
+  "category": "optics",
+  "summary": [
+    "Each half of a pair of binoculars is a small telescope. The large objective lens at the front gathers light and forms an image inside the barrel, and the eyepiece magnifies that image for your eye.",
+    "A simple telescope shows the world upside down. In these Porro-prism binoculars, two prisms in each barrel bounce the light four times, turning the image upright and folding a long light path into a short body. The fold is also why the front lenses sit wider apart than the eyepieces."
+  ],
+  "model": "models/binoculars.glb",
+  "viewAngle": [
+    -38,
+    26
+  ],
+  "facts": [
+    {
+      "label": "Design",
+      "value": "Porro prism"
+    },
+    {
+      "label": "Reflections",
+      "value": "4 per side"
+    },
+    {
+      "label": "Real size",
+      "value": "20 cm long"
+    }
+  ],
+  "parts": [
+    {
+      "node": "vintage_binocular_left_prism",
+      "label": "Left barrel",
+      "about": "One of the two small telescopes: the objective lens at the front, a pair of Porro prisms in the bulge.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.2,
+      "stage": 0
+    },
+    {
+      "node": "vintage_binocular_right_prism",
+      "label": "Right barrel",
+      "about": "The second telescope, a mirror image of the first, with its own objective lens and prisms.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.2,
+      "stage": 0
+    },
+    {
+      "node": "vintage_binocular_left_lens",
+      "label": "Left eyepiece",
+      "about": "Lenses that magnify the image formed inside the barrel. The focus wheel moves both eyepieces together.",
+      "direction": [
+        0.2,
+        0,
+        -0.4
+      ],
+      "distance": 0.447,
+      "stage": 0
+    },
+    {
+      "node": "vintage_binocular_right_lens",
+      "label": "Right eyepiece",
+      "about": "Like the left one, but with its own diopter ring, to make up for the difference between your eyes.",
+      "direction": [
+        -0.2,
+        0,
+        -0.4
+      ],
+      "distance": 0.447,
+      "stage": 0
+    },
+    {
+      "node": "vintage_binocular_diopter",
+      "label": "Diopter ring",
+      "about": "Sharpens the right eyepiece on its own, once the focus wheel has set the left.",
+      "direction": [
+        -0.2,
+        0,
+        -0.62
+      ],
+      "distance": 0.651,
+      "stage": 1
+    },
+    {
+      "node": "vintage_binocular_focus",
+      "label": "Focus wheel",
+      "about": "Slides both eyepieces in or out together, to focus near or far.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.25,
+      "stage": 1
+    },
+    {
+      "node": "vintage_binocular_eye_relief",
+      "label": "Hinge cap",
+      "about": "Caps the central hinge that the two halves pivot on.",
+      "direction": [
+        0,
+        0.5,
+        -1
+      ],
+      "distance": 0.3,
+      "stage": 1
+    },
+    {
+      "node": "vintage_binocular_middle",
+      "label": "Hinge",
+      "about": "Lets the two halves swing to match the distance between your eyes.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Objective lens",
+      "text": "The big front lens gathers light and focuses it into an image inside the barrel. Its width matters most in poor light: a wider lens collects more, so the view stays bright at dusk.",
+      "node": "vintage_binocular_left_prism",
+      "position": [
+        0.43,
+        0.24,
+        0.7
+      ],
+      "camera": {
+        "position": [
+          0.877,
+          0.613,
+          2.106
+        ],
+        "target": [
+          0.43,
+          0.24,
+          0.7
+        ]
+      }
+    },
+    {
+      "title": "Porro prisms",
+      "text": "Inside each barrel's bulge, two right-angled glass prisms each reflect the light twice. Four reflections in all turn the image upright and the right way round, and fold the path so the barrel can be short.",
+      "node": "vintage_binocular_left_prism",
+      "position": [
+        0.356,
+        0.471,
+        -0.1
+      ],
+      "camera": {
+        "position": [
+          1.071,
+          1.758,
+          0.186
+        ],
+        "target": [
+          0.356,
+          0.471,
+          -0.1
+        ]
+      }
+    },
+    {
+      "title": "Eyepiece",
+      "text": "A cluster of small lenses that works like a magnifying glass on the image the objective formed. Magnification is the objective's focal length divided by the eyepiece's.",
+      "node": "vintage_binocular_left_lens",
+      "position": [
+        0.169,
+        0.254,
+        -0.649
+      ],
+      "camera": {
+        "position": [
+          0.545,
+          0.63,
+          -1.724
+        ],
+        "target": [
+          0.169,
+          0.254,
+          -0.649
+        ]
+      }
+    },
+    {
+      "title": "Focus wheel",
+      "text": "Turning the centre wheel slides both eyepieces in or out together, sharpening near or distant subjects at once.",
+      "node": "vintage_binocular_focus",
+      "position": [
+        0,
+        0.47,
+        -0.061
+      ],
+      "camera": {
+        "position": [
+          0.194,
+          1.438,
+          -0.545
+        ],
+        "target": [
+          0,
+          0.47,
+          -0.061
+        ]
+      }
+    },
+    {
+      "title": "Diopter ring",
+      "text": "Most people's eyes differ slightly. Focus the left side with the wheel, then turn this ring to sharpen the right eyepiece on its own.",
+      "node": "vintage_binocular_diopter",
+      "position": [
+        -0.208,
+        0.189,
+        -0.39
+      ],
+      "camera": {
+        "position": [
+          -0.695,
+          0.513,
+          -1.201
+        ],
+        "target": [
+          -0.208,
+          0.189,
+          -0.39
+        ]
+      }
+    },
+    {
+      "title": "Hinge",
+      "text": "The two halves pivot on a central hinge so you can match their spacing to the distance between your eyes, typically 56 to 74 mm.",
+      "node": "vintage_binocular_middle",
+      "position": [
+        0,
+        0.374,
+        0.162
+      ],
+      "camera": {
+        "position": [
+          0,
+          1.043,
+          1.277
+        ],
+        "target": [
+          0,
+          0.374,
+          0.162
+        ]
+      }
+    }
+  ],
+  "credit": {
+    "title": "Vintage Binoculars",
+    "author": "Luke",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/vintage_binocular"
+  },
+  "how": [
+    {
+      "label": "Objective",
+      "title": "Light in: the objective",
+      "text": [
+        "Each half of a pair of binoculars is a small telescope. The big lens at the front, the objective, gathers light and bends it to a point, forming a small image inside the barrel.",
+        "That image is upside down and back to front, as it would be through any single lens."
+      ],
+      "angle": [
+        42,
+        16
+      ],
+      "fill": 0.8,
+      "focus": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens",
+        "vintage_binocular_diopter",
+        "vintage_binocular_focus",
+        "vintage_binocular_eye_relief",
+        "vintage_binocular_middle"
+      ],
+      "carries": "light",
+      "flow": [
+        [
+          0.43,
+          0.24,
+          0.88
+        ],
+        [
+          0.43,
+          0.24,
+          0.66
+        ],
+        [
+          0.43,
+          0.24,
+          -0.02
+        ]
+      ],
+      "flows": [
+        [
+          [
+            -0.43,
+            0.24,
+            0.88
+          ],
+          [
+            -0.43,
+            0.24,
+            0.66
+          ],
+          [
+            -0.43,
+            0.24,
+            -0.02
+          ]
+        ]
+      ],
+      "tags": [
+        {
+          "node": "vintage_binocular_left_prism",
+          "text": "Objective lens",
+          "at": [
+            0.43,
+            0.42,
+            0.68
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Prisms",
+      "title": "Prisms turn it the right way round",
+      "text": [
+        "In the bulge of each barrel, two right-angled glass prisms each bounce the light twice. The first turns the image over top to bottom, the second side to side, so it comes out the right way round.",
+        "Folding the light back and forth also packs a long light path into a short body, and is why the objectives sit wider apart than your eyes."
+      ],
+      "angle": [
+        52,
+        50
+      ],
+      "fill": 0.82,
+      "focus": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens",
+        "vintage_binocular_diopter",
+        "vintage_binocular_focus",
+        "vintage_binocular_eye_relief",
+        "vintage_binocular_middle"
+      ],
+      "carries": "light",
+      "flow": [
+        [
+          0.43,
+          0.24,
+          0.88
+        ],
+        [
+          0.43,
+          0.24,
+          0.66
+        ],
+        [
+          0.43,
+          0.24,
+          -0.02
+        ],
+        [
+          0.335,
+          0.335,
+          -0.02
+        ],
+        [
+          0.335,
+          0.335,
+          0.36
+        ],
+        [
+          0.241,
+          0.211,
+          0.36
+        ],
+        [
+          0.241,
+          0.211,
+          -0.5
+        ],
+        [
+          0.241,
+          0.211,
+          -0.8
+        ]
+      ],
+      "flows": [
+        [
+          [
+            -0.43,
+            0.24,
+            0.88
+          ],
+          [
+            -0.43,
+            0.24,
+            0.66
+          ],
+          [
+            -0.43,
+            0.24,
+            -0.02
+          ],
+          [
+            -0.335,
+            0.335,
+            -0.02
+          ],
+          [
+            -0.335,
+            0.335,
+            0.36
+          ],
+          [
+            -0.241,
+            0.211,
+            0.36
+          ],
+          [
+            -0.241,
+            0.211,
+            -0.5
+          ],
+          [
+            -0.241,
+            0.211,
+            -0.8
+          ]
+        ]
+      ],
+      "tags": [
+        {
+          "node": "vintage_binocular_left_prism",
+          "text": "First prism",
+          "at": [
+            0.39,
+            0.4,
+            -0.02
+          ]
+        },
+        {
+          "node": "vintage_binocular_left_prism",
+          "text": "Second prism",
+          "at": [
+            0.29,
+            0.4,
+            0.36
+          ]
+        }
+      ],
+      "chart": "binoculars-image"
+    },
+    {
+      "label": "Eyepiece",
+      "title": "The eyepiece enlarges it",
+      "text": [
+        "The eyepiece works like a magnifying glass on the upright image. How much it enlarges is the objective’s focal length divided by the eyepiece’s.",
+        "A typical pair has an objective focusing about 180 mm behind it and an eyepiece of about 25 mm, which gives 7×."
+      ],
+      "angle": [
+        214,
+        18
+      ],
+      "fill": 0.75,
+      "focus": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens",
+        "vintage_binocular_diopter",
+        "vintage_binocular_focus",
+        "vintage_binocular_eye_relief",
+        "vintage_binocular_middle"
+      ],
+      "frame": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens"
+      ],
+      "carries": "light",
+      "flow": [
+        [
+          0.241,
+          0.211,
+          0.36
+        ],
+        [
+          0.241,
+          0.211,
+          -0.5
+        ],
+        [
+          0.241,
+          0.211,
+          -0.8
+        ]
+      ],
+      "flows": [
+        [
+          [
+            -0.241,
+            0.211,
+            0.36
+          ],
+          [
+            -0.241,
+            0.211,
+            -0.5
+          ],
+          [
+            -0.241,
+            0.211,
+            -0.8
+          ]
+        ]
+      ],
+      "tags": [
+        {
+          "node": "vintage_binocular_left_lens",
+          "text": "Eyepiece",
+          "at": [
+            0.241,
+            0.33,
+            -0.55
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Magnification",
+        "caption": "Magnification is one focal length over the other: 180 mm ÷ 25 mm is about 7×, written on binoculars as the first number, as in 7 × 50.",
+        "unit": "Focal length, mm",
+        "bars": [
+          {
+            "label": "Objective",
+            "value": 180
+          },
+          {
+            "label": "Eyepiece",
+            "value": 25
+          }
+        ],
+        "picked": 0
+      }
+    },
+    {
+      "label": "Focus",
+      "title": "Focusing both at once",
+      "text": [
+        "Turning the centre wheel slides both eyepieces in or out together, to where the image forms for near or far subjects.",
+        "Most people’s eyes differ slightly, so the right eyepiece has a diopter ring of its own: focus the left side with the wheel, then turn the ring until the right is sharp too."
+      ],
+      "angle": [
+        200,
+        40
+      ],
+      "fill": 0.62,
+      "focus": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens",
+        "vintage_binocular_focus",
+        "vintage_binocular_diopter"
+      ],
+      "frame": [
+        "vintage_binocular_left_lens",
+        "vintage_binocular_right_lens",
+        "vintage_binocular_focus"
+      ],
+      "tags": [
+        {
+          "node": "vintage_binocular_focus",
+          "text": "Focus wheel",
+          "at": [
+            0,
+            0.48,
+            -0.04
+          ]
+        },
+        {
+          "node": "vintage_binocular_diopter",
+          "text": "Diopter ring",
+          "at": [
+            -0.24,
+            0.35,
+            -0.44
+          ]
+        }
+      ]
+    }
+  ]
+}

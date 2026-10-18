@@ -1,0 +1,1684 @@
+{
+  "order": 9,
+  "title": "Tesla Roadster",
+  "hook": "Fans that suck it onto the road and air thrusters that make it fly: the Roadster Tesla showed in 2026.",
+  "category": "cars",
+  "summary": [
+    "Tesla showed its new Roadster on 15 October 2026, nine years after the first prototype, in three trims: the Performance, with fans that suck it onto the road; the Thrust, which adds cold-gas thrusters at the back; and the Rocket, shown here, with ten thrusters round it and a tank where the passenger would sit. It flies, for a few seconds at a time, and isn’t allowed on public roads.",
+    "Under the tail, four electric fans pull the air out from under the sealed floor, so the air above presses the car down even when it’s standing still: enough, Tesla says, to drive upside down. And it carries about 600 litres of air squeezed to 690 bar; let out through nozzles like a rocket’s, it shoves the car forward, or lifts it off the ground.",
+    "The figures are Tesla’s claims (0 to 60 mph in under 0.59 seconds for the Rocket, over 230 mph); production is planned for 2028. This model was built in code from the launch’s photographs. Tesla hasn’t published drawings of its insides, so the fans, tanks and nozzles are laid out from its descriptions and its fan-car patent, not from the real parts."
+  ],
+  "model": "models/tesla-roadster.glb",
+  "viewAngle": [
+    -40,
+    14
+  ],
+  "explodeAngle": [
+    -48,
+    26
+  ],
+  "explodeDuration": 1800,
+  "motionLabel": "Drive",
+  "facts": [
+    {
+      "label": "Shown",
+      "value": "15 October 2026"
+    },
+    {
+      "label": "Trim",
+      "value": "Rocket (one seat, not road-legal)"
+    },
+    {
+      "label": "Suction",
+      "value": "Four fans, about 80 kW"
+    },
+    {
+      "label": "Air",
+      "value": "About 600 litres at 690 bar"
+    },
+    {
+      "label": "Thrusters",
+      "value": "Ten: four rear, four lift, two yaw"
+    },
+    {
+      "label": "0–60 mph",
+      "value": "Under 0.59 s (claimed)"
+    },
+    {
+      "label": "Production",
+      "value": "2028 (planned)"
+    }
+  ],
+  "parts": [
+    {
+      "node": "door_left",
+      "label": "Left door",
+      "group": "Body",
+      "about": "A scissor door: hinged at its front edge, it swings up.",
+      "direction": [
+        1,
+        0.15,
+        0
+      ],
+      "distance": 0.32,
+      "window": [
+        0,
+        0.22
+      ]
+    },
+    {
+      "node": "door_right",
+      "label": "Right door",
+      "group": "Body",
+      "about": "A scissor door: hinged at its front edge, it swings up.",
+      "direction": [
+        -1,
+        0.15,
+        0
+      ],
+      "distance": 0.32,
+      "window": [
+        0,
+        0.22
+      ]
+    },
+    {
+      "node": "bonnet",
+      "label": "Front lid",
+      "group": "Body",
+      "about": "Over the front boot, where the compressor that fills the air tanks is.",
+      "direction": [
+        0,
+        1,
+        0.3
+      ],
+      "distance": 0.2,
+      "window": [
+        0.08,
+        0.26
+      ]
+    },
+    {
+      "node": "boot",
+      "label": "Rear wing",
+      "group": "Body",
+      "about": "The deck behind the glass is the wing: in track mode it rises on two struts and tilts, its front edge down, to press the tail down at speed.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2,
+      "window": [
+        0.08,
+        0.26
+      ]
+    },
+    {
+      "node": "front_bumper",
+      "label": "Nose",
+      "group": "Body",
+      "about": "The light bar across it, an intake underneath, and in its sides the two yaw nozzles.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.22,
+      "window": [
+        0.16,
+        0.34
+      ]
+    },
+    {
+      "node": "rear_bumper",
+      "label": "Tail",
+      "group": "Body",
+      "about": "The light bar across it, and the opening where the fans blow out and the rear nozzles fire.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.22,
+      "window": [
+        0.16,
+        0.34
+      ]
+    },
+    {
+      "node": "body",
+      "label": "Body",
+      "group": "Body",
+      "about": "The shell, the gold-tinted glass and the cabin: it lifts off the battery, the fans, the air tanks and the nozzles underneath.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.36,
+      "window": [
+        0.4,
+        0.62
+      ]
+    },
+    {
+      "node": "fan_box",
+      "label": "Suction fans",
+      "group": "Suction",
+      "about": "Four electric fans of about 20 kW each, in the tail. A duct from an inlet in the floor between the rear wheels feeds them the air from under the car, and they blow it out of the back.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.1,
+      "window": [
+        0.66,
+        0.84
+      ]
+    },
+    {
+      "node": "skirts",
+      "label": "Skirts",
+      "group": "Suction",
+      "about": "Carbon blades round the sealed floor. When the fans run they drop to just above the road, so air can only seep in under their edges.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "air_tanks",
+      "label": "Air tanks",
+      "group": "Air",
+      "about": "Carbon-wound tanks, about 600 litres in all at 690 bar (10,000 psi): one across the car behind the seat, one in the passenger’s place.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.1,
+      "window": [
+        0.66,
+        0.84
+      ]
+    },
+    {
+      "node": "compressor",
+      "label": "Compressor",
+      "group": "Air",
+      "about": "An electric pump that fills the tanks from the battery. Tesla says six or seven hours for now, and wants it down to half an hour.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.12,
+      "window": [
+        0.66,
+        0.84
+      ]
+    },
+    {
+      "node": "air_lines",
+      "label": "Valves and lines",
+      "group": "Air",
+      "about": "Lines from the tanks to a valve block on the main tank’s back, and out to every nozzle; each nozzle has its own fast electric valve.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "thruster_rear_1",
+      "label": "Rear thrusters",
+      "group": "Air",
+      "about": "Four nozzles in the tail, about 80 kN between them: four or five times the push the tyres can give.",
+      "with": [
+        "thruster_rear_2",
+        "thruster_rear_3",
+        "thruster_rear_4"
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "thruster_down_1",
+      "label": "Lift thrusters",
+      "group": "Air",
+      "about": "One at each corner, blowing straight down: together they can lift the car off the ground.",
+      "with": [
+        "thruster_down_2",
+        "thruster_down_3",
+        "thruster_down_4"
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "thruster_yaw_left",
+      "label": "Yaw thrusters",
+      "group": "Air",
+      "about": "One in each side of the nose: they turn the car about its middle, in the air or on the ground.",
+      "with": [
+        "thruster_yaw_right"
+      ],
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "battery_pack",
+      "label": "Battery pack",
+      "group": "Skateboard",
+      "about": "A thick tray of 4680 cells in the floor, at 800 to 1,000 volts; the seat sits on it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "pack_lid",
+      "label": "Pack lid",
+      "group": "Skateboard",
+      "about": "Seals the pack; the cabin floor, the seat and the passenger’s tank sit on it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "drive",
+      "label": "Rear motors",
+      "group": "Skateboard",
+      "about": "A motor for each rear wheel, each with its inverter on top and a reduction gear beside it. Over a megawatt between them, Tesla says.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "suspension",
+      "label": "Suspension",
+      "group": "Skateboard",
+      "about": "Double wishbones and a coil-over at each corner; the front wheels are steered by wire, from a yoke.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "wheel_fl",
+      "label": "Front left wheel",
+      "group": "Wheels",
+      "about": "20-inch, on 255/30 tyres.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.15,
+      "window": [
+        0.22,
+        0.38
+      ]
+    },
+    {
+      "node": "wheel_fr",
+      "label": "Front right wheel",
+      "group": "Wheels",
+      "about": "20-inch, on 255/30 tyres.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.15,
+      "window": [
+        0.22,
+        0.38
+      ]
+    },
+    {
+      "node": "wheel_rl",
+      "label": "Rear left wheel",
+      "group": "Wheels",
+      "about": "21-inch, on wide 325/30 tyres.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.15,
+      "window": [
+        0.22,
+        0.38
+      ]
+    },
+    {
+      "node": "wheel_rr",
+      "label": "Rear right wheel",
+      "group": "Wheels",
+      "about": "21-inch, on wide 325/30 tyres.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.15,
+      "window": [
+        0.22,
+        0.38
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Suction fans",
+      "text": "Four fans pull the air out from under the floor and blow it out of the back.",
+      "node": "fan_box",
+      "position": [
+        0.0648,
+        0.115,
+        -0.8699
+      ],
+      "camera": {
+        "position": [
+          0,
+          0.3334,
+          -1.8104
+        ],
+        "target": [
+          0,
+          0.1255,
+          -0.8323
+        ]
+      }
+    },
+    {
+      "title": "Skirts",
+      "text": "They drop to just above the road while the fans run, to seal the floor.",
+      "node": "skirts",
+      "position": [
+        0.3246,
+        0.0586,
+        -0.0376
+      ],
+      "camera": {
+        "position": [
+          1.3284,
+          0.1987,
+          0.1524
+        ],
+        "target": [
+          0.251,
+          0.0837,
+          -0.0376
+        ]
+      }
+    },
+    {
+      "title": "Air tanks",
+      "text": "About 600 litres of air at 690 bar, in carbon-wound tanks.",
+      "node": "air_tanks",
+      "position": [
+        -0.1464,
+        0.3702,
+        0.0335
+      ],
+      "explode": 0.64,
+      "camera": {
+        "position": [
+          -1.3999,
+          0.5237,
+          0.2991
+        ],
+        "target": [
+          -0.0418,
+          0.2719,
+          -0.1422
+        ]
+      }
+    },
+    {
+      "title": "Rear thrusters",
+      "text": "Four nozzles, about 80 kN together.",
+      "node": "thruster_rear_2",
+      "position": [
+        -0.0565,
+        0.2175,
+        -0.8867
+      ],
+      "camera": {
+        "position": [
+          0.3031,
+          0.3445,
+          -1.6861
+        ],
+        "target": [
+          0,
+          0.1882,
+          -0.8532
+        ]
+      }
+    },
+    {
+      "title": "Lift thrusters",
+      "text": "One at each corner, blowing down.",
+      "node": "thruster_down_1",
+      "position": [
+        0.2928,
+        0.0502,
+        0.7571
+      ],
+      "camera": {
+        "position": [
+          0.8922,
+          0.1744,
+          1.4795
+        ],
+        "target": [
+          0.251,
+          0.1046,
+          0.7153
+        ]
+      }
+    },
+    {
+      "title": "Yaw thrusters",
+      "text": "In the sides of the nose: they turn the car.",
+      "node": "thruster_yaw_left",
+      "position": [
+        0.3639,
+        0.1255,
+        0.8073
+      ],
+      "camera": {
+        "position": [
+          1.1303,
+          0.2591,
+          1.0619
+        ],
+        "target": [
+          0.2928,
+          0.1338,
+          0.7571
+        ]
+      }
+    },
+    {
+      "title": "Compressor",
+      "text": "Fills the tanks from the battery.",
+      "node": "compressor",
+      "position": [
+        0,
+        0.2342,
+        0.7487
+      ],
+      "explode": 0.3,
+      "camera": {
+        "position": [
+          -0.2914,
+          0.7249,
+          1.3401
+        ],
+        "target": [
+          0,
+          0.1464,
+          0.7153
+        ]
+      }
+    },
+    {
+      "title": "Rear wing",
+      "text": "Hidden in the deck; it rises in track mode.",
+      "node": "boot",
+      "position": [
+        0,
+        0.3681,
+        -0.8323
+      ],
+      "camera": {
+        "position": [
+          -0.5393,
+          0.8606,
+          -1.6827
+        ],
+        "target": [
+          0,
+          0.3346,
+          -0.7486
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "wheel_fl",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.3304,
+        0.1382,
+        0.5479
+      ],
+      "speed": 1
+    },
+    {
+      "node": "wheel_fr",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.3304,
+        0.1382,
+        0.5479
+      ],
+      "speed": 1
+    },
+    {
+      "node": "wheel_rl",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.3262,
+        0.1523,
+        -0.6232
+      ],
+      "speed": 1
+    },
+    {
+      "node": "wheel_rr",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.3262,
+        0.1523,
+        -0.6232
+      ],
+      "speed": 1
+    },
+    {
+      "node": "shaft_rl",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.3262,
+        0.1523,
+        -0.6232
+      ],
+      "speed": 1,
+      "inside": true
+    },
+    {
+      "node": "shaft_rr",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.3262,
+        0.1523,
+        -0.6232
+      ],
+      "speed": 1,
+      "inside": true
+    },
+    {
+      "node": "rear_motor_left_rotor",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0586,
+        0.2276,
+        -0.6232
+      ],
+      "speed": 9,
+      "inside": true
+    },
+    {
+      "node": "rear_motor_right_rotor",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0586,
+        0.2276,
+        -0.6232
+      ],
+      "speed": 9,
+      "inside": true
+    },
+    {
+      "node": "fan_1",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.1945,
+        0.115,
+        -0.824
+      ],
+      "control": "fan",
+      "turn": 1
+    },
+    {
+      "node": "fan_2",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0648,
+        0.115,
+        -0.824
+      ],
+      "control": "fan",
+      "turn": 1
+    },
+    {
+      "node": "fan_3",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0648,
+        0.115,
+        -0.824
+      ],
+      "control": "fan",
+      "turn": 1
+    },
+    {
+      "node": "fan_4",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.1945,
+        0.115,
+        -0.824
+      ],
+      "control": "fan",
+      "turn": 1
+    },
+    {
+      "node": "skirts",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "control": "skirts",
+      "slide": [
+        0,
+        -0.03973,
+        0
+      ]
+    },
+    {
+      "node": "boot",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "control": "wing",
+      "slide": [
+        0,
+        0.15894,
+        0
+      ]
+    },
+    {
+      "node": "boot",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0,
+        0.3513,
+        -0.8323
+      ],
+      "control": "wing",
+      "turn": 0.0333
+    }
+  ],
+  "jets": [
+    {
+      "node": "thruster_rear_1",
+      "at": [
+        -0.1694,
+        0.2175,
+        -0.8834
+      ],
+      "dir": [
+        0,
+        0,
+        -1
+      ],
+      "group": "rear"
+    },
+    {
+      "node": "thruster_rear_2",
+      "at": [
+        -0.0565,
+        0.2175,
+        -0.8834
+      ],
+      "dir": [
+        0,
+        0,
+        -1
+      ],
+      "group": "rear"
+    },
+    {
+      "node": "thruster_rear_3",
+      "at": [
+        0.0565,
+        0.2175,
+        -0.8834
+      ],
+      "dir": [
+        0,
+        0,
+        -1
+      ],
+      "group": "rear"
+    },
+    {
+      "node": "thruster_rear_4",
+      "at": [
+        0.1694,
+        0.2175,
+        -0.8834
+      ],
+      "dir": [
+        0,
+        0,
+        -1
+      ],
+      "group": "rear"
+    },
+    {
+      "node": "thruster_down_1",
+      "at": [
+        0.2928,
+        0.0627,
+        0.7445
+      ],
+      "dir": [
+        0,
+        -1,
+        0
+      ],
+      "group": "lift"
+    },
+    {
+      "node": "thruster_down_2",
+      "at": [
+        -0.2928,
+        0.0627,
+        0.7445
+      ],
+      "dir": [
+        0,
+        -1,
+        0
+      ],
+      "group": "lift"
+    },
+    {
+      "node": "thruster_down_3",
+      "at": [
+        0.3074,
+        0.0627,
+        -0.824
+      ],
+      "dir": [
+        0,
+        -1,
+        0
+      ],
+      "group": "lift"
+    },
+    {
+      "node": "thruster_down_4",
+      "at": [
+        -0.3074,
+        0.0627,
+        -0.824
+      ],
+      "dir": [
+        0,
+        -1,
+        0
+      ],
+      "group": "lift"
+    },
+    {
+      "node": "thruster_yaw_left",
+      "at": [
+        0.3283,
+        0.1255,
+        0.7947
+      ],
+      "dir": [
+        1,
+        0,
+        0
+      ],
+      "group": "yaw"
+    },
+    {
+      "node": "thruster_yaw_right",
+      "at": [
+        -0.3283,
+        0.1255,
+        0.7947
+      ],
+      "dir": [
+        -1,
+        0,
+        0
+      ],
+      "group": "yaw"
+    }
+  ],
+  "how": [
+    {
+      "label": "Inside",
+      "title": "Fans, air and a battery",
+      "text": [
+        "Under the gold glass the new Roadster is three systems. A battery of 4680 cells fills the floor and drives two motors at the back, one for each rear wheel. In the tail, four electric fans pull the air out from under the car’s sealed floor. And about 600 litres of air, squeezed to 690 bar in carbon tanks behind the seat and in the passenger’s place, feeds ten nozzles round the car.",
+        "The fans hold it down; the air pushes it along, or (on the Rocket, shown here) lifts it off the ground. The two work against each other, so the rest of the tour takes them one at a time."
+      ],
+      "angle": [
+        -55,
+        32
+      ],
+      "fill": 0.88,
+      "rate": 0,
+      "focus": [
+        "battery_pack",
+        "modules",
+        "drive",
+        "rear_motor_left",
+        "rear_motor_right",
+        "rear_motor_left_rotor",
+        "rear_motor_right_rotor",
+        "fan_box",
+        "fan_1",
+        "fan_2",
+        "fan_3",
+        "fan_4",
+        "skirts",
+        "skirt_left",
+        "skirt_right",
+        "skirt_front",
+        "skirt_rear",
+        "air_tanks",
+        "tank_main",
+        "tank_seat",
+        "compressor",
+        "air_lines",
+        "thruster_rear_1",
+        "thruster_rear_2",
+        "thruster_rear_3",
+        "thruster_rear_4",
+        "thruster_down_1",
+        "thruster_down_2",
+        "thruster_down_3",
+        "thruster_down_4",
+        "thruster_yaw_left",
+        "thruster_yaw_right"
+      ],
+      "tags": [
+        {
+          "node": "battery_pack",
+          "text": "Battery",
+          "at": [
+            0.1255,
+            0.1422,
+            0.0879
+          ]
+        },
+        {
+          "node": "drive",
+          "text": "Rear motors",
+          "at": [
+            -0.1338,
+            0.2928,
+            -0.6232
+          ]
+        },
+        {
+          "node": "fan_box",
+          "text": "Fans",
+          "at": [
+            -0.2342,
+            0.1255,
+            -0.8741
+          ]
+        },
+        {
+          "node": "tank_seat",
+          "text": "Air tanks",
+          "at": [
+            -0.1464,
+            0.3764,
+            0.0879
+          ]
+        },
+        {
+          "node": "compressor",
+          "text": "Compressor",
+          "at": [
+            0,
+            0.2175,
+            0.7487
+          ]
+        },
+        {
+          "node": "thruster_down_1",
+          "text": "Lift nozzles",
+          "at": [
+            0.2928,
+            0.2091,
+            0.7571
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Nought to 60 mph, as claimed",
+        "caption": "Tesla’s figures. The fans’ grip takes the Performance to 1.6 s with no thrusters; the air takes off as much again.",
+        "unit": "seconds",
+        "bars": [
+          {
+            "label": "2017 claim",
+            "value": 1.9
+          },
+          {
+            "label": "Performance",
+            "value": 1.6
+          },
+          {
+            "label": "Thrust",
+            "value": 0.9
+          },
+          {
+            "label": "Rocket",
+            "value": 0.59
+          }
+        ]
+      }
+    },
+    {
+      "label": "Motors",
+      "title": "Two motors, one for each rear wheel",
+      "text": [
+        "Each motor is a ring of copper windings round a magnet rotor. The inverter on top turns the battery’s direct current into three-phase alternating current, and the faster it alternates, the faster the rotor turns. A reduction gear slows it about nine times for its wheel, and multiplies its torque as much.",
+        "With a motor for each rear wheel, the car can push the outside wheel harder in a bend; the front wheels are steered by wire, from a yoke. Hold Drive and count: nine turns of a motor for one of its wheels."
+      ],
+      "angle": [
+        -140,
+        24
+      ],
+      "fill": 0.8,
+      "focus": [
+        "rear_motor_left",
+        "rear_motor_right",
+        "rear_motor_left_rotor",
+        "rear_motor_right_rotor",
+        "shaft_rl",
+        "shaft_rr",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "frame": [
+        "rear_motor_left",
+        "rear_motor_right",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "try": "run",
+      "count": [
+        {
+          "node": "rear_motor_left_rotor",
+          "label": "Motor"
+        },
+        {
+          "node": "wheel_rl",
+          "label": "Wheel"
+        }
+      ],
+      "chart": {
+        "type": "motor-field",
+        "title": "A magnet motor, end-on",
+        "caption": "The three currents rise and fall in turn (red one way, black the other), so their field goes round; the rotor’s magnet follows it, just behind. Slowed nine times.",
+        "node": "rear_motor_left_rotor",
+        "kind": "magnet",
+        "slow": 9
+      }
+    },
+    {
+      "label": "Suction",
+      "title": "Sucked onto the road",
+      "text": [
+        "The air presses on everything, about ten tonnes on every square metre. Under a parked car it pushes up as hard as it presses down on top. The Roadster’s fans pull the air out from under its floor faster than it can leak back in, so the pressure there drops, and the air on top wins.",
+        "It takes very little: 6 kPa less underneath, a sixteenth of the air’s pressure, over 3 m² of floor is two tonnes of downforce, more than the car weighs, moving or not. The skirts drop to the road so air can only seep in under their edges; the fans’ 80 kW mostly pumps that leak away."
+      ],
+      "angle": [
+        -125,
+        10
+      ],
+      "fill": 0.82,
+      "rate": 0,
+      "focus": [
+        "fan_box",
+        "fan_1",
+        "fan_2",
+        "fan_3",
+        "fan_4",
+        "skirts",
+        "skirt_left",
+        "skirt_right",
+        "skirt_front",
+        "skirt_rear",
+        "battery_pack",
+        "wheel_rl",
+        "wheel_rr",
+        "wheel_fl",
+        "wheel_fr"
+      ],
+      "flows": [
+        [
+          [
+            0.4099,
+            0.0167,
+            0.1297
+          ],
+          [
+            0.3179,
+            0.0251,
+            0.0879
+          ],
+          [
+            0.1673,
+            0.0293,
+            -0.1631
+          ],
+          {
+            "node": "fan_box",
+            "at": [
+              0,
+              0.046,
+              -0.4308
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              0,
+              0.0837,
+              -0.5813
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              0,
+              0.1589,
+              -0.7487
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              0.0648,
+              0.115,
+              -0.8323
+            ]
+          },
+          [
+            0.0648,
+            0.115,
+            -1.0414
+          ]
+        ],
+        [
+          [
+            -0.4099,
+            0.0167,
+            0.2552
+          ],
+          [
+            -0.3179,
+            0.0251,
+            0.2134
+          ],
+          [
+            -0.1673,
+            0.0293,
+            -0.0794
+          ],
+          {
+            "node": "fan_box",
+            "at": [
+              -0.0837,
+              0.046,
+              -0.4349
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              -0.1046,
+              0.0837,
+              -0.6022
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              -0.1673,
+              0.138,
+              -0.757
+            ]
+          },
+          {
+            "node": "fan_box",
+            "at": [
+              -0.1945,
+              0.115,
+              -0.8323
+            ]
+          },
+          [
+            -0.1945,
+            0.115,
+            -1.0414
+          ]
+        ]
+      ],
+      "carries": "air",
+      "tags": [
+        {
+          "node": "battery_pack",
+          "text": "Low pressure under the floor",
+          "at": [
+            0,
+            0.0251,
+            -0.1213
+          ]
+        },
+        {
+          "node": "skirt_left",
+          "text": "Skirt",
+          "ride": false,
+          "at": [
+            0.3246,
+            0.0502,
+            0.1715
+          ]
+        },
+        {
+          "node": "fan_box",
+          "text": "Air out",
+          "at": [
+            0,
+            0.1255,
+            -0.9369
+          ]
+        }
+      ],
+      "chart": {
+        "type": "suction",
+        "title": "Pressure above and below",
+        "caption": "The air presses down on top and up underneath; with the fans running there’s less underneath, and the difference holds the car down. Switch them on and watch."
+      },
+      "try": "suction"
+    },
+    {
+      "label": "Grip",
+      "title": "Downforce without speed",
+      "text": [
+        "A racing car’s wings make downforce from the air rushing past, so it grows with the square of the speed: at a crawl there’s next to none. The fans’ pull is the same standing still as at 300 km/h. That’s how the Roadster drove up a ramp that curled over until it was upside down.",
+        "Pressed down harder, the tyres can push sideways harder before they slide: Tesla quotes over 2 g in a bend, against 1.26 g on the tyres alone (not quite double, as a tyre grips a little less for each extra kilo). In track mode a wing rises out of the deck."
+      ],
+      "angle": [
+        -150,
+        20
+      ],
+      "fill": 0.85,
+      "focus": [
+        "boot",
+        "fan_box",
+        "fan_1",
+        "fan_2",
+        "fan_3",
+        "fan_4",
+        "skirts",
+        "skirt_left",
+        "skirt_right",
+        "skirt_front",
+        "skirt_rear",
+        "wheel_rl",
+        "wheel_rr",
+        "wheel_fl",
+        "wheel_fr"
+      ],
+      "chart": {
+        "type": "downforce",
+        "title": "Downforce and speed",
+        "caption": "The fans’ pull is the same at any speed; the body’s and the wing’s grows with speed squared. Above the dashed line, the car could drive upside down."
+      },
+      "try": "grip"
+    },
+    {
+      "label": "Air",
+      "title": "Air at 690 bar",
+      "text": [
+        "The thrusters burn nothing: they run on air. A compressor in the front boot pumps it, on power from the battery, into the tanks until it’s at 690 bar (10,000 psi), as high as a hydrogen car’s tank and three times a diver’s. Air that squeezed is half as dense as water: 600 litres of it weigh about 320 kg, four people’s worth.",
+        "The tanks are carbon fibre wound over a thin liner, as SpaceX’s rockets’ are: strong enough for the pressure and far lighter than steel. Filling them takes six or seven hours today; Tesla wants it down to half an hour."
+      ],
+      "angle": [
+        -35,
+        38
+      ],
+      "fill": 0.82,
+      "rate": 0,
+      "focus": [
+        "air_tanks",
+        "tank_main",
+        "tank_seat",
+        "compressor",
+        "air_lines"
+      ],
+      "flow": [
+        {
+          "node": "compressor",
+          "at": [
+            0,
+            0.1129,
+            0.7487
+          ]
+        },
+        {
+          "node": "air_lines",
+          "at": [
+            -0.0837,
+            0.092,
+            0.4643
+          ]
+        },
+        {
+          "node": "air_lines",
+          "at": [
+            -0.1338,
+            0.1799,
+            0.3388
+          ]
+        },
+        {
+          "node": "tank_seat",
+          "at": [
+            -0.1464,
+            0.2572,
+            0.0335
+          ]
+        },
+        {
+          "node": "tank_main",
+          "at": [
+            -0.1422,
+            0.2886,
+            -0.3848
+          ]
+        },
+        {
+          "node": "tank_main",
+          "at": [
+            0,
+            0.2886,
+            -0.3848
+          ]
+        }
+      ],
+      "carries": "air",
+      "tags": [
+        {
+          "node": "tank_main",
+          "text": "Behind the seat",
+          "at": [
+            0.1673,
+            0.435,
+            -0.3848
+          ]
+        },
+        {
+          "node": "tank_seat",
+          "text": "In the passenger’s place",
+          "at": [
+            -0.1422,
+            0.3681,
+            0.0879
+          ]
+        },
+        {
+          "node": "compressor",
+          "text": "Compressor",
+          "at": [
+            0,
+            0.2175,
+            0.7487
+          ]
+        }
+      ],
+      "chart": {
+        "type": "ladder",
+        "title": "How hard the air is squeezed",
+        "caption": "Pressure in bar, on a scale where each line is ten times the last: the Roadster’s tanks hold air at nearly three hundred times a car tyre’s pressure.",
+        "unit": "bar",
+        "scale": "log",
+        "rungs": [
+          {
+            "name": "Car tyre",
+            "value": 2.4,
+            "note": "2.4 bar"
+          },
+          {
+            "name": "Diver’s tank",
+            "value": 230,
+            "note": "230 bar"
+          },
+          {
+            "name": "Hydrogen car",
+            "value": 700,
+            "note": "700 bar"
+          },
+          {
+            "name": "Roadster",
+            "value": 690,
+            "note": "690 bar"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Thrusters",
+      "title": "A rocket without fire",
+      "text": [
+        "Open a valve and the air rushes out through a nozzle shaped like a rocket engine’s. It narrows to a throat, where the air reaches the speed of sound, then widens, and the air speeds up to twice that as its pressure falls to the air’s outside. Throwing air backwards pushes the car forwards, as a balloon flies off when you let it go. The jet leaves at about −200 °C: its white cloud is the moisture round it freezing.",
+        "The four rear nozzles push with about 80 kN, four or five times what the tyres can, and need no grip to do it: 0 to 60 mph in under 0.59 s, Tesla says. At full blast the air lasts about a second and a half."
+      ],
+      "camera": {
+        "position": [
+          -1.1249,
+          0.679,
+          -3.0943
+        ],
+        "target": [
+          0,
+          0.2008,
+          -1.146
+        ]
+      },
+      "focus": [
+        "thruster_rear_1",
+        "thruster_rear_2",
+        "thruster_rear_3",
+        "thruster_rear_4",
+        "air_lines",
+        "air_tanks",
+        "tank_main",
+        "tank_seat",
+        "fan_box"
+      ],
+      "frame": [
+        "thruster_rear_1",
+        "thruster_rear_2",
+        "thruster_rear_3",
+        "thruster_rear_4",
+        "tank_main"
+      ],
+      "flows": [
+        [
+          {
+            "node": "tank_main",
+            "at": [
+              0,
+              0.2886,
+              -0.3848
+            ]
+          },
+          {
+            "node": "air_lines",
+            "at": [
+              0,
+              0.2719,
+              -0.5437
+            ]
+          },
+          {
+            "node": "air_lines",
+            "at": [
+              0,
+              0.2677,
+              -0.7277
+            ]
+          },
+          {
+            "node": "thruster_rear_2",
+            "at": [
+              -0.0565,
+              0.2175,
+              -0.7445
+            ]
+          },
+          {
+            "node": "thruster_rear_2",
+            "at": [
+              -0.0565,
+              0.2175,
+              -0.8834
+            ]
+          },
+          [
+            -0.0565,
+            0.2175,
+            -1.1251
+          ]
+        ],
+        [
+          {
+            "node": "tank_main",
+            "at": [
+              0,
+              0.2886,
+              -0.3848
+            ]
+          },
+          {
+            "node": "air_lines",
+            "at": [
+              0,
+              0.2719,
+              -0.5437
+            ]
+          },
+          {
+            "node": "air_lines",
+            "at": [
+              0,
+              0.2677,
+              -0.7277
+            ]
+          },
+          {
+            "node": "thruster_rear_3",
+            "at": [
+              0.0565,
+              0.2175,
+              -0.7445
+            ]
+          },
+          {
+            "node": "thruster_rear_3",
+            "at": [
+              0.0565,
+              0.2175,
+              -0.8834
+            ]
+          },
+          [
+            0.0565,
+            0.2175,
+            -1.1251
+          ]
+        ]
+      ],
+      "carries": "air",
+      "chart": {
+        "type": "nozzle",
+        "title": "Through a nozzle",
+        "caption": "The air’s speed (and its pressure) from the valve to the open air: below the speed of sound until the throat, above it after. Fire, and watch the air go through."
+      },
+      "try": "thrust"
+    },
+    {
+      "label": "Flight",
+      "title": "Lifting off",
+      "text": [
+        "Downforce and flight pull opposite ways, so before a jump the fans stop and the skirts tuck up. Then the four lift nozzles, one at each corner, blow straight down. When their push is more than the car weighs, it climbs; equal to it, it hovers. Like a drone, it stays level because a computer trims each valve many times a second; the two nozzles in the nose turn it.",
+        "Hovering takes about 20 kN, some 30 kg of air a second, so the tanks last seconds: a jump, not a journey. At the launch it jumped over five other Teslas, then 27 feet up with a barrel roll; the hops here are smaller, worked out from the same numbers."
+      ],
+      "camera": {
+        "position": [
+          -4.6277,
+          1.5139,
+          2.4959
+        ],
+        "target": [
+          -0.1046,
+          0.6692,
+          -0.3304
+        ]
+      },
+      "rate": 0,
+      "chart": {
+        "type": "flight",
+        "title": "Thrust and weight",
+        "caption": "The lift nozzles’ push (red) against the car’s weight (dashed): above it the car climbs, on it it hovers, below it it falls; a hard push catches it before it lands."
+      },
+      "try": "fly"
+    }
+  ],
+  "credit": {
+    "title": "Tesla Roadster (2026), after Tesla’s launch photographs",
+    "author": "3D of Things",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "built in code for this site",
+    "sourceUrl": "",
+    "extra": {
+      "label": "Sources",
+      "text": "Proportions from Tesla’s launch photographs (October 2026); the suction system after Tesla’s “Electric Fan Car” patent (US 12,746,987); figures from Tesla, Electrek and The EV Report. The layout of the tanks, lines and nozzles is this model’s."
+    }
+  },
+  "build": {
+    "generate": "scripts/cars/generate.mjs",
+    "car": "roadster"
+  }
+}

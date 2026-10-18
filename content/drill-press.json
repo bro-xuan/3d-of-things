@@ -1,0 +1,628 @@
+{
+  "order": 6,
+  "title": "Drill Press",
+  "hook": "One motor, two stepped pulleys and a belt: move the belt to change the speed.",
+  "category": "gears",
+  "summary": [
+    "A drill press holds a drill rigidly upright, so holes go in straight and to a set depth. An electric motor at the back turns a stepped pulley, and a V-belt carries that motion to a matching pulley on the spindle at the front.",
+    "Moving the belt to a different pair of steps changes the speed: a small pulley driving a large one turns the bit slowly with more force, for big holes and metal, while large driving small is fast, for small bits and wood. To drill, you pull the feed handles, which lower the spinning spindle on a rack and pinion."
+  ],
+  "model": "models/drill-press.glb",
+  "viewAngle": [
+    38,
+    14
+  ],
+  "facts": [
+    {
+      "label": "Drive",
+      "value": "Motor and V-belt"
+    },
+    {
+      "label": "Speed",
+      "value": "Set by belt position"
+    },
+    {
+      "label": "Real size",
+      "value": "90 cm tall"
+    }
+  ],
+  "parts": [
+    {
+      "node": "drill_press_01_lid",
+      "label": "Belt guard",
+      "about": "Covers the pulleys and belt. Lift it to move the belt to another speed.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3,
+      "stage": 0
+    },
+    {
+      "node": "drill_press_01_plate",
+      "label": "Table",
+      "about": "Slides up and down the column and clamps where you want it, with slots for the bit to pass through.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.26,
+      "stage": 0,
+      "with": [
+        "drill_press_01_catch"
+      ]
+    },
+    {
+      "node": "drill_press_01_belt",
+      "label": "V-belt",
+      "about": "Its wedge-shaped section jams into the pulley grooves, carrying the motor’s turn to the spindle.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2,
+      "stage": 1
+    },
+    {
+      "node": "drill_press_01_handle",
+      "label": "Feed handles",
+      "about": "Turn a pinion against a rack on the spindle’s sleeve, lowering the spinning bit into the work.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.28,
+      "stage": 1
+    },
+    {
+      "node": "drill_press_01_bit",
+      "label": "Chuck & bit",
+      "about": "Grips the bit. It spins with the spindle and comes down when you pull the handles.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.16,
+      "stage": 1
+    },
+    {
+      "node": "drill_press_01_limiter",
+      "label": "Depth stop",
+      "about": "A stop on a threaded rod, so every hole in a batch ends at the same depth.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.2,
+      "stage": 1
+    },
+    {
+      "node": "drill_press_01_button_a",
+      "label": "Switches",
+      "about": "Start and stop the motor.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.14,
+      "stage": 1,
+      "with": [
+        "drill_press_01_button_b"
+      ]
+    },
+    {
+      "node": "drill_press_01_gear_a",
+      "label": "Motor pulley",
+      "about": "A stack of grooves on the motor shaft, mirroring the spindle pulley; where the belt sits sets the speed.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.1,
+      "stage": 2
+    },
+    {
+      "node": "drill_press_01_gear_b",
+      "label": "Spindle pulley",
+      "about": "The matching stack of grooves on the spindle, turned by the belt from the motor pulley.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.1,
+      "stage": 2
+    },
+    {
+      "node": "drill_press_01",
+      "label": "Column, head & motor",
+      "about": "The column carries the head, which holds the spindle at the front and the motor at the back. The cord brings the motor its power.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "with": [
+        "drill_press_01_plug"
+      ]
+    }
+  ],
+  "motion": [
+    {
+      "node": "drill_press_01_gear_a",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "speed": -1.5
+    },
+    {
+      "node": "drill_press_01_gear_b",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "speed": -1.5
+    },
+    {
+      "node": "drill_press_01_bit",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "speed": -1.5
+    }
+  ],
+  "motionLabel": "Switch it on",
+  "annotations": [
+    {
+      "title": "Motor",
+      "text": "An induction motor at the back runs at one fixed speed, typically around 1,400 rpm. The pulleys turn that single speed into several.",
+      "position": [
+        0.046,
+        1.152,
+        -0.457
+      ],
+      "camera": {
+        "position": [
+          1.319,
+          1.534,
+          -1.348
+        ],
+        "target": [
+          0.046,
+          1.152,
+          -0.457
+        ]
+      }
+    },
+    {
+      "title": "Stepped pulleys",
+      "text": "Each pulley is a stack of grooves of different diameters, one on the motor and a mirror-image one on the spindle. Their ratio sets the speed: a 2 : 1 pair halves it and doubles the turning force.",
+      "node": "drill_press_01_gear_b",
+      "position": [
+        0.047,
+        1.3,
+        0.312
+      ],
+      "camera": {
+        "position": [
+          0.501,
+          2.436,
+          0.993
+        ],
+        "target": [
+          0.047,
+          1.3,
+          0.312
+        ]
+      }
+    },
+    {
+      "title": "V-belt",
+      "text": "The belt's wedge-shaped section jams into the pulley grooves, so the harder it pulls, the tighter it grips. To change speed you lift the guard and move it to another pair of grooves.",
+      "node": "drill_press_01_belt",
+      "position": [
+        0.092,
+        1.225,
+        -0.002
+      ],
+      "camera": {
+        "position": [
+          0.954,
+          2.374,
+          0.429
+        ],
+        "target": [
+          0.092,
+          1.225,
+          -0.002
+        ]
+      }
+    },
+    {
+      "title": "Feed handles",
+      "text": "The handles turn a small gear meshed with teeth cut into the sleeve around the spindle: a rack and pinion. Pull down and the spinning bit descends; let go and a spring lifts it back.",
+      "node": "drill_press_01_handle",
+      "position": [
+        0.241,
+        0.974,
+        0.234
+      ],
+      "camera": {
+        "position": [
+          1.404,
+          1.323,
+          0.932
+        ],
+        "target": [
+          0.241,
+          0.974,
+          0.234
+        ]
+      }
+    },
+    {
+      "title": "Depth stop",
+      "text": "A stop on a threaded rod limits how far the spindle can travel, so a whole batch of holes ends at exactly the same depth.",
+      "node": "drill_press_01_limiter",
+      "position": [
+        -0.013,
+        0.995,
+        0.326
+      ],
+      "camera": {
+        "position": [
+          -0.244,
+          1.226,
+          1.481
+        ],
+        "target": [
+          -0.013,
+          0.995,
+          0.326
+        ]
+      }
+    },
+    {
+      "title": "Table",
+      "text": "The table slides up and down the column and locks with a clamp. Its slots let the bit pass through without hitting the table and give clamps something to grip.",
+      "node": "drill_press_01_plate",
+      "position": [
+        0.039,
+        0.359,
+        0.31
+      ],
+      "camera": {
+        "position": [
+          0.475,
+          1.122,
+          1.4
+        ],
+        "target": [
+          0.039,
+          0.359,
+          0.31
+        ]
+      }
+    }
+  ],
+  "credit": {
+    "title": "Drill Press 01",
+    "author": "Viktor",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/drill_press_01"
+  },
+  "how": [
+    {
+      "label": "Motor",
+      "title": "One motor, one speed",
+      "text": [
+        "The electric motor at the back runs at a single speed, about 1,400 turns a minute. Its shaft comes up into the head and carries a stepped pulley: a stack of grooves, each a different size.",
+        "Everything the drill press does with speed, it does with that one pulley and a belt."
+      ],
+      "angle": [
+        128,
+        24
+      ],
+      "fill": 0.66,
+      "focus": [
+        "drill_press_01_gear_a",
+        "drill_press_01_gear_b",
+        "drill_press_01_belt",
+        "drill_press_01_bit"
+      ],
+      "frame": [
+        "drill_press_01_gear_a",
+        "drill_press_01_gear_b",
+        "drill_press_01_belt"
+      ],
+      "flow": [
+        [
+          0.035,
+          1.02,
+          -0.43
+        ],
+        {
+          "node": "drill_press_01_gear_a",
+          "at": [
+            0.035,
+            1.243,
+            -0.324
+          ]
+        },
+        {
+          "node": "drill_press_01_gear_a",
+          "at": [
+            0.107,
+            1.226,
+            -0.324
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "drill_press_01",
+          "text": "Motor: about 1,400 rpm",
+          "at": [
+            0.046,
+            1.05,
+            -0.457
+          ]
+        },
+        {
+          "node": "drill_press_01_gear_a",
+          "text": "Motor pulley",
+          "at": [
+            0.1,
+            1.29,
+            -0.38
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Belt",
+      "title": "The belt sets the speed",
+      "text": [
+        "A V-belt carries the turn to a matching pulley on the spindle, mirror image of the first. Which pair of grooves it sits in sets the speed: a small pulley driving a big one turns the spindle slowly, with more force, and big driving small turns it fast.",
+        "Pick a belt position and watch the spindle pulley."
+      ],
+      "angle": [
+        62,
+        42
+      ],
+      "fill": 0.7,
+      "focus": [
+        "drill_press_01_gear_a",
+        "drill_press_01_gear_b",
+        "drill_press_01_belt",
+        "drill_press_01_bit"
+      ],
+      "frame": [
+        "drill_press_01_gear_a",
+        "drill_press_01_gear_b",
+        "drill_press_01_belt"
+      ],
+      "flow": [
+        {
+          "node": "drill_press_01_gear_a",
+          "at": [
+            0.035,
+            1.243,
+            -0.324
+          ]
+        },
+        {
+          "node": "drill_press_01_gear_a",
+          "at": [
+            0.107,
+            1.226,
+            -0.324
+          ]
+        },
+        {
+          "node": "drill_press_01_belt",
+          "at": [
+            0.107,
+            1.226,
+            0.291
+          ]
+        },
+        {
+          "node": "drill_press_01_gear_b",
+          "at": [
+            0.032,
+            1.248,
+            0.291
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "drill_press_01_gear_a",
+          "text": "Motor pulley",
+          "at": [
+            0.1,
+            1.29,
+            -0.38
+          ]
+        },
+        {
+          "node": "drill_press_01_gear_b",
+          "text": "Spindle pulley",
+          "at": [
+            0.1,
+            1.29,
+            0.35
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Spindle speed",
+        "caption": "With pulleys like these (grooves from about 45 to 115 mm across), the five belt positions give roughly 550 to 3,600 turns a minute: slow for big holes and metal, fast for small bits and wood.",
+        "unit": "Turns a minute, by belt position",
+        "follow": "selected",
+        "bars": [
+          {
+            "label": "1",
+            "value": 550
+          },
+          {
+            "label": "2",
+            "value": 840
+          },
+          {
+            "label": "3",
+            "value": 1400
+          },
+          {
+            "label": "4",
+            "value": 2330
+          },
+          {
+            "label": "5",
+            "value": 3580
+          }
+        ]
+      },
+      "try": "speeds",
+      "spin": [
+        "drill_press_01_gear_b",
+        "drill_press_01_bit"
+      ],
+      "speeds": [
+        {
+          "label": "1",
+          "factor": 0.39,
+          "note": "Small driving big: about 550 rpm, for big holes and metal"
+        },
+        {
+          "label": "2",
+          "factor": 0.6,
+          "note": "About 840 rpm"
+        },
+        {
+          "label": "3",
+          "factor": 1,
+          "note": "Equal pulleys: the motor’s own 1,400 rpm"
+        },
+        {
+          "label": "4",
+          "factor": 1.67,
+          "note": "About 2,330 rpm"
+        },
+        {
+          "label": "5",
+          "factor": 2.56,
+          "note": "Big driving small: about 3,580 rpm, for small bits and wood"
+        }
+      ]
+    },
+    {
+      "label": "Feed",
+      "title": "Lowering the bit: a rack and pinion",
+      "text": [
+        "To drill, you pull the feed handles. They turn a small gear in the head against teeth cut into the sleeve around the spindle, a rack and pinion, which lowers the spinning bit into the work. A spring lifts it back when you let go.",
+        "The depth stop on its threaded rod ends every hole in a batch at the same depth."
+      ],
+      "angle": [
+        58,
+        12
+      ],
+      "fill": 0.64,
+      "focus": [
+        "drill_press_01_handle",
+        "drill_press_01_bit",
+        "drill_press_01_limiter"
+      ],
+      "frame": [
+        "drill_press_01_handle",
+        "drill_press_01_bit"
+      ],
+      "flow": [
+        {
+          "node": "drill_press_01_handle",
+          "at": [
+            0.33,
+            0.86,
+            0.36
+          ]
+        },
+        {
+          "node": "drill_press_01_handle",
+          "at": [
+            0.14,
+            0.96,
+            0.207
+          ]
+        },
+        [
+          0.06,
+          0.96,
+          0.29
+        ],
+        {
+          "node": "drill_press_01_bit",
+          "at": [
+            0.032,
+            0.86,
+            0.322
+          ]
+        },
+        {
+          "node": "drill_press_01_bit",
+          "at": [
+            0.032,
+            0.63,
+            0.322
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "drill_press_01_handle",
+          "text": "Pull down",
+          "at": [
+            0.33,
+            0.86,
+            0.36
+          ]
+        },
+        {
+          "node": "drill_press_01_limiter",
+          "text": "Depth stop",
+          "at": [
+            -0.06,
+            1.06,
+            0.33
+          ]
+        },
+        {
+          "node": "drill_press_01_bit",
+          "text": "Bit comes down, spinning",
+          "at": [
+            0.06,
+            0.7,
+            0.35
+          ]
+        }
+      ]
+    }
+  ]
+}

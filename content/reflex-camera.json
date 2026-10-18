@@ -1,0 +1,1665 @@
+{
+  "order": 8,
+  "title": "Medium-Format SLR",
+  "hook": "A cube of a camera: a mirror, two flaps and a shutter in the lens, all reset by one turn of a knob.",
+  "category": "cameras",
+  "summary": [
+    "Hasselblad’s 500C/M of 1970 is a camera built from parts that come off: a body with a mirror, a lens with its own shutter, a magazine of film and a folding finder. Change magazines and you change films halfway through a roll; change finders and you can hold it at eye level. Electric Hasselblads of the same family took the pictures on the Moon.",
+    "Looking down into the hood you see the picture on a ground-glass screen, thrown up by the mirror. Pressing the release sets off a chain of events in a few hundredths of a second: the lens shuts, the mirror flies up, two flaps behind it open, and only then does the shutter in the lens open. One turn of the knob on the side resets the lot and winds on the film.",
+    "This model was built in code for this site, after the factory service manual’s exploded views and timing chart and the camera’s published dimensions, and its parts move as that chart says they do."
+  ],
+  "model": "models/reflex-camera.glb",
+  "viewAngle": [
+    -38,
+    16
+  ],
+  "explodeAngle": [
+    -56,
+    22
+  ],
+  "explodeDuration": 1700,
+  "facts": [
+    {
+      "label": "Film",
+      "value": "120 roll film, twelve 56 × 56 mm frames"
+    },
+    {
+      "label": "Lens",
+      "value": "80 mm f/2.8, 7 glasses in 5 groups"
+    },
+    {
+      "label": "Shutter",
+      "value": "In the lens: 1 s to 1/500 s, flash at every speed"
+    },
+    {
+      "label": "Lens to film",
+      "value": "74.9 mm"
+    },
+    {
+      "label": "Made",
+      "value": "1970–1994 (500C/M)"
+    },
+    {
+      "label": "Size",
+      "value": "110 × 114 × 176 mm with lens and magazine"
+    }
+  ],
+  "parts": [
+    {
+      "node": "lens",
+      "label": "Lens",
+      "group": "Lens",
+      "about": "An 80 mm f/2.8 of the Planar type, seven glasses in five groups, with its own shutter between them. It turns off the body on a bayonet.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.78,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "optics",
+      "label": "Optical unit",
+      "group": "Lens",
+      "about": "The glass with the shutter and iris between it, in a housing carrying the speed and aperture rings. Focusing moves all of it forward on a helicoid.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.2,
+      "window": [
+        0.62,
+        0.8
+      ]
+    },
+    {
+      "node": "focus_ring",
+      "label": "Focusing ring",
+      "group": "Lens",
+      "about": "Turned 300° from infinity to 0.9 m, it screws the optical unit out 8.75 mm. The distance scale on it reads against the depth-of-field ring.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.12,
+      "window": [
+        0.7,
+        0.88
+      ]
+    },
+    {
+      "node": "shell",
+      "label": "Body shell",
+      "group": "Body",
+      "about": "An aluminium casting, chrome outside and leatherette on the sides. Everything that works is on the chassis inside, which slides out of the back.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.64,
+      "window": [
+        0.38,
+        0.58
+      ]
+    },
+    {
+      "node": "knob",
+      "label": "Winding knob",
+      "group": "Body",
+      "about": "One turn does everything: it lowers the mirror, turns the drive key back to cock the lens’s shutter, and winds the film on in the magazine.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.4,
+      "window": [
+        0.1,
+        0.3
+      ]
+    },
+    {
+      "node": "front_plate",
+      "label": "Bayonet plate",
+      "group": "Body",
+      "about": "The front of the chassis: the bayonet the lens locks into, and at the bottom of its throat the drive key, on a shaft with the spring that turns it as the camera fires.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "chassis",
+      "label": "Mirror box",
+      "group": "Body",
+      "about": "Black inside so no light bounces about. The mirror hangs from its top back corner; the focusing screen sits in a frame on top.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0,
+      "window": [
+        0,
+        1
+      ]
+    },
+    {
+      "node": "mechanism_plate",
+      "label": "Winding gears",
+      "group": "Body",
+      "about": "A brass plate on the right-hand wall with the train from the knob: an idler to the drive key’s cross shaft, the barrel that powers the rear flaps, and the gear that reaches into the magazine.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.18,
+      "window": [
+        0.6,
+        0.76
+      ]
+    },
+    {
+      "node": "rear_plate",
+      "label": "Rear flaps",
+      "group": "Body",
+      "about": "The back of the chassis, with the picture’s window and two hinged flaps behind the mirror that keep the film dark while you look through the lens.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.2,
+      "window": [
+        0.56,
+        0.72
+      ]
+    },
+    {
+      "node": "finder",
+      "label": "Folding hood",
+      "group": "Finder",
+      "about": "Folded flat it protects the screen; opened, it shades it, and a magnifier inside flips up for focusing.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3,
+      "window": [
+        0.04,
+        0.2
+      ]
+    },
+    {
+      "node": "screen",
+      "label": "Focusing screen",
+      "group": "Finder",
+      "about": "Ground glass, its matte face exactly as far from the lens as the film, by way of the mirror: what is sharp here is sharp on the film.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.22,
+      "window": [
+        0.22,
+        0.38
+      ]
+    },
+    {
+      "node": "magazine",
+      "label": "Film magazine",
+      "group": "Magazine",
+      "about": "A box of film that hooks onto the back of the body. With its dark slide in, it can come off in the middle of a roll.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.35,
+      "window": [
+        0.06,
+        0.24
+      ]
+    },
+    {
+      "node": "dark_slide",
+      "label": "Dark slide",
+      "group": "Magazine",
+      "about": "A thin steel sheet in front of the film. While it is in, the film is safe and the camera won’t fire.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.42,
+      "window": [
+        0.26,
+        0.4
+      ]
+    },
+    {
+      "node": "insert",
+      "label": "Film insert",
+      "group": "Magazine",
+      "about": "Slides out of the left side to load: two 120 spools, the rollers the film turns over, and the pressure plate that holds it flat.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.72,
+      "window": [
+        0.3,
+        0.5
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Shutter in the lens",
+      "text": "Five thin blades between the glass, open while you look. Pressing the release shuts them, and they open again only for the exposure.",
+      "node": "optics",
+      "position": [
+        0.0589,
+        0.5526,
+        0.4271
+      ],
+      "camera": {
+        "position": [
+          0.6845,
+          0.8246,
+          1.9674
+        ],
+        "target": [
+          0.0589,
+          0.3836,
+          0.5623
+        ]
+      }
+    },
+    {
+      "title": "Mirror",
+      "text": "A front-silvered mirror at 45° throws the lens’s picture up to the screen. It swings up flat under the screen to let the light through to the film.",
+      "node": "chassis",
+      "position": [
+        -0.0594,
+        0.485,
+        -0.139
+      ],
+      "explode": 0.24,
+      "camera": {
+        "position": [
+          0.3918,
+          0.8166,
+          1.5707
+        ],
+        "target": [
+          0.0589,
+          0.4174,
+          0.0047
+        ]
+      }
+    },
+    {
+      "title": "Rear flaps",
+      "text": "The lens’s shutter is open while you look, so the body has two flaps of its own in front of the film. They open after the mirror is up and close as you let go of the release.",
+      "node": "rear_plate",
+      "position": [
+        0.211,
+        0.5019,
+        -0.3282
+      ],
+      "explode": 0.24,
+      "camera": {
+        "position": [
+          0.4436,
+          1.7388,
+          -1.7858
+        ],
+        "target": [
+          0.0589,
+          0.4005,
+          -0.3502
+        ]
+      }
+    },
+    {
+      "title": "Winding knob",
+      "text": "One turn lowers the mirror, cocks the lens’s shutter through the drive key, and winds the film a frame on.",
+      "node": "knob",
+      "position": [
+        -0.4311,
+        0.5019,
+        -0.1305
+      ],
+      "camera": {
+        "position": [
+          -1.8283,
+          0.6523,
+          0.1358
+        ],
+        "target": [
+          -0.4142,
+          0.4005,
+          -0.0629
+        ]
+      }
+    },
+    {
+      "title": "Drive key",
+      "text": "At the bottom of the throat: a slotted key that couples the body to the lens. A spring turns it 309° as the camera fires; the knob turns it back.",
+      "node": "front_plate",
+      "position": [
+        0.0589,
+        0.1893,
+        0.2159
+      ],
+      "explode": 0.25,
+      "camera": {
+        "position": [
+          0.3784,
+          0.7505,
+          1.3553
+        ],
+        "target": [
+          0.0589,
+          0.2822,
+          0.2412
+        ]
+      }
+    },
+    {
+      "title": "Dark slide",
+      "text": "Pull it out to shoot; push it in to take the magazine off without fogging the film. The camera won’t fire with it in.",
+      "node": "dark_slide",
+      "position": [
+        0.3124,
+        0.806,
+        -0.3671
+      ],
+      "camera": {
+        "position": [
+          -0.7205,
+          1.5878,
+          -1.9368
+        ],
+        "target": [
+          0.0589,
+          0.6878,
+          -0.5868
+        ]
+      }
+    },
+    {
+      "title": "Film insert",
+      "text": "Twelve frames of 120 film run up from the bottom spool, across the picture window and onto the top one. The insert slides out of the side to load it.",
+      "node": "insert",
+      "position": [
+        0.0589,
+        0.3329,
+        -0.5023
+      ],
+      "explode": 0.55,
+      "camera": {
+        "position": [
+          2.5586,
+          1.1702,
+          -1.9056
+        ],
+        "target": [
+          0.6503,
+          0.3836,
+          -0.8909
+        ]
+      }
+    },
+    {
+      "title": "Focusing screen",
+      "text": "Ground glass on top of the mirror box. You look down at the picture on it, the right way up but reversed left to right.",
+      "node": "screen",
+      "position": [
+        0.2279,
+        0.7486,
+        0.0553
+      ],
+      "explode": 0.4,
+      "camera": {
+        "position": [
+          -0.8607,
+          1.5397,
+          1.3257
+        ],
+        "target": [
+          0.0589,
+          0.9412,
+          -0.0376
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "optics",
+      "control": "focus",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "slide": [
+        0,
+        0,
+        0.0084
+      ]
+    },
+    {
+      "node": "focus_ring",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.3836,
+        0.4609
+      ],
+      "control": "focus",
+      "turn": -0.0952
+    },
+    {
+      "node": "aperture_ring",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.3836,
+        0.4609
+      ],
+      "control": "aperture",
+      "turn": -0.0417,
+      "from": 3
+    },
+    {
+      "node": "speed_ring",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.3836,
+        0.4609
+      ],
+      "control": "speed",
+      "turn": -0.0583,
+      "from": 7
+    },
+    {
+      "node": "iris_blade_0",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.5221,
+        0.3671
+      ],
+      "control": "iris",
+      "curve": [
+        [
+          0,
+          -0.079
+        ],
+        [
+          1,
+          -0.0428
+        ],
+        [
+          2,
+          -0.0185
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0.0119
+        ],
+        [
+          5,
+          0.0219
+        ],
+        [
+          6,
+          0.028
+        ]
+      ]
+    },
+    {
+      "node": "iris_blade_1",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0728,
+        0.4264,
+        0.3671
+      ],
+      "control": "iris",
+      "curve": [
+        [
+          0,
+          -0.079
+        ],
+        [
+          1,
+          -0.0428
+        ],
+        [
+          2,
+          -0.0185
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0.0119
+        ],
+        [
+          5,
+          0.0219
+        ],
+        [
+          6,
+          0.028
+        ]
+      ]
+    },
+    {
+      "node": "iris_blade_2",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0225,
+        0.2715,
+        0.3671
+      ],
+      "control": "iris",
+      "curve": [
+        [
+          0,
+          -0.079
+        ],
+        [
+          1,
+          -0.0428
+        ],
+        [
+          2,
+          -0.0185
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0.0119
+        ],
+        [
+          5,
+          0.0219
+        ],
+        [
+          6,
+          0.028
+        ]
+      ]
+    },
+    {
+      "node": "iris_blade_3",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.1404,
+        0.2715,
+        0.3671
+      ],
+      "control": "iris",
+      "curve": [
+        [
+          0,
+          -0.079
+        ],
+        [
+          1,
+          -0.0428
+        ],
+        [
+          2,
+          -0.0185
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0.0119
+        ],
+        [
+          5,
+          0.0219
+        ],
+        [
+          6,
+          0.028
+        ]
+      ]
+    },
+    {
+      "node": "iris_blade_4",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.1907,
+        0.4264,
+        0.3671
+      ],
+      "control": "iris",
+      "curve": [
+        [
+          0,
+          -0.079
+        ],
+        [
+          1,
+          -0.0428
+        ],
+        [
+          2,
+          -0.0185
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0.0119
+        ],
+        [
+          5,
+          0.0219
+        ],
+        [
+          6,
+          0.028
+        ]
+      ]
+    },
+    {
+      "node": "shutter_blade_0",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.5357,
+        0.3595
+      ],
+      "control": "blades",
+      "turn": -0.1333
+    },
+    {
+      "node": "shutter_blade_1",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0857,
+        0.4306,
+        0.3595
+      ],
+      "control": "blades",
+      "turn": -0.1333
+    },
+    {
+      "node": "shutter_blade_2",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.0305,
+        0.2605,
+        0.3595
+      ],
+      "control": "blades",
+      "turn": -0.1333
+    },
+    {
+      "node": "shutter_blade_3",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.1483,
+        0.2605,
+        0.3595
+      ],
+      "control": "blades",
+      "turn": -0.1333
+    },
+    {
+      "node": "shutter_blade_4",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.2036,
+        0.4306,
+        0.3595
+      ],
+      "control": "blades",
+      "turn": -0.1333
+    },
+    {
+      "node": "mirror",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0589,
+        0.6573,
+        -0.3113
+      ],
+      "control": "mirror",
+      "turn": -0.125
+    },
+    {
+      "node": "flap_upper",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0589,
+        0.6337,
+        -0.3287
+      ],
+      "control": "flaps",
+      "turn": -0.25
+    },
+    {
+      "node": "flap_lower",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0589,
+        0.1335,
+        -0.3329
+      ],
+      "control": "flaps",
+      "turn": 0.25
+    },
+    {
+      "node": "drive_shaft",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0589,
+        0.1893,
+        0.1229
+      ],
+      "control": "key",
+      "turn": 1
+    },
+    {
+      "node": "cross_shaft",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.1893,
+        0.0342
+      ],
+      "control": "key",
+      "turn": -1
+    },
+    {
+      "node": "idler_gear",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.2749,
+        -0.0766
+      ],
+      "control": "key",
+      "turn": 2.1875
+    },
+    {
+      "node": "wind_gear",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.4005,
+        -0.0629
+      ],
+      "control": "key",
+      "turn": -1.1667
+    },
+    {
+      "node": "flap_barrel",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.5277,
+        -0.1761
+      ],
+      "control": "key",
+      "turn": 1.0938
+    },
+    {
+      "node": "magazine_gear",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.5708,
+        -0.3122
+      ],
+      "control": "key",
+      "turn": -1.75
+    },
+    {
+      "node": "magazine_input",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.5708,
+        -0.4056
+      ],
+      "control": "key",
+      "turn": 2.5
+    },
+    {
+      "node": "release_button",
+      "control": "release",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "slide": [
+        0,
+        0,
+        -0.0211
+      ]
+    },
+    {
+      "node": "knob",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.3635,
+        0.4005,
+        -0.0629
+      ],
+      "control": "wind",
+      "turn": 1
+    },
+    {
+      "node": "spool_drive",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.6337,
+        -0.5741
+      ],
+      "control": "film",
+      "turn": -1.4371
+    },
+    {
+      "node": "magazine_idler",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2604,
+        0.5658,
+        -0.4878
+      ],
+      "control": "film",
+      "turn": 2.1557
+    },
+    {
+      "node": "take_up_spool",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0589,
+        0.6337,
+        -0.5741
+      ],
+      "control": "film",
+      "turn": -1.4371
+    },
+    {
+      "node": "supply_spool",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0589,
+        0.1504,
+        -0.5741
+      ],
+      "control": "film",
+      "turn": -0.816
+    },
+    {
+      "node": "film",
+      "control": "film",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "scroll": -1
+    },
+    {
+      "node": "frame_counter",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.2925,
+        0.3734,
+        -0.4769
+      ],
+      "control": "film",
+      "turn": 0.0833
+    },
+    {
+      "node": "dark_slide",
+      "control": "slide",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "slide": [
+        0,
+        0.50694,
+        0
+      ]
+    }
+  ],
+  "how": [
+    {
+      "label": "Light",
+      "title": "Looking down at the picture",
+      "text": [
+        "Open the hood and look down: the picture is right there on a sheet of ground glass on top of the camera. The lens makes it, and a mirror at 45° behind the lens throws it up to the screen.",
+        "The screen is exactly as far from the lens as the film is, 74.9 mm by way of the mirror, so whatever is sharp on the screen will be sharp on the film. It is the right way up, but reversed left to right, as anything in a mirror is."
+      ],
+      "angle": [
+        -72,
+        14
+      ],
+      "fill": 0.8,
+      "focus": [
+        "lens",
+        "optics",
+        "focus_ring",
+        "mirror",
+        "screen"
+      ],
+      "hide": [
+        "finder"
+      ],
+      "carries": "light",
+      "flow": [
+        [
+          0.0589,
+          0.485,
+          0.9678
+        ],
+        [
+          0.0589,
+          0.4667,
+          0.6975
+        ],
+        [
+          0.0589,
+          0.4343,
+          -0.0883
+        ],
+        [
+          0.0589,
+          0.7351,
+          -0.0883
+        ]
+      ],
+      "flows": [
+        [
+          [
+            0.0589,
+            0.3836,
+            0.9678
+          ],
+          [
+            0.0589,
+            0.3836,
+            0.6975
+          ],
+          [
+            0.0589,
+            0.3836,
+            -0.0376
+          ],
+          [
+            0.0589,
+            0.7351,
+            -0.0376
+          ]
+        ],
+        [
+          [
+            0.0589,
+            0.2822,
+            0.9678
+          ],
+          [
+            0.0589,
+            0.3005,
+            0.6975
+          ],
+          [
+            0.0589,
+            0.3329,
+            0.0131
+          ],
+          [
+            0.0589,
+            0.7351,
+            0.0131
+          ]
+        ]
+      ],
+      "tags": [
+        {
+          "node": "mirror",
+          "text": "Mirror at 45°",
+          "at": [
+            -0.1946,
+            0.5019,
+            -0.1559
+          ]
+        },
+        {
+          "node": "screen",
+          "text": "Screen",
+          "at": [
+            -0.1946,
+            0.7486,
+            0.1229
+          ]
+        }
+      ],
+      "chart": "reflex-path",
+      "settings": {
+        "focus": 0,
+        "slide": "in"
+      }
+    },
+    {
+      "label": "Focus",
+      "title": "Focusing: the glass comes forward",
+      "text": [
+        "An 80 mm lens brings distant things to a point 80 mm behind it. Anything nearer forms its picture further back, so the glass has to come forward to keep it on the film (and on the screen): 3.4 mm for something 2 m away, 8.75 mm for the nearest 0.9 m.",
+        "Turning the focusing ring screws the whole optical unit out on a fine thread, a helicoid, while the bayonet stays put. Try it, and watch the picture on the screen come sharp as the lens comes out."
+      ],
+      "angle": [
+        -70,
+        12
+      ],
+      "fill": 0.72,
+      "focus": [
+        "lens",
+        "optics",
+        "focus_ring"
+      ],
+      "tags": [
+        {
+          "node": "focus_ring",
+          "text": "Focusing ring",
+          "at": [
+            0.0589,
+            0.6793,
+            0.5116
+          ]
+        }
+      ],
+      "try": "focus",
+      "chart": "reflex-focus",
+      "settings": {
+        "focus": 0
+      }
+    },
+    {
+      "label": "Shutter",
+      "title": "A shutter inside the lens",
+      "text": [
+        "There is no shutter in the body to speak of: each lens carries its own, five thin blades between the front and back glass, with the five blades of the iris beside them. The blades open from the middle and shut again, so the whole picture is lit at once, and a flash can be used at any speed.",
+        "The rings set the speed, 1 s to 1/500 s, and the stop, f/2.8 to f/22. Each step on either ring halves or doubles the light, so many pairs give the same exposure. While you look, the iris stays wide open for a bright screen; it closes to the stop set only when you take the picture. Here it closes as you turn the ring."
+      ],
+      "angle": [
+        26,
+        10
+      ],
+      "fill": 0.62,
+      "focus": [
+        "shutter_blade_0",
+        "shutter_blade_1",
+        "shutter_blade_2",
+        "shutter_blade_3",
+        "shutter_blade_4",
+        "iris_blade_0",
+        "iris_blade_1",
+        "iris_blade_2",
+        "iris_blade_3",
+        "iris_blade_4",
+        "aperture_ring",
+        "speed_ring"
+      ],
+      "frame": [
+        "shutter_blade_0",
+        "shutter_blade_1",
+        "shutter_blade_2",
+        "shutter_blade_3",
+        "shutter_blade_4",
+        "iris_blade_0",
+        "iris_blade_1",
+        "iris_blade_2",
+        "iris_blade_3",
+        "iris_blade_4"
+      ],
+      "try": "aperture",
+      "chart": "light-pairs",
+      "settings": {
+        "aperture": 8
+      }
+    },
+    {
+      "label": "Release",
+      "title": "Pressing the release",
+      "text": [
+        "A press of the button starts a chain of events, all over in a few hundredths of a second. The lens’s shutter, open while you looked, snaps shut and the iris closes down. The mirror swings up out of the light. Two flaps behind it, which kept the film dark while the lens was open, fold out of the way. Only then, 50 ms in, does the shutter in the lens open for the exposure.",
+        "Letting go closes the flaps again. The mirror stays up and the finder dark until you wind on. Fire it in slow motion and watch each step take its turn; the chart is drawn from the factory’s own timing chart."
+      ],
+      "angle": [
+        -64,
+        8
+      ],
+      "fill": 0.72,
+      "focus": [
+        "mirror",
+        "flap_upper",
+        "flap_lower",
+        "shutter_blade_0",
+        "shutter_blade_1",
+        "shutter_blade_2",
+        "shutter_blade_3",
+        "shutter_blade_4",
+        "iris_blade_0",
+        "iris_blade_1",
+        "iris_blade_2",
+        "iris_blade_3",
+        "iris_blade_4",
+        "release_button",
+        "drive_shaft"
+      ],
+      "frame": [
+        "mirror",
+        "flap_upper",
+        "flap_lower",
+        "optics"
+      ],
+      "tags": [
+        {
+          "node": "mirror",
+          "text": "Mirror",
+          "at": [
+            -0.1946,
+            0.5019,
+            -0.1559
+          ]
+        },
+        {
+          "node": "flap_upper",
+          "text": "Rear flaps",
+          "at": [
+            -0.1946,
+            0.5526,
+            -0.3282
+          ]
+        },
+        {
+          "node": "optics",
+          "text": "Shutter",
+          "at": [
+            -0.1946,
+            0.3836,
+            0.3595
+          ]
+        }
+      ],
+      "rate": 0.025,
+      "try": "shutter",
+      "chart": "release-sequence",
+      "settings": {
+        "speed": 0.008,
+        "slide": "out"
+      }
+    },
+    {
+      "label": "Winding",
+      "title": "One turn puts it all back",
+      "text": [
+        "The knob on the side turns a gear train on the right-hand wall. One turn turns the drive key back 309°, which winds the lens’s shutter and opens its blades and iris for viewing; a cam on the knob’s shaft lowers the mirror; the barrel that works the flaps is wound; and the last gear reaches through the back of the body into the magazine, which winds the film on one frame.",
+        "Firing let the key spin the other way, driven by its own spring, while a ratchet let the knob stand still. Take a picture and turn the knob, and watch the power go round."
+      ],
+      "angle": [
+        -98,
+        10
+      ],
+      "fill": 0.85,
+      "focus": [
+        "knob",
+        "mechanism_plate",
+        "wind_gear",
+        "idler_gear",
+        "flap_barrel",
+        "magazine_gear",
+        "cross_shaft",
+        "drive_shaft",
+        "magazine_input",
+        "magazine_idler",
+        "spool_drive",
+        "take_up_spool"
+      ],
+      "frame": [
+        "knob",
+        "mechanism_plate",
+        "drive_shaft"
+      ],
+      "flow": [
+        {
+          "node": "knob",
+          "at": [
+            -0.4227,
+            0.4005,
+            -0.0629
+          ]
+        },
+        {
+          "node": "wind_gear",
+          "at": [
+            -0.2605,
+            0.4005,
+            -0.0629
+          ]
+        },
+        {
+          "node": "idler_gear",
+          "at": [
+            -0.2604,
+            0.2749,
+            -0.0766
+          ]
+        },
+        {
+          "node": "cross_shaft",
+          "at": [
+            -0.2604,
+            0.1893,
+            0.0342
+          ]
+        },
+        {
+          "node": "cross_shaft",
+          "at": [
+            0.0082,
+            0.1893,
+            0.0342
+          ]
+        },
+        {
+          "node": "drive_shaft",
+          "at": [
+            0.0589,
+            0.1893,
+            0.0722
+          ]
+        },
+        {
+          "node": "drive_shaft",
+          "at": [
+            0.0589,
+            0.1893,
+            0.2108
+          ]
+        }
+      ],
+      "flows": [
+        [
+          {
+            "node": "wind_gear",
+            "at": [
+              -0.2605,
+              0.4005,
+              -0.0629
+            ]
+          },
+          {
+            "node": "flap_barrel",
+            "at": [
+              -0.2604,
+              0.5277,
+              -0.1761
+            ]
+          },
+          {
+            "node": "magazine_gear",
+            "at": [
+              -0.2604,
+              0.5708,
+              -0.3122
+            ]
+          },
+          {
+            "node": "magazine_input",
+            "at": [
+              -0.2604,
+              0.5708,
+              -0.4056
+            ]
+          },
+          {
+            "node": "spool_drive",
+            "at": [
+              -0.2605,
+              0.6404,
+              -0.5741
+            ]
+          },
+          {
+            "node": "take_up_spool",
+            "at": [
+              0.0589,
+              0.6404,
+              -0.5741
+            ]
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "node": "drive_shaft",
+          "text": "Drive key",
+          "at": [
+            0.0589,
+            0.1893,
+            0.2159
+          ]
+        },
+        {
+          "node": "flap_barrel",
+          "text": "Flaps’ spring",
+          "at": [
+            -37.7917094,
+            17.055387799999995,
+            24.6066282
+          ]
+        }
+      ],
+      "try": "advance",
+      "chart": {
+        "type": "ladder",
+        "title": "Turns for one turn of the knob",
+        "caption": "The gears between the knob and the lens turn its drive key back 30/35 of a turn, the 309° the release spun it.",
+        "unit": "Turns",
+        "rungs": [
+          {
+            "name": "Knob",
+            "value": 1,
+            "note": "1 turn",
+            "node": "knob"
+          },
+          {
+            "name": "Idler",
+            "value": 1.875,
+            "step": "×1.88",
+            "note": "1.9 turns",
+            "node": "idler_gear"
+          },
+          {
+            "name": "Drive key",
+            "value": 0.857,
+            "step": "×0.46",
+            "note": "309°",
+            "node": "drive_shaft"
+          },
+          {
+            "name": "Magazine",
+            "value": 1.5,
+            "step": "×1.75",
+            "note": "1½ turns",
+            "node": "magazine_gear"
+          }
+        ]
+      },
+      "settings": {
+        "slide": "out"
+      }
+    },
+    {
+      "label": "Magazine",
+      "title": "Film in a box of its own",
+      "text": [
+        "The film lives in the magazine on the back, not in the camera. Twelve frames of 120 film, 56 mm square, run up from the bottom spool, round a roller, flat across the picture window, round another roller and onto the top spool. A pressure plate behind holds it flat.",
+        "In front of the film is the dark slide. Push it in and the magazine can come off in the middle of a roll, to change from colour to black and white and back; with it in, the camera won’t fire. The insert slides out of the side for loading."
+      ],
+      "angle": [
+        -130,
+        18
+      ],
+      "fill": 0.8,
+      "explode": 0.24,
+      "focus": [
+        "magazine",
+        "insert",
+        "supply_spool",
+        "take_up_spool",
+        "film",
+        "dark_slide"
+      ],
+      "tags": [
+        {
+          "node": "dark_slide",
+          "text": "Dark slide",
+          "at": [
+            0.3124,
+            0.806,
+            -0.3671
+          ]
+        },
+        {
+          "node": "take_up_spool",
+          "text": "Take-up spool",
+          "at": [
+            -0.1101,
+            0.7469,
+            -0.5741
+          ]
+        },
+        {
+          "node": "supply_spool",
+          "text": "Supply spool",
+          "at": [
+            -0.1101,
+            0.0287,
+            -0.5741
+          ]
+        }
+      ],
+      "try": "slide",
+      "chart": "film-roll",
+      "settings": {
+        "slide": "in"
+      }
+    },
+    {
+      "label": "Flash",
+      "title": "Why a shutter in every lens",
+      "text": [
+        "A focal-plane shutter, like the rangefinder’s cloth curtains, uncovers the film as a moving slit; above 1/50 s it never has the whole frame open, so a flash would light only a stripe. A leaf shutter opens from the middle and has the whole picture open at once at every speed.",
+        "The price is a shutter in every lens, and a body that needs its own flaps to keep the film dark while you look through the open lens. Fire at 1/500 s and watch the blades: they are barely open before they shut."
+      ],
+      "angle": [
+        8,
+        6
+      ],
+      "fill": 0.6,
+      "focus": [
+        "shutter_blade_0",
+        "shutter_blade_1",
+        "shutter_blade_2",
+        "shutter_blade_3",
+        "shutter_blade_4",
+        "iris_blade_0",
+        "iris_blade_1",
+        "iris_blade_2",
+        "iris_blade_3",
+        "iris_blade_4"
+      ],
+      "rate": 0.008333333333333333,
+      "try": "shutter",
+      "chart": "leaf-shutter",
+      "settings": {
+        "speed": 0.002,
+        "slide": "out"
+      }
+    }
+  ],
+  "credit": {
+    "title": "Medium-format SLR, after the Hasselblad 500C/M",
+    "author": "3D of Things",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "built in code for this site",
+    "sourceUrl": "",
+    "extra": {
+      "label": "Sources",
+      "text": "Laid out from the 500C/M’s published dimensions and the factory service manual’s exploded views and release-sequence chart."
+    }
+  },
+  "build": {
+    "generate": "scripts/hasselblad/generate.mjs"
+  }
+}

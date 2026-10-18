@@ -1,0 +1,3422 @@
+/* 3D of Things — a workshop manual on warm paper: ink type, hairline rules,
+   vermilion callouts. Sizes are rem against a viewport-scaled root, so the
+   whole layout grows on big screens instead of floating small in the middle. */
+
+:root {
+  color-scheme: light;
+
+  --paper: oklch(0.958 0.011 84);
+  --paper-raised: oklch(0.982 0.007 84);
+  --paper-sunk: oklch(0.928 0.014 82);
+  --ink: oklch(0.24 0.017 60);
+  --ink-2: oklch(0.4 0.016 62);
+  --ink-3: oklch(0.5 0.015 65);
+  --rule: oklch(0.86 0.013 80);
+  --rule-strong: oklch(0.74 0.015 75);
+  --accent: oklch(0.6 0.185 38);
+  --accent-strong: oklch(0.54 0.18 36);
+  --accent-ink: oklch(0.5 0.165 35);
+  --accent-wash: oklch(0.935 0.035 58);
+  /* Air, in the Roadster's charts and flow lines. */
+  --air: oklch(0.55 0.11 245);
+
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter: clamp(1rem, 3vw, 2.75rem);
+  --header-h: 3.75rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-soft: 0 0.15rem 0.5rem oklch(0.25 0.02 60 / 0.12), 0 0.05rem 0.1rem oklch(0.25 0.02 60 / 0.1);
+}
+
+html {
+  font-size: clamp(16px, 1.15vw, 24px);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--header-h);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-wash);
+}
+
+main:focus,
+h1:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.6rem;
+}
+
+/* ------------------------------------------------------------- shared bits */
+
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.eyebrow span + span::before {
+  content: '/';
+  margin-right: 0.75rem;
+  color: var(--rule-strong);
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  font: 600 0.8rem/1.4 var(--font-body);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.prose p {
+  margin: 0 0 0.9rem;
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.15rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 550;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms,
+    color 160ms;
+}
+
+.button:hover {
+  background: var(--paper-sunk);
+}
+
+.button svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.button--ink {
+  background: var(--ink);
+  color: var(--paper-raised);
+}
+
+.button--ink:hover {
+  background: oklch(0.33 0.02 60);
+}
+
+.button[aria-pressed='true'] {
+  background: var(--accent-wash);
+  border-color: var(--accent-strong);
+  color: var(--accent-ink);
+}
+
+/* --------------------------------------------------------------- masthead */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--header-h);
+  padding-inline: var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.wordmark__mark {
+  padding: 0.2rem 0.32rem 0.16rem;
+  border: 1.5px solid currentColor;
+  border-radius: 0.2rem;
+  font: 500 0.8rem/1 var(--font-mono);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+.masthead__nav {
+  display: flex;
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.masthead__nav a {
+  padding-block: 0.3rem;
+  border-bottom: 1.5px solid transparent;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.masthead__nav a:hover {
+  color: var(--ink);
+}
+
+.masthead__nav a[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: currentColor;
+}
+
+/* ---------------------------------------------------------------- gallery */
+
+.gallery {
+  max-width: 110rem;
+  margin-inline: auto;
+  padding: clamp(2.5rem, 7vw, 6rem) var(--gutter) clamp(3rem, 8vw, 6rem);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 1.5rem clamp(2rem, 6vw, 6rem);
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.intro__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7.2vw, 7.25rem);
+  font-weight: 360;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.intro__title em {
+  font-weight: 300;
+  color: var(--accent-ink);
+}
+
+.intro__lede {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem clamp(1.25rem, 2.5vw, 2.25rem);
+  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--ink);
+}
+
+.filters a {
+  position: relative;
+  padding-block: 0.3rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.filters a:hover {
+  color: var(--ink);
+}
+
+.filters a[aria-current='true'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* The active tab sits on the rule like an index tab. */
+.filters a[aria-current='true']::before {
+  content: '';
+  position: absolute;
+  top: -0.9rem;
+  left: 0;
+  right: 0;
+  height: 0.2rem;
+  background: var(--ink);
+}
+
+.filters__count {
+  margin-left: 0.35rem;
+  color: var(--ink-3);
+  font: 400 0.8rem var(--font-mono);
+}
+
+.plates {
+  --cols: 3;
+  --gap-x: clamp(1rem, 2.2vw, 2.25rem);
+  --gap-y: clamp(2rem, 4vw, 3.5rem);
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--gap-y) var(--gap-x);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  container-type: inline-size;
+}
+
+.plate {
+  --frame-h: calc((100cqi - (var(--cols) - 1) * var(--gap-x)) / var(--cols));
+  min-width: 0;
+}
+
+.plate--span-2 {
+  grid-column: span 2;
+}
+
+.plate--span-3 {
+  grid-column: 1 / -1;
+}
+
+.plate__link {
+  position: relative;
+  display: block;
+  border-radius: 0.35rem;
+  text-decoration: none;
+}
+
+.plate__link:focus-visible {
+  outline-offset: 0.4rem;
+}
+
+.plate__frame {
+  position: relative;
+  height: var(--frame-h);
+  overflow: hidden;
+  border-radius: 0.35rem;
+  background: radial-gradient(120% 95% at 50% 40%, var(--paper-raised) 0%, var(--paper-sunk) 100%);
+  isolation: isolate;
+}
+
+/* Engineering-paper dots, fading out toward the edges. */
+.plate__frame::before,
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(circle, oklch(0.24 0.017 60 / 0.17) 0.055rem, transparent 0.075rem);
+  background-size: 1.35rem 1.35rem;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 72% 68% at 50% 52%, #000 15%, transparent 78%);
+  pointer-events: none;
+}
+
+.plate__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+
+.plate__img--apart {
+  opacity: 0;
+}
+
+/* Without hover the exploded poster would never show, so don't render (or download) it. */
+@media (hover: none) {
+  .plate:not(.plate--span-3) .plate__img--apart {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  .plate__link:hover .plate__img--together {
+    opacity: 0;
+  }
+
+  .plate__link:hover .plate__img--apart {
+    opacity: 1;
+  }
+
+  .plate__link:hover .plate__img {
+    transform: scale(1.025);
+  }
+
+  .plate__link:hover .plate__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+}
+
+.plate__fig {
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  color: var(--ink-3);
+  font: 500 0.8rem var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.plate__caption {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 1rem;
+}
+
+.plate__kind {
+  margin: 0;
+  color: var(--ink-3);
+  font: 500 0.8rem var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.plate__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 420;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.plate__hook {
+  max-width: 36ch;
+  margin: 0;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* Wide plates: the caption sits in the empty half of the frame, and the frame
+   stretches to the row so it lines up with its captioned neighbour. */
+.plate--span-2 .plate__link,
+.plate--span-2 .plate__frame {
+  height: 100%;
+  min-height: var(--frame-h);
+}
+
+.plate--span-2 .plate__img {
+  object-position: 88% 50%;
+}
+
+.plate--span-2 .plate__caption,
+.plate--span-3 .plate__caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 46%;
+  padding: clamp(1.25rem, 2.6vw, 2.5rem);
+}
+
+.plate--span-2 .plate__title,
+.plate--span-3 .plate__title {
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+/* Full-width plates show the object both ways, side by side. */
+.plate--span-3 .plate__img {
+  width: 36%;
+  opacity: 1;
+}
+
+.plate--span-3 .plate__img--together {
+  left: 30%;
+}
+
+.plate--span-3 .plate__img--apart {
+  left: 62%;
+}
+
+.plate--span-3 .plate__caption {
+  width: 32%;
+}
+
+@media (hover: hover) {
+  .plate--span-3 .plate__link:hover .plate__img--together {
+    opacity: 1;
+  }
+}
+
+/* One orchestrated entrance on first load. */
+@media (prefers-reduced-motion: no-preference) {
+  .gallery.is-entering .intro > *,
+  .gallery.is-entering .filters,
+  .gallery.is-entering .plate {
+    animation: rise 900ms var(--ease-out) both;
+  }
+
+  .gallery.is-entering .intro__lede {
+    animation-delay: 90ms;
+  }
+
+  .gallery.is-entering .filters {
+    animation-delay: 160ms;
+  }
+
+  .gallery.is-entering .plate {
+    animation-delay: calc(220ms + var(--i, 0) * 80ms);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+}
+
+@media (max-width: 64rem) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+
+  .plates {
+    --cols: 2;
+  }
+
+  .plate--span-2,
+  .plate--span-3 {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 40rem) {
+  .plates {
+    --cols: 1;
+  }
+
+  .plate__frame,
+  .plate--span-2 .plate__frame {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 0.82;
+  }
+
+  .plate--span-3 .plate__frame {
+    aspect-ratio: 1.7 / 1;
+  }
+
+  .plate--span-2 .plate__img {
+    object-position: 50% 50%;
+  }
+
+  .plate--span-2 .plate__caption,
+  .plate--span-3 .plate__caption {
+    position: static;
+    width: auto;
+    padding: 1rem 0 0;
+  }
+
+  .plate--span-3 .plate__img {
+    width: 50%;
+  }
+
+  .plate--span-3 .plate__img--together {
+    left: 0;
+  }
+
+  .plate--span-3 .plate__img--apart {
+    left: 50%;
+  }
+
+  .plate--span-2 .plate__title,
+  .plate--span-3 .plate__title {
+    font-size: 1.75rem;
+  }
+}
+
+/* ------------------------------------------------------------ object page */
+
+/* On wide screens the stage and the sheet are one sheet of paper: the text sits on a card lying on
+   it, and the model stands in front of both. Layers, bottom to top: the paper and what's printed on
+   it (dots, corner marks, the hook, the tray, the scale; z-index 1), the model with its markers
+   and cards (the theatre, 2), then whatever you press or must be able to read over it (tools,
+   the hint, the loading status, the phones' caption; 3). */
+.thing {
+  --sheet-width: clamp(22rem, 31vw, 34rem);
+  /* The gap around the sheet's card, and the card's side padding: at rest a model reaching out of
+     the stage covers no more than the card's edge and padding, never its text. */
+  --sheet-inset: clamp(0.75rem, 1.1vw, 1.25rem);
+  --sheet-pad: clamp(1.75rem, 2.8vw, 3rem);
+  /* How far the stage's furniture keeps from its edges. */
+  --stage-pad: clamp(1.25rem, 2vw, 2.25rem);
+  --lit-paper: radial-gradient(130% 100% at 50% 42%, var(--paper-raised) 0%, var(--paper) 52%, var(--paper-sunk) 100%);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--sheet-width);
+  height: calc(100svh - var(--header-h));
+  background: radial-gradient(90% 100% at calc((100% - var(--sheet-width)) / 2) 42%, var(--paper-raised) 0%, var(--paper) 52%, var(--paper-sunk) 100%);
+}
+
+/* A length the viewer reads in pixels: the room kept clear each side of the model at rest. */
+@property --home-clear {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.stage {
+  /* Where the model stands at rest, read by the viewer: whole, in the middle, a little low, and clear
+     of the controls printed down the left and the drawings down the right (`--home-clear` each side).
+     Close-ups are framed on the middle. */
+  --drawings-w: clamp(13.5rem, 15vw, 18rem);
+  --home-x: 0;
+  --home-y: 0.045;
+  --home-fill: 0.88;
+  --home-width: 1;
+  --home-clear: calc(var(--stage-pad) + var(--drawings-w) + 1rem);
+  position: relative;
+  /* Clipped, and never scrolled: the pointer surface is as big as the 3D layer, so bringing a control into view
+     could otherwise slide the whole stage over. */
+  overflow: hidden;
+  overflow: clip;
+}
+
+/* Without isolation the dots need to sit on the stage's backdrop, not behind it. */
+.stage::before {
+  z-index: 0;
+}
+
+/* The 3D layer. It outlives object pages so one model can hand over to the next. On wide screens
+   it spans the stage and the sheet, so a model always shows whole and solid, in front of the
+   page, however close you go; the page shows through and stays clickable around it. */
+.theatre {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stage:fullscreen {
+  --home-x: 0;
+  --home-y: 0;
+  --home-fill: 0.92;
+  --home-width: 1;
+  --home-clear: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: var(--lit-paper);
+}
+
+/* Corner marks, as on a print: they frame the stage without a box for the model to break out of. */
+.stage__marks {
+  --tick: 0.85rem;
+  position: absolute;
+  inset: calc(var(--stage-pad) * 0.5);
+  z-index: 1;
+  background:
+    linear-gradient(var(--rule-strong) 0 0) left top / var(--tick) 1px,
+    linear-gradient(var(--rule-strong) 0 0) left top / 1px var(--tick),
+    linear-gradient(var(--rule-strong) 0 0) right top / var(--tick) 1px,
+    linear-gradient(var(--rule-strong) 0 0) right top / 1px var(--tick),
+    linear-gradient(var(--rule-strong) 0 0) left bottom / var(--tick) 1px,
+    linear-gradient(var(--rule-strong) 0 0) left bottom / 1px var(--tick),
+    linear-gradient(var(--rule-strong) 0 0) right bottom / var(--tick) 1px,
+    linear-gradient(var(--rule-strong) 0 0) right bottom / 1px var(--tick);
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* Every object in order, as cut-outs on cards lying on the paper. Picking one hands the model over.
+   It stops short of the view cards in the corner, and wraps onto a second row when it gets there. */
+.tray {
+  position: absolute;
+  top: var(--stage-pad);
+  right: calc(var(--stage-pad) + 15rem);
+  left: var(--stage-pad);
+  z-index: 1;
+}
+
+.tray ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tray__item {
+  --card-w: 3.9rem;
+  position: relative;
+  display: block;
+  width: var(--card-w);
+  height: calc(var(--card-w) * 1.12);
+  border: 1px solid var(--rule);
+  border-radius: 0.3rem;
+  background: color-mix(in oklch, var(--paper-raised) 82%, transparent);
+  text-decoration: none;
+  transition:
+    border-color 160ms,
+    background-color 160ms,
+    translate 250ms var(--ease-out);
+}
+
+.tray__item:hover {
+  z-index: 1;
+  border-color: var(--ink-3);
+  background: var(--paper-raised);
+  translate: 0 -0.12rem;
+}
+
+.tray__item[aria-current='page'] {
+  border-color: var(--accent-strong);
+  background: var(--paper-raised);
+  box-shadow: inset 0 0 0 1px var(--accent-strong);
+}
+
+.tray__fig {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.4rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1 var(--font-mono);
+}
+
+.tray__item[aria-current='page'] .tray__fig {
+  color: var(--accent-ink);
+}
+
+.tray__img {
+  position: absolute;
+  inset: 1.2rem 0.3rem 0.3rem;
+  width: calc(100% - 0.6rem);
+  height: calc(100% - 1.5rem);
+  object-fit: contain;
+}
+
+/* The name, as a tag under the card while it's pointed at. */
+.tray__title {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 50%;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 550 0.85rem/1.3 var(--font-body);
+  white-space: nowrap;
+  opacity: 0;
+  translate: -50% -0.25rem;
+  pointer-events: none;
+  transition:
+    opacity 150ms,
+    translate 200ms var(--ease-out);
+}
+
+.tray__item:hover .tray__title,
+.tray__item:focus-visible .tray__title {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+@media (max-width: 70rem) {
+  .tray__item {
+    --card-w: 3.5rem;
+  }
+}
+
+.stage:fullscreen .tray {
+  display: none;
+}
+
+/* The pointer surface. With the 3D layer spilling past the stage, it's sized to match the canvas (the stage clips it). */
+.viewer {
+  position: absolute;
+  inset: 0;
+  outline: none;
+  touch-action: none;
+}
+
+.viewer:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.viewer__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+.viewer__canvas.is-shown {
+  opacity: 1;
+}
+
+/* z-index 1 keeps the renderer's per-label z-indexes inside this layer, under the stage's own UI. */
+.viewer__labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.viewer__labels.is-shown {
+  opacity: 1;
+}
+
+.stage__status,
+.stage__corner,
+.stage__caption {
+  z-index: 3;
+}
+
+/* The poster stands where the model will: moved and scaled like the home view. */
+.stage__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  translate: calc(var(--home-x) * 100%) calc(var(--home-y) * 100%);
+  scale: calc(var(--home-fill) / 0.877);
+  transition: opacity 700ms var(--ease-out);
+}
+
+.stage[data-state='loading'] .stage__poster {
+  animation: breathe 2.2s ease-in-out infinite alternate;
+}
+
+.stage[data-state='ready'] .stage__poster {
+  opacity: 0;
+}
+
+/* While the last object's model slides out, this one's poster stays out of the way; the loading
+   status only shows if the model takes a while. */
+.stage.is-handover .stage__poster {
+  visibility: hidden;
+}
+
+.stage.is-handover[data-state='loading'] .stage__status {
+  animation: late 300ms 1s both;
+}
+
+@keyframes late {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.stage__status {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  width: min(90%, 24rem);
+  translate: -50% 0;
+  color: var(--ink-2);
+  font: 400 0.8rem/1.4 var(--font-mono);
+  text-align: center;
+  transition: opacity 400ms;
+}
+
+.stage[data-state='ready'] .stage__status {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.stage__meter {
+  position: relative;
+  width: 10rem;
+  height: 2px;
+  overflow: hidden;
+  background: var(--rule);
+}
+
+.stage[data-state='error'] .stage__meter,
+.stage[data-state='unsupported'] .stage__meter {
+  display: none;
+}
+
+.stage__meter-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  transition: transform 200ms linear;
+}
+
+.stage[data-indeterminate] .stage__meter-fill {
+  width: 30%;
+  transform: none;
+  animation: sweep 1.2s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 340% 0;
+  }
+}
+
+/* Along the bottom: the scale bar, printed on the paper, then how to handle the model (until it's
+   first handled), kept readable over it. No z-index here, so each keeps its own layer. */
+.stage__foot {
+  position: absolute;
+  left: var(--stage-pad);
+  right: var(--stage-pad);
+  bottom: var(--stage-pad);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+  transition: opacity 300ms;
+}
+
+.stage__hint {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  color: var(--ink-3);
+  font-size: 0.8rem;
+}
+
+/* Each line carries its own backing, so it fades out with it. */
+.stage__hint > span {
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  background: color-mix(in oklch, var(--paper) 80%, transparent);
+  transition: opacity 500ms;
+}
+
+.stage__hint.is-dismissed .stage__hint-pointer,
+.stage:has(.stage__caption.is-visible) .stage__foot {
+  opacity: 0;
+}
+
+/* A round length at the model's real size, redrawn as the camera moves. */
+.scale {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink-2);
+  font: 500 0.8rem/1 var(--font-mono);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.stage[data-state='ready'] .scale {
+  opacity: 1;
+}
+
+.scale__bar {
+  height: 0.5rem;
+  border: 0 solid currentColor;
+  border-width: 0 1.5px 1.5px;
+  transition: width 200ms var(--ease-out);
+}
+
+.stage__hint-keys,
+.stage__hint-touch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .stage__hint-pointer {
+    display: none;
+  }
+
+  .stage__hint-touch {
+    display: inline;
+  }
+
+  .stage__hint.is-dismissed .stage__hint-touch {
+    opacity: 0;
+  }
+}
+
+.stage:has(.viewer:focus-visible) .stage__hint-pointer {
+  display: none;
+}
+
+.stage:has(.viewer:focus-visible) .stage__hint-keys {
+  display: block;
+  color: var(--ink-2);
+}
+
+/* Round tools under the view cards. */
+.stage__tools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.tool {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: color-mix(in oklch, var(--paper-raised) 88%, transparent);
+  cursor: pointer;
+  transition:
+    background-color 160ms,
+    border-color 160ms;
+}
+
+.tool:hover {
+  border-color: var(--ink-2);
+  background: var(--paper-raised);
+}
+
+.tool svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.tool[hidden] {
+  display: none;
+}
+
+/* Callout markers on the model */
+.hotspot-anchor {
+  pointer-events: none;
+}
+
+.hotspot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    opacity 250ms,
+    scale 250ms var(--ease-out);
+}
+
+.hotspot__dot {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+  font: 600 0.8rem/1 var(--font-mono);
+  box-shadow:
+    0 0 0 2px var(--paper-raised),
+    0 0.2rem 0.6rem oklch(0.2 0.02 50 / 0.3);
+  transition: background-color 200ms;
+}
+
+.hotspot__label {
+  position: absolute;
+  left: calc(100% + 0.55rem);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 550;
+  white-space: nowrap;
+  opacity: 0;
+  translate: -0.3rem 0;
+  pointer-events: none;
+  transition:
+    opacity 200ms,
+    translate 250ms var(--ease-out);
+}
+
+.hotspot:hover .hotspot__label,
+.hotspot.is-active .hotspot__label {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.hotspot.is-active .hotspot__dot {
+  background: var(--ink);
+}
+
+/* With its card open beside it, the marker's own label would only repeat the card's title. */
+.viewer__labels.has-card .hotspot.is-active .hotspot__label {
+  opacity: 0;
+}
+
+.hotspot.is-active::before {
+  content: '';
+  position: absolute;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: ping 1.8s var(--ease-out) infinite;
+}
+
+@keyframes ping {
+  from {
+    opacity: 0.9;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 2.3;
+  }
+}
+
+.hotspot.is-occluded:not(.is-active) {
+  opacity: 0.35;
+  scale: 0.8;
+}
+
+.hotspot.is-occluded:hover {
+  opacity: 1;
+  scale: 1;
+}
+
+.hotspot.is-inside.is-occluded:not(.is-active) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.viewer__labels[data-explode='apart'] .hotspot:not(.is-active, :hover) {
+  opacity: 0.3;
+  scale: 0.8;
+}
+
+/* Lettered part tags, shown while the model is apart */
+.part-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding-inline: 0.3rem;
+  border-radius: 0.2rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 500 0.8rem/1 var(--font-mono);
+  box-shadow: 0 0 0 1.5px var(--paper-raised);
+  opacity: 0;
+  scale: 0.6;
+  pointer-events: none;
+  cursor: help;
+  transition:
+    opacity 300ms,
+    scale 300ms var(--ease-out),
+    background-color 150ms;
+}
+
+.part-badge.is-out {
+  opacity: 1;
+  scale: 1;
+  pointer-events: auto;
+}
+
+.part-badge.is-out.is-occluded:not(.is-highlighted) {
+  opacity: 0.22;
+}
+
+.part-badge::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 0.45rem);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 550 0.85rem/1.3 var(--font-body);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+
+.part-badge.is-highlighted {
+  background: var(--accent-strong);
+}
+
+.part-badge.is-highlighted::after {
+  opacity: 1;
+  background: var(--accent-strong);
+}
+
+.viewer__tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font-size: 0.85rem;
+  font-weight: 550;
+  white-space: nowrap;
+  transform: translate(0.9rem, 0.9rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+
+.viewer__tooltip.is-visible {
+  opacity: 1;
+}
+
+/* Explanation card on the model, beside the part it explains (wide screens) */
+.scene-card-anchor {
+  pointer-events: none;
+}
+
+.scene-card {
+  --shift: 0px;
+  position: absolute;
+  top: 0;
+  width: min(21rem, 30vw);
+  padding: 0.9rem 0.6rem 1rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.6rem;
+  background: color-mix(in oklch, var(--paper-raised) 96%, transparent);
+  box-shadow:
+    0 0.6rem 1.8rem oklch(0.25 0.02 60 / 0.16),
+    0 0.1rem 0.3rem oklch(0.25 0.02 60 / 0.12);
+  color: var(--ink);
+  font-size: 0.95rem;
+  pointer-events: auto;
+  translate: 0 calc(-50% + var(--shift));
+}
+
+.scene-card[data-side='right'] {
+  left: 2.4rem;
+}
+
+.scene-card[data-side='left'] {
+  right: 2.4rem;
+}
+
+/* A leader from the point on the model to the card. */
+.scene-card::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - var(--shift));
+  width: 2.2rem;
+  border-top: 1.5px solid var(--ink-2);
+}
+
+.scene-card[data-side='right']::before {
+  right: 100%;
+}
+
+.scene-card[data-side='left']::before {
+  left: 100%;
+}
+
+.scene-card.is-in {
+  animation: card-in 380ms var(--ease-out);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+.scene-card__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.7rem;
+  align-items: start;
+}
+
+.scene-card__mark {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-top: 0.05rem;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+  font: 600 0.8rem/1 var(--font-mono);
+}
+
+/* Parts keep the square, inked tags they have in the legend. */
+.scene-card__mark[data-kind='part'] {
+  border-radius: 0.2rem;
+  background: var(--ink);
+}
+
+.scene-card__eyebrow {
+  margin: 0.1rem 0 0.15rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.3 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scene-card__title {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.scene-card__text {
+  margin: 0.6rem 0.4rem 0 0;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.scene-card__close {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: -0.5rem -0.2rem 0 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.scene-card__close:hover {
+  color: var(--ink);
+  background: var(--paper-sunk);
+}
+
+.scene-card__close svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* From one object to the next, the models hand over in 3D and the text fades in after (the card
+   it's on stays put). */
+main[data-handover] .sheet > * {
+  animation: sheet-in 520ms 120ms var(--ease-out) both;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+/* Callout text over the model, for narrow screens */
+.stage__caption {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  display: none;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.8rem 0.6rem 0.8rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.6rem;
+  background: color-mix(in oklch, var(--paper-raised) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+  font-size: 0.9rem;
+}
+
+.stage__caption-num {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 600 0.8rem/1 var(--font-mono);
+}
+
+.stage__caption-title {
+  margin: 0.1rem 0 0.2rem;
+  font-weight: 600;
+}
+
+.stage__caption-text {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink-2);
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.stage__caption-close {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -0.6rem -0.3rem -0.6rem 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.stage__caption-close svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* The sheet: everything you read, on a card lying on the stage's paper */
+.sheet {
+  display: grid;
+  align-content: start;
+  gap: 2.25rem;
+  margin: var(--sheet-inset) var(--sheet-inset) var(--sheet-inset) 0;
+  padding: clamp(1.75rem, 2.8vw, 2.75rem) var(--sheet-pad) 3rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--rule);
+  border-radius: 0.55rem;
+  background: var(--paper-raised);
+  box-shadow:
+    0 0.05rem 0.15rem oklch(0.25 0.02 60 / 0.06),
+    0 1rem 2.5rem -1rem oklch(0.25 0.02 60 / 0.2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+.sheet__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 3.9vw, 4.25rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.sheet__hook {
+  margin: 0.9rem 0 0;
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 350;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  column-gap: 1.25rem;
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.facts div {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.facts dt {
+  color: var(--ink-3);
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.facts dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.explode__range {
+  --fill: 0%;
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.explode__range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--rule-strong) var(--fill));
+}
+
+.explode__range::-moz-range-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--rule-strong) var(--fill));
+}
+
+.explode__range::-webkit-slider-thumb {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-top: calc(-0.65rem + 1px);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-soft);
+  -webkit-appearance: none;
+}
+
+.explode__range::-moz-range-thumb {
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-soft);
+}
+
+.explode__range:focus-visible {
+  outline: none;
+}
+
+.explode__range:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 3px var(--paper),
+    0 0 0 5px var(--accent);
+}
+
+.explode__range:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 3px var(--paper),
+    0 0 0 5px var(--accent);
+}
+
+.explode__ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -0.35rem;
+  color: var(--ink-3);
+  font: 400 0.8rem var(--font-mono);
+}
+
+.explode__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.1rem 1rem;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.parts__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.25rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: none;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.parts__item:hover,
+.parts__item.is-highlighted {
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+.parts__letter {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 0.2rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 500 0.8rem/1 var(--font-mono);
+}
+
+.parts__item.is-highlighted .parts__letter {
+  background: var(--accent-strong);
+}
+
+/* Parts listed under headings, for objects with many parts */
+.parts-groups {
+  margin-top: 1.4rem;
+}
+
+.parts-group + .parts-group {
+  margin-top: 0.85rem;
+}
+
+.parts-group__heading {
+  margin: 0 0 0.15rem 0.25rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.parts-groups .parts {
+  margin-top: 0;
+}
+
+.callouts {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  list-style: none;
+}
+
+.callout {
+  border-bottom: 1px solid var(--rule);
+}
+
+.callout__head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.85rem 0.25rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 550;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.callout__head::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--ink-3);
+  font: 400 1.1rem/1 var(--font-mono);
+  transition: rotate 300ms var(--ease-out);
+}
+
+.callout__head[aria-expanded='true']::after {
+  rotate: 45deg;
+}
+
+.callout__head:hover .callout__title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.callout__num {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1.5px solid var(--accent-strong);
+  border-radius: 50%;
+  color: var(--accent-ink);
+  font: 600 0.8rem/1 var(--font-mono);
+  transition:
+    background-color 200ms,
+    color 200ms;
+}
+
+.callout__head[aria-expanded='true'] .callout__num {
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+}
+
+.callout__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms var(--ease-out);
+}
+
+.callout__body > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s 450ms;
+}
+
+.callout.is-open .callout__body {
+  grid-template-rows: 1fr;
+}
+
+.callout.is-open .callout__body > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* When the text shows on the model, beside the part, the open callout here stays a heading (and is still read out). */
+.callouts.is-on-model .callout.is-open .callout__body {
+  grid-template-rows: 0fr;
+}
+
+.callout__body p {
+  max-width: 58ch;
+  margin: 0;
+  padding: 0 0.25rem 1.1rem 2.8rem;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.credit {
+  display: grid;
+  gap: 0.45rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-3);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.credit p {
+  margin: 0;
+}
+
+.credit a {
+  color: var(--ink-2);
+}
+
+.credit__label {
+  margin-right: 0.4rem;
+  color: var(--ink-2);
+  font: 500 0.8rem var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.pager a {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.4rem;
+  text-decoration: none;
+  transition:
+    border-color 160ms,
+    background-color 160ms;
+}
+
+.pager a:hover {
+  border-color: var(--ink-2);
+  background: var(--paper-raised);
+}
+
+.pager a:last-child {
+  text-align: right;
+}
+
+.pager__dir {
+  color: var(--ink-3);
+  font: 500 0.8rem var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pager__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+/* ------------------------------------------------------------ how it works */
+
+/* The sheet holds two pages: the object's article, and the tour, which takes its place while it's open. */
+.sheet__page {
+  display: contents;
+}
+
+.thing[data-touring] .sheet__page {
+  display: none;
+}
+
+/* The tour: a page of the manual, one stage of the mechanism at a time. */
+.tour {
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+  animation: sheet-in 420ms var(--ease-out) both;
+}
+
+.tour[hidden] {
+  display: none;
+}
+
+.tour__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tour__eyebrow {
+  margin: 0;
+}
+
+.tour__exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  margin-right: -0.5rem;
+  padding: 0 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tour__exit:hover {
+  background: var(--paper-sunk);
+  color: var(--ink);
+}
+
+.tour__exit svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tour__page {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.tour__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.3vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* It takes focus to be read out, as the page's title does, not to be pressed. */
+.tour__title:focus {
+  outline: none;
+}
+
+.tour__text p {
+  margin: 0 0 0.75rem;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.tour__text p:last-child {
+  margin-bottom: 0;
+}
+
+.tour__figure {
+  margin: 0.4rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+}
+
+.tour__figure[hidden] {
+  display: none;
+}
+
+.tour__figure-title {
+  margin: 0 0 0.6rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tour__chart {
+  min-height: 4rem;
+}
+
+.tour__caption {
+  margin-top: 0.55rem;
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* Something to try, and slow motion. On wide screens it sits on the stage by the model, where the hook
+   is printed otherwise (the cannon's FIRE button); on phones it's in the tour's page. */
+.stage__try {
+  position: absolute;
+  left: var(--stage-pad);
+  bottom: calc(var(--stage-pad) + 2.6rem);
+  z-index: 3;
+  width: min(24rem, 40%);
+  pointer-events: none;
+}
+
+/* The slot is the most room a step's controls take, so whether they fit beside the step bar doesn't change as their
+   readout does. Where they wouldn't, they stand over it (the tour sets this). */
+.stage__try.is-over {
+  bottom: calc(var(--stage-pad) + 4.6rem);
+}
+
+.stage__try .tour__try {
+  width: fit-content;
+  max-width: 100%;
+  pointer-events: auto;
+}
+
+.tour__try {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.6rem;
+  background: color-mix(in oklch, var(--paper-raised) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+  animation: card-in 380ms var(--ease-out) both;
+}
+
+.tour__try[hidden] {
+  display: none;
+}
+
+.tour__try-actions {
+  display: contents;
+}
+
+.tour__try-home .tour__try {
+  box-shadow: none;
+  background: var(--paper-sunk);
+  border-color: transparent;
+}
+
+.button--try {
+  border-color: var(--accent-strong);
+  color: var(--accent-ink);
+  background: var(--paper-raised);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.button--try:hover {
+  background: var(--accent-wash);
+}
+
+.button--try svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.button--hold.is-held,
+.button--try[aria-pressed='true'] {
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+}
+
+.tour__readout {
+  flex: 1 1 12rem;
+  margin: 0;
+  color: var(--ink-2);
+  font: 500 0.85rem/1.4 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tour__readout:empty {
+  display: none;
+}
+
+.tour__slider {
+  display: grid;
+  flex: 1 1 100%;
+  gap: 0.1rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tour__slider input {
+  width: 100%;
+  accent-color: var(--accent-strong);
+}
+
+.tour__toggle {
+  min-height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tour__toggle[hidden] {
+  display: none;
+}
+
+.tour__toggle[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper-raised);
+}
+
+/* The step bar: back, the steps, next. It stands on the stage in the corner by the page, in the same place and at
+   the same size on every step (Next is as wide as its longest wording), so the tour can be clicked through without
+   looking for it. The step's controls keep the corner across from it. */
+.tour__nav {
+  position: absolute;
+  right: var(--stage-pad);
+  bottom: var(--stage-pad);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--paper-raised) 92%, transparent);
+  box-shadow: var(--shadow-soft);
+  animation: card-in 380ms var(--ease-out) both;
+}
+
+.tour__nav[hidden] {
+  display: none;
+}
+
+.tour__back {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+}
+
+.tour__back:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* The steps, as numbered stops on a rule that's inked in as far as the one on show. Pointing at one names it. */
+.tour__steps {
+  --stop: 1.9rem;
+  position: relative;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tour__steps::before,
+.tour__steps::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(var(--stop) / 2);
+  height: 1.5px;
+  translate: 0 -50%;
+}
+
+.tour__steps::before {
+  right: calc(var(--stop) / 2);
+  background: var(--rule-strong);
+}
+
+.tour__steps::after {
+  width: calc((100% - var(--stop)) * var(--at, 0));
+  background: var(--accent-strong);
+  transition: width 400ms var(--ease-out);
+}
+
+.tour__step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--stop);
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.tour__step-num {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1.5px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--paper-raised);
+  font: 600 0.8rem/1 var(--font-mono);
+  transition:
+    background-color 200ms,
+    border-color 200ms,
+    color 200ms;
+}
+
+.tour__step:hover .tour__step-num {
+  border-color: var(--ink-2);
+  color: var(--ink);
+}
+
+.tour__step.is-done .tour__step-num {
+  border-color: var(--accent-strong);
+  color: var(--accent-ink);
+}
+
+.tour__step[aria-current='step'] .tour__step-num {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper-raised);
+}
+
+/* The name, as a tag over the stop while it's pointed at. */
+.tour__step-label {
+  position: absolute;
+  bottom: calc(100% + 0.45rem);
+  left: 50%;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 550 0.85rem/1.3 var(--font-body);
+  white-space: nowrap;
+  opacity: 0;
+  translate: -50% 0.25rem;
+  pointer-events: none;
+  transition:
+    opacity 150ms,
+    translate 200ms var(--ease-out);
+}
+
+.tour__step:focus-visible .tour__step-label {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* Only for a pointer that hovers: a tap would leave the tag standing. */
+@media (hover: hover) {
+  .tour__step:hover .tour__step-label {
+    opacity: 1;
+    translate: -50% 0;
+  }
+}
+
+.tour__next {
+  min-height: 3rem;
+  padding: 0 1.3rem 0 1.45rem;
+  font-size: 1rem;
+}
+
+.tour__next svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Every step's wording, stacked in one cell: only the one for the step on show is seen. */
+.tour__next-labels {
+  display: grid;
+  justify-items: center;
+}
+
+.tour__next-labels > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.tour__next-labels > .is-on {
+  visibility: visible;
+}
+
+/* While touring, the foot of the stage is the step's: the hint for handling the model steps aside for the bar. */
+.thing[data-touring] .stage__hint {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* A narrow stage beside the page: Next leaves off the step's name, and narrower still, the scale steps aside too. */
+@media (min-width: 52.01rem) and (max-width: 68rem) {
+  .tour__next-name {
+    display: none;
+  }
+}
+
+@media (min-width: 52.01rem) and (max-width: 60rem) {
+  .thing[data-touring] .scale {
+    opacity: 0;
+  }
+}
+
+/* Charts: ink on the card's paper, hairline grids, notes in italics. */
+.chart {
+  display: block;
+  overflow: visible;
+  font-family: var(--font-body);
+}
+
+.chart text {
+  fill: var(--ink-2);
+}
+
+.chart__grid {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.chart__axis {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.chart__line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.chart__line--ghost {
+  stroke: var(--ink-3);
+  stroke-width: 1;
+}
+
+.chart__line--dashed {
+  stroke-dasharray: 4 3;
+}
+
+.chart__line--dotted {
+  stroke-dasharray: 0.5 3.5;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.chart__line--live {
+  stroke: var(--accent-strong);
+  stroke-width: 2;
+}
+
+.chart__area {
+  fill: var(--accent-wash);
+}
+
+.chart__band {
+  fill: var(--accent-wash);
+  opacity: 0.8;
+}
+
+.chart__tick {
+  font: 500 0.8rem/1 var(--font-mono);
+}
+
+.chart .chart__tick {
+  fill: var(--ink-3);
+}
+
+.chart__note {
+  font: italic 400 0.9rem/1 var(--font-display);
+}
+
+.chart .chart__note--accent {
+  fill: var(--accent-ink);
+}
+
+.chart__name {
+  font: 600 0.9rem/1 var(--font-body);
+}
+
+.chart .chart__name {
+  fill: var(--ink);
+}
+
+.chart__name--small {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.chart__index {
+  font: 500 0.8rem/1 var(--font-mono);
+}
+
+.chart .chart__index {
+  fill: var(--accent-ink);
+}
+
+.chart__value {
+  font: 600 0.8rem/1 var(--font-mono);
+}
+
+.chart .chart__value {
+  fill: var(--accent-ink);
+}
+
+.chart__dot {
+  fill: var(--accent-strong);
+  stroke: var(--paper-raised);
+  stroke-width: 1.5;
+}
+
+.chart__dot--ink {
+  fill: var(--ink);
+}
+
+.chart__cursor-line {
+  stroke: var(--accent-strong);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.chart__dial {
+  fill: var(--paper-raised);
+  stroke: var(--ink-3);
+  stroke-width: 1;
+}
+
+.chart__pin {
+  fill: var(--ink);
+}
+
+.chart__hand {
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.chart__hand--accent {
+  stroke: var(--accent-strong);
+}
+
+.chart__hand--wide {
+  stroke-width: 2.6;
+}
+
+/* A car's motor end-on: coils lit by the current in them (accent one way, ink the other), the rotor. */
+.chart__coil {
+  fill: var(--accent-strong);
+  stroke: var(--ink-3);
+  stroke-width: 1;
+}
+
+.chart__coil--return {
+  fill: var(--ink);
+}
+
+.chart__rotor {
+  fill: var(--paper-sunk);
+  stroke: var(--ink-2);
+  stroke-width: 1.2;
+}
+
+.chart__rotor-pole {
+  fill: var(--ink-2);
+}
+
+.chart__rotor-bar {
+  fill: var(--ink-3);
+}
+
+.chart .chart__tick--paper {
+  fill: var(--paper-raised);
+}
+
+/* The Roadster's air: dots going through a nozzle (faint while it isn't firing). */
+.chart__dot--air {
+  fill: var(--air);
+  stroke: none;
+  transition: opacity 300ms;
+}
+
+.chart__dot.is-still {
+  opacity: 0.35;
+}
+
+.chart__tickmark {
+  stroke: var(--accent-strong);
+  stroke-width: 1.5;
+}
+
+.chart__flow {
+  fill: none;
+  stroke: var(--accent-strong);
+  stroke-width: 1.8;
+}
+
+.chart__time {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 3;
+}
+
+.chart__arrowhead {
+  fill: var(--ink-2);
+}
+
+.chart__arrowhead--accent {
+  fill: var(--accent-strong);
+}
+
+.chart__bar {
+  fill: var(--paper-sunk);
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  transition: fill 200ms;
+}
+
+.chart__bar.is-picked {
+  fill: var(--accent-strong);
+  stroke: var(--accent-strong);
+}
+
+.chart .chart__value--ink {
+  fill: var(--ink-2);
+}
+
+.chart__glyph {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart__light {
+  fill: none;
+  stroke: oklch(0.72 0.15 75);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The camera's charts: the finder's patch and second picture, the frame lines, a strip of film in the gate. */
+.chart__glyph--thin {
+  stroke-width: 1.4;
+}
+
+.chart__glyph--accent {
+  stroke: var(--accent-strong);
+}
+
+.chart__frame {
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1;
+}
+
+.chart__patch {
+  fill: var(--accent-wash);
+  stroke: var(--accent-strong);
+  stroke-width: 1;
+  stroke-opacity: 0.6;
+}
+
+.chart__film {
+  fill: color-mix(in oklch, var(--ink) 78%, var(--paper-raised));
+}
+
+.chart__frame-cell {
+  fill: color-mix(in oklch, var(--ink) 60%, var(--paper-raised));
+}
+
+.chart__perf {
+  fill: var(--paper-raised);
+}
+
+.chart__gate {
+  fill: none;
+  stroke: var(--accent-strong);
+  stroke-width: 2;
+}
+
+.chart .chart__film-label {
+  fill: var(--paper-raised);
+  font: 500 0.8rem/1 var(--font-mono);
+}
+
+/* Choices on the stage, such as which pulleys the belt is on. */
+.tour__choices {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.tour__choice {
+  display: grid;
+  place-items: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.4rem;
+  background: var(--paper-raised);
+  color: var(--ink-2);
+  font: 600 0.9rem/1 var(--font-mono);
+  cursor: pointer;
+}
+
+.tour__choice:hover {
+  border-color: var(--ink-2);
+}
+
+.tour__choice[aria-checked='true'] {
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+}
+
+.chart__node {
+  cursor: pointer;
+}
+
+.chart__node rect {
+  fill: var(--paper-raised);
+  stroke: var(--rule-strong);
+  transition:
+    fill 160ms,
+    stroke 160ms;
+}
+
+.chart__node:hover rect {
+  fill: var(--accent-wash);
+  stroke: var(--accent-strong);
+}
+
+/* Drawings: front, side and top, in ink, laid out and dimensioned like a draughtsman's sheet. */
+.drawings__wait {
+  margin: 0;
+  color: var(--ink-3);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.drawing__name {
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.chart .drawing__name {
+  fill: var(--ink-3);
+}
+
+.drawing__dimension {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1;
+}
+
+.drawing__extension {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 0.75;
+  stroke-dasharray: 2 2;
+}
+
+.drawing__measure {
+  font: italic 400 0.9rem/1 var(--font-display);
+}
+
+.chart .drawing__measure {
+  fill: var(--ink);
+}
+
+/* ------------------------------------------------------- views and drawings */
+
+/* Top right: how the model is drawn, as two cards that show it each way, and the tools under them. */
+.stage__corner {
+  position: absolute;
+  top: var(--stage-pad);
+  right: var(--stage-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.stage[data-state='ready'] .stage__corner,
+.stage[data-state='error'] .stage__corner,
+.stage[data-state='unsupported'] .stage__corner {
+  opacity: 1;
+}
+
+.views {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.35rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--paper-raised) 90%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.view-card {
+  --thumb: 4.6rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.3rem 0.45rem;
+  border: 1.5px solid transparent;
+  border-radius: 0.5rem;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition:
+    border-color 180ms,
+    background-color 180ms,
+    color 180ms;
+}
+
+.view-card:hover {
+  background: var(--paper-sunk);
+  color: var(--ink);
+}
+
+.view-card[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.view-card__thumb {
+  position: relative;
+  display: block;
+  width: var(--thumb);
+  height: var(--thumb);
+  overflow: hidden;
+  border-radius: 0.3rem;
+  background: var(--paper);
+}
+
+.view-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: scale 300ms var(--ease-out);
+}
+
+.view-card:hover .view-card__thumb img {
+  scale: 1.06;
+}
+
+/* Until the model's own lines are drawn, the wireframe card sketches its picture from the poster. */
+.view-card__lines:not(.is-drawn) {
+  filter: grayscale(1) contrast(2.4) brightness(1.35);
+  opacity: 0.55;
+}
+
+/* Over the wireframe card, the scan line that draws the model in, as a hint of what a click does. */
+.view-card__scan {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 0.45rem 0.1rem color-mix(in oklch, var(--accent) 60%, transparent);
+  opacity: 0;
+  translate: 0 -0.5rem;
+}
+
+@media (hover: hover) {
+  .view-card--lines:hover .view-card__scan {
+    animation: card-scan 1.4s var(--ease-out) infinite;
+  }
+}
+
+.view-card--lines:focus-visible .view-card__scan {
+  animation: card-scan 1.4s var(--ease-out) infinite;
+}
+
+@keyframes card-scan {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 var(--thumb);
+  }
+}
+
+.view-card__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.view-card kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.2rem;
+  border: 1px solid var(--rule-strong);
+  border-bottom-width: 2px;
+  border-radius: 0.2rem;
+  color: var(--ink-2);
+  font: 600 0.8rem/1 var(--font-mono);
+  letter-spacing: 0;
+}
+
+.tool {
+  background: color-mix(in oklch, var(--paper-raised) 88%, transparent);
+}
+
+/* In wireframe the paper turns to a drafting sheet: a fine grid in place of the dots. */
+.stage::before {
+  transition: opacity 600ms;
+}
+
+.stage[data-look='wireframe']::before {
+  background-image:
+    linear-gradient(oklch(0.24 0.017 60 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.24 0.017 60 / 0.07) 1px, transparent 1px),
+    linear-gradient(oklch(0.24 0.017 60 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.24 0.017 60 / 0.035) 1px, transparent 1px);
+  background-size:
+    5.4rem 5.4rem,
+    5.4rem 5.4rem,
+    1.35rem 1.35rem,
+    1.35rem 1.35rem;
+}
+
+/* Down the left, above the scale: the controls, printed on the paper like a plate's FIRE button and
+   elevation scale. Down the right, under the view cards: the drawings (under the model, as print is). */
+.stage__left {
+  position: absolute;
+  bottom: calc(var(--stage-pad) + 2.6rem);
+  left: var(--stage-pad);
+  width: var(--drawings-w);
+  pointer-events: none;
+}
+
+.stage__right {
+  position: absolute;
+  top: calc(var(--stage-pad) + 11.2rem);
+  right: var(--stage-pad);
+  bottom: calc(var(--stage-pad) + 2.6rem);
+  display: flex;
+  flex-direction: column;
+  width: var(--drawings-w);
+  pointer-events: none;
+}
+
+.stage__drawings {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  pointer-events: auto;
+  transition: opacity 400ms;
+}
+
+.stage[data-state='loading'] .stage__drawings,
+.stage:fullscreen .stage__drawings {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.controls {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: start;
+  gap: 1.1rem;
+  pointer-events: auto;
+}
+
+/* Ink, with a hairline of paper just inside its edge. */
+.controls__how {
+  min-height: 3.1rem;
+  padding: 0 1.35rem 0 1.55rem;
+  white-space: nowrap;
+  border: 0;
+  border-radius: 0.15rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  box-shadow:
+    inset 0 0 0 0.2rem var(--ink),
+    inset 0 0 0 calc(0.2rem + 1px) color-mix(in oklch, var(--paper-raised) 75%, transparent),
+    0 0.3rem 0.9rem -0.4rem oklch(0.25 0.02 60 / 0.5);
+  font: 500 1.05rem/1 var(--font-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 160ms,
+    box-shadow 160ms,
+    translate 250ms var(--ease-out);
+}
+
+.controls__how:hover {
+  background: oklch(0.33 0.02 60);
+  box-shadow:
+    inset 0 0 0 0.2rem oklch(0.33 0.02 60),
+    inset 0 0 0 calc(0.2rem + 1px) var(--paper-raised),
+    0 0.45rem 1.1rem -0.4rem oklch(0.25 0.02 60 / 0.55);
+  translate: 0 -0.08rem;
+}
+
+.controls__note {
+  margin: -0.6rem 0 0;
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.controls__apart {
+  display: grid;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+.controls__apart-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+}
+
+/* The scale's name is a button too: it takes the model all the way apart, or puts it back. */
+.controls__label {
+  padding: 0.3rem 0 0.2rem;
+  white-space: nowrap;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--ink-2);
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 160ms,
+    border-color 160ms;
+}
+
+.controls__label:hover {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+}
+
+.controls__value {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1;
+}
+
+/* A hairline scale with a diamond on it. */
+.controls__range {
+  height: 1.7rem;
+}
+
+.controls__range::-webkit-slider-runnable-track {
+  height: 1px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--rule-strong) var(--fill));
+}
+
+.controls__range::-moz-range-track {
+  height: 1px;
+  background: linear-gradient(to right, var(--ink) var(--fill), var(--rule-strong) var(--fill));
+}
+
+.controls__range::-webkit-slider-thumb {
+  width: 1rem;
+  height: 1rem;
+  margin-top: calc(-0.5rem + 0.5px);
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  box-shadow: none;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.controls__range::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink);
+  box-shadow: none;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.controls__range:focus-visible::-webkit-slider-thumb {
+  background: var(--accent-strong);
+  box-shadow: none;
+}
+
+.controls__range:focus-visible::-moz-range-thumb {
+  background: var(--accent-strong);
+  box-shadow: none;
+}
+
+.controls__toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+/* Switches lettered with their state, underlined like links on a plate. */
+.controls__toggle {
+  padding: 0.45rem 0 0.3rem;
+  white-space: nowrap;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  background: none;
+  color: var(--ink-2);
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 160ms,
+    border-color 160ms;
+}
+
+.controls__toggle::after {
+  content: ' off';
+  color: var(--ink-3);
+}
+
+.controls__toggle[aria-pressed='true'] {
+  border-bottom-color: var(--accent-strong);
+  color: var(--ink);
+}
+
+.controls__toggle[aria-pressed='true']::after {
+  content: ' on';
+  color: var(--accent-ink);
+}
+
+.controls__toggle:hover {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+}
+
+/* In the sheet, on phones: just under the model. */
+.sheet__controls:empty {
+  display: none;
+}
+
+.sheet__controls .controls {
+  padding: 0.25rem 0 0.5rem;
+}
+
+/* The model starts clean: callout numbers and part letters show with Labels on. A callout picked from
+   the page still shows its marker. */
+.viewer__labels:not([data-labels]) .hotspot:not(.is-active),
+.viewer__labels:not([data-labels]) .part-badge {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (min-width: 52.01rem) {
+  .drawings {
+    display: none;
+  }
+}
+
+.drawing__view {
+  cursor: pointer;
+  outline: none;
+}
+
+.drawing__hit {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1;
+  transition:
+    fill 160ms,
+    stroke 160ms;
+}
+
+.drawing__view:hover .drawing__hit,
+.drawing__view:focus-visible .drawing__hit {
+  fill: color-mix(in oklch, var(--accent-wash) 55%, transparent);
+  stroke: var(--accent);
+  stroke-dasharray: 3 3;
+}
+
+/* Labels on the model during a step: a dot on the part and its name in ink beside it. */
+.step-tag {
+  --dot: 0.5rem;
+  position: relative;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--accent-strong);
+  box-shadow: 0 0 0 2px var(--paper-raised);
+  pointer-events: none;
+  animation: tag-in 420ms calc(var(--i) * 90ms + 500ms) var(--ease-out) both;
+}
+
+.step-tag__text {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 0.45rem);
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.3rem;
+  background: var(--ink);
+  color: var(--paper-raised);
+  font: 550 0.85rem/1.3 var(--font-body);
+  white-space: nowrap;
+  translate: 0 -50%;
+}
+
+.step-tag.is-offstage {
+  visibility: hidden;
+}
+
+@keyframes tag-in {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
+/* While touring, the stage gives the model the room: the tray and the hook printed under it step aside. */
+.thing[data-touring] .tray,
+.thing[data-touring] .stage__left,
+.thing[data-touring] .stage__right {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms,
+    visibility 0s 300ms;
+}
+
+/* Back at once when the tour closes, so How it works can take keyboard focus straight back. */
+.tray,
+.stage__left,
+.stage__right {
+  transition:
+    opacity 300ms,
+    visibility 0s;
+}
+
+/* While touring, the step's own tags speak for the model; the callout markers and part letters step back. */
+.viewer__labels[data-touring] .hotspot,
+.viewer__labels[data-touring] .part-badge {
+  display: none;
+}
+
+.tool[aria-pressed='true'] {
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: var(--paper-raised);
+}
+
+/* Phones and narrow tablets: the model stays pinned while the sheet scrolls under it. */
+@media (max-width: 52rem) {
+  .thing {
+    grid-template-columns: 1fr;
+    height: auto;
+    background: none;
+  }
+
+  /* The stage is a window of its own here: the model sits in the middle of it. */
+  .stage {
+    --home-x: 0;
+    --home-y: 0;
+    --home-fill: 0.877;
+    --home-width: 1;
+    --home-clear: 0px;
+    position: sticky;
+    top: var(--header-h);
+    z-index: 5;
+    height: 56svh;
+    border-bottom: 1px solid var(--rule);
+    background: var(--lit-paper);
+  }
+
+  .sheet {
+    margin: 0;
+    padding: 1.75rem clamp(1.25rem, 2.4vw, 2.5rem) 3rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: var(--paper);
+    box-shadow: none;
+  }
+
+  .callout {
+    scroll-margin-top: calc(var(--header-h) + 56svh + 0.5rem);
+  }
+
+  .stage__caption.is-visible {
+    display: grid;
+  }
+
+  .tray,
+  .stage__marks,
+  .stage__left,
+  .stage__right {
+    display: none;
+  }
+
+  /* The corner cluster spans the top: view cards on the left, tools on the right, so the callout card at the bottom never covers them. */
+  .stage__corner {
+    inset: 0.75rem 0.75rem auto;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .view-card {
+    --thumb: 3.1rem;
+  }
+
+  .stage__foot {
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.9rem;
+  }
+
+  /* The tour's page comes up to just under the model. */
+  .tour {
+    scroll-margin-top: calc(var(--header-h) + 56svh + 1.25rem);
+  }
+
+  /* The step bar runs along the bottom of the screen, where a thumb rests, and the page keeps clear of it. */
+  .tour__nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+    padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    border-width: 1px 0 0;
+    border-radius: 0;
+    background: var(--paper-raised);
+    box-shadow: 0 -0.4rem 1.2rem -0.9rem oklch(0.25 0.02 60 / 0.35);
+    animation-name: bar-up;
+  }
+
+  .thing[data-touring] .sheet {
+    padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* On a phone, Next says just that and the stops close up. */
+@media (max-width: 30rem) {
+  .tour__next-name {
+    display: none;
+  }
+
+  .tour__back {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .tour__steps {
+    --stop: 1.55rem;
+  }
+
+  .tour__step-num {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
+
+@keyframes bar-up {
+  from {
+    translate: 0 100%;
+  }
+}
+
+/* ------------------------------------------------------------ about, 404 */
+
+.about,
+.missing {
+  width: min(90%, 52rem);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(3rem, 8vw, 6rem);
+}
+
+.about {
+  display: grid;
+  gap: 2.75rem;
+}
+
+.about .eyebrow {
+  margin-bottom: -1.5rem;
+}
+
+.about__title,
+.missing__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-weight: 360;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.about__title em {
+  color: var(--accent-ink);
+  font-weight: 300;
+}
+
+.about__lede {
+  font-size: 1.15rem;
+}
+
+.about__how {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem 2rem;
+  margin: 0;
+}
+
+.about__how dt {
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+.about__how dd {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.about__note {
+  max-width: 62ch;
+  margin: 0 0 1.25rem;
+  color: var(--ink-2);
+}
+
+.about__table-wrap {
+  overflow-x: auto;
+}
+
+.about__credits {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.about__credits th,
+.about__credits td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.about__credits thead th {
+  color: var(--ink-3);
+  font: 500 0.8rem var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.about__credits tbody th {
+  font-weight: 600;
+}
+
+.about__fig {
+  display: block;
+  color: var(--ink-3);
+  font: 400 0.8rem var(--font-mono);
+}
+
+.missing {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.missing p {
+  margin: 0;
+}
+
+/* Dev-only poster capture page */
+.capture {
+  padding: 2rem var(--gutter);
+}
+
+.capture__stage {
+  position: relative;
+  background: transparent;
+}
+
+/* ------------------------------------------------------- view transitions */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-group(poster) {
+  animation-duration: 480ms;
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
