@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#f3efe6" />
-    <title>Teardown · a skill for Claude Code</title>
+    <title>3D of Things · a skill for Claude Code</title>
     <meta name="description" content="Name a machine in one line, and Claude builds it in 3D, takes it apart and shows how it works: the standard procedure behind 3D of Things, as a Claude Code skill." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body class="td">
     <a class="skip-link" href="#content">Skip to content</a>
     <header class="masthead">
-      <a class="wordmark" href="./"><span class="wordmark__mark">3D</span> of Things</a>
-      <p class="masthead__here" aria-hidden="true"><span class="masthead__name">Teardown</span><span class="masthead__section"></span></p>
+      <a class="wordmark" href="%OBJECTS%"><span class="wordmark__mark">3D</span> of Things</a>
+      <p class="masthead__here" aria-hidden="true"><span class="masthead__name">The skill</span><span class="masthead__section"></span></p>
       <nav class="masthead__nav" aria-label="Site">
-        <a href="./#/">Objects</a>
+        <a href="%OBJECTS%#/">Objects</a>
         <a href="#install">Install</a>
       </nav>
     </header>
@@ -23,16 +23,16 @@
     <main id="content" tabindex="-1">
       <header class="hero flow">
         <p class="eyebrow"><span>3D of Things</span><span>18 October 2026</span></p>
-        <h1 class="hero__title">Teardown <span class="hero__kind">· a skill for Claude Code</span></h1>
+        <h1 class="hero__title">3D of Things <span class="hero__kind">· a skill for Claude Code</span></h1>
         <p class="hero__tagline">Name a machine in one line, and Claude builds it in 3D, <em>takes it apart</em> and shows how it works.</p>
         <ul class="hero__thumbs" aria-label="Five of the objects">
-          <li><a href="./#/thing/pocket-watch"><img src="/posters/pocket-watch-thumb.webp" width="240" height="240" alt="The pocket watch" /><span>Pocket watch</span></a></li>
-          <li><a href="./#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-thumb.webp" width="240" height="240" alt="The Leica M3 rangefinder camera" /><span>Rangefinder</span></a></li>
-          <li><a href="./#/thing/reflex-camera"><img src="/posters/reflex-camera-thumb.webp" width="240" height="240" alt="The medium-format SLR" /><span>SLR</span></a></li>
-          <li><a href="./#/thing/tesla-roadster"><img src="/posters/tesla-roadster-thumb.webp" width="240" height="240" alt="The 2026 Tesla Roadster" /><span>Roadster</span></a></li>
-          <li><a href="./#/thing/family-car"><img src="/posters/family-car-thumb.webp" width="240" height="240" alt="The family car" /><span>Family car</span></a></li>
+          <li><a href="%OBJECTS%#/thing/pocket-watch"><img src="/posters/pocket-watch-thumb.webp" width="240" height="240" alt="The pocket watch" /><span>Pocket watch</span></a></li>
+          <li><a href="%OBJECTS%#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-thumb.webp" width="240" height="240" alt="The Leica M3 rangefinder camera" /><span>Rangefinder</span></a></li>
+          <li><a href="%OBJECTS%#/thing/reflex-camera"><img src="/posters/reflex-camera-thumb.webp" width="240" height="240" alt="The medium-format SLR" /><span>SLR</span></a></li>
+          <li><a href="%OBJECTS%#/thing/tesla-roadster"><img src="/posters/tesla-roadster-thumb.webp" width="240" height="240" alt="The 2026 Tesla Roadster" /><span>Roadster</span></a></li>
+          <li><a href="%OBJECTS%#/thing/family-car"><img src="/posters/family-car-thumb.webp" width="240" height="240" alt="The family car" /><span>Family car</span></a></li>
         </ul>
-        <p class="hero__meta"><a href="./#/">13 objects, all live</a><span>by 3D of Things</span><a href="#install">Install ↓</a></p>
+        <p class="hero__meta"><span>/3d-of-things</span><a href="%OBJECTS%#/">13 objects, all live</a><span>by 3D of Things</span><a href="#install">Install ↓</a></p>
       </header>
 
       <nav class="toc flow" aria-label="Contents">
@@ -41,7 +41,7 @@
           <li><a href="#prompt"><span>02</span> Writing a prompt</a></li>
           <li><a href="#stages"><span>03</span> What Claude does</a></li>
           <li><a href="#rules"><span>04</span> The rules of a teardown</a></li>
-          <li><a href="#objects"><span>05</span> Ten machines, up close</a></li>
+          <li><a href="#objects"><span>05</span> Thirteen machines, up close</a></li>
           <li><a href="#inside"><span>06</span> Inside, generated</a></li>
           <li><a href="#checks"><span>07</span> The checks</a></li>
           <li><a href="#time"><span>08</span> How long it takes</a></li>
@@ -69,13 +69,13 @@
         <p>The prompt is the machine, not the drawing. Name it as exactly as you can and say what should move; finding the numbers is Claude’s job.</p>
         <dl class="prompts">
           <dt>Name the machine</dt>
-          <dd><code>/teardown add a mechanical metronome</code></dd>
+          <dd><code>/3d-of-things add a mechanical metronome</code></dd>
           <dt>Say what should move</dt>
-          <dd><code>/teardown a sewing machine: the needle, the shuttle hook and the feed dog working together</code></dd>
+          <dd><code>/3d-of-things a sewing machine: the needle, the shuttle hook and the feed dog working together</code></dd>
           <dt>Start from a free model</dt>
-          <dd><code>/teardown take apart Poly Haven’s vintage video camera, like the Leica</code></dd>
+          <dd><code>/3d-of-things take apart Poly Haven’s vintage video camera, like the Leica</code></dd>
           <dt>Check what’s there</dt>
-          <dd><code>/teardown the SLR’s winding step has a label floating somewhere: check everything still works</code></dd>
+          <dd><code>/3d-of-things the SLR’s winding step has a label floating somewhere: check everything still works</code></dd>
         </dl>
         <p>It sizes the job before anything else, in one of four tiers. <strong>Sourced</strong>: a free model whose parts are already separate. <strong>Opened</strong>: a free shell, cut open and given its insides in code. <strong>Built</strong>: no usable model, so the whole thing is generated. <strong>Machine</strong>: several systems with physics of their own, like a car that flies. A Machine isn’t started without asking; Claude first proposes a smaller version that keeps the core of the idea.<sup class="ref">2</sup></p>
         <aside class="note"><span class="note__n">2</span>For anything current, a car shown last week or a new camera, Claude searches the latest reveal before modelling it, because its training may predate it.</aside>
@@ -130,19 +130,19 @@ anchors: {
         <h2><span class="num">05</span>Thirteen machines, up close</h2>
         <p>The collection reads best one machine at a time. Each opens on its own page, ready to turn, take apart and run.</p>
         <ul class="objects wide">
-          <li><a href="./#/thing/hand-drill"><img src="/posters/hand-drill-800.webp" width="800" height="800" loading="lazy" alt="The hand drill, assembled: a crank, a big gear wheel and the chuck on a frame." /><span class="objects__fig">Fig. 01</span><span class="objects__title">Hand Drill</span><span class="objects__hook">An 80-tooth wheel on a 24-tooth pinion: the bit turns three and a third times for each turn of the handle.</span></a></li>
-          <li><a href="./#/thing/pocket-watch"><img src="/posters/pocket-watch-800.webp" width="800" height="800" loading="lazy" alt="The pocket watch, closed, its dial showing the time." /><span class="objects__fig">Fig. 02</span><span class="objects__title">Pocket Watch</span><span class="objects__hook">A 26-part movement generated inside a Poly Haven case, running in step with your clock.</span></a></li>
-          <li><a href="./#/thing/binoculars"><img src="/posters/binoculars-800.webp" width="800" height="800" loading="lazy" alt="A pair of vintage binoculars." /><span class="objects__fig">Fig. 03</span><span class="objects__title">Binoculars</span><span class="objects__hook">Prisms fold the light and turn the picture the right way up.</span></a></li>
-          <li><a href="./#/thing/microscope"><img src="/posters/microscope-800.webp" width="800" height="800" loading="lazy" alt="A vintage microscope on its stand." /><span class="objects__fig">Fig. 04</span><span class="objects__title">Microscope</span><span class="objects__hook">Two lenses in a tube, each magnifying what the one before made.</span></a></li>
-          <li><a href="./#/thing/film-projector"><img src="/posters/film-projector-800.webp" width="800" height="800" loading="lazy" alt="An 8 mm film projector with its reels." /><span class="objects__fig">Fig. 05</span><span class="objects__title">Film Projector</span><span class="objects__hook">A claw pulls the film down only while the shutter is shut.</span></a></li>
-          <li><a href="./#/thing/drill-press"><img src="/posters/drill-press-800.webp" width="800" height="800" loading="lazy" alt="A drill press on its column." /><span class="objects__fig">Fig. 06</span><span class="objects__title">Drill Press</span><span class="objects__hook">Move the belt between the stepped pulleys and watch the spindle speed change.</span></a></li>
-          <li><a href="./#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-800.webp" width="800" height="800" loading="lazy" alt="The Leica M3 rangefinder camera with its lens." /><span class="objects__fig">Fig. 07</span><span class="objects__title">Rangefinder Camera</span><span class="objects__hook">A Leica M3 opened along its seams: cloth curtains, film path, rangefinder optics, a nine-blade iris.</span></a></li>
-          <li><a href="./#/thing/reflex-camera"><img src="/posters/reflex-camera-800.webp" width="800" height="800" loading="lazy" alt="The medium-format SLR with its lens and film magazine." /><span class="objects__fig">Fig. 08</span><span class="objects__title">Medium-Format SLR</span><span class="objects__hook">Built entirely in code after the Hasselblad 500C/M, in the order of its service manual’s timing chart.</span></a></li>
-          <li><a href="./#/thing/tesla-roadster"><img src="/posters/tesla-roadster-800.webp" width="800" height="800" loading="lazy" alt="The 2026 Tesla Roadster." /><span class="objects__fig">Fig. 09</span><span class="objects__title">Tesla Roadster</span><span class="objects__hook">The fans that suck it onto the road and the air thrusters that make it fly.</span></a></li>
-          <li><a href="./#/thing/family-car"><img src="/posters/family-car-800.webp" width="800" height="800" loading="lazy" alt="A green 1970s family saloon." /><span class="objects__fig">Fig. 10</span><span class="objects__title">Family Car</span><span class="objects__hook">A two-litre four, a four-speed gearbox and a differential you can take round a bend.</span></a></li>
-          <li><a href="./#/thing/washing-machine"><img src="/posters/washing-machine-800.webp" width="800" height="800" loading="lazy" alt="A white front-loading washing machine." /><span class="objects__fig">Fig. 11</span><span class="objects__title">Washing Machine</span><span class="objects__hook">Built in code: a belt from a fast motor turns the drum, and a tub on springs carries 25 kg of concrete.</span></a></li>
-          <li><a href="./#/thing/bicycle-pump"><img src="/posters/bicycle-pump-800.webp" width="800" height="800" loading="lazy" alt="A floor pump for bicycle tyres, its handle up." /><span class="objects__fig">Fig. 12</span><span class="objects__title">Bicycle Pump</span><span class="objects__hook">A cup seal that folds one way and a ball valve that keeps the tyre’s air in.</span></a></li>
-          <li><a href="./#/thing/garden-sprinkler"><img src="/posters/garden-sprinkler-800.webp" width="800" height="800" loading="lazy" alt="A yellow garden sprinkler on wheels, with a turning arm." /><span class="objects__fig">Fig. 13</span><span class="objects__title">Garden Sprinkler</span><span class="objects__hook">No motor: two jets of water push the arm round, the way a rocket flies.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/hand-drill"><img src="/posters/hand-drill-800.webp" width="800" height="800" loading="lazy" alt="The hand drill, assembled: a crank, a big gear wheel and the chuck on a frame." /><span class="objects__fig">Fig. 01</span><span class="objects__title">Hand Drill</span><span class="objects__hook">An 80-tooth wheel on a 24-tooth pinion: the bit turns three and a third times for each turn of the handle.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/pocket-watch"><img src="/posters/pocket-watch-800.webp" width="800" height="800" loading="lazy" alt="The pocket watch, closed, its dial showing the time." /><span class="objects__fig">Fig. 02</span><span class="objects__title">Pocket Watch</span><span class="objects__hook">A 26-part movement generated inside a Poly Haven case, running in step with your clock.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/binoculars"><img src="/posters/binoculars-800.webp" width="800" height="800" loading="lazy" alt="A pair of vintage binoculars." /><span class="objects__fig">Fig. 03</span><span class="objects__title">Binoculars</span><span class="objects__hook">Prisms fold the light and turn the picture the right way up.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/microscope"><img src="/posters/microscope-800.webp" width="800" height="800" loading="lazy" alt="A vintage microscope on its stand." /><span class="objects__fig">Fig. 04</span><span class="objects__title">Microscope</span><span class="objects__hook">Two lenses in a tube, each magnifying what the one before made.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/film-projector"><img src="/posters/film-projector-800.webp" width="800" height="800" loading="lazy" alt="An 8 mm film projector with its reels." /><span class="objects__fig">Fig. 05</span><span class="objects__title">Film Projector</span><span class="objects__hook">A claw pulls the film down only while the shutter is shut.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/drill-press"><img src="/posters/drill-press-800.webp" width="800" height="800" loading="lazy" alt="A drill press on its column." /><span class="objects__fig">Fig. 06</span><span class="objects__title">Drill Press</span><span class="objects__hook">Move the belt between the stepped pulleys and watch the spindle speed change.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/rangefinder-camera"><img src="/posters/rangefinder-camera-800.webp" width="800" height="800" loading="lazy" alt="The Leica M3 rangefinder camera with its lens." /><span class="objects__fig">Fig. 07</span><span class="objects__title">Rangefinder Camera</span><span class="objects__hook">A Leica M3 opened along its seams: cloth curtains, film path, rangefinder optics, a nine-blade iris.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/reflex-camera"><img src="/posters/reflex-camera-800.webp" width="800" height="800" loading="lazy" alt="The medium-format SLR with its lens and film magazine." /><span class="objects__fig">Fig. 08</span><span class="objects__title">Medium-Format SLR</span><span class="objects__hook">Built entirely in code after the Hasselblad 500C/M, in the order of its service manual’s timing chart.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/tesla-roadster"><img src="/posters/tesla-roadster-800.webp" width="800" height="800" loading="lazy" alt="The 2026 Tesla Roadster." /><span class="objects__fig">Fig. 09</span><span class="objects__title">Tesla Roadster</span><span class="objects__hook">The fans that suck it onto the road and the air thrusters that make it fly.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/family-car"><img src="/posters/family-car-800.webp" width="800" height="800" loading="lazy" alt="A green 1970s family saloon." /><span class="objects__fig">Fig. 10</span><span class="objects__title">Family Car</span><span class="objects__hook">A two-litre four, a four-speed gearbox and a differential you can take round a bend.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/washing-machine"><img src="/posters/washing-machine-800.webp" width="800" height="800" loading="lazy" alt="A white front-loading washing machine." /><span class="objects__fig">Fig. 11</span><span class="objects__title">Washing Machine</span><span class="objects__hook">Built in code: a belt from a fast motor turns the drum, and a tub on springs carries 25 kg of concrete.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/bicycle-pump"><img src="/posters/bicycle-pump-800.webp" width="800" height="800" loading="lazy" alt="A floor pump for bicycle tyres, its handle up." /><span class="objects__fig">Fig. 12</span><span class="objects__title">Bicycle Pump</span><span class="objects__hook">A cup seal that folds one way and a ball valve that keeps the tyre’s air in.</span></a></li>
+          <li><a href="%OBJECTS%#/thing/garden-sprinkler"><img src="/posters/garden-sprinkler-800.webp" width="800" height="800" loading="lazy" alt="A yellow garden sprinkler on wheels, with a turning arm." /><span class="objects__fig">Fig. 13</span><span class="objects__title">Garden Sprinkler</span><span class="objects__hook">No motor: two jets of water push the arm round, the way a rocket flies.</span></a></li>
         </ul>
       </section>
 
@@ -150,24 +150,24 @@ anchors: {
         <h2><span class="num">06</span>Inside, generated</h2>
         <p>Most free models are shells. Three of the thirteen objects had their insides generated inside a downloaded case, and four were generated whole. Each was laid out from published numbers, and each page says what was simplified.</p>
         <figure class="wide shot">
-          <img src="/teardown/hero-watch-escapement.webp" width="1600" height="1000" loading="lazy" alt="The pocket watch in How it works: the case turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid, beside a timing chart of one swing of the balance." />
+          <img src="/skill/hero-watch-escapement.webp" width="1600" height="1000" loading="lazy" alt="The pocket watch in How it works: the case turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid, beside a timing chart of one swing of the balance." />
           <figcaption><strong>The watch’s escapement.</strong> At each beat the pallet fork lets the escape wheel slip half a tooth, and the tooth gives the balance a push. The chart is drawn from the same beat count that turns the wheels.</figcaption>
         </figure>
         <p><strong>The pocket watch</strong> was a closed case. Its build step cuts the case along the mesh’s own edge loops, adds the inside surfaces a shell never had, and builds about twenty parts from real tooth counts. In the viewer, every wheel follows one beat count taken from your clock, so the train stays in mesh at any time of day and in slow motion.</p>
         <figure class="pair wide">
           <figure class="shot">
-            <img src="/teardown/tour-leica-rangefinder.webp" width="960" height="600" loading="lazy" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter, with a chart of the two images in the viewfinder." />
+            <img src="/skill/tour-leica-rangefinder.webp" width="960" height="600" loading="lazy" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter, with a chart of the two images in the viewfinder." />
             <figcaption><strong>The Leica’s rangefinder.</strong> Two windows 68.5 mm apart; a lens on a roller arm, moved by the lens’s own cam, lays one picture over the other.</figcaption>
           </figure>
           <figure class="shot">
-            <img src="/teardown/tour-slr-winding.webp" width="960" height="600" loading="lazy" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key, with a chart of each gear's turns." />
+            <img src="/skill/tour-slr-winding.webp" width="960" height="600" loading="lazy" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key, with a chart of each gear's turns." />
             <figcaption><strong>The SLR’s winding.</strong> One turn of the knob winds the drive key back 30/35 of a turn, through gears sized from the factory’s service manual.</figcaption>
           </figure>
         </figure>
         <p><strong>The Leica M3</strong> was a shell too: its build cuts it along the seams of the top cover and base plate, thickens each piece inward, and builds the cloth shutter, the film path, the rangefinder optics and a nine-blade iris. <strong>The medium-format SLR</strong> had no free model at all, so all of it is code, laid out from the service manual of the Hasselblad 500C/M.<sup class="ref">4</sup></p>
         <aside class="note"><span class="note__n">4</span>Its release runs in the order of the factory’s timing chart: the lens’s shutter shuts and the drive key turns to 117°, the iris stops down, the mirror swings up, the flaps open, the key reaches 268° and the shutter fires.</aside>
         <figure class="wide shot">
-          <img src="/teardown/tour-roadster-suction.webp" width="960" height="600" loading="lazy" alt="The Roadster's suction fans: blue air lines run from under the floor to four fans in the tail, with a chart of the pressure above and below the car." />
+          <img src="/skill/tour-roadster-suction.webp" width="960" height="600" loading="lazy" alt="The Roadster's suction fans: blue air lines run from under the floor to four fans in the tail, with a chart of the pressure above and below the car." />
           <figcaption><strong>The Roadster’s suction.</strong> Four ducted fans pull the air from under the sealed floor. About 6 kPa less underneath is two tonnes of downforce, parked or moving.</figcaption>
         </figure>
         <p><strong>The cars</strong> are lofted from a few curves per car and cut into the panels that come off. Under the 2026 Roadster are the fans, two carbon tanks of air at 690 bar and ten nozzles, laid out from Tesla’s launch and its patent; under the family car, a two-litre four firing 1, 3, 4, 2, a four-speed gearbox and a differential.</p>
@@ -181,10 +181,10 @@ anchors: {
           <li><code>npm run qa</code> <span>The real page in headless Chromium: every callout, every tour step and every experiment. It holds the hold buttons, moves the sliders, fires the shutters, and fails if a readout never changes. Then the phone layout and reduced motion.</span></li>
           <li><code>npm run models:build</code> <span>Fails if any part crosses another at rest, or if taking it apart would pass one part through another.</span></li>
         </ul>
-        <p>Headless Chromium used to draw with software WebGL, at about <strong>460 ms a frame</strong>. On the Mac’s GPU it takes <strong>18 to 23 ms</strong>, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all ten in under two.<sup class="ref">5</sup></p>
+        <p>Headless Chromium used to draw with software WebGL, at about <strong>460 ms a frame</strong>. On the Mac’s GPU it takes <strong>18 to 23 ms</strong>, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all thirteen in under two.<sup class="ref">5</sup></p>
         <aside class="note"><span class="note__n">5</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown. Once found, it was a one-line fix.</aside>
         <figure class="wide shot">
-          <img src="/teardown/qa-tour-sheet.webp" width="1400" height="994" loading="lazy" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled with its step." />
+          <img src="/skill/qa-tour-sheet.webp" width="1400" height="994" loading="lazy" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled with its step." />
           <figcaption><strong>One run, one sheet.</strong> The SLR’s seven tour steps as the runner saw them. Step 5, Winding, shows one of its two labels; the runner failed it.</figcaption>
         </figure>
       </section>
@@ -215,7 +215,7 @@ cd 3d-of-things
 npm install
 npx playwright install chromium   <span class="c"># for the checks, if it's missing</span></code></pre>
         <p>Then open Claude Code in the folder and name a machine:</p>
-        <pre class="block"><code>/teardown add a mechanical metronome</code></pre>
+        <pre class="block"><code>/3d-of-things add a mechanical metronome</code></pre>
       </section>
 
       <section class="flow" id="limits" data-n="10">
@@ -250,10 +250,10 @@ npx playwright install chromium   <span class="c"># for the checks, if it's miss
     </main>
 
     <footer class="colophon flow">
-      <p><a class="wordmark" href="./"><span class="wordmark__mark">3D</span> of Things</a></p>
-      <p>Teardown, the skill behind it. Models from <a href="https://polyhaven.com">Poly Haven</a> (CC0) or built in code for this site. Tesla and the Roadster’s name are trademarks of Tesla, Inc.; the Roadster here is an illustration. Set in Fraunces, Instrument Sans and IBM Plex Mono.</p>
+      <p><a class="wordmark" href="%OBJECTS%"><span class="wordmark__mark">3D</span> of Things</a></p>
+      <p>Made with <code>/3d-of-things</code>, the skill on this page. Models from <a href="https://polyhaven.com">Poly Haven</a> (CC0) or built in code for this site. Tesla and the Roadster’s name are trademarks of Tesla, Inc.; the Roadster here is an illustration. Set in Fraunces, Instrument Sans and IBM Plex Mono.</p>
     </footer>
 
-    <script type="module" src="/src/teardown/main.ts"></script>
+    <script type="module" src="/src/skill/main.ts"></script>
   </body>
 </html>

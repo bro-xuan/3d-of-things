@@ -1,10 +1,10 @@
 ---
-name: teardown
+name: 3d-of-things
 description: Add a real machine to 3D of Things the standard way, as a 3D model that comes apart into named parts with real insides, callouts, scale drawings and a step-by-step "How it works" tour with live charts and experiments. Use it whenever someone asks to add, build, model, open up, take apart or explain an object, machine, instrument, camera, watch, engine or vehicle on this site, even if they only name the thing ("do a Leica M6", "add a sewing machine"). Also use it to change or check an existing object page ("the SLR's tour is broken", "does everything still work?"). Covers sourcing a CC0 model or generating one in code, the content file, mechanisms, the tour, the automated checks and shipping.
 compatibility: Written for Claude Code in this repository. Needs Node 22+, the repo's npm dependencies, and a Playwright Chromium for the browser checks (it uses the Mac's GPU when there is one).
 ---
 
-# Teardown
+# 3D of Things
 
 3D of Things explains how machines work by taking real ones apart in 3D. This skill is the standard procedure for one object, from a name ("a Hasselblad 500C/M") to a shipped page: model, parts, callouts, drawings, a tour that follows the energy through the mechanism, and checks that prove it all works.
 
@@ -40,14 +40,14 @@ Work in this order. Write the truth sheet before any geometry: most of the quali
 4. **Content (15 min, can run alongside 3).** `objects/<slug>/content.mjs` writes `content/<slug>.json`: hook, summary, facts, parts with `about`, callouts, motions, the tour. Positions come from the hints' anchors (or `placer(nodeBounds)` for a downloaded model), never typed. Follow references/explaining.md for order and voice and references/content.md for every field.
 5. **Mechanism (only for a new kind).** Reuse what exists first: time-driven spins and clock trains, crank and cam motions, `control` motions (turn, slide, curve, cloth, scroll), the generic charts (`ladder`, `bars`, `timing`) and experiments (`run`, `speeds`). A genuinely new mechanism gets a three-free module in `src/viewer/` that the charts read too; references/mechanisms.md lists every place it has to be wired.
 6. **Check (10 min).** `npm run check -- <slug>` (static, 1 s), then `npm run qa -- <slug>` (browser, about a minute): every callout, tour step and experiment, the phone layout and reduced motion. Read the contact sheets it prints; open a single shot only to look closer. Fix, re-run, until it passes with no warnings you can't explain. Then `npm run qa -- --all --quick` in the background for the other objects.
-7. **Ship (5 min).** `npm run posters -- <slug>`, `npm run truth -- <slug>` (the sheet's parts and tour tables, from what was built), add the object to the README's models table and its list, `npm run build`, update the memory notes, and tell the user what's on the page and what's simplified. Commit only when the user asks.
+7. **Ship (5 min).** `npm run posters -- <slug>`, `npm run truth -- <slug>` (the sheet's parts and tour tables, from what was built), add the object to the README's models table and its list, `npm run build`, update the memory notes, and tell the user what's on the page and what's simplified. Commit only when the user asks. To put it live, `npm run export` bakes the site into afrodance.fun (references/procedure.md).
 
 ## What makes it fast
 
 The procedure is fast because nothing is done twice and the machine does the looking. Measured on earlier objects, a third of each build went on hand-written browser scripts waiting for software rendering, and a sixth on re-reading the codebase.
 
 - **Never write a one-off QA script.** If the runner lacks a check, add it to `scripts/qa/run.mjs` so every object gets it.
-- **The browser runs on the GPU** (`scripts/qa/browser.mjs`, 20–25× SwiftShader's speed). Wait on conditions (`__viewer.tweens` empty, selectors), never on fixed sleeps.
+- **The browser runs on the GPU** (`scripts/qa/browser.mjs`, 20–25× SwiftShader's speed). Wait on conditions (`__viewer.tweens` empty, or `[data-moving]` gone on a built copy, selectors), never on fixed sleeps.
 - **Static before browser:** `npm run check` catches unknown nodes, meshes in no part, off-model points, unknown charts and experiments and unfinished text in a second.
 - **Read contact sheets, not screenshots:** the runner tiles every view into a few labelled sheets and frames failures in red.
 - **No pasted numbers:** the generator names its points; the content builder uses the names. A changed layout moves everything with it.
@@ -76,8 +76,10 @@ The procedure is fast because nothing is done twice and the machine does the loo
 | `node objects/<slug>/content.mjs` | Write `content/<slug>.json` from the text and the hints | < 1 s |
 | `npm run check [-- <slug>]` | Static content checks against the model | < 1 s |
 | `npm run qa -- <slug> [--model\|--quick\|--only …]` | Browser checks, contact sheets, report, exit code | 15–70 s |
-| `npm run qa -- --all --quick` | Regression over every object | ~80 s |
+| `npm run qa -- --all --quick` | Regression over every object | ~100 s |
 | `npm run posters -- <slug>` | Gallery posters and tray thumbnail | ~7 s |
+| `npm run export -- --out <host>/public/3d-of-everything` | Bake the site into afrodance.fun (absolute URLs under the mount) | ~3 s |
+| `npm run qa -- --all --deployed --url <gallery>` | The baked copy, served: load, rest and tour, no dev hooks | ~95 s |
 | `npm run models:inspect -- <slug>` | Every node's bounds in model space | < 1 s |
 | `npm run timing [-- session.jsonl --item slug=pattern]` | Where a build's time went, by stage | 5–30 s |
 

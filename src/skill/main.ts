@@ -1,10 +1,10 @@
-// The teardown skill's page (teardown.html): the site's fonts, its own stylesheet, and a masthead
+// The skill's page (skill.html): the site's fonts, its own stylesheet, and a masthead
 // that names the section in view while the contents mark it.
 import '@fontsource-variable/fraunces/opsz.css';
 import '@fontsource-variable/instrument-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
-import './teardown.css';
+import './skill.css';
 
 const sections = [...document.querySelectorAll<HTMLElement>('section[data-n]')];
 const here = document.querySelector<HTMLElement>('.masthead__section');

@@ -4,7 +4,7 @@
 //
 // The parts below were listed by the scaffold from the model's nodes: rename them, group them in the
 // energy chain's order, give each an `about`, and set how each comes off. The field-by-field guide is
-// .claude/skills/teardown/references/content.md; the voice is in references/explaining.md.
+// .claude/skills/3d-of-things/references/content.md; the voice is in references/explaining.md.
 import { polyHaven, pose, readHints, writeContent } from '../../scripts/kit/content.mjs';
 import { nodeBounds, placer } from '../../scripts/kit/nodes.mjs';
 

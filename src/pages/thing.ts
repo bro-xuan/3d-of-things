@@ -1,3 +1,4 @@
+import { asset } from '../asset';
 import { categoryLabel, figure, getThing, partLetter, posterSrcset, posterUrl, things, thumbUrl } from '../content';
 import { esc, icons, prefersReducedMotion, type Page } from '../dom';
 import { thingHref } from '../router';
@@ -580,7 +581,7 @@ export function thingPage(main: HTMLElement, slug: string): Page {
     const model = slug && slug !== thing.slug && getThing(slug)?.model;
     if (!model || fetched.has(model)) return;
     fetched.add(model);
-    void fetch(model).catch(() => {});
+    void fetch(asset(model)).catch(() => {});
   };
   for (const element of [q('.tray')!, q('.pager')!]) {
     for (const type of ['pointerover', 'focusin', 'touchstart']) element.addEventListener(type, prefetch, { passive: true });

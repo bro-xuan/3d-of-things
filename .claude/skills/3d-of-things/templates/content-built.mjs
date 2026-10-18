@@ -3,7 +3,7 @@
 // every build:   node objects/__SLUG__/content.mjs
 //
 // It starts as the demo's content (see generate.mjs). Rewrite it from the truth sheet; the field-by-field
-// guide is .claude/skills/teardown/references/content.md, the voice is in references/explaining.md.
+// guide is .claude/skills/3d-of-things/references/content.md, the voice is in references/explaining.md.
 import { builtInCode, readHints, space, writeContent } from '../../scripts/kit/content.mjs';
 
 const H = readHints('__SLUG__');

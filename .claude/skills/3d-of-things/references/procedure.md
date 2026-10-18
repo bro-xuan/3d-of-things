@@ -59,7 +59,7 @@ Rules:
 
 Optionally, while you build the model, a writer subagent can draft the words:
 
-> Read `.claude/skills/teardown/references/explaining.md` and `objects/{slug}/TRUTH.md`, and two existing content files for the voice (`content/pocket-watch.json`, `content/reflex-camera.json`). Draft the words for {object}: hook, three summary paragraphs, 4–6 facts, an `about` for each part in section 6, 6–9 callouts (title and text) and the tour steps in section 8 (label, title, two short paragraphs each). Return them as JSON in your final message; don't edit any file.
+> Read `.claude/skills/3d-of-things/references/explaining.md` and `objects/{slug}/TRUTH.md`, and two existing content files for the voice (`content/pocket-watch.json`, `content/reflex-camera.json`). Draft the words for {object}: hook, three summary paragraphs, 4–6 facts, an `about` for each part in section 6, 6–9 callouts (title and text) and the tour steps in section 8 (label, title, two short paragraphs each). Return them as JSON in your final message; don't edit any file.
 
 **Exit:** `npm run check -- <slug>` passes with no TODO left.
 
@@ -88,10 +88,11 @@ npm run qa -- --all --quick
 
 - `npm run posters -- <slug>`.
 - `npm run truth -- <slug>` writes the truth sheet's parts table (section 6) and tour table (section 8) from what was built, keeping any notes around them; then fill section 7 (the mechanism map) and the log in section 10.
-- README: add the object to the list at the top and to the models table (title, source link, author, licence). On `teardown.html`, add it to the objects list and update the counts.
+- README: add the object to the list at the top and to the models table (title, source link, author, licence). On `skill.html`, add it to the objects list and update the counts.
 - `npm run build` (type-check and production build).
 - Memory: a note for anything non-obvious this object taught (a model quirk, a user preference).
 - Tell the user what the page shows, what moves, what's simplified and which figures are claims. Offer to commit; commit only when asked.
+- To put it live, when the user wants that: the site lives inside afrodance.fun at `/3d-of-everything` (README, Deploying). In a worktree of that repo off its `main` (other work is often in progress there), `npm run export -- --out <worktree>/public/3d-of-everything`, then `npx next build && npx next start -p 3017` there and `npm run qa -- --all --deployed --url http://localhost:3017/3d-of-everything/objects`. Commit and push in that repo only when asked: its `main` deploys to Vercel.
 
 ## Changing an existing object
 

@@ -1,4 +1,4 @@
-// Starts a new object the standard way (stage 2 of the teardown skill): its folder, truth sheet,
+// Starts a new object the standard way (stage 2 of the /3d-of-things skill): its folder, truth sheet,
 // content builder and, for a model opened or built in code, its build step. Then it builds the
 // model and writes the content file once, so the page opens within minutes and is deepened from
 // there.
@@ -57,7 +57,7 @@ const vars = {
   PARTS: '',
   BUILD: tier === 'B' ? `  build: { augment: 'objects/${slug}/augment.mjs', hints: 'objects/${slug}/hints.json' },\n` : '',
 };
-const TEMPLATES = path.join(ROOT, '.claude/skills/teardown/templates');
+const TEMPLATES = path.join(ROOT, '.claude/skills/3d-of-things/templates');
 const fill = (name, extra = {}) => readFileSync(path.join(TEMPLATES, name), 'utf8').replace(/__([A-Z_]+?)__/g, (m, key) => ({ ...vars, ...extra })[key] ?? m);
 const run = (cmd, ...rest) => execFileSync(cmd, rest, { cwd: ROOT, stdio: 'inherit' });
 const contentBuilder = path.join(dir, 'content.mjs');
@@ -106,7 +106,7 @@ try {
 }
 console.log(`
 new: ${slug} is on the site in ${((Date.now() - started) / 1000).toFixed(0)} s (npm run dev → #/thing/${slug}).
-Next, as in .claude/skills/teardown/SKILL.md:
+Next, as in .claude/skills/3d-of-things/SKILL.md:
   1. Fill objects/${slug}/TRUTH.md: sources, numbers, energy chain, parts, tour.
   2. ${tier === 'A' ? `Group and describe the parts in objects/${slug}/content.mjs` : `Build the object in objects/${slug}/${tier === 'B' ? 'augment' : 'generate'}.mjs`}, then loop:
        npm run models:build -- ${slug} && node objects/${slug}/content.mjs && npm run check -- ${slug}

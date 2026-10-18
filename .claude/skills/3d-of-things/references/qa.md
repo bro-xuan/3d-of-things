@@ -17,7 +17,7 @@ It exits 1 on any error.
 
 ## `npm run qa` (browser, about a minute)
 
-`scripts/qa/run.mjs` starts its own Vite server (or uses `--url`) and headless Chromium on the GPU, opens the object page and waits for real conditions: the model in, the opening move done (`__viewer.tweens` empty), the drawings drawn.
+`scripts/qa/run.mjs` starts its own Vite server (or uses `--url`) and headless Chromium on the GPU, opens the object page and waits for real conditions: the model in, the opening move done (`__viewer.tweens` empty), the drawings drawn. A built or deployed copy has no `__viewer`: there the stage's `data-state="ready"` and `data-moving` (set while a camera move or animation runs) stand in for it.
 
 | Section | What it does | Fails when |
 |---|---|---|
@@ -35,9 +35,13 @@ It exits 1 on any error.
 npm run qa -- <slug>                    # everything
 npm run qa -- <slug> --model            # the model only, for the geometry loop (~15 s)
 npm run qa -- <slug> --only tour,try    # some sections
-npm run qa -- --all --quick             # load, rest and tour for every object (~80 s, 3 at a time)
+npm run qa -- --all --quick             # load, rest and tour for every object (~100 s, 3 at a time)
 npm run qa -- <slug> --software         # SwiftShader, to compare
+npm run qa -- --all --deployed --url http://localhost:3017/3d-of-everything/objects
+                                        # a built copy, served (or the live site): load, rest and tour
 ```
+
+`--deployed` is for the copy baked into afrodance.fun (`npm run export`, README › Deploying): serve that site's production build (`npx next build && npx next start -p 3017` in its checkout) and point `--url` at the gallery. It checks what the dev server can't: the URLs under the mount, the production bundle, the host's rewrites. Without the dev hooks it skips taking apart, callouts, experiments and run.
 
 Output goes to `.cache/qa/<slug>/`: numbered contact sheets (`<slug>-1-rest.png`, `-2-callouts.png`, `-3-tour.png`, one per experiment, `-N-phone.png`), every single shot in `shots/`, and `report.json` (every check, the console, the renderer, timings). The exit code is 1 if anything failed.
 
@@ -57,7 +61,7 @@ Zoom into a single shot from `shots/` only where a sheet raises a question.
 
 ## The browser
 
-`scripts/qa/browser.mjs` launches Playwright's Chromium with `--use-angle=metal --enable-gpu --ignore-gpu-blocklist` and checks the renderer string. On this Mac it gets "ANGLE Metal Renderer: Apple M3" at 18–23 ms a frame (1440 × 900 at 2×), against ~460 ms with SwiftShader, with the same picture. Without a GPU it falls back to SwiftShader and says so (`QA_GPU=0` forces it). `npm run posters` uses the same launch.
+`scripts/qa/browser.mjs` launches Playwright's Chromium with `--use-angle=metal --enable-gpu --ignore-gpu-blocklist` and checks the renderer string. On this Mac it gets "ANGLE Metal Renderer: Apple M3" at 18–23 ms a frame (1440 × 900 at 2×), against ~460 ms with SwiftShader, with the same picture. Without a GPU it falls back to SwiftShader and says so; `--software` or `QA_GPU=0` forces it (with `--disable-gpu`, or Chromium on a Mac keeps Metal). The quick pass runs on SwiftShader too, so a machine without a GPU can do every check, only slower. `npm run posters` uses the same launch.
 
 gstack's `/browse` can't create WebGL contexts here (its Chromium is sandboxed); use the runner.
 

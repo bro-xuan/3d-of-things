@@ -29,6 +29,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh';
+import { asset } from '../asset';
 import type { CameraPose, FlowPoint, Step, Thing, Vec3 } from '../types';
 import { ContactShadow } from './ContactShadow';
 import { Flow } from './flow';
@@ -262,7 +263,7 @@ export class Viewer {
 
   async load(thing: Thing, onProgress?: (fraction: number | null) => void): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const gltf = await loader.loadAsync(thing.model, (event) => {
+    const gltf = await loader.loadAsync(asset(thing.model), (event) => {
       onProgress?.(event.lengthComputable && event.total ? event.loaded / event.total : null);
     });
     if (this.disposed) return;
@@ -1423,7 +1424,10 @@ export class Viewer {
       this.dirty = true;
       return Promise.resolve();
     }
-    return new Promise((done) => this.tweens.push({ kind, start: performance.now(), duration, step, done }));
+    return new Promise((done) => {
+      this.tweens.push({ kind, start: performance.now(), duration, step, done });
+      this.container.toggleAttribute('data-moving', true);
+    });
   }
 
   private cancel(kind: string): void {
@@ -1450,6 +1454,9 @@ export class Viewer {
       }
       this.dirty = true;
     }
+    // Marked on the page while a move is under way, so a check of a built copy (no __viewer) can wait it out.
+    const moving = this.tweens.length > 0;
+    if (this.container.hasAttribute('data-moving') !== moving) this.container.toggleAttribute('data-moving', moving);
     const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
     this.cameraBody?.tick(dt);
     if (this.aero && this.tickAero(dt)) this.dirty = true;

@@ -1,3 +1,4 @@
+import { asset } from './asset';
 import type { CategoryId, Thing } from './types';
 
 export const categories: { id: CategoryId; label: string }[] = [
@@ -34,7 +35,7 @@ export function figure(thing: Thing): string {
 export const POSTER_SIZES = [800, 1280] as const;
 
 export function posterUrl(thing: Thing, size: (typeof POSTER_SIZES)[number], exploded = false): string {
-  return `posters/${thing.slug}${exploded ? '-exploded' : ''}-${size}.webp`;
+  return asset(`posters/${thing.slug}${exploded ? '-exploded' : ''}-${size}.webp`);
 }
 
 export function posterSrcset(thing: Thing, exploded = false): string {
@@ -43,7 +44,7 @@ export function posterSrcset(thing: Thing, exploded = false): string {
 
 /** A small cut-out of the assembled poster, trimmed to the object (for the object tray). */
 export function thumbUrl(thing: Thing): string {
-  return `posters/${thing.slug}-thumb.webp`;
+  return asset(`posters/${thing.slug}-thumb.webp`);
 }
 
 /** Letters tag the parts of an exploded model: A, B, C… and on past Z as AA, AB…, as on a drawing. */

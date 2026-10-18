@@ -7,10 +7,10 @@ Thanks for helping. This file covers adding or changing an object, the checks ev
 The easy way is Claude Code in this repository:
 
 ```text
-/teardown add a sewing machine
+/3d-of-things add a sewing machine
 ```
 
-The [teardown skill](.claude/skills/teardown/SKILL.md) is the standard procedure; doing it by hand follows the same stages:
+The [`/3d-of-things` skill](.claude/skills/3d-of-things/SKILL.md) is the standard procedure; doing it by hand follows the same stages:
 
 1. **Pick something new.** A machine whose mechanism and shape differ from what's on the site, with a free model (CC0 or CC BY, checkable at its source) or enough published dimensions to build it in code.
 2. **Write its truth sheet** (`objects/<slug>/TRUTH.md` once scaffolded): sources, real numbers, the energy chain, the parts in groups, the tour.
@@ -25,13 +25,13 @@ The [teardown skill](.claude/skills/teardown/SKILL.md) is the standard procedure
    npm run models:build -- <slug> && node objects/<slug>/content.mjs && npm run check -- <slug>
    npm run qa -- <slug> --model
    ```
-5. **Write the content** in `objects/<slug>/content.mjs`: [explaining a machine](.claude/skills/teardown/references/explaining.md) for the order and voice, [the content file](.claude/skills/teardown/references/content.md) for every field.
+5. **Write the content** in `objects/<slug>/content.mjs`: [explaining a machine](.claude/skills/3d-of-things/references/explaining.md) for the order and voice, [the content file](.claude/skills/3d-of-things/references/content.md) for every field.
 6. **Check it:** `npm run check -- <slug>` and `npm run qa -- <slug>` pass, and you've looked at every contact sheet.
 7. **Ship it:** `npm run posters -- <slug>`, add it to the README's list and models table, `npm run build`.
 
 ## Changing an object
 
-Edit the source, not the output: for an object in `objects/<slug>/`, its `content.mjs` writes `content/<slug>.json` and its generator writes the model. The objects built before the skill keep their own layout, listed in [the procedure](.claude/skills/teardown/references/procedure.md#changing-an-existing-object). Rebuild what you changed, then check that object and the rest:
+Edit the source, not the output: for an object in `objects/<slug>/`, its `content.mjs` writes `content/<slug>.json` and its generator writes the model. The objects built before the skill keep their own layout, listed in [the procedure](.claude/skills/3d-of-things/references/procedure.md#changing-an-existing-object). Rebuild what you changed, then check that object and the rest:
 
 ```sh
 npm run qa -- <slug>

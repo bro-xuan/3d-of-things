@@ -25,7 +25,7 @@ const files = args.filter((a, i) => a.endsWith('.jsonl') && !['--item', '--since
 const [itemName, itemPattern] = item ? item.split('=') : [];
 const itemRe = item ? new RegExp(itemPattern ?? itemName, 'i') : null;
 
-/** Stages of the standard procedure (see .claude/skills/teardown/references/procedure.md). */
+/** Stages of the standard procedure (see .claude/skills/3d-of-things/references/procedure.md). */
 function stageOf(name, input = {}) {
   if (name === 'Bash') {
     const c = String(input.command ?? '');

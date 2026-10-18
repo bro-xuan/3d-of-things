@@ -8,6 +8,8 @@
 //   npm run qa -- reflex-camera --model    # the model only: views and explode stages (geometry loop)
 //   npm run qa -- slug --only tour,try     # some sections: rest, callouts, tour, try, run, phone, motion
 //   npm run qa -- slug --url http://localhost:5173   # use a running dev server instead of starting one
+//   npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects
+//                                          # a built or live copy (no dev hooks): load, rest and tour
 //   npm run qa -- --all --jobs 4           # objects checked side by side (default 3 with --all)
 //   npm run qa -- slug --retina            # shots at 2× (fine detail, README pictures)
 //
@@ -25,7 +27,13 @@ const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1
 const valued = new Set(['--only', '--url', '--out', '--jobs']);
 const slugs = args.filter((a, i) => !a.startsWith('--') && !valued.has(args[i - 1]));
 const ALL_SECTIONS = ['rest', 'callouts', 'tour', 'try', 'run', 'phone', 'motion'];
-const sections = new Set(opt('--only')?.split(',') ?? (flag('--model') ? ['views'] : flag('--quick') ? ['rest', 'tour'] : ALL_SECTIONS));
+// A deployed copy has no `window.__viewer`, so only the checks that work through the page itself run.
+const deployed = flag('--deployed');
+if (deployed && !opt('--url')) {
+  console.error('--deployed checks a copy that is already served: add --url <the gallery\'s address>.');
+  process.exit(2);
+}
+const sections = new Set(opt('--only')?.split(',') ?? (flag('--model') ? ['views'] : flag('--quick') || deployed ? ['rest', 'tour'] : ALL_SECTIONS));
 const outRoot = path.resolve(ROOT, opt('--out') ?? '.cache/qa');
 
 // Dev warnings that mean the content file and the model disagree: these fail a check.
@@ -38,8 +46,8 @@ if (!things.length) {
 }
 
 const started = Date.now();
-const { server, base } = opt('--url') ? { server: null, base: opt('--url').replace(/\/?$/, '/') } : await serve();
-const { browser, renderer, gpu } = await launch({ gpu: !flag('--software') });
+const { server, base } = opt('--url') ? { server: null, base: new URL(opt('--url')).href } : await serve();
+const { browser, renderer, gpu } = await launch({ gpu: !flag('--software') && process.env.QA_GPU !== '0' });
 console.log(`qa: ${things.length} object${things.length > 1 ? 's' : ''} · ${gpu ? 'GPU' : 'software GL (slow)'}: ${renderer}`);
 
 let failures = 0;
@@ -96,7 +104,8 @@ async function checkObject(slug, thing) {
     (shots[group] ??= []).push({ file, label, bad });
   };
   const settle = async (page, extra = 150) => {
-    await page.waitForFunction(() => (window.__viewer?.tweens?.length ?? 0) === 0, null, { timeout: 10_000, polling: 50 }).catch(() => {});
+    // A built copy has no __viewer; the stage carries data-moving instead.
+    await page.waitForFunction(() => (window.__viewer ? window.__viewer.tweens.length === 0 : !document.querySelector('[data-moving]')), null, { timeout: 10_000, polling: 50 }).catch(() => {});
     await page.waitForTimeout(extra);
   };
   /** Opens the object page and waits for the model, the opening move and the drawings. */
@@ -105,7 +114,7 @@ async function checkObject(slug, thing) {
     watchConsole(page, logs);
     const t = Date.now();
     await page.goto(`${base}#/thing/${slug}`);
-    await ready(page);
+    await ready(page, { hooks: !deployed });
     await page.waitForTimeout(400);
     await settle(page);
     await page.waitForFunction(() => document.querySelectorAll('.stage__drawings svg, .drawings__views svg').length > 0, null, { timeout: 4000 }).catch(() => {});
@@ -141,14 +150,14 @@ async function checkObject(slug, thing) {
       await shoot(page, 'rest', 'Wireframe');
       await page.locator('.view-card[data-look="rendered"]').click();
       await settle(page, 300);
-      for (const value of sections.has('views') ? [0.25, 0.5, 0.75, 1] : [0.5, 1]) {
+      for (const value of deployed ? [] : sections.has('views') ? [0.25, 0.5, 0.75, 1] : [0.5, 1]) {
         mark = logs.length;
         await page.evaluate((v) => window.__viewer.setExplode(v), value);
         await page.waitForTimeout(250);
         await shoot(page, 'rest', `Apart ${Math.round(value * 100)}%`);
         consoleCheck('rest', `apart ${value}`, mark);
       }
-      await page.evaluate(() => window.__viewer.setExplode(0));
+      if (!deployed) await page.evaluate(() => window.__viewer.setExplode(0));
       await page.waitForTimeout(200);
     }
 

@@ -1,9 +1,9 @@
 <h1 align="center">3D of Things</h1>
 
-<p align="center"><b>How things work, taken apart.</b><br>A free, browser-based library of real machines you can turn over, look inside and pull to pieces,<br>built object by object with <code>/teardown</code>, a Claude Code skill that makes each one the same careful way.</p>
+<p align="center"><b>How things work, taken apart.</b><br>A free, browser-based library of real machines you can turn over, look inside and pull to pieces,<br>built object by object with <code>/3d-of-things</code>, a Claude Code skill that makes each one the same careful way.</p>
 
 <p align="center">
-  <a href=".claude/skills/teardown/SKILL.md"><img src="https://img.shields.io/badge/Claude_Code-skill-1b1b19?style=flat-square&logo=claude&logoColor=white" alt="Claude Code skill"></a>
+  <a href=".claude/skills/3d-of-things/SKILL.md"><img src="https://img.shields.io/badge/Claude_Code-skill-1b1b19?style=flat-square&logo=claude&logoColor=white" alt="Claude Code skill"></a>
   <a href="https://threejs.org"><img src="https://img.shields.io/badge/three.js-r186-1b1b19?style=flat-square&logo=threedotjs&logoColor=white" alt="three.js r186"></a>
   <a href="#models"><img src="https://img.shields.io/badge/models-CC0-1b1b19?style=flat-square" alt="Models CC0"></a>
   <a href="#requirements"><img src="https://img.shields.io/badge/node-%E2%89%A5%2022-1b1b19?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 22 or later"></a>
@@ -14,7 +14,7 @@
   <a href="#quick-start">Quick start</a> ·
   <a href="#the-objects">The objects</a> ·
   <a href="#whats-on-a-page">What's on a page</a> ·
-  <a href="#the-teardown-skill">The teardown skill</a> ·
+  <a href="#the-skill">The skill</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#checks">Checks</a> ·
   <a href="#limits">Limits</a>
@@ -44,7 +44,7 @@ npm run dev        # http://localhost:5173
 Add an object. In Claude Code, in this repository:
 
 ```text
-/teardown add a mechanical metronome
+/3d-of-things add a mechanical metronome
 ```
 
 Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. The skill comes with the repository: there's nothing else to install.
@@ -111,13 +111,13 @@ Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion)
 - **Drawings**: top, front and side views drawn from the model at one scale, dimensioned at its real size. Pick one and the model turns to match.
 - **A scale bar** at the model's real size, and the model's credit and licence.
 
-## The teardown skill
+## The skill
 
-[`/teardown`](.claude/skills/teardown/SKILL.md) is the standard procedure for one object, written as a Claude Code skill so every object is made the same way and nothing is relearned. It lives in this repository because the repository is its kit: the viewer, the model pipeline, the generator kit and the checks.
+[`/3d-of-things`](.claude/skills/3d-of-things/SKILL.md) is the standard procedure for one object, written as a Claude Code skill so every object is made the same way and nothing is relearned. It lives in this repository because the repository is its kit: the viewer, the model pipeline, the generator kit and the checks.
 
 **The one idea: real insides, really moving.** A shell with labels is a catalogue. The object explains itself when its insides are true and they work.
 
-The skill has a page of its own, [`teardown.html`](teardown.html): run `npm run dev` and open `/teardown.html`.
+The skill has a page of its own, [`skill.html`](skill.html): run `npm run dev` and open `/skill.html`. Baked into afrodance.fun, it's the page at `/3d-of-everything`, with the objects at `/3d-of-everything/objects` (see [Deploying](#deploying)).
 
 It sizes each object first:
 
@@ -139,7 +139,7 @@ Then it works through eight stages, each with an exit check:
 7. **Check**: `npm run check` and `npm run qa` until both pass and the contact sheets have been read.
 8. **Ship**: posters, this README, the production build.
 
-The skill's [references](.claude/skills/teardown/references) hold the depth: [the procedure](.claude/skills/teardown/references/procedure.md), [explaining a machine](.claude/skills/teardown/references/explaining.md), [the content file](.claude/skills/teardown/references/content.md), [the model and the kit](.claude/skills/teardown/references/model.md), [mechanisms](.claude/skills/teardown/references/mechanisms.md), [checks](.claude/skills/teardown/references/qa.md) and [lessons](.claude/skills/teardown/references/lessons.md).
+The skill's [references](.claude/skills/3d-of-things/references) hold the depth: [the procedure](.claude/skills/3d-of-things/references/procedure.md), [explaining a machine](.claude/skills/3d-of-things/references/explaining.md), [the content file](.claude/skills/3d-of-things/references/content.md), [the model and the kit](.claude/skills/3d-of-things/references/model.md), [mechanisms](.claude/skills/3d-of-things/references/mechanisms.md), [checks](.claude/skills/3d-of-things/references/qa.md) and [lessons](.claude/skills/3d-of-things/references/lessons.md).
 
 ### How long it takes
 
@@ -151,7 +151,7 @@ Detail costs time, so here are the real numbers: Claude's active time per object
 | Leica M3 | B | 2 h 07 | 37% |
 | Hasselblad-type SLR | C | 1 h 59 | 33% |
 
-The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all ten in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
+The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all thirteen in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
 
 The first three objects made with the skill, on 18 October 2026, came in well under it. All three were built in one session: 70 minutes from the request to the last poster, with each object's research running in a subagent alongside.
 
@@ -179,12 +179,13 @@ Measured with `npm run timing -- --item <slug>`, which counts the calls that tou
 │   ├── new-object.mjs          npm run new: scaffold an object from the skill's templates
 │   ├── timing.mjs              npm run timing: where a build's time went
 │   ├── truth-tables.mjs        npm run truth: the truth sheet's parts and tour tables, from what was built
+│   ├── export-site.mjs         npm run export: the site built to live inside another one (afrodance.fun)
 │   └── watch/ camera/ hasselblad/ cars/   the generators of the objects built before the skill
 ├── src/
 │   ├── pages/                  gallery, object page, about, the 3D layer, How it works
 │   ├── viewer/                 the three.js viewer and the mechanisms (clockwork, cameras, aerocar)
 │   └── charts/                 the tour's charts, drawn from the numbers the model runs on
-└── .claude/skills/teardown/    the skill: SKILL.md, references/, templates/, evals/
+└── .claude/skills/3d-of-things/    the skill: SKILL.md, references/, templates/, evals/
 ```
 
 The site is static (Vite, TypeScript and three.js, no framework, no backend). Routing is hash-based and asset URLs are relative, so `dist/` works from any host or sub-path. The gallery is plain DOM; three.js is only fetched when an object page opens, after its poster is on screen.
@@ -244,7 +245,8 @@ Two checkers, both driven by the content file, so a new object is checked with n
 ```sh
 npm run check                 # every object against its model, no browser: under a second
 npm run qa -- reflex-camera   # callouts, tour steps, experiments, phone: about a minute
-npm run qa -- --all --quick   # every object, three at a time: about 80 seconds
+npm run qa -- --all --quick   # every object, three at a time: under two minutes
+npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects   # a built or live copy
 ```
 
 `check` finds names the model doesn't have, meshes in no part, positions off the model, charts and experiments that don't exist, and unfinished text. `qa` drives the real page in headless Chromium on the GPU: it holds every hold button, moves every slider, fires every shutter, fails if a readout never changes, and tiles what it saw into a few labelled contact sheets:
@@ -261,7 +263,7 @@ The model build has its own checks: it fails if any generated part crosses anoth
 |---|---|---|
 | **Node.js 22+** | everything | Built and tested on Node 25. |
 | **Playwright's Chromium** | `qa`, `posters` | `npx playwright install chromium` if it's missing. On a Mac it draws with the GPU through Metal; elsewhere it falls back to SwiftShader (slower). |
-| **[Claude Code](https://code.claude.com/docs/en/overview)** | the skill | Open it in this repository and type `/teardown`. |
+| **[Claude Code](https://code.claude.com/docs/en/overview)** | the skill | Open it in this repository and type `/3d-of-things`. |
 
 ```sh
 npm run build      # type-check, then build to dist/
@@ -297,7 +299,15 @@ All but the SLR, the washing machine and the two cars from [Poly Haven](https://
 
 ## Deploying
 
-`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main` (enable Pages with "GitHub Actions" as the source in the repository settings). Any other static host works too: serve `dist/`. The models and posters are committed, because CI only runs `npm run build`.
+The site is baked into the personal site, [afrodance.fun](https://afrodance.fun) (a Next.js app), at `/3d-of-everything`:
+
+```sh
+npm run export -- --out ../afrodance.fun/public/3d-of-everything
+```
+
+The export builds the site with every URL under `/3d-of-everything/` and copies it into that `public/` folder, replacing an earlier export but never anything else. Two rewrites in afrodance.fun's `next.config.ts`, which the export prints, serve `skill.html` at `/3d-of-everything` and the gallery at `/3d-of-everything/objects`. Served, the baked copy is checked with `npm run qa -- --all --deployed --url <address>/3d-of-everything/objects`, and it goes live when that repository's `main` deploys on Vercel. The models and posters are committed, because the build only copies them.
+
+Any other static host works too: `npm run build` writes `dist/` with relative URLs, so it can be served from any path.
 
 ## Contributing
 

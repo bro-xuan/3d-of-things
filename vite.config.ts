@@ -29,16 +29,32 @@ function posterCapture(): Plugin {
   };
 }
 
+/**
+ * Where the site is mounted when it's baked into another site (`npm run export`), such as
+ * "/3d-of-everything": skill.html is served at the mount and the gallery at <mount>/objects.
+ * Unset, every URL is relative and the build works from any path.
+ */
+const mount = process.env.SITE_MOUNT?.replace(/\/+$/, '');
+
+/** skill.html links to the objects as %OBJECTS%: the gallery beside it, or <mount>/objects when baked in. */
+function objectsLinks(href: string): Plugin {
+  return {
+    name: 'objects-links',
+    transformIndexHtml: { order: 'pre', handler: (html) => html.replaceAll('%OBJECTS%', href) },
+  };
+}
+
 export default defineConfig({
-  // Relative asset URLs, so the build works from any path (GitHub Pages project
-  // sites, Vercel, a plain static server). Routing is hash-based for the same reason.
-  base: './',
-  plugins: [posterCapture()],
+  // Relative asset URLs, so the build works from any path (Vercel, a plain static server, a
+  // sub-path). Baked in, absolute ones under the mount, because the host serves its pages without
+  // a trailing slash and relative URLs would miss. Routing is hash-based for the same reason.
+  base: mount ? `${mount}/` : './',
+  plugins: [posterCapture(), objectsLinks(mount ? `${mount}/objects` : './')],
   build: {
     target: 'es2022',
     // The object-page chunk is three.js (~200 kB gzipped). It's lazy-loaded and prefetched while the gallery is idle.
     chunkSizeWarningLimit: 900,
-    // teardown.html is the teardown skill's page.
-    rollupOptions: { input: { main: 'index.html', teardown: 'teardown.html' } },
+    // skill.html is the skill's page.
+    rollupOptions: { input: { main: 'index.html', skill: 'skill.html' } },
   },
 });

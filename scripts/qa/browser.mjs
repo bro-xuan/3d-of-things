@@ -9,7 +9,8 @@ import { createServer } from 'vite';
 import { ROOT } from '../lib.mjs';
 
 const GPU = ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'];
-const SOFTWARE = ['--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+// --disable-gpu, or Chromium on a Mac keeps drawing with Metal.
+const SOFTWARE = ['--disable-gpu', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 const isSoftware = (renderer) => /swiftshader|llvmpipe|software|none/i.test(renderer);
 
 /** The WebGL renderer a browser ends up with, e.g. "ANGLE (Apple, ANGLE Metal Renderer: Apple M3, …)". */
@@ -57,7 +58,7 @@ export function watchConsole(page, into = []) {
   return into;
 }
 
-/** Waits until an object page has its model in and the viewer exposed on `window.__viewer`. */
-export async function ready(page, timeout = 60_000) {
-  await page.waitForFunction(() => window.__viewer && document.querySelector('[data-state="ready"]'), null, { timeout });
+/** Waits until an object page has its model in and, on a dev server, the viewer exposed on `window.__viewer`. */
+export async function ready(page, { timeout = 60_000, hooks = true } = {}) {
+  await page.waitForFunction((hooks) => (!hooks || window.__viewer) && document.querySelector('[data-state="ready"]'), hooks, { timeout });
 }
