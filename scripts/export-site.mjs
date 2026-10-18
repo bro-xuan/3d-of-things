@@ -5,12 +5,12 @@
 //   npm run export -- --out ../afrodance.fun/public/3d-of-everything   # the mount is the path after public/
 //   npm run export -- --out <folder> --mount /3d-of-everything          # or name it
 //
-// skill.html is served at the mount and the gallery at <mount>/objects; every other URL is a file
-// under the mount (vite.config.ts). The host needs two rewrites for that, printed at the end. The
-// folder is replaced, but only if it's empty or holds an earlier export: that one carries
-// .3d-of-things.json, which also names the commit it was built from.
+// skill.html becomes the mount's index.html and the gallery <mount>/objects/index.html; every other URL is
+// a file under the mount (vite.config.ts). A host that doesn't serve a folder's index.html needs two
+// rewrites for that, printed at the end. The folder is replaced, but only if it's empty or holds an
+// earlier export: that one carries .3d-of-things.json, which also names the commit it was built from.
 import { execFileSync } from 'node:child_process';
-import { cp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { listThings, ROOT } from './lib.mjs';
 
@@ -45,9 +45,16 @@ const problems = [
 ].filter(Boolean);
 if (problems.length) fail(problems.join('; '));
 
+if (await stat(path.join(build, 'objects')).catch(() => null)) fail('the build has an objects/ folder, where the gallery goes');
 await rm(out, { recursive: true, force: true });
 // robots.txt only counts at a site's root, so it stays behind.
 await cp(build, out, { recursive: true, filter: (from) => path.basename(from) !== 'robots.txt' });
+// Laid out as folders, the way static hosts serve them: the skill's page is the mount's index.html and the gallery
+// is objects/index.html. A host that answers a folder with its index.html (Vercel does, before any rewrite) then
+// serves both pages at their clean URLs; left as skill.html beside the gallery's index.html, the gallery took the mount.
+await mkdir(path.join(out, 'objects'));
+await rename(path.join(out, 'index.html'), path.join(out, 'objects', 'index.html'));
+await rename(path.join(out, 'skill.html'), path.join(out, 'index.html'));
 const commit = await headCommit();
 await writeFile(path.join(out, MARK), `${JSON.stringify({ from: 'github.com/bro-xuan/3d-of-things', commit, built: new Date().toISOString(), mount }, null, 2)}\n`);
 
@@ -60,12 +67,14 @@ for (const entry of await readdir(out, { withFileTypes: true, recursive: true })
 }
 console.log(`\nexport: ${things.length} objects, ${files} files, ${(bytes / 1e6).toFixed(1)} MB → ${path.relative(process.cwd(), out)}, served at ${mount}, from ${commit?.slice(0, 7) ?? 'an unknown commit'} (uncommitted changes aren't recorded) in ${((Date.now() - started) / 1000).toFixed(0)} s`);
 console.log(`
-The host serves skill.html at ${mount} and the gallery at ${mount}/objects. In Next.js (next.config.ts):
+The skill's page is ${mount}/index.html and the gallery ${mount}/objects/index.html. A host that serves a folder's
+index.html (Vercel, Netlify, most static servers) needs nothing more; Next.js's own server (next start) doesn't, so
+add these to next.config.ts:
 
   async rewrites() {
     return [
-      { source: '${mount}', destination: '${mount}/skill.html' },
-      { source: '${mount}/objects', destination: '${mount}/index.html' },
+      { source: '${mount}', destination: '${mount}/index.html' },
+      { source: '${mount}/objects', destination: '${mount}/objects/index.html' },
     ];
   }`);
 

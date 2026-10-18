@@ -315,7 +315,7 @@ The site is baked into the personal site, [afrodance.fun](https://afrodance.fun)
 npm run export -- --out ../afrodance.fun/public/3d-of-everything
 ```
 
-The export builds the site with every URL under `/3d-of-everything/` and copies it into that `public/` folder, replacing an earlier export but never anything else. Two rewrites in afrodance.fun's `next.config.ts`, which the export prints, serve `skill.html` at `/3d-of-everything` and the gallery at `/3d-of-everything/objects`. Served, the baked copy is checked with `npm run qa -- --all --deployed --url <address>/3d-of-everything/objects`, and it goes live when that repository's `main` deploys on Vercel. The models and posters are committed, because the build only copies them.
+The export builds the site with every URL under `/3d-of-everything/` and copies it into that `public/` folder, replacing an earlier export but never anything else. The skill's page becomes the folder's `index.html` and the gallery `objects/index.html`, so a host that serves a folder's index (Vercel does, before any rewrite) gives both clean URLs; two rewrites in afrodance.fun's `next.config.ts`, which the export prints, do the same for `next start`. Served, the baked copy is checked with `npm run qa -- --all --deployed --url <address>/3d-of-everything/objects`, and it goes live when that repository's `main` deploys on Vercel. The models and posters are committed, because the build only copies them.
 
 Any other static host works too: `npm run build` writes `dist/` with relative URLs, so it can be served from any path.
 

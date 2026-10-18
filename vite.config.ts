@@ -31,7 +31,7 @@ function posterCapture(): Plugin {
 
 /**
  * Where the site is mounted when it's baked into another site (`npm run export`), such as
- * "/3d-of-everything": skill.html is served at the mount and the gallery at <mount>/objects.
+ * "/3d-of-everything": skill.html becomes the mount's index.html and the gallery <mount>/objects/index.html.
  * Unset, every URL is relative and the build works from any path.
  */
 const mount = process.env.SITE_MOUNT?.replace(/\/+$/, '');
