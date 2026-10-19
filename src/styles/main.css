@@ -3130,6 +3130,17 @@ main[data-handover] .sheet > * {
     bottom: 0.75rem;
   }
 
+  .film__caption-text {
+    padding: 0.45rem 0.85rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  /* A phone's stage is short: while the film plays, the look cards step aside so a tall model has the room. */
+  .thing[data-touring] .views {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   .film__time {
     display: none;
   }
