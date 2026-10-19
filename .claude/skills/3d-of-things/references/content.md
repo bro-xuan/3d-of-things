@@ -69,7 +69,7 @@ The build checks every explode path against every other part (it uses the viewer
 | `position` | The marker, on the part's surface (an anchor or a face of its box). |
 | `node` | The marker rides with this node when the model comes apart. `ride: true` also turns with it (a crank handle). |
 | `camera` | Where the camera flies: `pose(target, angle, distance)`. |
-| `explode` | Open the model this far (0–1) for something only visible inside; the camera pose is then for that state. |
+| `explode` | Open the model this far (0–1) for something only visible inside; the camera pose is then for that state. The viewer keeps an opened model standing on the floor, so when a part drops below the model (the ceiling fan's switch cup, 460 mm) the whole model rises by that drop: aim the camera at the part's opened position plus that lift (`apart()` in objects/ceiling-fan/content.mjs). |
 
 ### Motion (`motion[]`)
 

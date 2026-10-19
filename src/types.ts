@@ -67,6 +67,9 @@ export interface Motion {
   swing?: 'balance' | 'pallet' | 'coil';
   /** Degrees either side of rest, for `swing` and `pawl`. */
   amplitude?: number;
+  /** Beats a second of the clock this motion belongs to (any one motion can say it; default 6, a watch's). A seconds
+   *  pendulum beats once a second: its trains step and its `swing: 'balance'` parts swing with that beat. */
+  beats?: number;
   /** Turned by winding the crown: turns per turn of the crown, negative for the other way. */
   wind?: number;
   /** With `wind`: a spiral spring whose inner coils turn as it's wound while its outer end stays put (a mainspring). */
@@ -80,7 +83,8 @@ export interface Motion {
    *  (stops from wide open), `curtain1` and `curtain2` (0 cocked to 1 run), `lever` (0–1 of a stroke), `film`
    *  (frames wound on) or `release` (0–1); a desk lamp's `arm_lower` and `arm_upper` (src/viewer/balancedarm.ts); a
    *  lock's `lock-key`, `lock-wrong` and `lock-turn` (src/viewer/pintumbler.ts); an extinguisher's `ext_pin` and `ext_lever`
-   *  (0–1), `ext_bar` (gauge bar) or `ext_used` (0–1 of the powder gone). See src/viewer/linkage.ts. */
+   *  (0–1), `ext_bar` (gauge bar) or `ext_used` (0–1 of the powder gone); a typewriter's `tw_key_<letter>` and
+   *  `tw_strike` (0–1 of a stroke), `tw_space` (letter spaces) and `tw_ink_<n>` (src/viewer/typewriter.ts). See src/viewer/linkage.ts. */
   control?: string;
   /** With `control`: turns per unit of the control, counted from `from` (default 0). */
   turn?: number;
@@ -112,6 +116,15 @@ export interface Motion {
   rocks?: boolean;
   lift?: number;
   duration?: number;
+  /** A rocker worked by a crank through a link (a spinning wheel's treadle, a treadle lathe's): instead of turning by
+   *  itself it rocks about `axis` through `pivot`, so that its point `at` stays the link's length from the point `pin`
+   *  on the crank on the node named here (one that spins); both points as they are at rest. src/viewer/fourbar.ts. */
+  rocker?: string;
+  /** The link between a crank and the rocker named here (a footman): it hangs from the rocker's `at` and follows the
+   *  crank's `pin`, as a rigid rod. Give it the same parent as the rocker. */
+  coupler?: string;
+  pin?: Vec3;
+  at?: Vec3;
 }
 
 export interface Fact {

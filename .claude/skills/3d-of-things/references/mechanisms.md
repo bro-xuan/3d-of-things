@@ -15,6 +15,7 @@ How parts move in the viewer, what already exists, and how to add a kind of mech
 | `wind`, `wind` + `coil`, `pawl` | The keyless works, a mainspring, a click | pocket watch |
 | `crank` (+ `along`, `throw`, `rod`, `phase`, `rocks`) | A piston and its rod on a crank | family car, bicycle pump |
 | `cam` (+ `along`, `lift`, `phase`, `duration`) | A valve on a camshaft | family car, bicycle pump |
+| `rocker` (+ `pin`, `at`) and `coupler` | A treadle rocked by a crank through a link, and the link: a four-bar solved exactly each frame (src/viewer/fourbar.ts), so the link's ends stay on both pins | spinning wheel |
 
 `inside: true` only animates when the inside can be seen; it works for `train` but is ignored for plain spins.
 
@@ -31,6 +32,7 @@ A motion with `control: '<name>'` follows a value that a mechanism module sets, 
 | `filmcamera.ts` (rangefinder) | a motion uses `curtain1` or `focus` | `focus`, `aperture`, `curtain1`, `curtain2`, `lever`, `film`, `release` | `cameraState`; `focusAt`, `setStop`, `setSpeed`, `fire`, `windOn` |
 | `reflexcamera.ts` (SLR) | a motion uses `mirror` | `focus`, `aperture`, `iris`, `speed`, `blades`, `mirror`, `flaps`, `key`, `wind`, `film`, `release`, `slide` | `cameraState`; also `setSlide`, `setPreview` |
 | `aerocar.ts` (Roadster) | a motion uses `skirts` | `fan`, `skirts`, `wing` | `aeroState`; `setFans`, `setSpeed`, `fire`, `fly`, `refill`, `reset` |
+| `typewriter.ts` (Underwood No. 5) | a motion uses `tw_space` | `tw_key_<letter>`, `tw_strike`, `tw_space`, `tw_ink_<n>` | `typewriterState`; `typeLetters` |
 
 Control names are one global namespace: a control nothing sets never moves, and any object with a `focus` control currently gets the rangefinder's module. Name a new mechanism's controls so they don't collide.
 
