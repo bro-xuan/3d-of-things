@@ -27,7 +27,6 @@ const exists = (file) => access(file).then(() => true, () => false);
 
 const CATEGORIES = await categoryIds();
 const CHARTS = await chartNames();
-const EXPERIMENTS = await experimentNames();
 const CUES = await cueNames();
 
 /** Category ids from src/content.ts, so a new category only has to be added there. */
@@ -61,13 +60,6 @@ async function cueNames() {
   const body = src.slice(src.indexOf('export const CUES'), src.indexOf('\n};', src.indexOf('export const CUES')));
   const names = new Set();
   for (const m of body.matchAll(/^\s+'?([a-z][a-z-]*)'?: \{ kind:/gm)) names.add(m[1]);
-  return names;
-}
-
-async function experimentNames() {
-  const src = await readFile(path.join(ROOT, 'src/pages/tour.ts'), 'utf8');
-  const names = new Set();
-  for (const m of src.matchAll(/\bkind === '([a-z0-9-]+)'/g)) names.add(m[1]);
   return names;
 }
 
@@ -177,26 +169,8 @@ function checkThing(slug, thing, model, orders) {
     if (m.cam) node(`${where} cam`, m.cam);
   });
 
-  // How it works
-  (thing.how ?? []).forEach((step, i) => {
-    const where = `how[${i}] "${step.label}"`;
-    if (!step.label || !step.title || !step.text?.length) err(where, 'needs label, title and text');
-    for (const key of ['focus', 'frame', 'hide', 'spin']) for (const name of step[key] ?? []) node(`${where} ${key}`, name);
-    for (const tag of step.tags ?? []) { node(`${where} tag "${tag.text}"`, tag.node); if (tag.at) onModel(`${where} tag "${tag.text}"`, tag.at); }
-    for (const flow of [step.flow ?? [], ...(step.flows ?? [])]) {
-      for (const p of flow) {
-        // Light can come from in front of the object, so flows get a wide margin; a point far off is a unit slip.
-        if (Array.isArray(p)) onModel(`${where} flow`, p, 1);
-        else { node(`${where} flow`, p.node); onModel(`${where} flow`, p.at, 1); }
-      }
-    }
-    for (const c of step.count ?? []) node(`${where} count`, c.node);
-    if (typeof step.chart === 'string' && CHARTS.size && !CHARTS.has(step.chart)) err(where, `no chart "${step.chart}" in src/charts`);
-    if (step.try && EXPERIMENTS.size && !EXPERIMENTS.has(step.try)) err(where, `no experiment "${step.try}" in src/pages/tour.ts`);
-    if (step.explode !== undefined && !(step.explode >= 0 && step.explode <= 1)) err(where, 'explode must be 0–1');
-  });
-  if (!thing.how?.length && !thing.film?.length) warn('film', 'no "How it works" film');
-  if (thing.how?.length && thing.film?.length) warn('how', 'has a film and the old steps too: delete `how`');
+  if (!thing.film?.length) warn('film', 'no "How it works" film');
+  if (thing.how) err('how', 'the old step-by-step tour: make it a film (references/film.md) and delete `how`');
 
   // How it works, as a film (references/film.md)
   let filmTime = 0;
@@ -242,7 +216,6 @@ function checkThing(slug, thing, model, orders) {
 
 if (listOnly) {
   console.log(`charts (${CHARTS.size}): ${[...CHARTS].sort().join(', ')}`);
-  console.log(`experiments (${EXPERIMENTS.size}): ${[...EXPERIMENTS].sort().join(', ')}`);
   console.log(`film cues (${CUES.size}): ${[...CUES].sort().join(', ')}`);
   console.log(`categories: ${[...CATEGORIES].join(', ')}`);
   process.exit(0);

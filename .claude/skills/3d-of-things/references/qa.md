@@ -26,7 +26,6 @@ It exits 1 on any error.
 | views (`--model`) | From the front, side and top, and apart at 25/50/75/100% | as rest |
 | callouts | Opens each callout from the sheet | its card runs off the window, it doesn't open to its `explode`, errors |
 | tour | Opens How it works: the film plays on its own; each shot is held near its end and checked; then a strip of frames at even steps through the whole film; played to the end, it stops | it doesn't play, a caption isn't shown or runs off the window, a tag is missing (unknown node), it doesn't stop at the end, Esc doesn't close it; warns on captions over 110 characters, tags past the stage and a film outside 12–30 s |
-| try | Drives each experiment of an old step tour (an object not yet converted to a film) | the readout never changes |
 | run | Presses the run button | a spinning part doesn't turn |
 | phone | 390 × 844 at 2×, a touch device: rest and the film's opening | the page scrolls sideways, errors |
 | motion | Reduced motion, taken apart | errors |
@@ -34,15 +33,15 @@ It exits 1 on any error.
 ```sh
 npm run qa -- <slug>                    # everything
 npm run qa -- <slug> --model            # the model only, for the geometry loop (~15 s)
-npm run qa -- <slug> --only tour,try    # some sections
-npm run qa -- --all --quick             # load, rest and tour for every object (~100 s, 3 at a time)
+npm run qa -- <slug> --only tour        # some sections (tour is the film)
+npm run qa -- --all --quick             # load, rest and the film for every object (~100 s, 3 at a time)
 npm run qa -- --skill                   # the skill's page: its live watch winds, slows, comes apart; the wheel scrolls (~15 s)
 npm run qa -- <slug> --software         # SwiftShader, to compare
 npm run qa -- --all --deployed --url http://localhost:3017/3d-of-everything/objects
-                                        # a built copy, served (or the live site): load, rest and tour
+                                        # a built copy, served (or the live site): load, rest and the film
 ```
 
-`--deployed` is for the copy baked into afrodance.fun (`npm run export`, README › Deploying): serve that site's production build (`npx next build && npx next start -p 3017` in its checkout) and point `--url` at the gallery. It checks what the dev server can't: the URLs under the mount, the production bundle, the host's rewrites. Without the dev hooks it skips taking apart, callouts, experiments and run.
+`--deployed` is for the copy baked into afrodance.fun (`npm run export`, README › Deploying): serve that site's production build (`npx next build && npx next start -p 3017` in its checkout) and point `--url` at the gallery. It checks what the dev server can't: the URLs under the mount, the production bundle, the host's rewrites. Without the dev hooks it skips taking apart, callouts and run, and checks the film by jumping to each shot from its script.
 
 Output goes to `.cache/qa/<slug>/`: numbered contact sheets (`<slug>-1-rest.png`, `-2-callouts.png`, `-3-film.png`, `-N-phone.png`), every single shot in `shots/`, and `report.json` (every check, the console, the renderer, timings). The exit code is 1 if anything failed.
 

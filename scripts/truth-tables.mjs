@@ -1,4 +1,4 @@
-// Writes the parts table (section 6) and the tour table (section 8) of objects/<slug>/TRUTH.md from what was
+// Writes the parts table (section 6) and the film table (section 8) of objects/<slug>/TRUTH.md from what was
 // built: content/<slug>.json and the model's node tree. Run it at stage 7, so the sheet records the object as
 // shipped (the plan may have gone straight into content.mjs):
 //   npm run truth -- <slug>
@@ -52,33 +52,12 @@ const parts = table(
   (thing.parts ?? []).map((p) => [p.group ?? '', `\`${p.node}\``, p.label, p.about, movesBy(p.node)]),
 );
 
-function shows(step) {
-  const bits = [];
-  if (step.focus?.length) bits.push(step.focus.map(name).join(', '));
-  if (step.flow) bits.push(`${step.carries ?? 'power'} flow${step.flows?.length ? ` (${step.flows.length + 1} paths)` : ''}`);
-  if (step.explode) bits.push(`apart ${step.explode}`);
-  if (step.hide?.length) bits.push(`hides ${step.hide.map(name).join(', ')}`);
-  if (step.rate && step.rate !== 1) bits.push(`at ${step.rate}× speed`);
-  return bits.join('; ');
-}
-const chart = (c) => (!c ? '' : typeof c === 'string' ? c : `${c.type}: ${c.title ?? ''}`);
-function experiment(step) {
-  if (!step.try) return '';
-  if (step.try === 'speeds') return `speeds: ${(step.speeds ?? []).map((s) => s.label).join(' / ')}`;
-  if (step.try === 'run' && step.count?.length) return `run, counting ${step.count.map((c) => c.label).join(', ')}`;
-  return step.try;
-}
 const cues = (shot) => (shot.cues ?? []).map((c) => `${c.at} s ${c.do}${c.to !== undefined ? ` → ${c.to}` : ''}${c.over ? ` over ${c.over} s` : ''}`).join('; ');
 let clock = 0;
-const tour = thing.film?.length
-  ? table(
-      ['At', 'Chapter', 'Caption', 'Seconds', 'Cues'],
-      thing.film.map((s) => [`${(clock += s.duration) - s.duration} s`, s.chapter, s.caption, s.duration, cues(s)]),
-    )
-  : table(
-      ['#', 'Label', 'Shows (focus, flow)', 'Chart', 'Try'],
-      (thing.how ?? []).map((s, i) => [i + 1, s.label, shows(s), chart(s.chart), experiment(s)]),
-    );
+const film = table(
+  ['At', 'Chapter', 'Caption', 'Seconds', 'Cues'],
+  (thing.film ?? []).map((s) => [`${(clock += s.duration) - s.duration} s`, s.chapter, s.caption, s.duration, cues(s)]),
+);
 
 /** Replaces the first table in the section under the heading that starts `## <n>.` (or adds one after its heading). */
 function replaceTable(text, n, body) {
@@ -100,6 +79,6 @@ function replaceTable(text, n, body) {
 
 let sheet = readFileSync(sheetFile, 'utf8');
 sheet = replaceTable(sheet, 6, parts);
-sheet = replaceTable(sheet, 8, tour);
+sheet = replaceTable(sheet, 8, film);
 writeFileSync(sheetFile, sheet);
-console.log(`${path.relative(ROOT, sheetFile)}: ${thing.parts?.length ?? 0} parts, ${thing.film?.length ? `a film of ${clock} s in ${thing.film.length} shots` : `${thing.how?.length ?? 0} tour steps`}`);
+console.log(`${path.relative(ROOT, sheetFile)}: ${thing.parts?.length ?? 0} parts, a film of ${clock} s in ${thing.film?.length ?? 0} shots`);

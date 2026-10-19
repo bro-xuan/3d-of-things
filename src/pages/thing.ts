@@ -7,7 +7,6 @@ import { sound } from '../sound';
 import { drawingScale, showDrawings } from './drawings';
 import { theatre } from './theatre';
 import { Film, filmMarkup } from './film';
-import { Tour, tourMarkup } from './tour';
 // Only types: three.js arrives in its own chunk once the page (and its poster) is up.
 import type { Drawing, LookMode, Viewer } from '../viewer/Viewer';
 import { missing } from './missing';
@@ -61,7 +60,6 @@ function template(thing: Thing): string {
   const canRun = thing.motion?.some((m) => m.speed !== undefined) || !!thing.slowMotion;
   // Things with an escapement tick, or a shutter that clicks: they get a sound switch.
   const ticks = !!thing.motion?.some((m) => m.swing === 'pallet' || m.cloth);
-  const how = thing.how ?? [];
   const film = thing.film ?? [];
   const seconds = Math.round(film.reduce((sum, shot) => sum + shot.duration, 0));
   const { credit } = thing;
@@ -88,13 +86,12 @@ function template(thing: Thing): string {
           <span class="stage__hint-keys">Arrow keys turn · + and − zoom · E takes it apart · W draws it in lines · L shows labels · 1–${Math.min(9, thing.annotations.length)} jump to callouts · Esc resets</span>
         </p>
       </div>
-      <div class="stage__try"></div>
       <div class="stage__left">
         <div class="controls" role="group" aria-label="Controls">
           ${
-            film.length || how.length
+            film.length
               ? `<button class="controls__how" type="button" data-action="how" aria-describedby="how-note">How it works</button>
-          <p class="controls__note" id="how-note">${film.length ? `An animation, ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}` : `${how.length} steps, with the model running`}</p>`
+          <p class="controls__note" id="how-note">An animation, ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}</p>`
               : ''
           }
           ${
@@ -206,7 +203,7 @@ function template(thing: Thing): string {
         <a href="${thingHref(next.slug)}" data-slug="${esc(next.slug)}"><span class="pager__dir">${figure(next)} →</span><span class="pager__title">${esc(next.title)}</span></a>
       </nav>
       </div>
-      ${film.length ? filmMarkup(thing) : how.length ? tourMarkup(thing) : ''}
+      ${film.length ? filmMarkup(thing) : ''}
     </div>
   </article>`;
 }
@@ -372,11 +369,11 @@ export function thingPage(main: HTMLElement, slug: string): Page {
   narrow.addEventListener('change', placeControls);
 
   // ----------------------------------------------------------- how it works
-  const tourRoot = q('.tour');
+  const filmRoot = q('.tour');
   const onToggle = (on: boolean) => {
     q('.thing')!.toggleAttribute('data-touring', on);
     select(null, { fly: false });
-    // The tour runs (and stops) the mechanism itself: the sheet's run button starts from off again.
+    // The film runs (and stops) the mechanism itself: the sheet's run button starts from off again.
     if (runButton && runButton.getAttribute('aria-pressed') === 'true') {
       runButton.setAttribute('aria-pressed', 'false');
       runButton.querySelector('svg')?.replaceWith(document.createRange().createContextualFragment(icons.play));
@@ -384,16 +381,11 @@ export function thingPage(main: HTMLElement, slug: string): Page {
     }
     if (on) q('.sheet')!.scrollTo({ top: 0 });
     else q<HTMLButtonElement>('[data-action="how"]')?.focus({ preventScroll: true });
-    // On phones the tour is in the sheet under the model: bring it up.
-    if (on && narrow.matches) tourRoot!.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    // On phones the film's script is in the sheet under the model: bring it up.
+    if (on && narrow.matches) filmRoot!.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   };
-  // A film where the object has one, else the step-by-step tour.
-  const tour = !tourRoot
-    ? null
-    : thing.film?.length
-      ? new Film(tourRoot, thing, { onToggle, stage })
-      : new Tour(tourRoot, thing, { onToggle, stageSlot: q('.stage__try')!, stage, narrow });
-  q('[data-action="how"]')?.addEventListener('click', () => (tour instanceof Film ? tour.start() : tour?.start(0)));
+  const film = filmRoot ? new Film(filmRoot, thing, { onToggle, stage }) : null;
+  q('[data-action="how"]')?.addEventListener('click', () => film?.start());
 
   // -------------------------------------------------------------- drawings
   // Printed on the stage's paper beside the model on wide screens (on phones, in the sheet), and drawn by the
@@ -490,7 +482,7 @@ export function thingPage(main: HTMLElement, slug: string): Page {
       '=': () => viewer!.zoom(0.8),
       '-': () => viewer!.zoom(1.25),
       Escape: () => {
-        if (tour?.active) return tour.stop();
+        if (film?.active) return film.stop();
         select(null, { fly: false });
         void viewer!.resetView();
       },
@@ -502,8 +494,8 @@ export function thingPage(main: HTMLElement, slug: string): Page {
       L: () => setLabels(!labelsOn),
     };
     const digit = /^[1-9]$/.test(event.key) ? Number(event.key) - 1 : null;
-    // Keys keep focus on the model: a step picked by number doesn't move it to the panel.
-    const action = actions[event.key] ?? (digit === null ? null : tour?.active ? () => (tour instanceof Film ? tour.go(digit) : tour.go(digit, { focus: false })) : () => select(digit));
+    // Keys keep focus on the model: a chapter picked by number doesn't move it to the panel.
+    const action = actions[event.key] ?? (digit === null ? null : film?.active ? () => film.go(digit) : () => select(digit));
     if (!action) return;
     event.preventDefault();
     action();
@@ -554,13 +546,13 @@ export function thingPage(main: HTMLElement, slug: string): Page {
       stage.dataset.state = 'ready';
       statusText.textContent = `${thing!.title} loaded`;
       // For authoring content: __viewer.probe(node, from), __viewer.pick(x, y), __viewer.currentPose().
-      if (import.meta.env.DEV) Object.assign(window, { __viewer: viewer, __film: tour instanceof Film ? tour : null });
+      if (import.meta.env.DEV) Object.assign(window, { __viewer: viewer, __film: film });
       if (look !== 'rendered') viewer.setLook(look, { animate: false });
       viewer.setLabels(labelsOn);
       viewer.setSounds({ beat: (beat) => sound.tick(beat), click: () => sound.ratchet(), shutter: (curtain, event) => sound.shutter(curtain, event) });
       const ready = viewer;
       void theatre.show(viewer, thing!.slug).then(() => {
-        tour?.attach(ready);
+        film?.attach(ready);
         // Out of the way of the opening move: drawing the lines takes a moment on slow machines. (A busy
         // render loop can leave no idle time at all, so it doesn't wait for long.)
         if ('requestIdleCallback' in window) requestIdleCallback(() => void drawUp(ready), { timeout: 1200 });
@@ -602,7 +594,7 @@ export function thingPage(main: HTMLElement, slug: string): Page {
     title: `${thing.title} · 3D of Things`,
     destroy(next) {
       destroyed = true;
-      tour?.destroy();
+      film?.destroy();
       stopSound();
       narrow.removeEventListener('change', placeDrawings);
       narrow.removeEventListener('change', placeControls);

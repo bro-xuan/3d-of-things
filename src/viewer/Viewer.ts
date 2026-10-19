@@ -30,7 +30,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh';
 import { asset } from '../asset';
-import type { CameraPose, FlowPoint, Step, Thing, Vec3 } from '../types';
+import type { CameraPose, FlowPoint, Shot, Thing, Vec3, View } from '../types';
 import { ContactShadow } from './ContactShadow';
 import { Flow } from './flow';
 import { Hotspots, PartBadges, SceneCard, Tags, type CardContent } from './labels';
@@ -989,7 +989,7 @@ export class Viewer {
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
    *  to its exact camera), on the stage's middle. Ghosts far from those parts fade, so a close-up isn't seen through a veil. */
-  showStep(step: Pick<Step, 'explode' | 'focus' | 'frame' | 'hide' | 'camera' | 'angle' | 'fill'>, { instant = false, camera = true } = {}): void {
+  showStep(step: View, { instant = false, camera = true } = {}): void {
     const explode = step.explode ?? 0;
     const moving = !!this.exploder && Math.abs(this.explodeValue - explode) > 0.005;
     const { pose, sphere, focused } = this.framing(step);
@@ -1005,14 +1005,14 @@ export class Viewer {
 
   /** Where a step puts the camera: its parts framed from its angle (or its exact camera), with the model as far apart as
    *  it says. A film follows these from one shot to the next. */
-  stepPose(step: Pick<Step, 'explode' | 'focus' | 'frame' | 'camera' | 'angle' | 'fill'>, box?: [Vec3, Vec3]): CameraPose {
+  stepPose(step: View, box?: [Vec3, Vec3]): CameraPose {
     const { position, target } = this.framing(step, box && new Box3(new Vector3(...box[0]), new Vector3(...box[1]))).pose;
     return { position: position.toArray() as Vec3, target: target.toArray() as Vec3 };
   }
 
   /** The box round the parts a step frames, as they are now (world space): a film frames a shot on the parts where they
    *  start and where they end up. */
-  framedBox(step: Pick<Step, 'explode' | 'focus' | 'frame'>): [Vec3, Vec3] {
+  framedBox(step: View): [Vec3, Vec3] {
     const explode = step.explode ?? 0;
     const now = this.explodeValue;
     const moving = !!this.exploder && Math.abs(now - explode) > 0.005;
@@ -1041,7 +1041,7 @@ export class Viewer {
     return this.flyTo({ position: new Vector3(...pose.position), target: new Vector3(...pose.target) }, duration);
   }
 
-  private framing(step: Pick<Step, 'explode' | 'focus' | 'frame' | 'camera' | 'angle' | 'fill'>, given?: Box3): { pose: Pose; sphere: Sphere; focused: boolean } {
+  private framing(step: View, given?: Box3): { pose: Pose; sphere: Sphere; focused: boolean } {
     const explode = step.explode ?? 0;
     // Where the parts in focus will be once the model is as far apart as the step says.
     const now = this.explodeValue;
@@ -1147,7 +1147,7 @@ export class Viewer {
   }
 
   /** Labels on parts for a step, each where it says or at its part's middle; null clears them. */
-  setTags(tags: Step['tags'] | null): void {
+  setTags(tags: Shot['tags'] | null): void {
     const entries = (tags ?? []).flatMap((tag) => {
       const node = this.root?.getObjectByName(tag.node);
       if (!node) return [];

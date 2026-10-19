@@ -46,9 +46,9 @@ export function mountLive(figure: HTMLElement): void {
     say(slow ? 'Slowed to a twentieth' : 'Real time');
   }
 
-  /** The first step of the watch's tour: the case as glass, the movement solid, the power as a red line. */
+  /** The first shot of the watch's film: the case as glass, the movement solid. */
   function showIdea() {
-    const step = thing.film?.[0] ?? thing.how?.[0];
+    const step = thing.film?.[0];
     if (!viewer || !step) return;
     viewer.setFocus(step.focus ?? null);
     viewer.setFlow([step.flow ?? [], ...(step.flows ?? [])], step.carries);

@@ -93,7 +93,7 @@ A short film of the mechanism doing its job: references/film.md has the rules, e
 | `flow`, `flows`, `carries` | A path drawn through the parts: points (`[x, y, z]` or `{ node, at, ride }` to ride with a part). A point on a part that spins needs `ride: true`, or the line stays put while the part turns (a sprinkler's arm). `carries`: `power` (vermilion, default), `light` (amber, straight between reflections), `air` (blue), `water` (teal). |
 | `tags` | Labels on parts: `{ node, text, at, ride }`. A tag on a node that doesn't exist is dropped, and `npm run qa` fails it. |
 
-An object made before the film may still have `how[]` (steps of text, charts and experiments); convert it to a `film` and delete `how`.
+The step-by-step tour that came before (`how[]`: steps of text, charts and experiments) is gone; `npm run check` fails on a content file that still has one.
 
 ## Checks
 
