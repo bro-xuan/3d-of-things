@@ -51,6 +51,8 @@ export const CUES: Record<string, Verb> = {
   squeeze: { kind: 'switch', has: (v) => !!v.extinguisherState, apply: (v, x) => v.squeezeLever(!!x) },
   invert: { kind: 'switch', has: (v) => !!v.extinguisherState, apply: (v, x) => v.invertExtinguisher(!!x) },
   recharge: { kind: 'event', has: (v) => !!v.extinguisherState, apply: (v) => v.rechargeExtinguisher() },
+  // A typewriter: letters of its word typed (a fraction is a stroke under way).
+  type: { kind: 'number', from: (v) => v.typewriterState?.typed ?? 0, has: (v) => !!v.typewriterState, apply: (v, x) => v.typeLetters(x as number) },
   // A camera: focus (metres; 0 is infinity), the aperture ring (stops from wide open), the shutter speed (s), the
   // release, a stroke of the advance lever, a reflex's dark slide.
   focus: { kind: 'number', from: (v) => finite(v.cameraState?.focus), has: (v) => !!v.cameraState, apply: (v, x) => v.focusAt((x as number) || Infinity) },

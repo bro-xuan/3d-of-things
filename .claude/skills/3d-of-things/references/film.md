@@ -50,6 +50,7 @@ Each shot (`Shot` in `src/types.ts`):
 | A camera | `focus` (metres, 0 infinity), `stop` (stops from wide open), `speed` (shutter, s), `fire`, `wind-on`, `slide` (dark slide out), `preview` (stop-down) |
 | A car with fans and thrusters | `fans`, `road-speed` (km/h), `wing`, `thrust`, `fly` ('hop', 'roll') |
 | Clockwork | `wind` (crown turning), `hold` (balance held), `loose` (fork out) |
+| A typewriter (src/viewer/typewriter.ts) | `type` (letters of its word typed; a fraction is a stroke under way) |
 
 Spinning parts need no cue: they run while `run` is on, at `rate`, scaled by `spin`. A mechanism the cues don't reach gets a verb in `CUES` (one line: its kind, where it starts, which models have it, what it calls on the viewer) and a row here.
 

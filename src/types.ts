@@ -80,7 +80,8 @@ export interface Motion {
    *  (stops from wide open), `curtain1` and `curtain2` (0 cocked to 1 run), `lever` (0–1 of a stroke), `film`
    *  (frames wound on) or `release` (0–1); a desk lamp's `arm_lower` and `arm_upper` (src/viewer/balancedarm.ts); a
    *  lock's `lock-key`, `lock-wrong` and `lock-turn` (src/viewer/pintumbler.ts); an extinguisher's `ext_pin` and `ext_lever`
-   *  (0–1), `ext_bar` (gauge bar) or `ext_used` (0–1 of the powder gone). See src/viewer/linkage.ts. */
+   *  (0–1), `ext_bar` (gauge bar) or `ext_used` (0–1 of the powder gone); a typewriter's `tw_key_<letter>` and
+   *  `tw_strike` (0–1 of a stroke), `tw_space` (letter spaces) and `tw_ink_<n>` (src/viewer/typewriter.ts). See src/viewer/linkage.ts. */
   control?: string;
   /** With `control`: turns per unit of the control, counted from `from` (default 0). */
   turn?: number;

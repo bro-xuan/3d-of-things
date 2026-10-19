@@ -32,6 +32,7 @@ A motion with `control: '<name>'` follows a value that a mechanism module sets, 
 | `filmcamera.ts` (rangefinder) | a motion uses `curtain1` or `focus` | `focus`, `aperture`, `curtain1`, `curtain2`, `lever`, `film`, `release` | `cameraState`; `focusAt`, `setStop`, `setSpeed`, `fire`, `windOn` |
 | `reflexcamera.ts` (SLR) | a motion uses `mirror` | `focus`, `aperture`, `iris`, `speed`, `blades`, `mirror`, `flaps`, `key`, `wind`, `film`, `release`, `slide` | `cameraState`; also `setSlide`, `setPreview` |
 | `aerocar.ts` (Roadster) | a motion uses `skirts` | `fan`, `skirts`, `wing` | `aeroState`; `setFans`, `setSpeed`, `fire`, `fly`, `refill`, `reset` |
+| `typewriter.ts` (Underwood No. 5) | a motion uses `tw_space` | `tw_key_<letter>`, `tw_strike`, `tw_space`, `tw_ink_<n>` | `typewriterState`; `typeLetters` |
 
 Control names are one global namespace: a control nothing sets never moves, and any object with a `focus` control currently gets the rangefinder's module. Name a new mechanism's controls so they don't collide.
 

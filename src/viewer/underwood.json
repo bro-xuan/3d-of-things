@@ -1,0 +1,15 @@
+{
+  "about": "Underwood Standard No. 5 (objects/typewriter/TRUTH.md): the numbers its build (objects/typewriter/layout.mjs) and the viewer's src/viewer/typewriter.ts share. Millimetres and degrees.",
+  "word": "typewriter",
+  "pitch": 2.54,
+  "dip": 16,
+  "bar": 95,
+  "segmentR": 45,
+  "rest": -5,
+  "heel": 12,
+  "pickup": 22.2,
+  "trip": 3.175,
+  "throw": 1.6,
+  "wheel": { "teeth": 16, "r": 15, "drop": 0.635 },
+  "snap": 0.04
+}
