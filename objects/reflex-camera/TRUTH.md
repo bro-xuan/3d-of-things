@@ -152,19 +152,17 @@ Only the content's 14 parts are listed; the pieces under them (gears, blades, ri
 - **Charts:** six in src/charts/reflex.ts, drawn from reflexcamera.ts's state and functions (`reflex-path`, `reflex-focus`, `light-pairs`, `release-sequence`, `film-roll`, `leaf-shutter`), and the generic `ladder` (src/charts/generic.ts) for Winding. src/charts/optics.ts holds only the binoculars' chart and isn't used here.
 - **Shared with the rangefinder:** linkage.ts and the `Controls` type (filmcamera.ts), the camera experiments, the build's clash and explode-path checks (scripts/kit/parts.mjs), and the blade outlines (lens.mjs: "as in the rangefinder's lens").
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Light | Lens, Optical unit, Focusing ring, mirror, Focusing screen; light flow (3 paths); hides Folding hood | reflex-path |  |
-| 2 | Focus | Lens, Optical unit, Focusing ring | reflex-focus | focus |
-| 3 | Shutter | shutter_blade_0, shutter_blade_1, shutter_blade_2, shutter_blade_3, shutter_blade_4, iris_blade_0, iris_blade_1, iris_blade_2, iris_blade_3, iris_blade_4, aperture_ring, speed_ring | light-pairs | aperture |
-| 4 | Release | mirror, flap_upper, flap_lower, shutter_blade_0, shutter_blade_1, shutter_blade_2, shutter_blade_3, shutter_blade_4, iris_blade_0, iris_blade_1, iris_blade_2, iris_blade_3, iris_blade_4, release_button, drive_shaft; at 0.025× speed | release-sequence | shutter |
-| 5 | Winding | Winding knob, Winding gears, wind_gear, idler_gear, flap_barrel, magazine_gear, cross_shaft, drive_shaft, magazine_input, magazine_idler, spool_drive, take_up_spool; power flow (2 paths) | ladder: Turns for one turn of the knob | advance |
-| 6 | Magazine | Film magazine, Film insert, supply_spool, take_up_spool, film, Dark slide; apart 0.24 | film-roll | slide |
-| 7 | Flash | shutter_blade_0, shutter_blade_1, shutter_blade_2, shutter_blade_3, shutter_blade_4, iris_blade_0, iris_blade_1, iris_blade_2, iris_blade_3, iris_blade_4; at 0.008333333333333333× speed | leaf-shutter | shutter |
+| 0 s | Focus | Focusing screws the lens out until the picture the mirror throws up to the screen is sharp. | 6 | 0 s slide → true; 1 s focus → 2 over 4 s |
+| 6 s | Fire | The release flips up the mirror and opens the flaps, and only then fires the lens’s shutter. | 6 | 1 s fire |
+| 12 s | Wind on | One turn of the knob lowers the mirror, cocks the shutter and winds the film on a frame. | 6 | 1 s wind-on |
 
-Settings per step (content `settings`): Light ∞, slide in; Focus ∞; Shutter f/8; Release 1/125 s, slide out; Winding slide out; Magazine slide in; Flash 1/500 s, slide out. Release runs at 1/40 speed and Flash at 1/120 (`rate`).
+Solid throughout: the Optical unit, Focusing ring, shutter and iris blades, the mirror and rear flaps, the release, the Winding knob and its gears, the film and its spools; the Body shell, Mirror box, Lens mount, Folding hood and Film magazine are glass. The Dark slide is pulled at 0 s (the release is blocked while it's in) and hidden throughout. Every shot runs at 1/40 (`rate`), so the release's 82 ms at 1/125 s takes 3.3 s; the knob's turn runs in real time, 0.9 s. Shot 1 draws three light rays to the mirror and the screen; shot 3 the power from the knob to the drive key and into the magazine.
 
 ## 9. Simplified or left out
 
@@ -181,3 +179,5 @@ Settings per step (content `settings`): Light ∞, slide in; Focus ∞; Shutter 
 ## 10. Log
 
 Not recorded per stage: built before the procedure, in 1 h 59 of active time (references/procedure.md, "How long it takes": Hasselblad-type SLR, tier C).
+
+19 October 2026: "How it works" became a film (references/film.md), 3 shots, 18 s: focus at 2 m, fire, wind on; the six tour steps, their charts and experiments came off the page.

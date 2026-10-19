@@ -132,16 +132,18 @@ Fill this in before any geometry. Every number on the page (sizes, counts, ratio
 - The belts stay still (a belt loop can't spin as one part); flow lines show where they carry the power.
 - **Reused:** plain spins; the `run` experiment with counts; the generic charts `ladder` (the speed ladder, log scale) and `bars` (reel speeds through a side; wavelengths on the tape). Nothing new in the viewer.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Flywheel and capstan, Pinch roller, Tape, Take-up reel, Supply reel, Playback head, Motor, Belts; power flow; apart 0.15 |  |  |
-| 2 | Power | Batteries, Motor, Belts, Flywheel and capstan; power flow; apart 0.15; at 0.1× speed | ladder: Turns a minute, motor to reels | run, counting Motor, Capstan |
-| 3 | Capstan | Flywheel and capstan, Pinch roller, Tape, Playback head; power flow; apart 0.15; at 0.1× speed |  |  |
-| 4 | Head | Playback head, Pressure pad, Tape; power flow; apart 0.15 | bars: One wave of a note, on the tape |  |
-| 5 | Take-up | Flywheel and capstan, Belts, Slip clutch, Take-up spindle; power flow; apart 0.15; at 0.2× speed |  |  |
-| 6 | Reels | Supply reel, Take-up reel, Tape, Pressure pad; power flow; apart 0.67; at 0.5× speed | bars: Take-up reel through one side of a C60 | run, counting Capstan, Take-up reel |
+| 0 s | Drive | A belt from the motor turns the brass flywheel; its 2 mm steel shaft is the capstan. | 5 |  |
+| 5 s | Drive | The pinch roller squeezes the tape onto the capstan, so the tape moves at exactly 4.76 cm/s. | 5 |  |
+| 10 s | Tape | The tape’s magnetised coating sweeps past the head’s tiny gap and makes a voltage: the music. | 5 |  |
+| 15 s | Tape | The take-up reel only winds in what the capstan lets through, slowing down as it fills. | 5 |  |
+
+Solid throughout: the Motor, Belts, Flywheel and capstan, Pinch roller, Tape, Playback head, Pressure pad, both reels and spindles and the Slip clutch; the case, the Deck and the cassette's shell are glass, so the whole transport, the drive behind the deck too, shows from the front, and nothing comes apart. Every shot frames the whole player at one size; the camera orbits from −70° to −10°. Every shot runs at 0.25× (`rate`).
 
 ## 9. Simplified or left out
 
@@ -168,3 +170,5 @@ Run `date` at each stage; at twice a stage's budget, tell the user where it stan
 | 5 Mechanism | (if new) | | | none: spins, `run`, `ladder`, `bars` |
 | 6 Check | 10 min | 00:30 | 01:08 | Four full QA runs (each about 6 min on software GL, plus waits for the shared browser lock), 64/64 each time. Fixed from the sheets: callout cameras pulled back to distance 2 (they had filled the frame), the explode reordered so the front case comes off before the cassette (the head and pinch roller sit under the radio panel), the cassette's front half slid aside to show the packs, two tags that overlapped, crowded bar notes, the capstan callout seen from above so the pinch roller doesn't hide it |
 | 7 Ship | 5 min | 01:09 | 01:16 | Posters (after a 4 min wait for the browser lock), `npm run truth`, `npm run reproduce` all identical. About 1 h 30 min from the brief to the commit, a third of it waiting on the shared browser and the software-GL QA runs |
+
+19 October 2026: "How it works" became a film (references/film.md), 4 shots, 20 s, all from the front; the six tour steps, their charts and the `run` experiment came off the page.

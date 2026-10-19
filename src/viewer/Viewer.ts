@@ -1712,11 +1712,12 @@ export class Viewer {
     this.shadowDirty = this.dirty = true;
   }
 
-  /** Puts every mechanism back to rest: the keys, the arm, the tape, the extinguisher, the car, the watch's crown and fork. */
+  /** Puts every mechanism back to rest: the keys, the arm, the tape, the extinguisher, the car, the watch's crown and fork, a camera. */
   resetMechanisms(): void {
     this.setLoose(false);
     this.hold(false);
     this.wind(false);
+    this.cameraBody?.reset();
     this.aero?.reset();
     if (this.arm) {
       this.hookSprings(true);
