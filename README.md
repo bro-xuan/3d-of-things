@@ -22,16 +22,16 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/hero-watch-escapement.webp" width="800" alt="The pocket watch in How it works, step 4 of 6: the case has turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid. Beside them the text reads 'One tooth at a time', over a timing chart of one swing of the balance, slowed down.">
+  <img src=".github/assets/hero-lock-film.webp" width="800" alt="The pin tumbler lock in How it works: the plug and housing have turned to glass, the key is in, and every pin's split sits on a red shear line. Under the model the caption reads 'With the right key, the gap in every pair lines up with the edge of the plug', over a bar to play, pause and scrub the film; beside it, the film's script.">
 </p>
 
-<p align="center"><sub>The pocket watch's escapement in <b>How it works</b>. The case turns to glass, the parts the step is about stay solid and run, and the chart beside them is drawn from the same beat count that turns the wheels.</sub></p>
+<p align="center"><sub>The pin tumbler lock in <b>How it works</b>: a short film of the key going in and turning. The casing turns to glass so the pins can be seen riding the key's cuts, the camera glides round without a cut, and one line of caption says what's happening.</sub></p>
 
 ---
 
 Every object on the site is a real machine with real insides: a watch movement with true tooth counts and a Swiss lever escapement, a Leica's cloth shutter and rangefinder, a Hasselblad's mirror, flaps and leaf shutter in the order of its service manual's timing chart, a car's four strokes. Where a free model is only a shell, the insides are generated in code from the real numbers. Nothing is guessed by an AI segmenter.
 
-Each object has its 3D model to turn and take apart, numbered callouts, scale drawings, and a step-by-step tour that follows the energy through the mechanism, with live charts and experiments to try. Every number on screen comes from the same maths that moves the parts.
+Each object has its 3D model to turn and take apart, numbered callouts, scale drawings, and a short film of the mechanism doing its job: the casing turns to glass, the parts inside move, and a caption says what's happening. Every number on screen comes from the same maths that moves the parts.
 
 ## Quick start
 
@@ -54,7 +54,7 @@ Then, in Claude Code, in any folder:
 /3d-of-things add a mechanical metronome
 ```
 
-Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, writes the tour, and checks every callout, step and experiment in a headless browser before it's done. Outside this repository it first sets up a workspace, a clone of it, because the repository is the skill's kit; inside it, the skill is already there (`.claude/skills/3d-of-things`). `npm run export` then puts the machines on your own site ([Deploying](#deploying)).
+Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the object (its page works within minutes), builds the model and its insides, makes the film, and checks every callout and plays the film through in a headless browser before it's done. Outside this repository it first sets up a workspace, a clone of it, because the repository is the skill's kit; inside it, the skill is already there (`.claude/skills/3d-of-things`). `npm run export` then puts the machines on your own site ([Deploying](#deploying)).
 
 ## The objects
 
@@ -93,7 +93,7 @@ Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the
   </tr>
 </table>
 
-Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **personal cassette player** (a 2 mm capstan sets the tape's speed; the reels only keep it taut), a **pin tumbler lock** (a Kwikset cylinder whose five pin stacks ride the key's cuts to the shear line, a wrong key that won't turn, and the bolt a quarter turn throws), a **desk lamp** (an Anglepoise-type arm whose springs match the head's weight at every angle; unhook them and it drops), a **tape measure** (a spring wound 20 turns tighter as you pull 3 m out, and a loose hook that keeps the zero true) and a **fire extinguisher** (nitrogen that drives its powder up a dip tube, and the pressure falling as it empties).
+Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **personal cassette player** (a 2 mm capstan sets the tape's speed; the reels only keep it taut), a **pin tumbler lock** (a Kwikset cylinder whose five pin stacks ride the key's cuts to the shear line, and the bolt a quarter turn throws), a **desk lamp** (an Anglepoise-type arm whose springs match the head's weight at every angle), a **tape measure** (a spring wound 20 turns tighter as you pull 3 m out, and a loose hook that keeps the zero true) and a **fire extinguisher** (nitrogen that drives its powder up a dip tube, and the pressure falling as it empties).
 
 And a **sewing machine**: a Singer 201-2 built in code from Singer's adjuster's manual, its hook turning twice per stitch to carry each loop of the top thread right round the bobbin.
 
@@ -101,21 +101,21 @@ And a **sewing machine**: a Singer 201-2 built in code from Singer's adjuster's 
 
 <table>
   <tr>
-    <td width="33%"><img src=".github/assets/tour-slr-light.webp" alt="The SLR in How it works: amber rays from the lens bounce off the 45 degree mirror up to the focusing screen."></td>
-    <td width="33%"><img src=".github/assets/tour-leica-rangefinder.webp" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter; a chart shows the two images in the viewfinder."></td>
-    <td width="33%"><img src=".github/assets/tour-slr-winding.webp" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key; a chart counts each gear's turns."></td>
+    <td width="33%"><img src=".github/assets/film-reflex-light.webp" alt="The SLR's film, focusing: amber rays from the lens bounce off the 45 degree mirror up to the focusing screen, with the caption under the model."></td>
+    <td width="33%"><img src=".github/assets/film-rangefinder-fire.webp" alt="The Leica's film, firing: the two cloth curtains cross the film gate, slowed so the slit can be seen."></td>
+    <td width="33%"><img src=".github/assets/film-roadster-fans.webp" alt="The Roadster's film: blue air lines run from under the floor to the fans in the tail, the body as glass."></td>
   </tr>
   <tr>
-    <td><img src=".github/assets/tour-leica-shutter.webp" alt="The Leica's shutter: the two cloth curtains in front of the film gate, with a chart of the slit crossing the frame at 1/250 s."></td>
-    <td><img src=".github/assets/tour-roadster-suction.webp" alt="The Roadster's suction fans: blue air lines run from under the floor to the fans, with a chart of the pressure above and below."></td>
-    <td><img src=".github/assets/tour-watch-power.webp" alt="The watch's power step: the crown, the winding wheels and the mainspring in its barrel, with a chart of the spring's pull over 40 hours."></td>
+    <td><img src=".github/assets/film-extinguisher-out.webp" alt="The fire extinguisher's film: the gas drives the powder up the dip tube and out of the hose, drawn as a line through the glass cylinder."></td>
+    <td><img src=".github/assets/film-cassette-drive.webp" alt="The cassette player's film: the motor, belt and brass flywheel turn behind the glass deck, the pinch roller pressing the tape onto the capstan."></td>
+    <td><img src=".github/assets/film-car-drive.webp" alt="The family car's film: a vermilion line runs from the engine through the gearbox and propshaft under the glass body."></td>
   </tr>
 </table>
 
 - **A 3D viewer**: drag, zoom, pan, arrow keys. On wide screens the model stands on a layer above the page, solid and whole, and moving to another object hands one model over to the next.
 - **Take it apart**: a slider and a button. Parts come off in stages, outer parts first, along paths the build has checked clear.
 - **Callouts**: numbered markers on the model; picking one flies the camera to it and opens the model if what it shows is inside. Click any part for a card beside it.
-- **How it works**: a tour of the mechanism, one stage of the energy chain per step. The parts a step is about stay solid and the rest turn to glass; a line draws the path the power, light or air takes; labels pin live numbers to the parts; a chart runs in step with the model; and there's something to try: wind the watch, hold its balance, take out its pallet fork and watch the train run away, focus the Leica until the rangefinder's images meet, fire the SLR in slow motion, switch on the Roadster's fans and fly it.
+- **How it works**: a short film, 15–25 seconds, of the machine doing its job once: the key going in and turning, the shutter firing, the crank driving the bit. The casing turns to glass and the moving parts stay solid, so you watch the insides work; the camera glides round without a cut; a line draws the path the power, light or air takes, labels name the parts as they act, and one line of caption says what's happening. Pause it, scrub it, slow it to a quarter, or drag the model to look closer.
 - **Rendered and wireframe**: two cards switch the look with a scan line that redraws the model in ink, hidden edges faint (key W).
 - **Drawings**: top, front and side views drawn from the model at one scale, dimensioned at its real size. Pick one and the model turns to match.
 - **A scale bar** at the model's real size, and the model's credit and licence.
@@ -140,10 +140,10 @@ It sizes each object first:
 Then it works through eight stages, each with an exit check:
 
 1. **Brief**: exactly which object, whether it's new to the site, the energy chain in a line.
-2. **Truth sheet**: sources, real numbers, the energy chain, one misconception to correct, the parts in groups, the tour. A research subagent does the digging.
+2. **Truth sheet**: sources, real numbers, the energy chain, one misconception to correct, the parts in groups, the film's shots. A research subagent does the digging.
 3. **Scaffold**: `npm run new -- <slug> --tier …` writes the object's folder from templates, builds a first model and page, and checks it, in seconds.
 4. **Model**: the shell cut open, or the whole object generated, with the kit. The build fails if any two parts collide, or if taking it apart would pass one part through another.
-5. **Content**: the words and the tour, placed by named anchors from the build, never by pasted coordinates.
+5. **Content**: the words and the film, placed by named anchors from the build, never by pasted coordinates.
 6. **Mechanism**: only for a kind the site doesn't have; everything that exists is reused first.
 7. **Check**: `npm run check` and `npm run qa` until both pass and the contact sheets have been read.
 8. **Ship**: posters, this README, the production build.
@@ -176,7 +176,7 @@ Measured with `npm run timing -- --item <slug>`, which counts the calls that tou
 
 ```text
 3d-of-things/
-├── content/<slug>.json         one file per object: text, parts, callouts, motions, tour, credit
+├── content/<slug>.json         one file per object: text, parts, callouts, motions, film, credit
 ├── public/models/<slug>.glb    compressed models (meshopt geometry, WebP textures)
 ├── public/posters/             gallery posters and tray thumbnails, rendered from the models
 ├── objects/<slug>/             every object: truth sheet, content builder, and its generate.mjs or augment.mjs
@@ -188,12 +188,12 @@ Measured with `npm run timing -- --item <slug>`, which counts the calls that tou
 │   ├── kit/                    the generator kit: building blocks, assembly, checks; cars/ the car builder
 │   ├── new-object.mjs          npm run new: scaffold an object from the skill's templates
 │   ├── timing.mjs              npm run timing: where a build's time went
-│   ├── truth-tables.mjs        npm run truth: the truth sheet's parts and tour tables, from what was built
+│   ├── truth-tables.mjs        npm run truth: the truth sheet's parts and film tables, from what was built
 │   └── export-site.mjs         npm run export: the site built to live inside another one (afrodance.fun)
 ├── src/
 │   ├── pages/                  gallery, object page, about, the 3D layer, How it works
 │   ├── viewer/                 the three.js viewer and the mechanisms (clockwork, cameras, aerocar)
-│   └── charts/                 the tour's charts, drawn from the numbers the model runs on
+│   └── charts/                 charts drawn from the numbers the model runs on
 └── .claude/skills/3d-of-things/    the skill: SKILL.md, references/, templates/, evals/
 ```
 
@@ -253,16 +253,16 @@ Two checkers, both driven by the content file, so a new object is checked with n
 
 ```sh
 npm run check                 # every object against its model, no browser: under a second
-npm run qa -- reflex-camera   # callouts, tour steps, experiments, phone: about a minute
+npm run qa -- reflex-camera   # callouts, the film, phone: about a minute
 npm run qa -- --all --quick   # every object, three at a time, and the skill's page: under two minutes
 npm run qa -- --skill         # the skill's page: its live watch winds, slows and comes apart
 npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects   # a built or live copy
 ```
 
-`check` finds names the model doesn't have, meshes in no part, positions off the model, charts and experiments that don't exist, and unfinished text. `qa` drives the real page in headless Chromium on the GPU: it holds every hold button, moves every slider, fires every shutter, fails if a readout never changes, and tiles what it saw into a few labelled contact sheets:
+`check` finds names the model doesn't have, meshes in no part, positions off the model, film cues that don't exist, captions and films too long, and unfinished text. `qa` drives the real page in headless Chromium on the GPU: it opens every callout, plays the film, checks each shot's caption and labels, and tiles what it saw into a few labelled contact sheets, the film as a strip of frames at even steps:
 
 <p align="center">
-  <img src=".github/assets/qa-tour-sheet.webp" width="800" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled.">
+  <img src=".github/assets/qa-film-strip.webp" width="800" alt="A contact sheet from npm run qa: the pin tumbler lock's film as thirteen frames at even steps, each labelled with its time, the camera gliding round from the key going in to the bolt thrown.">
 </p>
 
 The model build has its own checks: it fails if any generated part crosses another at rest, or if the content file's explode would pass one part through another.

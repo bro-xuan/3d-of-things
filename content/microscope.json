@@ -256,35 +256,21 @@
       }
     }
   ],
-  "credit": {
-    "title": "Vintage Microscope",
-    "author": "Luis José Fernández Rodríguez",
-    "license": "CC0 1.0",
-    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "source": "Poly Haven",
-    "sourceUrl": "https://polyhaven.com/a/vintage_microscope"
-  },
-  "how": [
+  "film": [
     {
-      "label": "Light",
-      "title": "Light comes from below",
-      "text": [
-        "A microscope looks through its specimen, so the light has to come from underneath. The mirror catches daylight from a window and sends it straight up.",
-        "The condenser under the stage gathers that light into a bright, even spot on the slide, which is cut thin enough to see through."
-      ],
+      "chapter": "Light",
+      "caption": "The mirror catches daylight and sends it up through the condenser onto the slide.",
+      "duration": 6,
       "angle": [
-        28,
-        12
+        20,
+        8
       ],
-      "fill": 0.62,
+      "fill": 0.74,
       "focus": [
         "vintage_microscope_mirror_base",
-        "vintage_microscope_mirror_arm",
-        "vintage_microscope_condenser"
-      ],
-      "frame": [
-        "vintage_microscope_mirror_base",
-        "vintage_microscope_condenser"
+        "vintage_microscope_condenser",
+        "vintage_microscope_revolver",
+        "vintage_microscope_eye_piece"
       ],
       "carries": "light",
       "flow": [
@@ -315,7 +301,7 @@
       "tags": [
         {
           "node": "vintage_microscope_mirror_base",
-          "text": "Mirror",
+          "text": "mirror",
           "at": [
             0.1,
             0.2,
@@ -323,17 +309,8 @@
           ]
         },
         {
-          "node": "vintage_microscope_condenser",
-          "text": "Condenser",
-          "at": [
-            0.07,
-            0.55,
-            0.17
-          ]
-        },
-        {
           "node": "vintage_microscope_rack_mount_support",
-          "text": "Slide on the stage",
+          "text": "slide",
           "at": [
             0.12,
             0.72,
@@ -343,29 +320,118 @@
       ]
     },
     {
-      "label": "Lenses",
-      "title": "Magnified twice over",
-      "text": [
-        "The objective just above the slide forms a magnified image inside the tube. The eyepiece at the top magnifies that image again, like a magnifying glass.",
-        "The two multiply: a 10× objective under a 10× eyepiece gives 100×. Turn the nosepiece to a 40× objective and it’s 400×."
-      ],
+      "chapter": "Objective",
+      "caption": "Just above the slide, the objective forms an enlarged image inside the tube.",
+      "duration": 6,
       "angle": [
-        36,
-        10
+        38,
+        12
       ],
-      "fill": 0.72,
+      "fill": 0.74,
       "focus": [
-        "vintage_microscope_revolver",
-        "vintage_microscope_eye_piece",
+        "vintage_microscope_mirror_base",
         "vintage_microscope_condenser",
-        "vintage_microscope_mirror_base"
-      ],
-      "frame": [
         "vintage_microscope_revolver",
         "vintage_microscope_eye_piece"
       ],
       "carries": "light",
       "flow": [
+        [
+          -0.58,
+          0.44,
+          0.42
+        ],
+        [
+          0,
+          0.18,
+          0.113
+        ],
+        {
+          "node": "vintage_microscope_condenser",
+          "at": [
+            0,
+            0.5,
+            0.113
+          ]
+        },
+        [
+          0,
+          0.715,
+          0.113
+        ],
+        {
+          "node": "vintage_microscope_revolver",
+          "at": [
+            0,
+            0.83,
+            0.113
+          ]
+        },
+        {
+          "node": "vintage_microscope_eye_piece",
+          "at": [
+            0,
+            1.3,
+            0.113
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "vintage_microscope_revolver",
+          "text": "objective",
+          "at": [
+            0.06,
+            0.84,
+            0.15
+          ]
+        },
+        {
+          "node": "vintage_microscope_eye_piece",
+          "text": "image",
+          "at": [
+            0.07,
+            1.3,
+            0.15
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Eyepiece",
+      "caption": "The eyepiece magnifies it again: a 10× objective under a 10× eyepiece makes 100×.",
+      "duration": 6.5,
+      "angle": [
+        56,
+        16
+      ],
+      "fill": 0.74,
+      "focus": [
+        "vintage_microscope_mirror_base",
+        "vintage_microscope_condenser",
+        "vintage_microscope_revolver",
+        "vintage_microscope_eye_piece"
+      ],
+      "carries": "light",
+      "flow": [
+        [
+          -0.58,
+          0.44,
+          0.42
+        ],
+        [
+          0,
+          0.18,
+          0.113
+        ],
+        {
+          "node": "vintage_microscope_condenser",
+          "at": [
+            0,
+            0.5,
+            0.113
+          ]
+        },
         [
           0,
           0.715,
@@ -403,100 +469,23 @@
       ],
       "tags": [
         {
-          "node": "vintage_microscope_revolver",
-          "text": "Objective: 10×",
-          "at": [
-            0.06,
-            0.84,
-            0.15
-          ]
-        },
-        {
           "node": "vintage_microscope_eye_piece",
-          "text": "Image inside the tube",
-          "at": [
-            0.07,
-            1.3,
-            0.15
-          ]
-        },
-        {
-          "node": "vintage_microscope_eye_piece",
-          "text": "Eyepiece: 10×",
+          "text": "eyepiece",
           "at": [
             0.07,
             1.7,
             0.15
           ]
         }
-      ],
-      "chart": {
-        "type": "ladder",
-        "title": "How big it looks",
-        "caption": "Each lens multiplies what the one before it made: ×10 and ×10 is 100 times the size the specimen looks to your eye at reading distance.",
-        "unit": "Times as large",
-        "scale": "log",
-        "rungs": [
-          {
-            "name": "Specimen",
-            "value": 1,
-            "note": "1×"
-          },
-          {
-            "name": "Objective",
-            "value": 10,
-            "note": "10×",
-            "step": "×10"
-          },
-          {
-            "name": "Eyepiece",
-            "value": 100,
-            "note": "100×",
-            "step": "×10"
-          }
-        ]
-      }
-    },
-    {
-      "label": "Focus",
-      "title": "Focusing: a rack and pinion",
-      "text": [
-        "At these magnifications the specimen is sharp only within a hair’s breadth. The focus knobs turn a small gear against a toothed rack on the arm, raising or lowering the whole tube a little at a time until it is."
-      ],
-      "angle": [
-        62,
-        16
-      ],
-      "fill": 0.66,
-      "focus": [
-        "vintage_microscope_adjustment",
-        "vintage_microscope_eye_piece",
-        "vintage_microscope_revolver"
-      ],
-      "frame": [
-        "vintage_microscope_adjustment",
-        "vintage_microscope_eye_piece"
-      ],
-      "tags": [
-        {
-          "node": "vintage_microscope_adjustment",
-          "text": "Focus knobs",
-          "at": [
-            0.17,
-            1.38,
-            0
-          ]
-        },
-        {
-          "node": "vintage_microscope_eye_piece",
-          "text": "Tube moves up and down",
-          "at": [
-            0.08,
-            1.05,
-            0.2
-          ]
-        }
       ]
     }
-  ]
+  ],
+  "credit": {
+    "title": "Vintage Microscope",
+    "author": "Luis José Fernández Rodríguez",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/vintage_microscope"
+  }
 }

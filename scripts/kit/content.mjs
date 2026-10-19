@@ -60,5 +60,5 @@ export function builtInCode(title, sources) {
 export function writeContent(slug, thing) {
   const file = path.join(ROOT, 'content', `${slug}.json`);
   writeFileSync(file, JSON.stringify(thing, null, 2) + '\n');
-  console.log(`wrote content/${slug}.json: ${thing.parts?.length ?? 0} parts, ${thing.annotations?.length ?? 0} callouts, ${thing.how?.length ?? 0} steps`);
+  console.log(`wrote content/${slug}.json: ${thing.parts?.length ?? 0} parts, ${thing.annotations?.length ?? 0} callouts, a film of ${(thing.film ?? []).reduce((t, shot) => t + shot.duration, 0)} s`);
 }

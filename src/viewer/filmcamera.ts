@@ -139,6 +139,21 @@ export class FilmCamera {
     this.speed = seconds;
   }
 
+  /** Back to rest at once, as the model is built: focused at infinity, at the rest stop, wound and ready (a film seeking). */
+  reset(): void {
+    this.extension = this.extensionTarget = 0;
+    this.stop = this.stopTarget = REST_STOP;
+    this.speed = 1 / 250;
+    this.cocked = true;
+    this.running = false;
+    this.shot = null;
+    this.pressed = 0;
+    this.curtains = [0, 0];
+    this.stroke = null;
+    this.strokes = this.lever = this.frames = this.ratchetTeeth = 0;
+    this.push();
+  }
+
   /** Presses the release: the first curtain runs, and the second follows after the speed set. False if not wound on. */
   fire(): boolean {
     if (!this.cocked || this.stroke) return false;

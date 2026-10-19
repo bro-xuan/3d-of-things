@@ -5,6 +5,24 @@
 //   node objects/film-projector/content.mjs
 import { writeContent } from '../../scripts/kit/content.mjs';
 
+/** What stays solid through the film: the reels, the film and the roller that guides it. The body is glass, so the
+ *  film's path through it to the gate, and the light's from the lamp to the lens, show inside. */
+const MOVING = ['filmstrip_projector_8mm_spool_feed', 'filmstrip_projector_8mm_spool_takeup', 'filmstrip_projector_8mm_feed_roller'];
+/** The gate, behind the lens, where each frame stops. */
+const GATE = [-0.21, 0.26, 0.33];
+/** The film's path: off the front reel, round the guide roller, down through the gate and round to the rear reel. */
+const filmPath = [
+  { node: 'filmstrip_projector_8mm_spool_feed', at: [-0.176, 0.64, 0.42] },
+  { node: 'filmstrip_projector_8mm_feed_roller', at: [-0.176, 0.536, 0.392] },
+  [-0.19, 0.36, 0.36],
+  GATE,
+  [-0.2, 0.12, 0.16],
+  [-0.18, 0.1, -0.2],
+  { node: 'filmstrip_projector_8mm_spool_takeup', at: [-0.176, 0.24, -0.39] },
+];
+/** The light: from the lamp, through the frame in the gate and the lens, out toward the screen. */
+const lightPath = [[-0.22, 0.26, 0.06], [-0.22, 0.26, 0.33], [-0.22, 0.26, 0.45], [-0.22, 0.26, 0.95]];
+
 writeContent('film-projector', {
   order: 5,
   title: 'Film Projector',
@@ -66,6 +84,47 @@ writeContent('film-projector', {
     },
   ],
   motion: [{ node: 'filmstrip_projector_8mm_spool_feed', axis: [1, 0, 0], speed: -0.3 }, { node: 'filmstrip_projector_8mm_spool_takeup', axis: [1, 0, 0], speed: -0.3 }],
+  // "How it works" as a film: the film running reel to reel, a frame at a time through the gate, and the lamp's light
+  // through it to the screen.
+  film: [
+    {
+      chapter: 'The film',
+      caption: 'The front reel feeds the film down into the machine, and the rear reel winds it back up.',
+      duration: 6,
+      angle: [-58, 16],
+      fill: 0.62,
+      focus: MOVING,
+      flow: filmPath,
+      tags: [
+        { node: 'filmstrip_projector_8mm_spool_feed', text: 'feed reel', at: [-0.2, 0.912, 0.38] },
+        { node: 'filmstrip_projector_8mm_spool_takeup', text: 'take-up reel', at: [-0.2, 0.522, -0.389] },
+      ],
+    },
+    {
+      chapter: 'The film',
+      caption: 'Behind the lens a claw pulls it down one frame and holds it still, 18 times a second.',
+      duration: 6,
+      angle: [-80, 10],
+      fill: 0.62,
+      focus: MOVING,
+      flow: filmPath,
+      tags: [{ node: 'filmstrip_projector_8mm', text: 'gate', at: GATE }],
+    },
+    {
+      chapter: 'Light',
+      caption: 'The lamp shines through each still frame, and the lens throws it onto the screen.',
+      duration: 7,
+      angle: [-104, 14],
+      fill: 0.55,
+      focus: MOVING,
+      carries: 'light',
+      flow: lightPath,
+      tags: [
+        { node: 'filmstrip_projector_8mm', text: 'lamp', at: [-0.22, 0.3, 0.06] },
+        { node: 'filmstrip_projector_8mm', text: 'lens', at: [-0.17, 0.3, 0.44] },
+      ],
+    },
+  ],
   motionLabel: 'Run the film',
   annotations: [
     {
@@ -118,87 +177,4 @@ writeContent('film-projector', {
     source: 'Poly Haven',
     sourceUrl: 'https://polyhaven.com/a/filmstrip_projector_8mm',
   },
-  how: [
-    {
-      label: 'Film path',
-      title: 'From reel to reel',
-      text: [
-        'Film unwinds from the front reel, round the guide roller and down into the machine. Past the lens it runs on round to the rear reel, which winds it back up.',
-        'Inside, small loops of slack above and below the gate let the film stop and start there, a frame at a time, while the reels keep turning smoothly.',
-      ],
-      angle: [-62, 18],
-      fill: 0.84,
-      focus: ['filmstrip_projector_8mm_spool_feed', 'filmstrip_projector_8mm_spool_takeup', 'filmstrip_projector_8mm_feed_roller', 'filmstrip_projector_8mm_spool_arm'],
-      flow: [
-        { node: 'filmstrip_projector_8mm_spool_feed', at: [-0.176, 0.64, 0.42] },
-        { node: 'filmstrip_projector_8mm_feed_roller', at: [-0.176, 0.536, 0.392] },
-        [-0.19, 0.36, 0.36],
-        [-0.21, 0.26, 0.33],
-        [-0.2, 0.12, 0.16],
-        [-0.18, 0.1, -0.2],
-        { node: 'filmstrip_projector_8mm_spool_takeup', at: [-0.176, 0.24, -0.39] },
-      ],
-      rate: 0.6,
-      tags: [
-        { node: 'filmstrip_projector_8mm_spool_feed', text: 'Feed reel', at: [-0.19, 1.15, 0.5] },
-        { node: 'filmstrip_projector_8mm_feed_roller', text: 'Guide roller', at: [-0.2, 0.54, 0.34] },
-        { node: 'filmstrip_projector_8mm_spool_takeup', text: 'Take-up reel', at: [-0.19, 0.75, -0.55] },
-      ],
-    },
-    {
-      label: 'The gate',
-      title: 'One frame at a time',
-      text: [
-        'In the gate behind the lens, a claw hooks into the film’s sprocket holes and pulls it down one frame, then lets it rest while that picture is shown.',
-        'A spinning shutter blocks the light while the film moves, and blinks once more while it’s still, so each frame flashes twice. At 18 frames a second your eye blends the stills into motion.',
-      ],
-      angle: [-50, 12],
-      fill: 0.6,
-      focus: ['filmstrip_projector_8mm_spool_feed', 'filmstrip_projector_8mm_spool_takeup', 'filmstrip_projector_8mm_feed_roller'],
-      frame: ['filmstrip_projector_8mm_feed_roller', 'filmstrip_projector_8mm_focus', 'filmstrip_projector_8mm_switch'],
-      flow: [{ node: 'filmstrip_projector_8mm_feed_roller', at: [-0.176, 0.536, 0.392] }, [-0.19, 0.36, 0.36], [-0.21, 0.26, 0.33], [-0.2, 0.12, 0.16]],
-      rate: 0.6,
-      tags: [{ node: 'filmstrip_projector_8mm', text: 'Gate: each frame stops here', at: [-0.24, 0.27, 0.36] }],
-      chart: {
-        type: 'timing',
-        title: 'One frame, slowed down',
-        caption: 'The film only moves while the shutter is shut (shaded), so the screen never shows a blur. The second blade blinks the light once more mid-frame, which hides the flicker.',
-        node: 'filmstrip_projector_8mm_spool_feed',
-        perTurn: 2,
-        bands: [[0, 0.3, 'pull-down']],
-        lanes: [
-          { name: 'Film', points: [[0, 0], [0.04, 0], [0.26, 1], [1, 1]] },
-          { name: 'Shutter', points: [[0, 0], [0.32, 0], [0.34, 1], [0.6, 1], [0.62, 0], [0.74, 0], [0.76, 1], [1, 1]], notes: [[0.47, 'open'], [0.68, 'blink']] },
-          { name: 'Screen', points: [[0, 0], [0.32, 0], [0.34, 1], [0.6, 1], [0.62, 0], [0.74, 0], [0.76, 1], [1, 1]] },
-        ],
-      },
-    },
-    {
-      label: 'Light',
-      title: 'Light through the frame',
-      text: [
-        'Behind the gate a bright lamp shines through the still frame, and the lens throws the picture onto the screen, a few hundred times wider than the film.',
-        'Turning the focus knob beside it slides the lens in or out until the picture is sharp.',
-      ],
-      angle: [42, 14],
-      fill: 0.6,
-      focus: ['filmstrip_projector_8mm_focus'],
-      frame: ['filmstrip_projector_8mm_focus', 'filmstrip_projector_8mm_feed_roller'],
-      carries: 'light',
-      flow: [[-0.22, 0.26, 0.06], [-0.22, 0.26, 0.33], [-0.22, 0.26, 0.45], [-0.22, 0.26, 0.95]],
-      tags: [
-        { node: 'filmstrip_projector_8mm', text: 'Lamp', at: [-0.22, 0.3, 0.06] },
-        { node: 'filmstrip_projector_8mm', text: 'Lens', at: [-0.17, 0.3, 0.44] },
-        { node: 'filmstrip_projector_8mm_focus', text: 'Focus knob', at: [-0.36, 0.3, 0.29] },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'From frame to screen',
-        caption: 'A Super 8 frame is under 6 mm wide. Thrown 1.5 m wide on a screen, it’s enlarged about 260 times, so every speck of dust shows.',
-        unit: 'Width, mm',
-        scale: 'log',
-        rungs: [{ name: 'Frame', value: 5.8, note: '5.8 mm' }, { name: 'Screen', value: 1500, note: '1.5 m', step: '×260' }],
-      },
-    },
-  ],
 });

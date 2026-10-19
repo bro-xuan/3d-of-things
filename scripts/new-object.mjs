@@ -107,7 +107,7 @@ try {
 console.log(`
 new: ${slug} is on the site in ${((Date.now() - started) / 1000).toFixed(0)} s (npm run dev → #/thing/${slug}).
 Next, as in .claude/skills/3d-of-things/SKILL.md:
-  1. Fill objects/${slug}/TRUTH.md: sources, numbers, energy chain, parts, tour.
+  1. Fill objects/${slug}/TRUTH.md: sources, numbers, energy chain, parts, film.
   2. ${tier === 'A' ? `Group and describe the parts in objects/${slug}/content.mjs` : `Build the object in objects/${slug}/${tier === 'B' ? 'augment' : 'generate'}.mjs`}, then loop:
        npm run models:build -- ${slug} && node objects/${slug}/content.mjs && npm run check -- ${slug}
        npm run qa -- ${slug} --model        (views and explode, ~15 s)

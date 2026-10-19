@@ -1918,11 +1918,6 @@ main[data-handover] .sheet > * {
   height: 1rem;
 }
 
-.tour__page {
-  display: grid;
-  gap: 0.85rem;
-}
-
 .tour__title {
   margin: 0;
   font-family: var(--font-display);
@@ -1936,16 +1931,6 @@ main[data-handover] .sheet > * {
 /* It takes focus to be read out, as the page's title does, not to be pressed. */
 .tour__title:focus {
   outline: none;
-}
-
-.tour__text p {
-  margin: 0 0 0.75rem;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
-.tour__text p:last-child {
-  margin-bottom: 0;
 }
 
 .tour__figure {
@@ -1980,317 +1965,238 @@ main[data-handover] .sheet > * {
   text-wrap: pretty;
 }
 
-/* Something to try, and slow motion. On wide screens it sits on the stage by the model, where the hook
-   is printed otherwise (the cannon's FIRE button); on phones it's in the tour's page. */
-.stage__try {
-  position: absolute;
-  left: var(--stage-pad);
-  bottom: calc(var(--stage-pad) + 2.6rem);
-  z-index: 3;
-  width: min(24rem, 40%);
-  pointer-events: none;
-}
-
-/* The slot is the most room a step's controls take, so whether they fit beside the step bar doesn't change as their
-   readout does. Where they wouldn't, they stand over it (the tour sets this). */
-.stage__try.is-over {
-  bottom: calc(var(--stage-pad) + 4.6rem);
-}
-
-.stage__try .tour__try {
-  width: fit-content;
-  max-width: 100%;
-  pointer-events: auto;
-}
-
-.tour__try {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--rule);
-  border-radius: 0.6rem;
-  background: color-mix(in oklch, var(--paper-raised) 94%, transparent);
-  box-shadow: var(--shadow-soft);
-  animation: card-in 380ms var(--ease-out) both;
-}
-
-.tour__try[hidden] {
-  display: none;
-}
-
-.tour__try-actions {
-  display: contents;
-}
-
-.tour__try-home .tour__try {
-  box-shadow: none;
-  background: var(--paper-sunk);
-  border-color: transparent;
-}
-
-.button--try {
-  border-color: var(--accent-strong);
-  color: var(--accent-ink);
-  background: var(--paper-raised);
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.button--try:hover {
-  background: var(--accent-wash);
-}
-
-.button--try svg {
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.button--hold.is-held,
-.button--try[aria-pressed='true'] {
-  background: var(--accent-strong);
-  color: var(--paper-raised);
-}
-
-.tour__readout {
-  flex: 1 1 12rem;
-  margin: 0;
-  color: var(--ink-2);
-  font: 500 0.85rem/1.4 var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-
-.tour__readout:empty {
-  display: none;
-}
-
-.tour__slider {
-  display: grid;
-  flex: 1 1 100%;
-  gap: 0.1rem;
-  color: var(--ink-3);
-  font: 500 0.8rem/1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.tour__slider input {
-  width: 100%;
-  accent-color: var(--accent-strong);
-}
-
-.tour__toggle {
-  min-height: 2.25rem;
-  padding: 0 0.85rem;
-  border: 1px solid var(--rule-strong);
-  border-radius: 999px;
-  background: none;
-  color: var(--ink-2);
-  font: 500 0.8rem/1 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.tour__toggle[hidden] {
-  display: none;
-}
-
-.tour__toggle[aria-pressed='true'] {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper-raised);
-}
-
-/* The step bar: back, the steps, next. It stands on the stage in the corner by the page, in the same place and at
-   the same size on every step (Next is as wide as its longest wording), so the tour can be clicked through without
-   looking for it. The step's controls keep the corner across from it. */
-.tour__nav {
-  position: absolute;
-  right: var(--stage-pad);
-  bottom: var(--stage-pad);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: color-mix(in oklch, var(--paper-raised) 92%, transparent);
-  box-shadow: var(--shadow-soft);
-  animation: card-in 380ms var(--ease-out) both;
-}
-
-.tour__nav[hidden] {
-  display: none;
-}
-
-.tour__back {
-  flex: none;
-  width: 3rem;
-  height: 3rem;
-}
-
-.tour__back:disabled {
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-/* The steps, as numbered stops on a rule that's inked in as far as the one on show. Pointing at one names it. */
-.tour__steps {
-  --stop: 1.9rem;
-  position: relative;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tour__steps::before,
-.tour__steps::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: calc(var(--stop) / 2);
-  height: 1.5px;
-  translate: 0 -50%;
-}
-
-.tour__steps::before {
-  right: calc(var(--stop) / 2);
-  background: var(--rule-strong);
-}
-
-.tour__steps::after {
-  width: calc((100% - var(--stop)) * var(--at, 0));
-  background: var(--accent-strong);
-  transition: width 400ms var(--ease-out);
-}
-
-.tour__step {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: var(--stop);
-  height: 3rem;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  color: var(--ink-3);
-  cursor: pointer;
-}
-
-.tour__step-num {
-  display: grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  border: 1.5px solid var(--rule-strong);
-  border-radius: 50%;
-  background: var(--paper-raised);
-  font: 600 0.8rem/1 var(--font-mono);
-  transition:
-    background-color 200ms,
-    border-color 200ms,
-    color 200ms;
-}
-
-.tour__step:hover .tour__step-num {
-  border-color: var(--ink-2);
-  color: var(--ink);
-}
-
-.tour__step.is-done .tour__step-num {
-  border-color: var(--accent-strong);
-  color: var(--accent-ink);
-}
-
-.tour__step[aria-current='step'] .tour__step-num {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper-raised);
-}
-
-/* The name, as a tag over the stop while it's pointed at. */
-.tour__step-label {
-  position: absolute;
-  bottom: calc(100% + 0.45rem);
-  left: 50%;
-  padding: 0.25rem 0.55rem;
-  border-radius: 0.3rem;
-  background: var(--ink);
-  color: var(--paper-raised);
-  font: 550 0.85rem/1.3 var(--font-body);
-  white-space: nowrap;
-  opacity: 0;
-  translate: -50% 0.25rem;
-  pointer-events: none;
-  transition:
-    opacity 150ms,
-    translate 200ms var(--ease-out);
-}
-
-.tour__step:focus-visible .tour__step-label {
-  opacity: 1;
-  translate: -50% 0;
-}
-
-/* Only for a pointer that hovers: a tap would leave the tag standing. */
-@media (hover: hover) {
-  .tour__step:hover .tour__step-label {
-    opacity: 1;
-    translate: -50% 0;
-  }
-}
-
-.tour__next {
-  min-height: 3rem;
-  padding: 0 1.3rem 0 1.45rem;
-  font-size: 1rem;
-}
-
-.tour__next svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-/* Every step's wording, stacked in one cell: only the one for the step on show is seen. */
-.tour__next-labels {
-  display: grid;
-  justify-items: center;
-}
-
-.tour__next-labels > span {
-  grid-area: 1 / 1;
-  white-space: nowrap;
-  visibility: hidden;
-}
-
-.tour__next-labels > .is-on {
-  visibility: visible;
-}
-
-/* While touring, the foot of the stage is the step's: the hint for handling the model steps aside for the bar. */
+/* While the film is on, the foot of the stage is its bar's: the hint for handling the model steps aside. */
 .thing[data-touring] .stage__hint {
   opacity: 0;
   visibility: hidden;
-}
-
-/* A narrow stage beside the page: Next leaves off the step's name, and narrower still, the scale steps aside too. */
-@media (min-width: 52.01rem) and (max-width: 68rem) {
-  .tour__next-name {
-    display: none;
-  }
 }
 
 @media (min-width: 52.01rem) and (max-width: 60rem) {
   .thing[data-touring] .scale {
     opacity: 0;
   }
+}
+
+/* ------------------------------------------------------------ the film */
+
+/* "How it works" as an animation: a caption under the model like a subtitle, a bar along the stage's foot to play,
+   pause and scrub it by chapter, and the sheet's card as its script. */
+.film__page {
+  display: grid;
+  gap: 1rem;
+}
+
+.film__script,
+.film__script ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.film__script {
+  gap: 0.9rem;
+}
+
+.film__part-name {
+  margin: 0 0 0.3rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.2 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.film__line {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem 0.4rem 0.6rem;
+  border: 0;
+  border-left: 2px solid var(--rule);
+  background: none;
+  color: var(--ink-3);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 200ms,
+    border-color 200ms,
+    background-color 200ms;
+}
+
+.film__line:hover {
+  background: var(--paper-sunk);
+  color: var(--ink-2);
+}
+
+.film__line[aria-current] {
+  border-left-color: var(--accent-strong);
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+.film__at {
+  padding-top: 0.15rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.film__said {
+  font-size: 1rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* The caption: one line of what's happening, under the model, over the bar. */
+.film__caption {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--stage-pad) + 5.4rem);
+  z-index: 3;
+  width: min(calc(100% - 2 * var(--stage-pad)), 44rem);
+  translate: -50% 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.film__caption[hidden],
+.film__bar[hidden] {
+  display: none;
+}
+
+.film__caption-text {
+  display: inline-block;
+  margin: 0;
+  padding: 0.55rem 1.1rem 0.6rem;
+  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--paper-raised) 90%, transparent);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.film__bar {
+  position: absolute;
+  right: var(--stage-pad);
+  bottom: var(--stage-pad);
+  left: var(--stage-pad);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.45rem 0.7rem 0.45rem 0.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 1.6rem;
+  background: color-mix(in oklch, var(--paper-raised) 92%, transparent);
+  box-shadow: var(--shadow-soft);
+  animation: card-in 380ms var(--ease-out) both;
+}
+
+.film__play {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper-raised);
+  cursor: pointer;
+}
+
+.film__play:hover {
+  background: oklch(0.33 0.02 60);
+}
+
+.film__play svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* The chapters, each as long as it lasts, inked in as the film plays through them. */
+.film__track {
+  display: flex;
+  flex: 1;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.45rem 0 0.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.film__track:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 0.25rem;
+}
+
+.film__chapter {
+  display: grid;
+  flex-basis: 0;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.film__chapter-bar {
+  position: relative;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--rule-strong);
+  overflow: hidden;
+}
+
+.film__chapter-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-strong);
+  transform: scaleX(var(--done, 0));
+  transform-origin: left;
+}
+
+.film__chapter-name {
+  overflow: hidden;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.2 var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.film__chapter.is-on .film__chapter-name {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.film__time {
+  flex: none;
+  color: var(--ink-2);
+  font: 500 0.85rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.film__speed {
+  flex: none;
+  min-width: 2.75rem;
+  min-height: 2.25rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: 600 0.85rem/1 var(--font-mono);
+  cursor: pointer;
+}
+
+.film__speed:hover {
+  border-color: var(--ink-2);
+  color: var(--ink);
 }
 
 /* Charts: ink on the card's paper, hairline grids, notes in italics. */
@@ -2576,35 +2482,6 @@ main[data-handover] .sheet > * {
 .chart .chart__film-label {
   fill: var(--paper-raised);
   font: 500 0.8rem/1 var(--font-mono);
-}
-
-/* Choices on the stage, such as which pulleys the belt is on. */
-.tour__choices {
-  display: flex;
-  gap: 0.3rem;
-}
-
-.tour__choice {
-  display: grid;
-  place-items: center;
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  border: 1px solid var(--rule-strong);
-  border-radius: 0.4rem;
-  background: var(--paper-raised);
-  color: var(--ink-2);
-  font: 600 0.9rem/1 var(--font-mono);
-  cursor: pointer;
-}
-
-.tour__choice:hover {
-  border-color: var(--ink-2);
-}
-
-.tour__choice[aria-checked='true'] {
-  border-color: var(--accent-strong);
-  background: var(--accent-strong);
-  color: var(--paper-raised);
 }
 
 .chart__node {
@@ -3131,7 +3008,7 @@ main[data-handover] .sheet > * {
   }
 }
 
-/* While touring, the stage gives the model the room: the tray and the hook printed under it step aside. */
+/* While the film is on, the stage gives the model the room: the tray and the hook printed under it step aside. */
 .thing[data-touring] .tray,
 .thing[data-touring] .stage__left,
 .thing[data-touring] .stage__right {
@@ -3151,7 +3028,7 @@ main[data-handover] .sheet > * {
     visibility 0s;
 }
 
-/* While touring, the step's own tags speak for the model; the callout markers and part letters step back. */
+/* While the film is on, its own tags speak for the model; the callout markers and part letters step back. */
 .viewer__labels[data-touring] .hotspot,
 .viewer__labels[data-touring] .part-badge {
   display: none;
@@ -3234,14 +3111,14 @@ main[data-handover] .sheet > * {
     scroll-margin-top: calc(var(--header-h) + 56svh + 1.25rem);
   }
 
-  /* The step bar runs along the bottom of the screen, where a thumb rests, and the page keeps clear of it. */
-  .tour__nav {
+  /* The film's bar runs along the bottom of the screen too, and its caption sits at the model's foot. */
+  .film__bar {
     position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
-    justify-content: space-between;
-    padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    gap: 0.6rem;
+    padding: 0.5rem max(0.75rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
     border-width: 1px 0 0;
     border-radius: 0;
     background: var(--paper-raised);
@@ -3249,29 +3126,27 @@ main[data-handover] .sheet > * {
     animation-name: bar-up;
   }
 
-  .thing[data-touring] .sheet {
-    padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+  .film__caption {
+    bottom: 0.75rem;
   }
-}
 
-/* On a phone, Next says just that and the stops close up. */
-@media (max-width: 30rem) {
-  .tour__next-name {
+  .film__caption-text {
+    padding: 0.45rem 0.85rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  /* A phone's stage is short: while the film plays, the look cards step aside so a tall model has the room. */
+  .thing[data-touring] .views {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .film__time {
     display: none;
   }
 
-  .tour__back {
-    width: 2.75rem;
-    height: 2.75rem;
-  }
-
-  .tour__steps {
-    --stop: 1.55rem;
-  }
-
-  .tour__step-num {
-    width: 1.4rem;
-    height: 1.4rem;
+  .thing[data-touring] .sheet {
+    padding-bottom: calc(7rem + env(safe-area-inset-bottom));
   }
 }
 

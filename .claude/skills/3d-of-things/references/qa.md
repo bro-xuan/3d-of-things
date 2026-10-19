@@ -9,9 +9,9 @@ Two checkers, both driven by the content file, so a new object is checked with n
 - every node a content file names exists (parts, `with`, focus, frame, hide, tags, flows, counts, spins, motions, cranks, cams, jets, `hide`);
 - every mesh belongs to a part;
 - every point (callouts, tags, flows, pivots, jets) sits on the model; a point a whole unit off is an error (millimetres pasted where model units belong), a little off a warning;
-- every `chart` and `try` exists in the code (`npm run check -- --list` prints them);
+- every film cue (and any `chart`) exists in the code (`npm run check -- --list` prints them); captions, shots and films within their lengths;
 - the credit is complete, `order` is unique, the category exists, the build script exists;
-- warnings for parts with no `about`, no facts, no callouts, no tour, missing posters and TODO text.
+- warnings for parts with no `about`, no facts, no callouts, no film, missing posters and TODO text.
 
 It exits 1 on any error.
 
@@ -25,26 +25,25 @@ It exits 1 on any error.
 | rest | At rest, wireframe, apart at 50% and 100%, the drawings | errors while apart |
 | views (`--model`) | From the front, side and top, and apart at 25/50/75/100% | as rest |
 | callouts | Opens each callout from the sheet | its card runs off the window, it doesn't open to its `explode`, errors |
-| tour | Opens How it works and every step | the title isn't shown, a tag is missing (unknown node), a chart doesn't draw, a `try` has no controls or its box covers the step bar, Esc doesn't close it; warns on tags past the stage and chart text past the column |
-| try | Drives each experiment: holds each hold button, moves each slider to both ends, clicks each choice and button | the readout never changes |
+| tour | Opens How it works: the film plays on its own; each shot is held near its end and checked; then a strip of frames at even steps through the whole film; played to the end, it stops | it doesn't play, a caption isn't shown or runs off the window, a tag is missing (unknown node), it doesn't stop at the end, Esc doesn't close it; warns on captions over 110 characters, tags past the stage and a film outside 12–30 s |
 | run | Presses the run button | a spinning part doesn't turn |
-| phone | 390 × 844 at 2×, a touch device: rest and the first step | the page scrolls sideways, errors |
+| phone | 390 × 844 at 2×, a touch device: rest and the film's opening | the page scrolls sideways, errors |
 | motion | Reduced motion, taken apart | errors |
 
 ```sh
 npm run qa -- <slug>                    # everything
 npm run qa -- <slug> --model            # the model only, for the geometry loop (~15 s)
-npm run qa -- <slug> --only tour,try    # some sections
-npm run qa -- --all --quick             # load, rest and tour for every object (~100 s, 3 at a time)
+npm run qa -- <slug> --only tour        # some sections (tour is the film)
+npm run qa -- --all --quick             # load, rest and the film for every object (~100 s, 3 at a time)
 npm run qa -- --skill                   # the skill's page: its live watch winds, slows, comes apart; the wheel scrolls (~15 s)
 npm run qa -- <slug> --software         # SwiftShader, to compare
 npm run qa -- --all --deployed --url http://localhost:3017/3d-of-everything/objects
-                                        # a built copy, served (or the live site): load, rest and tour
+                                        # a built copy, served (or the live site): load, rest and the film
 ```
 
-`--deployed` is for the copy baked into afrodance.fun (`npm run export`, README › Deploying): serve that site's production build (`npx next build && npx next start -p 3017` in its checkout) and point `--url` at the gallery. It checks what the dev server can't: the URLs under the mount, the production bundle, the host's rewrites. Without the dev hooks it skips taking apart, callouts, experiments and run.
+`--deployed` is for the copy baked into afrodance.fun (`npm run export`, README › Deploying): serve that site's production build (`npx next build && npx next start -p 3017` in its checkout) and point `--url` at the gallery. It checks what the dev server can't: the URLs under the mount, the production bundle, the host's rewrites. Without the dev hooks it skips taking apart, callouts and run, and checks the film by jumping to each shot from its script.
 
-Output goes to `.cache/qa/<slug>/`: numbered contact sheets (`<slug>-1-rest.png`, `-2-callouts.png`, `-3-tour.png`, one per experiment, `-N-phone.png`), every single shot in `shots/`, and `report.json` (every check, the console, the renderer, timings). The exit code is 1 if anything failed.
+Output goes to `.cache/qa/<slug>/`: numbered contact sheets (`<slug>-1-rest.png`, `-2-callouts.png`, `-3-film.png`, `-N-phone.png`), every single shot in `shots/`, and `report.json` (every check, the console, the renderer, timings). The exit code is 1 if anything failed.
 
 ## Reading the sheets
 
@@ -54,9 +53,8 @@ Read every sheet the run prints. Failed tiles are framed in red, but most of wha
 - **Wireframe:** hidden lines faint; no stray long triangles from the build.
 - **Apart:** every part clear of the others and on the stage; outer parts first; the order reads as the energy chain.
 - **Callouts:** the camera frames the part; the card sits beside it without covering it; the marker is on the surface.
-- **Tour:** the focused parts solid and the rest glass; the flow line runs through the right parts and fades before the panel; tags on their parts and readable; the chart readable beside the model; the try box clear of everything.
-- **Experiments:** the frames show the mechanism moving the right way and in the right order; the readout's numbers are plausible.
-- **Phone:** the sheet below the stage; nothing cut off; the tour readable.
+- **Film:** read the strip as a film (references/film.md, "Making one"): the camera glides, each frame a small even move from the last, never a jump or a lurch in and out; every frame shows the action its caption names, whole and clear of the caption and bar; the insides show through the glass; nothing flicks between solid and glass; tags and lines on their parts. Then watch it once at normal speed in the browser for the pace.
+- **Phone:** the sheet below the stage; nothing cut off; the caption and bar readable.
 
 Zoom into a single shot from `shots/` only where a sheet raises a question.
 

@@ -155,15 +155,15 @@ source → transmission → control → output. One line each, naming the parts.
 - **Reused:** a `speed` spin; the `speeds` experiment (The push: 1, 2 and 3 bar, each scaling the arm's speed); generic `bars` charts (`follow: 'selected'` in The push, so the chart picks the chosen pressure); the `water` flow from the washing machine, with its points on the arm and nozzles set to `ride` so the lines turn with them.
 - **Nothing new in the viewer.** The water jets themselves aren't drawn: the car's thruster jets are supersonic gas, and a water jet that arcs and breaks into drops would need a look of its own.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Arm, Left nozzle, Right nozzle; water flow (2 paths) |  |  |
-| 2 | Water in | Frame and column, Arm; water flow |  |  |
-| 3 | The push | Arm, Left nozzle, Right nozzle | bars: How far it throws | speeds: 1 bar / 2 bar / 3 bar |
-| 4 | Speed | Arm, Left nozzle, Right nozzle, Frame and column | bars: Where the push goes at 166 rpm |  |
-| 5 | Throw | Arm, Left nozzle, Right nozzle; water flow | bars: Turning the nozzles sideways |  |
+| 0 s | Water in | Turn on the tap and water comes up the column, through the swivel and out along the arm. | 6 |  |
+| 6 s | The push | Each nozzle throws water back and to the side, and the water pushes the nozzle forwards. | 6 |  |
+| 12 s | The push | Pushed at both ends, the arm turns at about 170 rpm and waters a circle 14 m across. | 6 |  |
 
 ## 9. Simplified or left out
 

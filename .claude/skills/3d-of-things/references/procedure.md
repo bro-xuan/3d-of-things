@@ -7,7 +7,7 @@ Each stage ends with an exit check. Don't start the next stage until it passes; 
 - Identify the object exactly: make, model, year, variant. A current product: web-search its latest reveal (extended search for anything recent), and use press photos for proportions. Say which figures are the maker's claims.
 - Check variety: list `content/` and make sure the new object differs from the last ones in mechanism and silhouette. A second of a kind is fine; before a third, check in with the user.
 - Pick the tier (SKILL.md) and say its budget.
-- Post the brief: object, tier and budget, the energy chain in one line, the tour's 5–7 step labels, what will move, what you'll try, the sources you'll use. Carry on unless the user objects.
+- Post the brief: object, tier and budget, the energy chain in one line, the film's shots (15–25 s, the happy path), what will move, the sources you'll use. Carry on unless the user objects.
 
 **Exit:** the brief is posted, the tier is named, nothing on the site already does the same thing.
 
@@ -19,9 +19,9 @@ Start a research subagent as soon as the brief is out, and scaffold while it wor
 
 > Research the **{object}** for an educational 3D teardown and fill sections 1–5 and 9 of `objects/{slug}/TRUTH.md` (read it first; edit no other file). Identify it exactly (for a current product, its latest reveal). Give real dimensions and every number its mechanism runs on (teeth, ratios, focal lengths, timings, pressures, speeds), each with its source (service manuals, patents, maker's specifications, museum records), and the energy chain from source to output, naming the parts. Name one common misconception about how it works and the correction. Note what a teardown would have to simplify. For a model, search Poly Haven (`https://api.polyhaven.com/assets?t=models`, then `/info/<id>`) and report candidates with their asset ids, and whether the parts are separate (if unsure, say so). Licences must be CC0 or CC BY and checkable at the source. Return a short summary with any doubts.
 
-Meanwhile, fill sections 6–8 yourself as the research lands: parts in chain order (8–20 parts, 4–8 groups), the mechanism map, the tour outline.
+Meanwhile, fill sections 6–8 yourself as the research lands: parts in chain order (8–20 parts, 4–8 groups), the mechanism map, the film's shot list (references/film.md).
 
-**Exit:** sections 1–8 are filled, every number has a source, the model's licence is confirmed (or it's built in code), and the tour outline names its charts and experiments, reusing existing kinds where possible.
+**Exit:** sections 1–8 are filled, every number has a source, the model's licence is confirmed (or it's built in code), and the shot list says what moves in each shot with the cues that move it, reusing existing ones where possible.
 
 ## 2. Scaffold (2 min)
 
@@ -59,15 +59,15 @@ Rules:
 
 Optionally, while you build the model, a writer subagent can draft the words:
 
-> Read `.claude/skills/3d-of-things/references/explaining.md` and `objects/{slug}/TRUTH.md`, and two existing content files for the voice (`content/pocket-watch.json`, `content/reflex-camera.json`). Draft the words for {object}: hook, three summary paragraphs, 4–6 facts, an `about` for each part in section 6, 6–9 callouts (title and text) and the tour steps in section 8 (label, title, two short paragraphs each). Return them as JSON in your final message; don't edit any file.
+> Read `.claude/skills/3d-of-things/references/explaining.md` and `objects/{slug}/TRUTH.md`, and two existing content files for the voice (`content/pocket-watch.json`, `content/reflex-camera.json`). Draft the words for {object}: hook, three summary paragraphs, 4–6 facts, an `about` for each part in section 6, 6–9 callouts (title and text) and the film's captions in section 8 (one line each, references/film.md). Return them as JSON in your final message; don't edit any file.
 
 **Exit:** `npm run check -- <slug>` passes with no TODO left.
 
 ## 5. Mechanism (only for a new kind)
 
-Reuse first; references/mechanisms.md lists what exists. A new kind means a viewer module, its controls, maybe experiments and charts. Wire it where that reference says, and keep its maths free of three.js so the charts can import it.
+Reuse first; references/mechanisms.md lists what exists. A new kind means a viewer module, its controls and a cue for the film. Wire it where that reference says, and keep its maths free of three.js.
 
-**Exit:** `npm run typecheck` passes and the object's experiments respond in `npm run qa -- <slug> --only tour,try`.
+**Exit:** `npm run typecheck` passes and the film moves it in `npm run qa -- <slug> --only tour`.
 
 ## 6. Check (10 min)
 
@@ -88,7 +88,7 @@ npm run reproduce              # every content file rebuilt from its builder; --
 ## 7. Ship (5 min)
 
 - `npm run posters -- <slug>`.
-- `npm run truth -- <slug>` writes the truth sheet's parts table (section 6) and tour table (section 8) from what was built, keeping any notes around them; then fill section 7 (the mechanism map) and the log in section 10.
+- `npm run truth -- <slug>` writes the truth sheet's parts table (section 6) and film table (section 8) from what was built, keeping any notes around them; then fill section 7 (the mechanism map) and the log in section 10.
 - README: add the object to the list at the top and to the models table (title, source link, author, licence). On `skill.html`, add it to the objects list and update the counts.
 - `npm run build` (type-check and production build).
 - Memory: a note for anything non-obvious this object taught (a model quirk, a user preference).

@@ -1,15 +1,15 @@
 // The browser checks for an object page, written once and driven by the content file:
-// every callout, every step of "How it works" and every experiment is exercised, the page
-// is checked on a phone and with reduced motion, and the results come back as a few
-// labelled contact sheets, a JSON report and an exit code.
+// every callout is opened and the "How it works" film is played through and caught as a strip
+// of frames, the page is checked on a phone and with reduced motion, and the results come
+// back as a few labelled contact sheets, a JSON report and an exit code.
 //
 //   npm run qa -- reflex-camera            # everything, for one object
-//   npm run qa -- --all --quick            # load, rest and tour for every object (regression)
+//   npm run qa -- --all --quick            # load, rest and the film for every object (regression)
 //   npm run qa -- reflex-camera --model    # the model only: views and explode stages (geometry loop)
-//   npm run qa -- slug --only tour,try     # some sections: rest, callouts, tour, try, run, phone, motion
+//   npm run qa -- slug --only tour         # some sections: rest, callouts, tour (the film), run, phone, motion
 //   npm run qa -- slug --url http://localhost:5173   # use a running dev server instead of starting one
 //   npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects
-//                                          # a built or live copy (no dev hooks): load, rest and tour
+//                                          # a built or live copy (no dev hooks): load, rest and the film
 //   npm run qa -- --all --jobs 4           # objects checked side by side (default 3 with --all)
 //   npm run qa -- slug --retina            # shots at 2× (fine detail, README pictures)
 //   npm run qa -- --skill                  # the skill's page and its live watch (--all includes it)
@@ -28,7 +28,7 @@ const flag = (name) => args.includes(name);
 const opt = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 const valued = new Set(['--only', '--url', '--out', '--jobs']);
 const slugs = args.filter((a, i) => !a.startsWith('--') && !valued.has(args[i - 1]));
-const ALL_SECTIONS = ['rest', 'callouts', 'tour', 'try', 'run', 'phone', 'motion'];
+const ALL_SECTIONS = ['rest', 'callouts', 'tour', 'run', 'phone', 'motion'];
 // A deployed copy has no `window.__viewer`, so only the checks that work through the page itself run.
 const deployed = flag('--deployed');
 if (deployed && !opt('--url')) {
@@ -117,6 +117,79 @@ async function checkObject(slug, thing) {
     await page.waitForFunction(() => (window.__viewer ? window.__viewer.tweens.length === 0 : !document.querySelector('[data-moving]')), null, { timeout: 10_000, polling: 50 }).catch(() => {});
     await page.waitForTimeout(extra);
   };
+  /** "How it works" as a film: it opens and plays on its own; each shot is held a little before its end (dev) or
+   *  jumped to from the script (a built copy) and shot, with its caption and tags checked; Esc closes it. */
+  const checkFilm = async (page, film) => {
+    let mark = logs.length;
+    await page.locator('[data-action="how"]').click();
+    await page.waitForSelector('.thing[data-touring]', { timeout: 5000 });
+    await page.waitForTimeout(1500);
+    const dev = await page.evaluate(() => !!window.__film);
+    const total = film.reduce((sum, shot) => sum + shot.duration, 0);
+    record('film', 'length', total >= 12 && total <= 30, `${total.toFixed(1)} s (15–25, 30 at most)`, 'warn');
+    if (dev) {
+      const playing = await page.evaluate(() => window.__film.status);
+      record('film', 'plays on opening', playing.playing && playing.time > 0.3, `playing ${playing.playing}, at ${playing.time.toFixed(2)} s`);
+    }
+    let start = 0;
+    for (const [i, shot] of film.entries()) {
+      mark = logs.length;
+      const where = `${i + 1} "${shot.chapter}: ${shot.caption.slice(0, 40)}"`;
+      if (dev) {
+        await page.evaluate((t) => window.__film.hold(t), start + shot.duration * 0.85);
+        // Flow lines draw themselves in.
+        await settle(page, shot.flow || shot.flows ? 1600 : 300);
+      } else {
+        await page.locator(`.film__line[data-shot="${i}"]`).click();
+        await page.waitForTimeout(Math.min(2500, shot.duration * 600));
+      }
+      const state = await page.evaluate(() => {
+        const tags = [...document.querySelectorAll('.step-tag')].filter((t) => getComputedStyle(t).display !== 'none');
+        const caption = document.querySelector('.film__caption-text');
+        const r = caption?.getBoundingClientRect();
+        return {
+          caption: caption?.textContent ?? '',
+          inside: !!r && r.left >= 0 && r.right <= innerWidth && r.bottom <= innerHeight,
+          tags: tags.length,
+          offstage: tags.filter((t) => t.classList.contains('is-offstage')).map((t) => t.textContent.trim()),
+          chart: !!document.querySelector('.film__figure:not([hidden]) .tour__chart svg, .film__figure:not([hidden]) .tour__chart canvas'),
+        };
+      });
+      record('film', `${where}: caption`, state.caption === shot.caption, `shows "${state.caption.slice(0, 60)}"`);
+      record('film', `${where}: caption on screen`, state.inside, 'the caption runs off the window');
+      record('film', `${where}: caption length`, shot.caption.length <= 110, `${shot.caption.length} characters (110 at most)`, 'warn');
+      const tagsWanted = shot.tags?.length ?? 0;
+      record('film', `${where}: tags`, state.tags === tagsWanted, `${state.tags} of ${tagsWanted} tags shown (a tag on an unknown node is dropped)`);
+      if (state.offstage.length) record('film', `${where}: tags off the stage`, false, state.offstage.join(', '), 'warn');
+      if (shot.chart) record('film', `${where}: chart`, state.chart, `chart ${JSON.stringify(typeof shot.chart === 'string' ? shot.chart : shot.chart.type)} didn't draw`);
+      consoleCheck('film', where, mark);
+      if (!dev) await shoot(page, 'film', `${i + 1} ${shot.chapter}`, state.caption !== shot.caption);
+      start += shot.duration;
+    }
+    if (dev) {
+      // A strip through the whole film at even steps: the camera should glide from frame to frame, never jump.
+      const step = total / Math.max(8, Math.min(16, Math.round(total / 1.5)));
+      for (let t = 0; t <= total + 1e-6; t += step) {
+        await page.evaluate((at) => window.__film.hold(at), Math.min(t, total));
+        await settle(page, 250);
+        const at = `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}.${Math.floor((t % 1) * 10)}`;
+        await shoot(page, 'film', at);
+      }
+    }
+    if (dev) {
+      // Played through from a moment to the end, it stops there.
+      await page.evaluate((t) => { window.__film.hold(t); }, total - 0.4);
+      await page.locator('[data-film="play"]').click();
+      await page.waitForTimeout(1200);
+      const end = await page.evaluate(() => window.__film.status);
+      record('film', 'stops at the end', !end.playing && end.time >= end.total - 0.01, `playing ${end.playing}, at ${end.time.toFixed(2)} of ${end.total} s`);
+    }
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(500);
+    record('film', 'Esc closes the film', !(await page.locator('.thing[data-touring]').count()), 'still open after Esc');
+    await settle(page);
+  };
+
   /** Opens the object page and waits for the model, the opening move and the drawings. */
   const open = async (context) => {
     const page = await context.newPage();
@@ -193,61 +266,8 @@ async function checkObject(slug, thing) {
       await settle(page);
     }
 
-    const steps = thing.how ?? [];
-    const wantsTour = steps.length && (sections.has('tour') || sections.has('try'));
-    if (wantsTour) {
-      await page.locator('[data-action="how"]').click();
-      await page.waitForSelector('.thing[data-touring]', { timeout: 5000 });
-      for (const [i, step] of steps.entries()) {
-        mark = logs.length;
-        await page.locator(`.tour__step[data-step="${i}"]`).click();
-        await settle(page, 450);
-        const where = `${i + 1} "${step.label}"`;
-        const state = await page.evaluate(() => {
-          const rect = (el) => el?.getBoundingClientRect();
-          const overlap = (a, b) => a && b && a.width && b.width && a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
-          const page = rect(document.querySelector('.tour__page'));
-          const tags = [...document.querySelectorAll('.step-tag')].filter((t) => getComputedStyle(t).display !== 'none');
-          // An inline SVG clips what lies outside it, so only the part of a label inside its SVG can show.
-          const chartText = [...document.querySelectorAll('.tour__chart svg text')].filter((t) => {
-            const r = t.getBoundingClientRect();
-            const box = t.closest('svg').getBoundingClientRect();
-            const left = Math.max(r.left, box.left);
-            const right = Math.min(r.right, box.right);
-            return r.width && page && right > left && (left < page.left - 2 || right > page.right + 2);
-          });
-          const tryBox = document.querySelector('.tour__try');
-          const tryShown = tryBox && getComputedStyle(tryBox).display !== 'none' && rect(tryBox).width > 0;
-          return {
-            text: document.querySelector('.tour__page')?.textContent ?? '',
-            tags: tags.length,
-            offstage: tags.filter((t) => t.classList.contains('is-offstage')).map((t) => t.textContent.trim()),
-            chart: !!document.querySelector('.tour__chart svg, .tour__chart canvas'),
-            chartOverflow: chartText.map((t) => t.textContent.trim()).slice(0, 3),
-            tryShown,
-            tryControls: tryBox ? tryBox.querySelectorAll('.tour__try-actions button, .tour__try-actions input').length : 0,
-            tryOverNav: tryShown && overlap(rect(tryBox), rect(document.querySelector('.tour__nav'))),
-          };
-        });
-        record('tour', `${where}: title`, state.text.includes(step.title), `page doesn't show "${step.title}"`);
-        const tagsWanted = step.tags?.length ?? 0;
-        record('tour', `${where}: tags`, state.tags === tagsWanted, `${state.tags} of ${tagsWanted} tags shown (a tag on an unknown node is dropped)`);
-        if (state.offstage.length) record('tour', `${where}: tags off the stage`, false, state.offstage.join(', '), 'warn');
-        if (step.chart) record('tour', `${where}: chart`, state.chart, `chart ${JSON.stringify(typeof step.chart === 'string' ? step.chart : step.chart.type)} didn't draw`);
-        if (state.chartOverflow.length) record('tour', `${where}: chart text past the column`, false, state.chartOverflow.join(', '), 'warn');
-        if (step.try) {
-          record('tour', `${where}: try "${step.try}" has controls`, state.tryShown && state.tryControls > 0, 'nothing to try');
-          record('tour', `${where}: try box clear of the step bar`, !state.tryOverNav, 'the try box covers the step bar');
-        }
-        consoleCheck('tour', where, mark);
-        await shoot(page, 'tour', `${step.label}`, state.text && !state.text.includes(step.title));
-        if (step.try && sections.has('try')) await tryExperiment(page, i, step);
-      }
-      await page.keyboard.press('Escape');
-      await page.waitForTimeout(500);
-      record('tour', 'Esc closes the tour', !(await page.locator('.thing[data-touring]').count()), 'still touring after Esc');
-      await settle(page);
-    }
+    const film = thing.film ?? [];
+    if (film.length && sections.has('tour')) await checkFilm(page, film);
 
     if (sections.has('run') && (await page.locator('[data-action="run"]').count())) {
       mark = logs.length;
@@ -262,59 +282,6 @@ async function checkObject(slug, thing) {
       }
       await page.locator('[data-action="run"]').click();
       consoleCheck('run', 'run', mark);
-    }
-
-    async function tryExperiment(page, i, step) {
-      const group = `try ${i + 1} ${step.try}`;
-      const readout = () => page.locator('.tour__readout').textContent().then((t) => t?.trim() ?? '');
-      const seen = new Set([await readout()]);
-      const box = page.locator('.tour__try-actions');
-      const holds = box.locator('.button--hold');
-      for (let k = 0; k < Math.min(await holds.count(), 2); k++) {
-        const b = holds.nth(k);
-        await b.scrollIntoViewIfNeeded();
-        const r = await b.boundingBox();
-        if (!r) continue;
-        await page.mouse.move(r.x + r.width / 2, r.y + r.height / 2);
-        await page.mouse.down();
-        await page.waitForTimeout(1500);
-        seen.add(await readout());
-        await shoot(page, group, `holding ${(await b.textContent()).trim()}`);
-        await page.mouse.up();
-        await page.waitForTimeout(300);
-      }
-      const sliders = box.locator('input[type="range"]');
-      for (let k = 0; k < Math.min(await sliders.count(), 2); k++) {
-        for (const end of ['min', 'max']) {
-          await sliders.nth(k).evaluate((el, end) => {
-            el.value = el[end] || (end === 'min' ? '0' : '100');
-            el.dispatchEvent(new Event('input', { bubbles: true }));
-            el.dispatchEvent(new Event('change', { bubbles: true }));
-          }, end);
-          await settle(page, 700);
-          seen.add(await readout());
-          await shoot(page, group, `slider ${k + 1} at ${end}`);
-        }
-      }
-      const choices = box.locator('.tour__choice');
-      for (let k = 0; k < Math.min(await choices.count(), 3); k++) {
-        await choices.nth(k).click();
-        await page.waitForTimeout(600);
-        seen.add(await readout());
-        await shoot(page, group, `choice ${(await choices.nth(k).textContent()).trim()}`);
-      }
-      const buttons = box.locator('button:not(.button--hold):not(.tour__choice)');
-      for (let k = 0; k < Math.min(await buttons.count(), 3); k++) {
-        const b = buttons.nth(k);
-        if (!(await b.isEnabled())) continue;
-        const label = ((await b.getAttribute('aria-label')) ?? (await b.textContent()) ?? '').trim();
-        await b.click();
-        await page.waitForTimeout(1200);
-        seen.add(await readout());
-        await shoot(page, group, `pressed ${label}`);
-      }
-      seen.delete('');
-      record('try', `${i + 1} "${step.try}": readout responds`, seen.size > 1, seen.size ? `readout stayed "${[...seen][0]}"` : 'no readout', seen.size ? 'fail' : 'warn');
     }
   } catch (error) {
     record('load', 'page runs', false, error.message.split('\n')[0]);
@@ -331,10 +298,10 @@ async function checkObject(slug, thing) {
       await shoot(page, 'phone', 'Phone at rest');
       const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       record('phone', 'no sideways scroll', wide <= 1, `page is ${wide}px wider than the screen`);
-      if (thing.how?.length) {
+      if (thing.film?.length) {
         await page.locator('[data-action="how"]').click();
-        await settle(page, 450);
-        await shoot(page, 'phone', `Phone: ${thing.how[0].label}`);
+        await settle(page, 2500);
+        await shoot(page, 'phone', `Phone: ${thing.film[0].chapter}`);
       }
       consoleCheck('phone', 'phone', mark);
     } catch (error) {
@@ -360,10 +327,10 @@ async function checkObject(slug, thing) {
     }
   }
 
-  const order = ['rest', 'callouts', 'tour', ...Object.keys(shots).filter((g) => g.startsWith('try ')), 'phone'];
+  const order = ['rest', 'callouts', 'film', 'tour', 'phone'];
   for (const [n, group] of order.filter((g) => shots[g]?.length).entries()) {
     const file = path.join(out, `${slug}-${n + 1}-${group.replace(/[^a-z0-9]+/gi, '-')}.png`);
-    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' ? 4 : 3, width: group === 'phone' ? 300 : 560, title: `${thing.title} · ${group}` });
+    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' || group === 'film' ? 4 : 3, width: group === 'phone' ? 300 : group === 'film' ? 440 : 560, title: `${thing.title} · ${group}` });
   }
   const failed = checks.filter((c) => c.level === 'fail');
   const warned = checks.filter((c) => c.level === 'warn');

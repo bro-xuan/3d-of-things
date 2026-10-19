@@ -144,18 +144,18 @@ There are 27 rows here, but the facts say "Parts shown: 26". `crown`, `ratchet_w
 - **Flows:** `power` lines (the default `carries`) on five steps, from the build's `flowPaths` (movement.mjs) via hints.json. The content's flow points and motion pivots match hints.json.
 - **Reused or new:** no other object uses `clock`, `train`, `swing`, `pawl`, `wind` as a motion kind, or `slowMotion`. src/types.ts lists `wind`, `loose` and `hold` as experiments "for a watch". Other viewer modules take only `clamp01` and `easeInOutCubic` from clockwork.ts.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Crown & stem, winding_pinion, Crown wheel, Ratchet wheel & click, Mainspring, Barrel, Centre wheel, Third wheel, Fourth wheel, Escape wheel, Pallet fork, Balance wheel, Hairspring, Cannon pinion, Minute wheel, Hour wheel, Hour hand, Minute hand, Seconds hand; power flow | watch-chain |  |
-| 2 | Power | Crown & stem, winding_pinion, Crown wheel, Ratchet wheel & click, Mainspring, Barrel; power flow | watch-power | wind |
-| 3 | Gear train | Mainspring, Barrel, Centre wheel, Third wheel, Fourth wheel, Escape wheel; power flow | watch-train |  |
-| 4 | Escapement | Escape wheel, Pallet fork, Balance wheel; power flow; at 0.06× speed | watch-escapement | loose |
-| 5 | Balance | Balance wheel, Hairspring, Pallet fork, Escape wheel; at 0.12× speed | watch-balance | hold |
-| 6 | Hands | Cannon pinion, Minute wheel, Hour wheel, Hour hand, Minute hand, Seconds hand; power flow; hides Dial, Crystal | watch-hands |  |
+| 0 s | Power | The wound mainspring turns the barrel, and its teeth drive the train of wheels. | 6 |  |
+| 6 s | Escapement | Slowed ten times: each swing of the balance lets the escape wheel slip half a tooth, a tick. | 6 |  |
+| 12 s | Escapement | The hairspring swings the balance to and fro three times a second: that sets the pace. | 6 |  |
+| 18 s | Hands | The train turns the hands: the seconds hand once a minute, the minute hand once an hour. | 6 |  |
 
-All flows are the build's (hints.json `flow`): steps 2–4 and 6 use `power`, `train`, `escapement` and `hands`, and step 1 joins the first three.
+Solid throughout: the Mainspring, the train, the escapement, the Balance wheel and Hairspring, the motion works and the three hands; the case, crystal, dial, plates, bridges and Barrel are glass, so the movement is seen from the dial side. Every shot frames the whole watch at one size; the camera orbits from −50° to 24°. Shots 2 and 3 run at 0.1× (`rate`), the others at real speed. Shot 1's power flow is the build's `power` path from the Mainspring joined to `train` (hints.json `flow`). The winding parts stay still: winding fills the spring in about 3 s and wouldn't run again on a replay.
 
 ## 9. Simplified or left out
 
@@ -177,3 +177,5 @@ Said on the page too (`credit.extra` or the text).
 ## 10. Log
 
 Not recorded per stage: built before the standard procedure, in 1 h 47 of active work (procedure.md, "How long it takes": tier B, 27% hand-made browser QA, 13% re-reading code).
+
+19 October 2026: "How it works" became a film (references/film.md), 4 shots, 24 s; the six tour steps, their charts and experiments came off the page.

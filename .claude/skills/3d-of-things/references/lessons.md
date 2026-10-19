@@ -12,7 +12,7 @@ What the site's owner has asked for, and turned down, while the site was built. 
 ## Controls and looks
 
 - **All controls on the main display**, printed like an engraved plate down the left (How it works, Take it apart with its slider, slow motion and labels as text toggles), not in a boxed card.
-- **Rendered and Wireframe only.** An X-ray mode was dropped because it looked too much like wireframe. See-through views live in the tour's focus (glass for the parts a step isn't about) and in wireframe.
+- **Rendered and Wireframe only.** An X-ray mode was dropped because it looked too much like wireframe. See-through views live in the film's focus (glass for the parts a step isn't about) and in wireframe.
 - **Drawings on the stage**: a third-angle sheet (top, front, side) at one scale with real dimensions; picking a view turns the model to it.
 - **Callout numbers and part letters are off at the start**; Labels shows them.
 
@@ -28,7 +28,8 @@ What the site's owner has asked for, and turned down, while the site was built. 
 ## Explaining
 
 - Cause and effect over a parts catalogue: the energy chain, timing, one misconception corrected (references/explaining.md).
-- The owner's reference for a "how it works" plate was a field cannon sheet: live charts, scale drawings, a big action button, rendered/wireframe/exploded, slow motion and sound. The tour grew from it.
+- The owner's reference for a "how it works" plate was a field cannon sheet: live charts, scale drawings, a big action button, rendered/wireframe/exploded, slow motion and sound. The step-by-step tour grew from it.
+- **"How it works" is an animation, not steps.** The tour of steps with paragraphs, charts and experiments was "not really intuitive enough": "I need actually the animation". The first film (55 s, a locked state, a wrong key, cuts between views) was "very harsh to watch, because it's very abrupt": "why do we need a 55 second video? We need to make the pace consistent". What was accepted (the pin tumbler lock): the happy path only, about 19 s, the camera gliding without a cut at an even pace. Then "I can't see what is inside": the shells (plug and housing) went to glass with the key and pins solid, and that was "absolutely correct". References/film.md has the rules.
 - Every live number is true to the mechanism's maths.
 
 ## Working

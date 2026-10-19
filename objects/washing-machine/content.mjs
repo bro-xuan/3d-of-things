@@ -12,11 +12,25 @@ const pivot = (name) => H?.pivots?.[name] ?? (H ? missing(name) : [0, 0.5, 0]);
 const RATIO = H?.ratio ?? 10.77;
 /** Turns a second at a drum speed in rpm. */
 const tps = (rpm) => +(rpm / 60).toFixed(3);
-/** g at the drum's wall at a speed in rpm. */
-const g = (rpm) => +(((rpm * Math.PI) / 30) ** 2 * ((H?.drumRadius ?? 235) / 1000) / 9.81).toFixed(rpm < 100 ? 2 : 0);
+/** The drum's speed washing, and spinning (rpm). */
 const WASH = 54;
+const SPIN = 1400;
 /** A part that comes off along a direction, over a window of the slider. */
 const off = (direction, mm, window) => ({ direction, distance: U(mm), window });
+
+/** What stays solid through the film: the drum and everything that turns it, and the pump's impeller. The cabinet, the
+ *  tub, the motor's casing and the pump's body are glass, so the drive and the drum can be seen working inside. */
+const MOVING = ['drum', 'spider', 'pulley', 'belt', 'motor_rotor', 'pump_impeller'];
+/** Every shot is framed on the whole cabinet, so the camera stays at one distance and only goes round. */
+const CABINET = ['frame'];
+/** The water's way in, from the valve through the drawer to the tub; and out, from the sump through the pump to the drain. */
+const waterIn = [at('valve_in'), at('valve'), at('fill_top'), at('dispenser_in'), at('dispenser'), at('dispenser_out'), at('tub_inlet')];
+const waterOut = [at('sump'), at('pump'), at('pump_out'), at('drain_low'), at('drain_back'), at('drain_top')];
+/** The power's path: from the motor, round the belt to the drum's pulley and in along its shaft. */
+const powerPath = [at('motor_side'), at('motor_pulley'), at('belt_mid'), at('pulley_side'), at('shaft')];
+/** On spin the drum, its pulley and the motor turn this many times faster than washing, shown at this much of real time. */
+const spinning = +(SPIN / WASH).toFixed(3);
+const SPIN_RATE = 0.15;
 
 writeContent('washing-machine', {
   order: 11,
@@ -89,191 +103,63 @@ writeContent('washing-machine', {
     { node: 'pump_impeller', axis: [0, 0, 1], pivot: pivot('impeller'), speed: 3 },
   ],
   motionLabel: 'Run the drum',
-  how: [
+  // "How it works" as an animation: water in, the motor turning the drum through the belt, the wash, then the spin.
+  film: [
     {
-      label: 'The idea',
-      title: 'Washed by falling',
-      text: [
-        'A wash needs four things: detergent to loosen the dirt, heat, time, and movement to work the water through the cloth. The machine supplies them one after another, under the board’s control.',
-        'The movement comes from the drum. Turning slowly, about ten seconds one way, a pause, then ten seconds the other, its three ridges carry the clothes up the side and let them fall back through the water.',
-      ],
-      angle: [-26, 16],
-      focus: ['drum', 'spider', 'tub_front', 'tub_rear'],
-      tags: [{ node: 'drum', text: `${Math.round(H?.drumLitres ?? 57)} litre drum`, at: at('drum_top') }],
-      chart: {
-        type: 'timing',
-        title: 'A 40 °C cotton wash',
-        caption: 'Roughly what the board switches, and when, over about two and a half hours.',
-        lanes: [
-          { name: 'Water in', points: [[0, 0], [0.01, 1], [0.05, 1], [0.06, 0], [0.56, 0], [0.57, 1], [0.6, 1], [0.61, 0], [0.7, 0], [0.71, 1], [0.74, 1], [0.75, 0], [1, 0]] },
-          { name: 'Heater', points: [[0, 0], [0.06, 0], [0.07, 1], [0.2, 1], [0.21, 0], [1, 0]] },
-          { name: 'Drum', points: [[0, 0.3], [0.54, 0.3], [0.55, 0.15], [0.57, 0.3], [0.68, 0.3], [0.69, 0.15], [0.71, 0.3], [0.82, 0.3], [0.83, 0.45], [0.86, 0.45], [0.88, 1], [0.97, 1], [1, 0]], notes: [[0.3, 'tumble'], [0.92, 'spin']] },
-          { name: 'Pump', points: [[0, 0], [0.54, 0], [0.55, 1], [0.57, 0], [0.68, 0], [0.69, 1], [0.71, 0], [0.82, 0], [0.83, 1], [0.98, 1], [0.99, 0], [1, 0]] },
-        ],
-        bands: [[0.88, 0.97, 'spin']],
-      },
-    },
-    {
-      label: 'Water in',
-      title: 'In through the drawer',
-      text: [
-        'The board opens an inlet valve. Mains pressure pushes water through the drawer, through whichever compartment that valve feeds, and the powder goes down the hose with it into the tub.',
-        'A pressure sensor on a thin tube from the sump feels the water’s depth and closes the valve. A wash uses about 12 litres at a time; the whole programme about 45.',
-      ],
-      angle: [-34, 22],
-      focus: ['inlet_valve', 'hoses', 'dispenser', 'drawer'],
+      chapter: 'Fill',
+      caption: 'Water from the valve runs through the detergent drawer and carries the powder into the tub.',
+      duration: 5,
+      angle: [165, 34],
+      fill: 0.6,
+      run: false,
+      focus: MOVING,
+      frame: CABINET,
       carries: 'water',
-      flow: [at('valve_in'), at('valve'), at('fill_top'), at('dispenser_in'), at('dispenser'), at('dispenser_out'), at('tub_inlet')],
+      flow: waterIn,
       tags: [
-        { node: 'inlet_valve', text: 'Inlet valve', at: at('valve') },
-        { node: 'drawer', text: 'Main wash compartment', at: at('drawer') },
+        { node: 'inlet_valve', text: 'inlet valve', at: at('valve') },
+        { node: 'drawer', text: 'drawer', at: at('drawer') },
       ],
     },
     {
-      label: 'Heat',
-      title: 'Heated in the sump',
-      text: [
-        'The heater lies in the sump, the pocket at the bottom of the tub where the water collects under the drum. A sensor beside it reports the temperature to the board, which switches the heater off when the water is warm enough.',
-        'Heating takes most of a wash’s electricity: warming 12 litres by 25 degrees takes about 1.3 MJ, a third of a kilowatt-hour. A 90 °C wash needs three times as much.',
-      ],
-      angle: [-18, 10],
-      fill: 0.7,
-      focus: ['heater'],
-      frame: ['tub_front'],
-      tags: [{ node: 'heater', text: '2 kW element', at: at('heater') }],
-      chart: {
-        type: 'bars',
-        title: 'Minutes to heat the water',
-        caption: 'Twelve litres from 15 °C with a 2 kW heater, ignoring what the drum and tub soak up.',
-        unit: 'Minutes',
-        bars: [
-          { label: '30 °C', value: 6.3 },
-          { label: '40 °C', value: 10.5 },
-          { label: '60 °C', value: 18.8 },
-          { label: '90 °C', value: 31.4 },
-        ],
-        picked: 1,
-      },
-    },
-    {
-      label: 'Drive',
-      title: 'A belt for a gearbox',
-      text: [
-        `The motor under the tub turns fast and weakly; the drum needs to turn slowly and hard. A belt from the motor’s small pulley to the drum’s big one trades one for the other: the motor turns ${RATIO.toFixed(1)} times for each turn of the drum.`,
-        'Hold the button and count. At the full 1,400 rpm spin the motor is doing about 15,000.',
-      ],
-      angle: [-150, 14],
-      fill: 0.72,
-      focus: ['motor', 'motor_rotor', 'belt', 'pulley', 'spider'],
-      flow: [at('motor_side'), at('motor_pulley'), at('belt_mid'), at('pulley_side'), at('shaft')],
+      chapter: 'Wash',
+      caption: `The motor under the tub drives the drum by a belt, turning ${RATIO.toFixed(1)} times for each turn of the drum.`,
+      duration: 6,
+      angle: [140, 12],
+      fill: 0.6,
+      spin: { pump_impeller: 0 },
+      focus: MOVING,
+      frame: CABINET,
+      flow: powerPath,
       tags: [
-        { node: 'motor_rotor', text: 'Motor', at: at('motor') },
-        { node: 'pulley', text: 'Drum pulley', at: at('pulley') },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'Turns a minute, motor to drum',
-        caption: `The belt divides the motor’s speed by ${RATIO.toFixed(1)}: the dials turn with the motor and the drum.`,
-        unit: 'Turns a minute at full spin',
-        ticks: [0, 5000, 10000, 15000],
-        rungs: [
-          { name: 'Motor', value: Math.round(1400 * RATIO), note: `${Math.round(1400 * RATIO).toLocaleString('en-GB')} rpm`, node: 'motor_rotor' },
-          { name: 'Drum', value: 1400, note: '1,400 rpm', step: `÷${RATIO.toFixed(1)}`, node: 'drum' },
-        ],
-      },
-      try: 'run',
-      count: [{ node: 'motor_rotor', label: 'Motor' }, { node: 'drum', label: 'Drum' }],
-    },
-    {
-      label: 'Tumble or spin',
-      title: 'Below 62 rpm it washes, above it it spins',
-      text: [
-        `At ${WASH} rpm the clothes ride up the side and fall off before the top: the drum’s wall pushes them round with less than their own weight. At about 62 rpm it pushes with exactly their weight, and from there up they stay pinned to the wall and stop moving.`,
-        `That is why spinning doesn’t wash. Its job is the opposite: at 1,400 rpm the wall presses the clothes outward with about ${g(1400)} times their weight, and the water, free to move, flies out through the holes. Pick a speed.`,
-      ],
-      angle: [-12, 8],
-      fill: 0.8,
-      rate: 0.15,
-      focus: ['drum', 'spider'],
-      tags: [{ node: 'drum', text: 'Lifter', at: at('lifter') }],
-      chart: {
-        type: 'ladder',
-        title: 'How hard the wall pushes',
-        caption: 'Times the clothes’ own weight, at the drum’s wall; above 1 they can’t fall.',
-        unit: 'Times their weight (g)',
-        scale: 'log',
-        rungs: [
-          { name: `${WASH} rpm`, value: g(WASH), note: `${g(WASH)} g` },
-          { name: '90 rpm', value: g(90), note: `${g(90)} g` },
-          { name: '800 rpm', value: g(800), note: `${g(800)} g` },
-          { name: '1,400 rpm', value: g(1400), note: `${g(1400)} g` },
-        ],
-      },
-      try: 'speeds',
-      spin: ['drum', 'pulley', 'motor_rotor'],
-      speeds: [
-        { label: `${WASH} rpm`, factor: 1, note: 'Washing: the clothes are lifted and fall back through the water.' },
-        { label: '90 rpm', factor: 90 / WASH, note: 'Spreading the load: pinned to the wall, the clothes settle evenly before the spin.' },
-        { label: '800 rpm', factor: 800 / WASH, note: 'Spinning: 168 times their weight presses the water out through the holes.' },
-        { label: '1,400 rpm', factor: 1400 / WASH, note: 'Full spin: about 500 times their weight. Shown slowed down.' },
+        { node: 'motor_rotor', text: 'motor', at: at('motor') },
+        { node: 'pulley', text: 'drum pulley', at: at('pulley') },
       ],
     },
     {
-      label: 'Suspension',
-      title: 'A heavy tub on springs',
-      text: [
-        'A load is never quite even. Half a kilo of wet jeans off-centre at 1,400 rpm pulls on the tub with about 2,500 newtons, a quarter of a tonne, changing direction 23 times a second. The tub hangs on springs and stands on dampers so that it can swing instead of the cabinet.',
-        'The concrete is there for that swing, not to hold the machine down: once the drum is turning fast, the tub moves by about the off-centre mass times its distance divided by the whole swinging mass. Make the tub heavier and it shakes less.',
-      ],
-      angle: [-48, 14],
-      fill: 0.75,
-      focus: ['springs', 'dampers', 'counterweight', 'front_weight', 'tub_front', 'tub_rear'],
-      tags: [
-        { node: 'springs', text: 'Spring', at: at('spring_left') },
-        { node: 'dampers', text: 'Damper', at: at('damper_left') },
-        { node: 'counterweight', text: 'Concrete', at: at('counterweight') },
-      ],
-      chart: {
-        type: 'bars',
-        title: 'How far the tub shakes at full spin',
-        caption: 'Half a kilo off-centre on a 23.5 cm drum, with the wet washing; the tub, drum and motor weigh about 20 kg.',
-        unit: 'Shake, mm',
-        bars: [
-          { label: 'No concrete', value: 3.7, note: '32 kg swinging' },
-          { label: 'With 25 kg', value: 2.1, note: '57 kg swinging' },
-        ],
-        picked: 1,
-      },
+      chapter: 'Wash',
+      caption: `At ${WASH} rpm its three ridges lift the clothes up the side and drop them back through the water.`,
+      duration: 6,
+      angle: [80, 14],
+      fill: 0.6,
+      spin: { pump_impeller: 0 },
+      focus: MOVING,
+      frame: CABINET,
+      tags: [{ node: 'drum', text: 'ridge', at: at('lifter') }],
     },
     {
-      label: 'Water out',
-      title: 'Pumped out, then spun',
-      text: [
-        'Between stages and all through the spin, the pump under the front empties the sump. It pushes the water up the hose to above the tub’s water line before it drops to the drain, so nothing siphons out while the machine fills.',
-        'The faster the spin, the less water stays in the clothes, and the less the dryer or the washing line has to do. Spin speed is on the energy label for that reason.',
-      ],
-      angle: [38, 10],
-      fill: 0.75,
-      focus: ['drain_pump', 'pump_impeller', 'hoses', 'tub_front'],
+      chapter: 'Spin',
+      caption: `At ${SPIN.toLocaleString('en-GB')} rpm the water flies out through the holes, and the pump sends it down the drain.`,
+      duration: 6,
+      angle: [30, 10],
+      fill: 0.6,
+      rate: SPIN_RATE,
+      spin: { drum: spinning, pulley: spinning, motor_rotor: spinning, pump_impeller: +(1 / SPIN_RATE).toFixed(3) },
+      focus: MOVING,
+      frame: CABINET,
       carries: 'water',
-      flow: [at('sump'), at('pump'), at('pump_out'), at('drain_low'), at('drain_back'), at('drain_top')],
-      tags: [
-        { node: 'drain_pump', text: 'Drain pump', at: at('pump') },
-        { node: 'drain_pump', text: 'Filter', at: at('pump_filter') },
-      ],
-      chart: {
-        type: 'bars',
-        title: 'Water left in the clothes',
-        caption: 'As a share of their dry weight, after the spin; typical figures, and makers quote 52–54 % at 1,400.',
-        unit: '% of dry weight',
-        bars: [
-          { label: '800', value: 75 },
-          { label: '1,000', value: 62 },
-          { label: '1,200', value: 57 },
-          { label: '1,400', value: 53 },
-        ],
-        picked: 3,
-      },
+      flow: waterOut,
+      tags: [{ node: 'drain_pump', text: 'drain pump', at: at('pump') }],
     },
   ],
   credit: builtInCode('Washing machine, a typical European front-loader', 'Laid out from manufacturers’ published dimensions, service manuals and spare-parts drawings for 7 kg, 1,400 rpm belt-driven machines; no particular make.'),

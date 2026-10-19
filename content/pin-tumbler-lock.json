@@ -1333,146 +1333,108 @@
       ]
     }
   ],
-  "how": [
+  "film": [
     {
-      "label": "The idea",
-      "title": "Pins across a gap hold the plug",
-      "text": [
-        "The plug turns in a hole in the housing. Five stacks of pins sit in holes drilled across both, each a key pin under a driver pin, pushed down by a spring. The plug turns only when the split in every stack lies on the gap between plug and housing: the shear line.",
-        "With the right key in, as here, all five splits are on it. The chart cuts through the stacks down the keyway; it moves as the model does."
-      ],
+      "chapter": "The key",
+      "caption": "Slide the key in. Each cut lifts a pair of pins to its own height.",
+      "duration": 6,
       "angle": [
-        80,
-        12
+        -114,
+        10
       ],
+      "fill": 0.56,
       "focus": [
+        "key",
+        "key_pins",
+        "driver_pins",
+        "springs",
+        "tailpiece",
+        "drive",
+        "bolt"
+      ],
+      "frame": [
         "plug",
         "key_pins",
         "driver_pins",
         "springs",
         "key"
       ],
-      "chart": "lock-pins"
+      "hide": [
+        "wrong_key"
+      ],
+      "tags": [
+        {
+          "node": "springs",
+          "text": "springs"
+        },
+        {
+          "node": "driver_pins",
+          "text": "top pins"
+        },
+        {
+          "node": "key_pins",
+          "text": "bottom pins"
+        }
+      ],
+      "cues": [
+        {
+          "at": 0,
+          "do": "insert",
+          "to": 0
+        },
+        {
+          "at": 0.5,
+          "do": "insert",
+          "to": 1,
+          "over": 4.5
+        }
+      ]
     },
     {
-      "label": "Pin stacks",
-      "title": "Without the key, the drivers lock it",
-      "text": [
-        "Pull the key out and the springs push every stack down until the key pins rest on a step in the keyway. Each driver is then half in the plug and half in the housing, pinning one to the other.",
-        "Slide it back in slowly: the pins ride up the tip’s ramp, over the cuts and down into them, and only at the shoulder does every split reach the line."
-      ],
+      "chapter": "The key",
+      "caption": "With the right key, the gap in every pair lines up with the edge of the plug.",
+      "duration": 5,
       "angle": [
-        84,
-        10
+        -98,
+        14
       ],
+      "fill": 0.5,
       "focus": [
+        "key",
         "key_pins",
         "driver_pins",
         "springs",
-        "key"
+        "tailpiece",
+        "drive",
+        "bolt"
       ],
-      "try": "lock-insert",
-      "chart": "lock-pins"
-    },
-    {
-      "label": "The key",
-      "title": "Its cuts are heights",
-      "text": [
-        "A KW1 key has room for five cuts, 0.247 inch from the shoulder to the first and 0.150 inch apart. Each is one of six depths, from 0.329 inch above the bottom edge for a 1 to 0.214 for a 6, in steps of 0.023 inch: about the thickness of a sheet of card.",
-        "This one is cut 4-3-6-4-3. Neighbouring cuts may differ by no more than four steps, or the cutter would take away the cut beside: that rule leaves 6,306 of the 7,776 combinations."
-      ],
-      "angle": [
-        90,
-        4
-      ],
-      "focus": [
-        "key",
-        "key_pins"
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "This key’s cuts, 4-3-6-4-3",
-        "caption": "How much blade each cut leaves under its pin, inches from the bottom edge. A higher number is a deeper cut.",
-        "unit": "Inches above the bottom edge",
-        "bars": [
-          {
-            "label": "1",
-            "value": 0.26,
-            "note": "cut 4"
-          },
-          {
-            "label": "2",
-            "value": 0.283,
-            "note": "cut 3"
-          },
-          {
-            "label": "3",
-            "value": 0.214,
-            "note": "cut 6"
-          },
-          {
-            "label": "4",
-            "value": 0.26,
-            "note": "cut 4"
-          },
-          {
-            "label": "5",
-            "value": 0.283,
-            "note": "cut 3"
-          }
-        ]
-      }
-    },
-    {
-      "label": "The shear line",
-      "title": "The key only lifts each split to the line",
-      "text": [
-        "The key doesn’t work anything inside. The drivers lock the plug by sitting across its surface, and all the key does is lift each stack until the split between its pins lies exactly on that surface. A deeper cut has a longer key pin over it, so cut and pin add up to 0.501 inch in every stack.",
-        "That is also why a key one step off is no key at all: its pin stops 0.58 mm off the line, and a pin that crosses by more than about a tenth of a millimetre holds the plug."
-      ],
-      "angle": [
-        76,
-        18
-      ],
-      "fill": 0.6,
-      "focus": [
+      "frame": [
+        "plug",
         "key_pins",
         "driver_pins",
         "springs"
       ],
-      "chart": {
-        "type": "bars",
-        "title": "Key pins for 4-3-6-4-3",
-        "caption": "Each pin is as much longer as its cut is deeper, so every split lands 0.501 inch above the key’s bottom edge.",
-        "unit": "Key pin length, inches",
-        "bars": [
-          {
-            "label": "1",
-            "value": 0.241,
-            "note": "#4 + .260"
-          },
-          {
-            "label": "2",
-            "value": 0.218,
-            "note": "#3 + .283"
-          },
-          {
-            "label": "3",
-            "value": 0.287,
-            "note": "#6 + .214"
-          },
-          {
-            "label": "4",
-            "value": 0.241,
-            "note": "#4 + .260"
-          },
-          {
-            "label": "5",
-            "value": 0.218,
-            "note": "#3 + .283"
-          }
-        ]
-      },
+      "hide": [
+        "wrong_key"
+      ],
+      "flow": [
+        {
+          "node": "housing",
+          "at": [
+            -0.2109,
+            0.5027,
+            0.1813
+          ]
+        },
+        {
+          "node": "housing",
+          "at": [
+            -0.2109,
+            0.5027,
+            -0.1171
+          ]
+        }
+      ],
       "tags": [
         {
           "node": "driver_pins",
@@ -1486,44 +1448,35 @@
       ]
     },
     {
-      "label": "Turn it",
-      "title": "The right key turns; two steps off and it won’t",
-      "text": [
-        "Try the wrong key: the same blank cut 4-5-6-2-3. Its second cut is two steps too deep, so that driver stays 1.17 mm down in the plug; its fourth is two steps too shallow, so that key pin pokes 1.17 mm up into the housing. Either one is enough.",
-        "With no key all five drivers hold it. With the right key nothing does, and the plug turns as far as your wrist takes it."
-      ],
+      "chapter": "Turn",
+      "caption": "Nothing pins the plug now, so it turns with the key and its tailpiece throws the bolt.",
+      "duration": 7.5,
       "angle": [
-        74,
-        16
+        -40,
+        24
       ],
+      "fill": 0.74,
       "focus": [
+        "key",
+        "key_pins",
+        "driver_pins",
+        "springs",
+        "tailpiece",
+        "drive",
+        "bolt"
+      ],
+      "frame": [
+        "plug",
         "key_pins",
         "driver_pins",
         "springs",
         "key",
-        "wrong_key"
-      ],
-      "try": "lock-turn",
-      "chart": "lock-pins"
-    },
-    {
-      "label": "The bolt",
-      "title": "Your wrist throws the bolt",
-      "text": [
-        "The turn is yours: the key passes it to the plug, the plug to the tailpiece, and the tailpiece to the deadbolt’s drive. The drive’s crank pin swings in a slot in the bolt’s tail and pushes the bolt 25.4 mm out of the door’s edge.",
-        "Hold the button: the bolt moves fastest in the middle of the quarter turn, where the crank pin moves straight across. Turned back, it draws the bolt in again; only then will the key come out."
-      ],
-      "angle": [
-        36,
-        28
-      ],
-      "focus": [
-        "key",
-        "plug",
         "tailpiece",
         "drive",
-        "bolt",
-        "latch_case"
+        "bolt"
+      ],
+      "hide": [
+        "wrong_key"
       ],
       "flow": [
         {
@@ -1599,8 +1552,24 @@
           "ride": true
         }
       ],
-      "try": "lock-turn",
-      "chart": "lock-bolt"
+      "tags": [
+        {
+          "node": "plug",
+          "text": "plug"
+        },
+        {
+          "node": "bolt",
+          "text": "bolt"
+        }
+      ],
+      "cues": [
+        {
+          "at": 1,
+          "do": "turn",
+          "to": 90,
+          "over": 4.5
+        }
+      ]
     }
   ],
   "credit": {

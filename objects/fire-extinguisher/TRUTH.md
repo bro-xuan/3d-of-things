@@ -125,16 +125,15 @@ Fill this in before any geometry. Every number on the page (sizes, counts, ratio
 - **Wired in:** src/viewer/Viewer.ts (the module, its tick, `extinguisherState`, `pullPin`, `squeezeLever`, `invertExtinguisher`, `rechargeExtinguisher`, reset when the tour closes), src/charts/index.ts (`extinguisher()` on the chart source, the chart's registration), src/pages/tour.ts (the source and the experiment), src/types.ts (doc comments).
 - **Flows:** `power` (vermilion) for the powder's path, `air` (blue) for the nitrogen's push in step 2.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Nitrogen, Powder, Dip tube, Valve body, Hose, Nozzle; power flow |  |  |
-| 2 | Push | Nitrogen, Gauge, Valve body |  |  |
-| 3 | Up | Powder, Dip tube; power flow |  |  |
-| 4 | Valve | Stem and seal, Return spring, Squeeze lever, Safety pin; power flow |  | discharge |
-| 5 | Empty | Powder, Dip tube, Gauge, Valve body, Squeeze lever, Stem and seal; power flow | extinguisher-discharge: Pressure as it empties | squeeze |
-| 6 | Out | Hose, Nozzle, Valve body; power flow |  |  |
+| 0 s | Pin | Pull the pin out of the handle, and the lever is free to move. | 5 | 1 s pin → true |
+| 5 s | Squeeze | Squeeze the lever and it pushes the stem down, taking the seal off its seat. | 6 | 1 s squeeze → true |
+| 11 s | Out | The gas drives the powder up the dip tube and out of the hose, losing pressure as it goes. | 8 |  |
 
 ## 9. Simplified or left out
 

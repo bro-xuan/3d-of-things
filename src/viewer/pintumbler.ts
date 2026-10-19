@@ -97,6 +97,8 @@ export class PinTumbler {
   private wrong = 0;
   private angle = 0;
   private wantTurn = false;
+  /** An angle the plug is held at from outside (a film turning it), in place of a whole turn or none. */
+  private aim: number | null = null;
   private refused = false;
   private wanted: KeyName = 'right';
   private plan: Leg[] = [];
@@ -192,18 +194,33 @@ export class PinTumbler {
   /** Tries to turn the plug a quarter turn (or turns it back). It only goes if every split is on the line. */
   turn(on: boolean): void {
     this.wantTurn = on;
+    this.aim = null;
     if (!on) this.refused = false;
+  }
+
+  /** Holds the plug at this angle (degrees), as a hand turning it slowly would: only past square if every split is on the line. */
+  setAngle(deg: number): void {
+    const s = this.state;
+    const to = Math.min(TURN, Math.max(0, deg));
+    if (to > 0.01 && !(s.clear && s.insert > 0.999) && !this.angle) {
+      this.refused = true;
+      return;
+    }
+    this.aim = this.angle = to;
+    this.wantTurn = to > 0;
+    this.push();
   }
 
   /** Back to rest: the right key in, the plug square, the wrong key beside the lock. */
   reset(): void {
+    this.aim = null;
     this.choose('right', true);
   }
 
   tick(dt: number): boolean {
     const before = [this.right, this.wrong, this.angle, +this.refused].join();
     // Keys only move with the plug square: turn it back first.
-    const target = this.plan.length ? 0 : this.wantTurn ? TURN : 0;
+    const target = this.plan.length ? 0 : (this.aim ?? (this.wantTurn ? TURN : 0));
     if (target > this.angle) {
       const s = this.state;
       if (s.clear && s.insert > 0.999) this.angle = Math.min(target, this.angle + TURN_RATE * dt);

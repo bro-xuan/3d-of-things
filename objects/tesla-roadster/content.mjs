@@ -1,6 +1,6 @@
 // Writes content/tesla-roadster.json, the content file for the 2026 Roadster (a spec with `aero`): its text, its
 // parts and how they come off, its motions (the wheels and motors; the fans, skirts and wing on the suction system's
-// controls), where its ten nozzles are and which way their jets go, its callouts and its "How it works". It runs the
+// controls), where its ten nozzles are and which way their jets go, its callouts and its "How it works" film. It runs the
 // build (without the checks) for where things sit in model space. The numbers in the text come from
 // src/viewer/aerocar.ts, which the viewer and the charts run on.
 //   node objects/tesla-roadster/content.mjs
@@ -31,8 +31,6 @@ function roadsterContent({ car, spec, H }) {
   const nozzles = (group) => A.thrusters.filter((t) => t.group === group).map((t) => t.node);
   const [rear, lift, yaw] = [nozzles('rear'), nozzles('down'), nozzles('yaw')];
   const fans = A.fans.map((f) => f.node);
-  const tanks = A.tanks.map((t) => t.node);
-  const skirts = ['skirt_left', 'skirt_right', 'skirt_front', 'skirt_rear'];
   const litres = A.tanks.reduce((s, t) => s + t.litres, 0);
 
   const parts = [
@@ -91,155 +89,66 @@ function roadsterContent({ car, spec, H }) {
     [M(-980, 40, 700), M(-760, 60, 600), M(-400, 70, -100), { node: 'fan_box', at: M(-200, 110, -950) }, { node: 'fan_box', at: M(-250, 200, -1350) }, { node: 'fan_box', at: M(-400, 330, -1720) }, { node: 'fan_box', at: M(-465, 275, -1900) }, M(-465, 275, -2400)],
   ];
   const T = A.tanks;
-  const tankFlow = [{ node: 'compressor', at: A.compressor }, { node: 'air_lines', at: M(-200, 220, 1200) }, { node: 'air_lines', at: M(-320, 430, 900) }, { node: T[1].node, at: T[1].centre }, { node: T[0].node, at: M(-340, 690, -830) }, { node: T[0].node, at: T[0].centre }];
   const thrustFlows = [rear[1], rear[2]].map((n) => {
     const t = A.thrusters.find((h) => h.node === n);
     return [{ node: T[0].node, at: T[0].centre }, { node: 'air_lines', at: A.manifold }, { node: 'air_lines', at: M(0, 640, -1650) }, { node: n, at: t.inlet }, { node: n, at: t.exit }, M(t.exit[0] * MM, 520, -2600)];
   });
-  const allThrusters = [...rear, ...lift, ...yaw];
   const motors = Object.keys(H.motors);
 
-  const how = [
+  // "How it works" as a film: the motors drive the rear wheels, the fans suck the car onto the road, and the rear
+  // thrusters fire. What stays solid: the motors' rotors and what they turn, the wheels, the fans, the rear nozzles. The
+  // body, the motors' cases, the fans' box, the skirts, the tanks and the lines are glass. (With the front wheels solid
+  // too, the parts in focus span the car, so its glass front doesn't fade into a smudge over its own shadow.)
+  const MOVING = [...motors.map((m) => `${m}_rotor`), 'shaft_rl', 'shaft_rr', ...wheelNames.map((n) => `wheel_${n}`), ...fans, ...rear];
+  // Every shot frames the whole car, so none of it runs over the script beside the stage.
+  const WHOLE = ['body', 'front_bumper', 'rear_bumper', ...wheelNames.map((n) => `wheel_${n}`)];
+  // Slowed down by half, all through, so the motors (nine turns to the wheel's one) can be followed.
+  const pace = { focus: MOVING, rate: 0.5 };
+  const film = [
     {
-      label: 'Inside',
-      title: 'Fans, air and a battery',
-      text: [
-        'Under the gold glass the new Roadster is three systems. A battery of 4680 cells fills the floor and drives two motors at the back, one for each rear wheel. In the tail, four electric fans pull the air out from under the car’s sealed floor. And about 600 litres of air, squeezed to 690 bar in carbon tanks behind the seat and in the passenger’s place, feeds ten nozzles round the car.',
-        'The fans hold it down; the air pushes it along, or (on the Rocket, shown here) lifts it off the ground. The two work against each other, so the rest of the tour takes them one at a time.',
-      ],
-      angle: [-55, 32],
-      fill: 0.88,
-      // The car stands still in this step (and in the suction, air and flight steps): its wheels don't turn.
-      rate: 0,
-      focus: ['battery_pack', 'modules', 'drive', ...motors, ...motors.map((m) => `${m}_rotor`), 'fan_box', ...fans, 'skirts', ...skirts, 'air_tanks', ...tanks, 'compressor', 'air_lines', ...allThrusters],
-      tags: [
-        { node: 'battery_pack', text: 'Battery', at: M(300, 340, 300) },
-        { node: 'drive', text: 'Rear motors', at: M(-320, 700, zr) },
-        { node: 'fan_box', text: 'Fans', at: M(-560, 300, -2000) },
-        { node: tanks[1], text: 'Air tanks', at: M(-350, 900, 300) },
-        { node: 'compressor', text: 'Compressor', at: M(0, 520, 1880) },
-        { node: lift[0], text: 'Lift nozzles', at: M(700, 500, 1900) },
-      ],
-      chart: {
-        type: 'bars',
-        title: 'Nought to 60 mph, as claimed',
-        caption: 'Tesla’s figures. The fans’ grip takes the Performance to 1.6 s with no thrusters; the air takes off as much again.',
-        unit: 'seconds',
-        bars: [
-          { label: '2017 claim', value: 1.9 },
-          { label: 'Performance', value: 1.6 },
-          { label: 'Thrust', value: 0.9 },
-          { label: 'Rocket', value: 0.59 },
-        ],
-      },
+      chapter: 'Drive',
+      caption: 'The battery drives a motor for each rear wheel, geared down nine times to turn it.',
+      duration: 6,
+      angle: [-60, 30],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
+      tags: [{ node: 'drive', text: 'rear motors', at: M(-320, 700, zr) }],
     },
     {
-      label: 'Motors',
-      title: 'Two motors, one for each rear wheel',
-      text: [
-        'Each motor is a ring of copper windings round a magnet rotor. The inverter on top turns the battery’s direct current into three-phase alternating current, and the faster it alternates, the faster the rotor turns. A reduction gear slows it about nine times for its wheel, and multiplies its torque as much.',
-        'With a motor for each rear wheel, the car can push the outside wheel harder in a bend; the front wheels are steered by wire, from a yoke. Hold Drive and count: nine turns of a motor for one of its wheels.',
-      ],
-      angle: [-140, 24],
-      fill: 0.8,
-      focus: [...motors, ...motors.map((m) => `${m}_rotor`), 'shaft_rl', 'shaft_rr', 'wheel_rl', 'wheel_rr'],
-      frame: [...motors, 'wheel_rl', 'wheel_rr'],
-      try: 'run',
-      count: [{ node: `${motors[0]}_rotor`, label: 'Motor' }, { node: 'wheel_rl', label: 'Wheel' }],
-      chart: { type: 'motor-field', title: 'A magnet motor, end-on', caption: 'The three currents rise and fall in turn (red one way, black the other), so their field goes round; the rotor’s magnet follows it, just behind. Slowed nine times.', node: `${motors[0]}_rotor`, kind: 'magnet', slow: ratio },
-    },
-    {
-      label: 'Suction',
-      title: 'Sucked onto the road',
-      text: [
-        'The air presses on everything, about ten tonnes on every square metre. Under a parked car it pushes up as hard as it presses down on top. The Roadster’s fans pull the air out from under its floor faster than it can leak back in, so the pressure there drops, and the air on top wins.',
-        'It takes very little: 6 kPa less underneath, a sixteenth of the air’s pressure, over 3 m² of floor is two tonnes of downforce, more than the car weighs, moving or not. The skirts drop to the road so air can only seep in under their edges; the fans’ 80 kW mostly pumps that leak away.',
-      ],
-      angle: [-125, 10],
-      fill: 0.82,
-      rate: 0,
-      focus: ['fan_box', ...fans, 'skirts', ...skirts, 'battery_pack', 'wheel_rl', 'wheel_rr', 'wheel_fl', 'wheel_fr'],
+      chapter: 'Grip',
+      caption: 'Four fans in the tail pull the air from under the floor, so the air above holds it down.',
+      duration: 6.5,
+      angle: [-95, 14],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
       flows: suctionFlows,
       carries: 'air',
       tags: [
-        { node: 'battery_pack', text: 'Low pressure under the floor', at: M(0, 60, -200) },
-        { node: 'skirt_left', text: 'Skirt', ride: false, at: M(776, 120, 500) },
-        { node: 'fan_box', text: 'Air out', at: M(0, 300, -2150) },
+        { node: 'fan_box', text: 'fans', at: M(0, 300, -2150) },
+        { node: 'battery_pack', text: 'low pressure', at: M(0, 60, -200) },
       ],
-      chart: { type: 'suction', title: 'Pressure above and below', caption: 'The air presses down on top and up underneath; with the fans running there’s less underneath, and the difference holds the car down. Switch them on and watch.' },
-      try: 'suction',
+      cues: [{ at: 0.8, do: 'fans', to: true }],
     },
     {
-      label: 'Grip',
-      title: 'Downforce without speed',
-      text: [
-        'A racing car’s wings make downforce from the air rushing past, so it grows with the square of the speed: at a crawl there’s next to none. The fans’ pull is the same standing still as at 300 km/h. That’s how the Roadster drove up a ramp that curled over until it was upside down.',
-        'Pressed down harder, the tyres can push sideways harder before they slide: Tesla quotes over 2 g in a bend, against 1.26 g on the tyres alone (not quite double, as a tyre grips a little less for each extra kilo). In track mode a wing rises out of the deck.',
-      ],
-      angle: [-150, 20],
-      fill: 0.85,
-      focus: ['boot', 'fan_box', ...fans, 'skirts', ...skirts, 'wheel_rl', 'wheel_rr', 'wheel_fl', 'wheel_fr'],
-      chart: { type: 'downforce', title: 'Downforce and speed', caption: 'The fans’ pull is the same at any speed; the body’s and the wing’s grows with speed squared. Above the dashed line, the car could drive upside down.' },
-      try: 'grip',
-    },
-    {
-      label: 'Air',
-      title: 'Air at 690 bar',
-      text: [
-        'The thrusters burn nothing: they run on air. A compressor in the front boot pumps it, on power from the battery, into the tanks until it’s at 690 bar (10,000 psi), as high as a hydrogen car’s tank and three times a diver’s. Air that squeezed is half as dense as water: 600 litres of it weigh about 320 kg, four people’s worth.',
-        'The tanks are carbon fibre wound over a thin liner, as SpaceX’s rockets’ are: strong enough for the pressure and far lighter than steel. Filling them takes six or seven hours today; Tesla wants it down to half an hour.',
-      ],
-      angle: [-35, 38],
-      fill: 0.82,
-      rate: 0,
-      focus: ['air_tanks', ...tanks, 'compressor', 'air_lines'],
-      flow: tankFlow,
-      carries: 'air',
-      tags: [
-        { node: tanks[0], text: 'Behind the seat', at: M(400, 1040, -830) },
-        { node: tanks[1], text: 'In the passenger’s place', at: M(-340, 880, 300) },
-        { node: 'compressor', text: 'Compressor', at: M(0, 520, 1880) },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'How hard the air is squeezed',
-        caption: 'Pressure in bar, on a scale where each line is ten times the last: the Roadster’s tanks hold air at nearly three hundred times a car tyre’s pressure.',
-        unit: 'bar',
-        scale: 'log',
-        rungs: [
-          { name: 'Car tyre', value: 2.4, note: '2.4 bar' },
-          { name: 'Diver’s tank', value: 230, note: '230 bar' },
-          { name: 'Hydrogen car', value: 700, note: '700 bar' },
-          { name: 'Roadster', value: 690, note: '690 bar' },
-        ],
-      },
-    },
-    {
-      label: 'Thrusters',
-      title: 'A rocket without fire',
-      text: [
-        'Open a valve and the air rushes out through a nozzle shaped like a rocket engine’s. It narrows to a throat, where the air reaches the speed of sound, then widens, and the air speeds up to twice that as its pressure falls to the air’s outside. Throwing air backwards pushes the car forwards, as a balloon flies off when you let it go. The jet leaves at about −200 °C: its white cloud is the moisture round it freezing.',
-        'The four rear nozzles push with about 80 kN, four or five times what the tyres can, and need no grip to do it: 0 to 60 mph in under 0.59 s, Tesla says. At full blast the air lasts about a second and a half.',
-      ],
-      camera: pose(M(0, 480, -2650), [-150, 12], 2.3),
-      focus: [...rear, 'air_lines', 'air_tanks', ...tanks, 'fan_box'],
-      frame: [...rear, tanks[0]],
+      chapter: 'Thrust',
+      caption: 'Air at 690 bar from the tanks blasts out of four rear nozzles, shoving the car forward.',
+      duration: 6,
+      angle: [-125, 18],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
       flows: thrustFlows,
       carries: 'air',
-      chart: { type: 'nozzle', title: 'Through a nozzle', caption: 'The air’s speed (and its pressure) from the valve to the open air: below the speed of sound until the throat, above it after. Fire, and watch the air go through.' },
-      try: 'thrust',
-    },
-    {
-      label: 'Flight',
-      title: 'Lifting off',
-      text: [
-        'Downforce and flight pull opposite ways, so before a jump the fans stop and the skirts tuck up. Then the four lift nozzles, one at each corner, blow straight down. When their push is more than the car weighs, it climbs; equal to it, it hovers. Like a drone, it stays level because a computer trims each valve many times a second; the two nozzles in the nose turn it.',
-        'Hovering takes about 20 kN, some 30 kg of air a second, so the tanks last seconds: a jump, not a journey. At the launch it jumped over five other Teslas, then 27 feet up with a barrel roll; the hops here are smaller, worked out from the same numbers.',
+      tags: [
+        { node: T[0].node, text: 'air tank', at: M(400, 1040, -830) },
+        { node: rear[1], text: 'nozzles', at: M(-135, 520, -2030) },
       ],
-      camera: pose(M(-250, 1600, -700), [-58, 9], 5.4),
-      rate: 0,
-      chart: { type: 'flight', title: 'Thrust and weight', caption: 'The lift nozzles’ push (red) against the car’s weight (dashed): above it the car climbs, on it it hovers, below it it falls; a hard push catches it before it lands.' },
-      try: 'fly',
+      cues: [
+        { at: 1, do: 'thrust', to: true },
+        { at: 3, do: 'thrust', to: false },
+      ],
     },
   ];
 
@@ -272,7 +181,7 @@ function roadsterContent({ car, spec, H }) {
     annotations,
     motion,
     jets,
-    how,
+    film,
     credit: {
       title: 'Tesla Roadster (2026), after Tesla’s launch photographs',
       author: '3D of Things',

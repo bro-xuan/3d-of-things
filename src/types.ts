@@ -74,7 +74,7 @@ export interface Motion {
   /** A click: instead of turning, it rocks by `amplitude` as each tooth of a ratchet with this many teeth
    *  goes by, the ratchet turning `wind` turns per turn of the crown. */
   pawl?: number;
-  /** Only animate while the inside can be seen (the model is apart, or seen through during a step of "How it works"). */
+  /** Only animate while the inside can be seen (the model is apart, or seen through in "How it works"). */
   inside?: boolean;
   /** Moved by one of the mechanism's controls instead of by time: a camera's `focus` (lens extension, mm), `aperture`
    *  (stops from wide open), `curtain1` and `curtain2` (0 cocked to 1 run), `lever` (0–1 of a stroke), `film`
@@ -119,7 +119,7 @@ export interface Fact {
   value: string;
 }
 
-/** A label on the model during a step of "How it works", such as a wheel's speed. */
+/** A label on the model during a shot of "How it works", naming a part as it acts. */
 export interface Tag {
   /** The node it rides with (and sits on, unless `at` is given). */
   node: string;
@@ -130,30 +130,44 @@ export interface Tag {
   ride?: boolean;
 }
 
-/** One chapter of "How it works": what the model shows, and what the panel says, while it's on. */
-export interface Step {
-  /** Short heading for the stepper, e.g. "Power". */
-  label: string;
-  title: string;
-  /** The explanation, as paragraphs. */
-  text: string[];
-  /** The angle to see the step from, as [azimuth, elevation] in degrees (azimuth 0 looks from +z): the camera
-   *  frames the parts in focus from there. */
+/** Something the mechanism does during a shot of the film, at a time from the shot's start: a key slides in, a lever is
+ *  squeezed, a shutter fires. A number moves to `to` over `over` seconds (eased; at once without `over`), from where the
+ *  last cue left it; anything else happens at once and the mechanism plays it out. The verbs, and what each one takes,
+ *  are in src/pages/film.ts (`CUES`). */
+export interface Cue {
+  at: number;
+  do: string;
+  to?: number | boolean | string;
+  over?: number;
+}
+
+/** One shot of "How it works": a few seconds of the mechanism at work, seen from one place, with one line of caption.
+ *  Shots play one after another like a short film (src/pages/film.ts, references/film.md); the camera glides from each
+ *  shot's view to the next, and the visitor can pause, scrub and replay it. */
+export interface Shot {
+  /** The chapter it belongs to, on the film's timeline ("The key"). Shots in a row with the same chapter share one. */
+  chapter: string;
+  /** What happens, in one line under the model while it plays: a cause and its effect, under ~100 characters. */
+  caption: string;
+  /** Seconds, at normal speed. */
+  duration: number;
+  /** The angle the camera sees the shot from as it starts, as [azimuth, elevation] in degrees (azimuth 0 looks from +z):
+   *  it frames the parts in `frame` (or in focus) from there. */
   angle?: [number, number];
-  /** How much of the frame the parts in focus fill (default 0.75). */
+  /** How much of the frame the framed parts fill (default 0.5). */
   fill?: number;
   /** An exact camera instead, framed on the stage's middle like a callout's. */
   camera?: CameraPose;
-  /** How far apart the model is (0–1) during the step. Defaults to 0. */
+  /** How far apart the model is (0–1) during the shot. Defaults to 0. */
   explode?: number;
   /** Parts that stay solid (any of their nodes). The rest turn to see-through ghosts, or to faint lines in wireframe. */
   focus?: string[];
   /** Parts to frame, if not the ones in focus (say, a small wheel and not the long hands on it). */
   frame?: string[];
-  /** Parts left out of the picture altogether while the step is on (a dial in the way). */
+  /** Parts left out of the picture altogether while the shot is on (a second key that plays no part). */
   hide?: string[];
   /** The path the power (or the light) takes: model-space points at the assembled state, each riding
-   *  with a node if one is named (so the path follows the parts as the model comes apart). */
+   *  with a node if one is named (so the path follows the parts as they move). */
   flow?: FlowPoint[];
   /** More paths drawn the same way (the second barrel of a pair of binoculars). */
   flows?: FlowPoint[][];
@@ -162,29 +176,22 @@ export interface Step {
   carries?: 'power' | 'light' | 'air' | 'water';
   /** Labels on parts. */
   tags?: Tag[];
-  /** How fast the mechanism runs: 1 is real time, less is slow motion. Defaults to 1. */
-  rate?: number;
-  /** A chart under the text: one drawn for this object, by name, or a generic one with its settings
+  /** A chart beside the film, rarely right: one drawn for this object, by name, or a generic one with its settings
    *  (`{ "type": "ladder", ... }`; see src/charts). */
   chart?: string | ({ type: string } & Record<string, unknown>);
-  /** An experiment to try (see src/pages/tour.ts): 'wind', 'loose' and 'hold' for a watch, 'run' (hold to run a
-   *  crank or motor) and 'speeds' (pick one of `speeds`) for anything that spins, for a camera 'focus',
-   *  'aperture', 'shutter' (pick a speed and fire) and 'advance' (wind on a frame), and for a car with fans and
-   *  thrusters 'suction' (switch the fans on), 'grip' (pick a speed), 'thrust' (fire the rear thrusters) and 'fly'; for a desk lamp 'arm' (move
-   *  each arm) and 'unhook' (hold the springs off), for a lock 'lock-insert' (push the key in) and 'lock-turn'
-   *  (pick a key and turn), and for an extinguisher 'discharge' (pull the pin, squeeze, upright or upside down;
-   *  'squeeze' starts with the pin out). */
-  try?: string;
-  /** For 'run': turns to count while it runs, e.g. the crank's and the bit's. */
-  count?: { node: string; label: string }[];
-  /** For 'speeds': the choices, each scaling how fast the `spin` nodes turn, or (`factors`) each node by its own amount
-   *  (a differential in a bend: one wheel faster, the other slower). */
-  speeds?: { label: string; factor: number; note: string; factors?: Record<string, number> }[];
-  spin?: string[];
-  /** A camera's settings as the step starts: focus distance (metres; 0 for infinity), the aperture's f-number and the
-   *  shutter speed (seconds). Settings a step doesn't name stay as they were. */
-  settings?: { focus?: number; aperture?: number; speed?: number; slide?: 'in' | 'out' };
+  /** Spinning parts run through the shot (anything a crank or motor turns); false holds them still. Defaults to true. */
+  run?: boolean;
+  /** How fast the mechanism runs: 1 is real time, less is slow motion. Defaults to 1. */
+  rate?: number;
+  /** Spinning parts turning faster or slower than their own speed through the shot, by node: a belt on other pulleys,
+   *  a wash drum on spin, one wheel of a pair going faster in a bend. */
+  spin?: Record<string, number>;
+  /** What the mechanism does during the shot. Whatever it's left doing carries on into the next. */
+  cues?: Cue[];
 }
+
+/** Where a shot puts the camera and what it shows solid or leaves out, as the viewer takes it. */
+export type View = Pick<Shot, 'angle' | 'fill' | 'camera' | 'explode' | 'focus' | 'frame' | 'hide'>;
 
 /** A point on a flow path: in model space, riding with a node if one is named (and turning with it, with `ride`,
  *  for a point on a crank that goes round). */
@@ -247,8 +254,9 @@ export interface Thing {
   slowMotion?: { rate: number; explode?: number };
   /** How long "Take it apart" takes, in milliseconds (default 1300). */
   explodeDuration?: number;
-  /** "How it works": the mechanism explained one stage at a time. */
-  how?: Step[];
+  /** "How it works": the mechanism doing its job once, start to finish, as a short film with a caption for each shot
+   *  (references/film.md). */
+  film?: Shot[];
   /** Nozzles that blow jets (the Roadster's thrusters). */
   jets?: Jet[];
   credit: Credit;

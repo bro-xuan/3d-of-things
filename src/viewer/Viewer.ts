@@ -30,7 +30,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh';
 import { asset } from '../asset';
-import type { CameraPose, FlowPoint, Step, Thing, Vec3 } from '../types';
+import type { CameraPose, FlowPoint, Shot, Thing, Vec3, View } from '../types';
 import { ContactShadow } from './ContactShadow';
 import { Flow } from './flow';
 import { Hotspots, PartBadges, SceneCard, Tags, type CardContent } from './labels';
@@ -103,6 +103,8 @@ export interface Drawing {
   tall: number;
   margin: number;
 }
+
+const _follow = { position: new Vector3(), target: new Vector3() };
 
 interface Pose {
   position: Vector3;
@@ -205,12 +207,17 @@ export class Viewer {
   /** How far the view is moved off the frame's centre right now, in fractions of the frame: the
    *  home offset, or none in a close-up, and in between while the camera flies from one to the other. */
   private readonly shift = new Vector2();
+  /** Where a close-up stands off the frame's centre, in fractions of the frame (− is up): a film lifts its shots clear of
+   *  the caption and bar along the stage's foot. Taken up by the next move of the camera. */
+  readonly closeUpShift = new Vector2();
   /** Whether the view is composed like the home view, so a resize keeps the model where the CSS puts it. */
   private composed = true;
   /** glTF units are metres, so this is the model's real size: what one unit of model space measures. */
   private metresPerUnit = 0;
   private pixelsPerMetre = 0;
   private lastFrame = performance.now();
+  /** How fast the mechanism's time goes against the clock's: 0 stops everything that moves on its own (a paused film). */
+  timeScale = 1;
   private frame = 0;
   private disposed = false;
 
@@ -559,7 +566,7 @@ export class Viewer {
 
   /** Where the view's centre belongs: off the frame's centre as the CSS says for a home view, on it for a close-up. */
   private get shiftTarget(): Vector2 {
-    return this.composed ? new Vector2(this.home.x, this.home.y) : new Vector2();
+    return this.composed ? new Vector2(this.home.x, this.home.y) : this.closeUpShift.clone();
   }
 
   /** The opening move: swing in from off to one side. */
@@ -966,6 +973,7 @@ export class Viewer {
     this.setFlow();
     this.setTags(null);
     this.setFocus(null);
+    this.timeScale = 1;
     this.setLoose(false);
     this.hold(false);
     this.wind(false);
@@ -981,7 +989,59 @@ export class Viewer {
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
    *  to its exact camera), on the stage's middle. Ghosts far from those parts fade, so a close-up isn't seen through a veil. */
-  showStep(step: Step): void {
+  showStep(step: View, { instant = false, camera = true } = {}): void {
+    const explode = step.explode ?? 0;
+    const moving = !!this.exploder && Math.abs(this.explodeValue - explode) > 0.005;
+    const { pose, sphere, focused } = this.framing(step);
+    if (moving && instant) this.setExplode(explode);
+    else if (moving) void this.animateExplode(explode, { camera: false });
+    this.looks?.setLens(focused ? sphere.center : null, sphere.radius * 1.1, sphere.radius * 1.9);
+    this.looks?.setHidden(this.meshesNamed(step.hide));
+    this.lookChanged();
+    this.hotspots?.setActive(null);
+    this.composed = false;
+    if (camera) void this.flyTo(pose, instant ? 0 : 1400);
+  }
+
+  /** Where a step puts the camera: its parts framed from its angle (or its exact camera), with the model as far apart as
+   *  it says. A film follows these from one shot to the next. */
+  stepPose(step: View, box?: [Vec3, Vec3]): CameraPose {
+    const { position, target } = this.framing(step, box && new Box3(new Vector3(...box[0]), new Vector3(...box[1]))).pose;
+    return { position: position.toArray() as Vec3, target: target.toArray() as Vec3 };
+  }
+
+  /** The box round the parts a step frames, as they are now (world space): a film frames a shot on the parts where they
+   *  start and where they end up. */
+  framedBox(step: View): [Vec3, Vec3] {
+    const explode = step.explode ?? 0;
+    const now = this.explodeValue;
+    const moving = !!this.exploder && Math.abs(now - explode) > 0.005;
+    if (moving) this.arrange(explode);
+    const names = step.frame?.length ? step.frame : step.focus;
+    const box = new Box3();
+    for (const mesh of names?.length ? this.meshesNamed(names) : this.meshes) box.expandByObject(mesh);
+    if (moving) this.arrange(now);
+    if (box.isEmpty()) box.copy(this.assembledBox);
+    return [box.min.toArray() as Vec3, box.max.toArray() as Vec3];
+  }
+
+  /** Puts the camera here at once, framed as a close-up (a film moving it on every frame). */
+  followPose(pose: CameraPose): void {
+    this.composed = false;
+    if (!this.shift.equals(this.closeUpShift)) {
+      this.shift.copy(this.closeUpShift);
+      this.project();
+    }
+    this.applyPose({ position: _follow.position.set(...pose.position), target: _follow.target.set(...pose.target) });
+  }
+
+  /** Flies to a pose given as numbers (a film starting, or picking up where it left off). */
+  flyToPose(pose: CameraPose, duration: number): Promise<void> {
+    this.composed = false;
+    return this.flyTo({ position: new Vector3(...pose.position), target: new Vector3(...pose.target) }, duration);
+  }
+
+  private framing(step: View, given?: Box3): { pose: Pose; sphere: Sphere; focused: boolean } {
     const explode = step.explode ?? 0;
     // Where the parts in focus will be once the model is as far apart as the step says.
     const now = this.explodeValue;
@@ -990,18 +1050,10 @@ export class Viewer {
     const focus = step.focus?.length ? this.meshesNamed(step.focus) : null;
     const framed = step.frame?.length ? this.meshesNamed(step.frame) : focus;
     const box = new Box3();
-    for (const mesh of framed ?? this.meshes) box.expandByObject(mesh);
-    if (moving) {
-      this.arrange(now);
-      void this.animateExplode(explode, { camera: false });
-    }
+    if (given) box.copy(given);
+    else for (const mesh of framed ?? this.meshes) box.expandByObject(mesh);
     if (box.isEmpty()) box.copy(this.assembledBox);
     const sphere = box.getBoundingSphere(new Sphere());
-    this.looks?.setLens(focus ? sphere.center : null, sphere.radius * 1.1, sphere.radius * 1.9);
-    this.looks?.setHidden(this.meshesNamed(step.hide));
-    this.lookChanged();
-    this.hotspots?.setActive(null);
-    this.composed = false;
     let pose: Pose;
     if (step.camera) {
       pose = this.fitPose(step.camera);
@@ -1012,7 +1064,14 @@ export class Viewer {
       const position = target.clone().addScaledVector(direction, this.fitDistance(box, target, direction, 1 / (step.fill ?? 0.75)));
       pose = this.fitPose({ position: position.toArray() as Vec3, target: target.toArray() as Vec3 });
     }
-    void this.flyTo(pose, 1400);
+    if (moving) this.arrange(now);
+    // The lens is round the parts in focus, not the ones framed.
+    if (focus && framed !== focus) {
+      const lens = new Box3();
+      for (const mesh of focus) lens.expandByObject(mesh);
+      if (!lens.isEmpty()) lens.getBoundingSphere(sphere);
+    }
+    return { pose, sphere, focused: !!focus };
   }
 
   /** An anchor at a model-space point (given for the assembled model) that rides with a node, if one is named. */
@@ -1088,7 +1147,7 @@ export class Viewer {
   }
 
   /** Labels on parts for a step, each where it says or at its part's middle; null clears them. */
-  setTags(tags: Step['tags'] | null): void {
+  setTags(tags: Shot['tags'] | null): void {
     const entries = (tags ?? []).flatMap((tag) => {
       const node = this.root?.getObjectByName(tag.node);
       if (!node) return [];
@@ -1137,6 +1196,11 @@ export class Viewer {
   /** The road speed a car's grip is worked out for, km/h (its wing rises at speed). */
   setRoadSpeed(kmh: number): void {
     this.aero?.setSpeed(kmh);
+  }
+
+  /** Raises a car's rear wing, or stows it. */
+  setWing(up: boolean): void {
+    this.aero?.setWing(up);
   }
 
   /** Holds a car's rear thrusters open, or shuts them. */
@@ -1222,6 +1286,11 @@ export class Viewer {
   /** Tries to turn the key a quarter turn, or turns it back. */
   turnKey(on: boolean): void {
     this.lock?.turn(on);
+  }
+
+  /** Holds the key turned this far (degrees), if it will go. */
+  setKeyAngle(deg: number): void {
+    this.lock?.setAngle(deg);
   }
 
   // ------------------------------------------------------------- a tape measure
@@ -1589,17 +1658,10 @@ export class Viewer {
     // Marked on the page while a move is under way, so a check of a built copy (no __viewer) can wait it out.
     const moving = this.tweens.length > 0;
     if (this.container.hasAttribute('data-moving') !== moving) this.container.toggleAttribute('data-moving', moving);
-    const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
-    this.cameraBody?.tick(dt);
-    this.lock?.tick(dt);
-    if (this.aero && this.tickAero(dt)) this.dirty = true;
-    if (this.arm) {
-      this.arm.tick(dt);
-      const { springs } = this.arm.state;
-      for (const spring of this.springs) if (spring.apply(springs[spring.layout.arm as 'lower' | 'upper'].length)) this.shadowDirty = this.dirty = true;
-    }
-    this.tape?.tick(dt);
-    if (this.extinguisher?.tick(dt)) this.dirty = true;
+    // The mechanism's own time, which a paused film stops.
+    const live = dt * this.timeScale;
+    const turned = !!this.mechanism?.tick(live, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
+    if (this.tickModules(live)) this.dirty = true;
     if (this.linkage?.apply() || turned) {
       this.rigs.apply();
       // A path pinned to a crank goes round with it.
@@ -1619,6 +1681,53 @@ export class Viewer {
       this.badges?.updateOcclusion(this.camera, this.pickable);
     }
   };
+
+  /** Moves the mechanisms' controls on by `dt` seconds (a camera's, a car's, an arm's, a lock's, a tape's, an
+   *  extinguisher's); true if anything drawn changed beyond their controls. */
+  private tickModules(dt: number): boolean {
+    let moved = false;
+    this.cameraBody?.tick(dt);
+    this.lock?.tick(dt);
+    if (this.aero && this.tickAero(dt)) moved = true;
+    if (this.arm) {
+      this.arm.tick(dt);
+      const { springs } = this.arm.state;
+      for (const spring of this.springs) if (spring.apply(springs[spring.layout.arm as 'lower' | 'upper'].length)) this.shadowDirty = moved = true;
+    }
+    this.tape?.tick(dt);
+    if (this.extinguisher?.tick(dt)) moved = true;
+    return moved;
+  }
+
+  /** Runs the mechanisms' controls on by `seconds` at once, in small steps, without drawing: a film seeking to a
+   *  moment plays everything before it this way. (Spinning parts and clockwork aren't run: they keep their place.) */
+  simulate(seconds: number): void {
+    for (let left = seconds; left > 1e-6; left -= 1 / 60) this.tickModules(Math.min(1 / 60, left));
+    // The parts go where the controls now put them, at once, so they can be measured.
+    if (this.linkage?.apply()) {
+      this.rigs.apply();
+      for (const flow of this.flows) if (flow.rides) flow.update();
+    }
+    this.root?.updateMatrixWorld(true);
+    this.shadowDirty = this.dirty = true;
+  }
+
+  /** Puts every mechanism back to rest: the keys, the arm, the tape, the extinguisher, the car, the watch's crown and fork, a camera. */
+  resetMechanisms(): void {
+    this.setLoose(false);
+    this.hold(false);
+    this.wind(false);
+    this.cameraBody?.reset();
+    this.aero?.reset();
+    if (this.arm) {
+      this.hookSprings(true);
+      this.arm.reset(true);
+    }
+    this.lock?.reset();
+    this.tape?.reset();
+    this.extinguisher?.reset();
+    this.dirty = true;
+  }
 
   /** Stops drawing while the model is out of sight (the skill page's live watch), and picks up where it was. */
   setPaused(paused: boolean): void {
