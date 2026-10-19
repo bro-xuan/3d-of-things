@@ -85,3 +85,4 @@ Keep a model under ~3 MB and ~100 nodes; the existing ones are 0.8–2.9 MB with
 - meshopt quantisation rewrites node transforms, so anything that deforms a mesh in the viewer has to work through its matrix.
 - three-mesh-bvh reorders the index buffer, so a triangle index from a BVH cast can't be mapped back to a material.
 - The viewer assumes glTF units are metres. A downloaded model in other units shows a wrong scale bar and drawings; fix it in the build step.
+- Poly Haven's CDN can serve a stale file after a model is updated, and `models:fetch` then fails its checksum. On 19 October 2026 the 1k `.bin` of `vintage_grandfather_clock_01` came back at 337,096 bytes against the API's 337,224; the same file fetched by its 2k path matched the API's md5, and was put into `.cache/sources/polyhaven/` by hand. Copy it from a workspace that has it rather than changing the fetch script.

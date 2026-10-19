@@ -92,7 +92,7 @@ The procedure is fast because nothing is done twice and the machine does the loo
 | `npm run check [-- <slug>]` | Static content checks against the model | < 1 s |
 | `npm run reproduce [-- --models]` | Every object's content builder run again (with `--models`, every model rebuilt first); fails if a byte changed | 4 s (30 s) |
 | `npm run qa -- <slug> [--model\|--quick\|--only …]` | Browser checks, contact sheets (the film as a strip of frames), report, exit code | 15–70 s |
-| `npm run qa -- --all --quick` | Regression over every object, and the skill's page | ~100 s |
+| `npm run qa -- --all --quick` | Regression over every object, and the skill's page | ~190 s |
 | `npm run qa -- --skill` | The skill's page and its live watch | ~15 s |
 | `npm run posters -- <slug>` | Gallery posters and tray thumbnail | ~7 s |
 | `npm run export -- --out <host>/public/3d-of-everything` | Bake the site into afrodance.fun (absolute URLs under the mount) | ~3 s |

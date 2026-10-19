@@ -134,6 +134,17 @@ With this procedure (18 Oct 2026; three objects built in one session, 70 minutes
 | Bicycle pump | B | 15 min | 38% |
 | Garden sprinkler | A | 15 min | 46% |
 
+Four more on 19 October 2026, each built by its own agent in its own worktree, in parallel:
+
+| Object | Tier | Active time, to its commit | Where it went over |
+|---|---|---|---|
+| Spinning wheel | B (one mesh cut apart) | 73 min | 15 min blocked on the research subagent; a new four-bar motion for the treadle |
+| Ceiling fan | B | 74 min, then 15 for the film | 13 min blocked on research; the film had to lean in and turn the blades to glass before the field showed |
+| Grandfather clock | B | 80 min, then the film again | 26 min blocked on research; the film framed whole left the movement 70 px tall |
+| Typewriter | C | 82 min | 16 min blocked on research; laying out 42 bars to meet at one point |
+
+Every one ran over its budget, and a fifth to a third of each overrun was the research subagent started in the foreground: start it with `run_in_background` and scaffold while it works, as stage 1 says. Two of the four films first framed the whole object so small that the mechanism didn't read; check the film strip for that before anything else.
+
 Checking is still the biggest stage, but now it's reading contact sheets and fixing what they show (callout cameras, flow points on moving parts, a crank bug in the viewer) rather than writing browser scripts. `--item` counts every call that names the object, so a call that loops over several objects counts for each: measure an object when it ships.
 
 Two thirds of the browser-QA time was the browser itself: every script launched software WebGL at about 460 ms a frame and slept 2.5–4.5 s per view. The rest was writing a new script for every object. That's what the GPU runner removes (one object's full check runs in about a minute), and the references remove most of the re-reading. Measure each new object with `npm run timing -- <session.jsonl> --item <slug>=<pattern>` and add it here.
