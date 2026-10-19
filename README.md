@@ -93,7 +93,7 @@ Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the
   </tr>
 </table>
 
-Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step) and a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in).
+Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **personal cassette player** (a 2 mm capstan sets the tape's speed; the reels only keep it taut), a **pin tumbler lock** (a Kwikset cylinder whose five pin stacks ride the key's cuts to the shear line, a wrong key that won't turn, and the bolt a quarter turn throws) and a **desk lamp** (an Anglepoise-type arm whose springs match the head's weight at every angle; unhook them and it drops).
 
 ## What's on a page
 
@@ -158,7 +158,7 @@ Detail costs time, so here are the real numbers: Claude's active time per object
 | Leica M3 | B | 2 h 07 | 37% |
 | Hasselblad-type SLR | C | 1 h 59 | 33% |
 
-The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all thirteen in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
+The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and the first thirteen in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
 
 The first three objects made with the skill, on 18 October 2026, came in well under it. All three were built in one session: 70 minutes from the request to the last poster, with each object's research running in a subagent alongside.
 
@@ -304,8 +304,11 @@ npm run preview    # serve dist/
 | Washing Machine | built in code for this site (`objects/washing-machine/`), a typical European front-loader; no particular make | 3D of Things | CC0 1.0 |
 | Bicycle Pump | [Tire Pump](https://polyhaven.com/a/tire_pump); piston, cup seal, air passage and ball valve built for this site | Garrison Gager | CC0 1.0 |
 | Garden Sprinkler | [Garden Sprinkler 01](https://polyhaven.com/a/garden_sprinkler_01) | Amal Kumar | CC0 1.0 |
+| Personal Cassette Player | [Portable Cassette Player](https://polyhaven.com/a/portable_cassette_player); deck, capstan, flywheel, belts, motor, cells, pinch roller, head, slip clutch, spindles and the cassette's reels, tape, rollers and pressure pad built for this site | Mateusz Sadek | CC0 1.0 |
+| Pin Tumbler Lock | built in code for this site (`objects/pin-tumbler-lock/`), after the Kwikset KW1 cylinder and 660 deadbolt | 3D of Things | CC0 1.0 |
+| Desk Lamp | [Desk Lamp Arm 01](https://polyhaven.com/a/desk_lamp_arm_01); springs rebuilt as coils for this site | Kuutti Siitonen & Yann Kervran | CC0 1.0 |
 
-All but the SLR, the washing machine and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; the Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap is left off. The explanations were written for this site.
+All but the SLR, the washing machine, the lock and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; the Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap is left off. The explanations were written for this site.
 
 ## Deploying
 

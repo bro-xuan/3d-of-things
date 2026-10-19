@@ -78,7 +78,8 @@ export interface Motion {
   inside?: boolean;
   /** Moved by one of the mechanism's controls instead of by time: a camera's `focus` (lens extension, mm), `aperture`
    *  (stops from wide open), `curtain1` and `curtain2` (0 cocked to 1 run), `lever` (0–1 of a stroke), `film`
-   *  (frames wound on) or `release` (0–1). See src/viewer/linkage.ts. */
+   *  (frames wound on) or `release` (0–1); a desk lamp's `arm_lower` and `arm_upper` (src/viewer/balancedarm.ts); a
+   *  lock's `lock-key`, `lock-wrong` and `lock-turn` (src/viewer/pintumbler.ts). See src/viewer/linkage.ts. */
   control?: string;
   /** With `control`: turns per unit of the control, counted from `from` (default 0). */
   turn?: number;
@@ -165,7 +166,9 @@ export interface Step {
   /** An experiment to try (see src/pages/tour.ts): 'wind', 'loose' and 'hold' for a watch, 'run' (hold to run a
    *  crank or motor) and 'speeds' (pick one of `speeds`) for anything that spins, for a camera 'focus',
    *  'aperture', 'shutter' (pick a speed and fire) and 'advance' (wind on a frame), and for a car with fans and
-   *  thrusters 'suction' (switch the fans on), 'grip' (pick a speed), 'thrust' (fire the rear thrusters) and 'fly'. */
+   *  thrusters 'suction' (switch the fans on), 'grip' (pick a speed), 'thrust' (fire the rear thrusters) and 'fly'; for a desk lamp 'arm' (move
+   *  each arm) and 'unhook' (hold the springs off), and for a lock 'lock-insert' (push the key in) and 'lock-turn'
+   *  (pick a key and turn). */
   try?: string;
   /** For 'run': turns to count while it runs, e.g. the crank's and the bit's. */
   count?: { node: string; label: string }[];
@@ -207,7 +210,7 @@ export interface Jet {
   group: 'rear' | 'lift' | 'yaw';
 }
 
-export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars' | 'home' | 'sound' | 'tools' | 'electric';
+export type CategoryId = 'gears' | 'optics' | 'time' | 'cameras' | 'cars' | 'home' | 'sound';
 
 export interface Thing {
   slug: string;
