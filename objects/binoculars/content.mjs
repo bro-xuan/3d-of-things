@@ -1,9 +1,21 @@
 // Writes content/binoculars.json. Converted key for key on 18 October 2026 from the hand-written JSON the page
-// shipped with, so it writes the same file byte for byte. Its positions and cameras are still typed in model
+// shipped with (its "How it works" is now a film). Its positions and cameras are still typed in model
 // space, as they were in the JSON: when the model changes, place them from the model with placer(nodeBounds(...))
 // (scripts/kit/nodes.mjs), as the newer objects' builders do.
 //   node objects/binoculars/content.mjs
 import { writeContent } from '../../scripts/kit/content.mjs';
+
+const BARRELS = ['vintage_binocular_left_prism', 'vintage_binocular_right_prism'];
+/** What stays solid through the film: the eyepieces (and the right one's diopter ring). The barrels, which hold the
+ *  objectives and the prisms, the hinge and the focus wheel are glass, so the light can be seen inside. */
+const SOLID = ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_diopter'];
+/** The whole pair, framed the same in every shot so the camera never moves in or out. */
+const WHOLE = [...BARRELS, ...SOLID];
+/** The light's path through the left barrel: in through the objective, back to the first prism, which turns it up and
+ *  forward, to the second, which turns it in and back, and on through the eyepiece. */
+const LIGHT = [[0.43, 0.24, 0.88], [0.43, 0.24, 0.66], [0.43, 0.24, -0.02], [0.335, 0.335, -0.02], [0.335, 0.335, 0.36], [0.241, 0.211, 0.36], [0.241, 0.211, -0.5], [0.241, 0.211, -0.8]];
+/** The same path through the right barrel. */
+const mirror = (path) => path.map(([x, y, z]) => [-x, y, z]);
 
 writeContent('binoculars', {
   order: 3,
@@ -106,6 +118,51 @@ writeContent('binoculars', {
       camera: { position: [0, 1.043, 1.277], target: [0, 0.374, 0.162] },
     },
   ],
+  // "How it works" as a film: the light through one barrel and the other, from the objective to the eye.
+  film: [
+    {
+      chapter: 'Objective',
+      caption: 'The big front lens gathers the light and forms an upside-down image inside the barrel.',
+      duration: 6,
+      angle: [64, 28],
+      fill: 0.78,
+      focus: SOLID,
+      frame: WHOLE,
+      carries: 'light',
+      flow: LIGHT.slice(0, 3),
+      flows: [mirror(LIGHT.slice(0, 3))],
+      tags: [{ node: 'vintage_binocular_left_prism', text: 'objective lens', at: [0.43, 0.42, 0.68] }],
+    },
+    {
+      chapter: 'Prisms',
+      caption: 'Two prisms bounce it four times, turning the picture upright and folding the path short.',
+      duration: 6.5,
+      angle: [92, 40],
+      fill: 0.64,
+      focus: SOLID,
+      frame: WHOLE,
+      carries: 'light',
+      flow: LIGHT.slice(0, 6),
+      flows: [mirror(LIGHT.slice(0, 6))],
+      tags: [
+        { node: 'vintage_binocular_left_prism', text: 'first prism', at: [0.39, 0.4, -0.02] },
+        { node: 'vintage_binocular_left_prism', text: 'second prism', at: [0.29, 0.4, 0.36] },
+      ],
+    },
+    {
+      chapter: 'Eyepiece',
+      caption: 'The eyepiece magnifies that upright image, about seven times, for your eye.',
+      duration: 6,
+      angle: [120, 28],
+      fill: 0.78,
+      focus: SOLID,
+      frame: WHOLE,
+      carries: 'light',
+      flow: LIGHT,
+      flows: [mirror(LIGHT)],
+      tags: [{ node: 'vintage_binocular_left_lens', text: 'eyepiece', at: [0.241, 0.33, -0.55] }],
+    },
+  ],
   credit: {
     title: 'Vintage Binoculars',
     author: 'Luke',
@@ -114,74 +171,4 @@ writeContent('binoculars', {
     source: 'Poly Haven',
     sourceUrl: 'https://polyhaven.com/a/vintage_binocular',
   },
-  how: [
-    {
-      label: 'Objective',
-      title: 'Light in: the objective',
-      text: [
-        'Each half of a pair of binoculars is a small telescope. The big lens at the front, the objective, gathers light and bends it to a point, forming a small image inside the barrel.',
-        'That image is upside down and back to front, as it would be through any single lens.',
-      ],
-      angle: [42, 16],
-      fill: 0.8,
-      focus: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_diopter', 'vintage_binocular_focus', 'vintage_binocular_eye_relief', 'vintage_binocular_middle'],
-      carries: 'light',
-      flow: [[0.43, 0.24, 0.88], [0.43, 0.24, 0.66], [0.43, 0.24, -0.02]],
-      flows: [[[-0.43, 0.24, 0.88], [-0.43, 0.24, 0.66], [-0.43, 0.24, -0.02]]],
-      tags: [{ node: 'vintage_binocular_left_prism', text: 'Objective lens', at: [0.43, 0.42, 0.68] }],
-    },
-    {
-      label: 'Prisms',
-      title: 'Prisms turn it the right way round',
-      text: [
-        'In the bulge of each barrel, two right-angled glass prisms each bounce the light twice. The first turns the image over top to bottom, the second side to side, so it comes out the right way round.',
-        'Folding the light back and forth also packs a long light path into a short body, and is why the objectives sit wider apart than your eyes.',
-      ],
-      angle: [52, 50],
-      fill: 0.82,
-      focus: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_diopter', 'vintage_binocular_focus', 'vintage_binocular_eye_relief', 'vintage_binocular_middle'],
-      carries: 'light',
-      flow: [[0.43, 0.24, 0.88], [0.43, 0.24, 0.66], [0.43, 0.24, -0.02], [0.335, 0.335, -0.02], [0.335, 0.335, 0.36], [0.241, 0.211, 0.36], [0.241, 0.211, -0.5], [0.241, 0.211, -0.8]],
-      flows: [[[-0.43, 0.24, 0.88], [-0.43, 0.24, 0.66], [-0.43, 0.24, -0.02], [-0.335, 0.335, -0.02], [-0.335, 0.335, 0.36], [-0.241, 0.211, 0.36], [-0.241, 0.211, -0.5], [-0.241, 0.211, -0.8]]],
-      tags: [{ node: 'vintage_binocular_left_prism', text: 'First prism', at: [0.39, 0.4, -0.02] }, { node: 'vintage_binocular_left_prism', text: 'Second prism', at: [0.29, 0.4, 0.36] }],
-      chart: 'binoculars-image',
-    },
-    {
-      label: 'Eyepiece',
-      title: 'The eyepiece enlarges it',
-      text: [
-        'The eyepiece works like a magnifying glass on the upright image. How much it enlarges is the objective’s focal length divided by the eyepiece’s.',
-        'A typical pair has an objective focusing about 180 mm behind it and an eyepiece of about 25 mm, which gives 7×.',
-      ],
-      angle: [214, 18],
-      fill: 0.75,
-      focus: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_diopter', 'vintage_binocular_focus', 'vintage_binocular_eye_relief', 'vintage_binocular_middle'],
-      frame: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens'],
-      carries: 'light',
-      flow: [[0.241, 0.211, 0.36], [0.241, 0.211, -0.5], [0.241, 0.211, -0.8]],
-      flows: [[[-0.241, 0.211, 0.36], [-0.241, 0.211, -0.5], [-0.241, 0.211, -0.8]]],
-      tags: [{ node: 'vintage_binocular_left_lens', text: 'Eyepiece', at: [0.241, 0.33, -0.55] }],
-      chart: {
-        type: 'bars',
-        title: 'Magnification',
-        caption: 'Magnification is one focal length over the other: 180 mm ÷ 25 mm is about 7×, written on binoculars as the first number, as in 7 × 50.',
-        unit: 'Focal length, mm',
-        bars: [{ label: 'Objective', value: 180 }, { label: 'Eyepiece', value: 25 }],
-        picked: 0,
-      },
-    },
-    {
-      label: 'Focus',
-      title: 'Focusing both at once',
-      text: [
-        'Turning the centre wheel slides both eyepieces in or out together, to where the image forms for near or far subjects.',
-        'Most people’s eyes differ slightly, so the right eyepiece has a diopter ring of its own: focus the left side with the wheel, then turn the ring until the right is sharp too.',
-      ],
-      angle: [200, 40],
-      fill: 0.62,
-      focus: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_focus', 'vintage_binocular_diopter'],
-      frame: ['vintage_binocular_left_lens', 'vintage_binocular_right_lens', 'vintage_binocular_focus'],
-      tags: [{ node: 'vintage_binocular_focus', text: 'Focus wheel', at: [0, 0.48, -0.04] }, { node: 'vintage_binocular_diopter', text: 'Diopter ring', at: [-0.24, 0.35, -0.44] }],
-    },
-  ],
 });

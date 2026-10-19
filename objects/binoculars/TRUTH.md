@@ -35,9 +35,9 @@ source → transmission → control → output. One line each, naming the parts.
 | Design | Porro prism | content: facts |
 | Reflections | 4 per side: two prisms, each reflecting twice | content: facts; callout 'Porro prisms' |
 | Real size | 20 cm long | content: facts |
-| Objective focal length | about 180 mm, for "a typical pair" | content: how step 3 text and chart |
-| Eyepiece focal length | about 25 mm, for "a typical pair" | content: how step 3 text and chart |
-| Magnification | 180 ÷ 25 mm, about 7×; the first number in "7 × 50" | content: how step 3 chart caption |
+| Objective focal length | about 180 mm, for "a typical pair" | the tour before the film; not on the page now |
+| Eyepiece focal length | about 25 mm, for "a typical pair" | the tour before the film; not on the page now |
+| Magnification | about 7× (180 ÷ 25 mm); the first number in "7 × 50" | content: film shot 3 caption ("about seven times"); the working was in the tour before the film |
 | Eye spacing the hinge matches | typically 56 to 74 mm | content: callout 'Hinge' |
 
 The focal lengths are the page's typical pair, not measured on this model.
@@ -64,20 +64,20 @@ The page gives no groups; the order is the page's.
 ## 7. Mechanism map
 
 - **Nothing moves:** no `motion`, no `motionLabel`, no `try` experiment. Taking it apart moves the parts out in two stages (0, 1); the Hinge stays put.
-- **Light:** steps 1–3 carry `light` flows, one path per barrel (`flow` for the left, `flows` for the right): objective, the two prisms, eyepiece. In those steps the barrels are left out of `focus`, so they turn to ghosts and the path shows inside.
-- **Charts:** `binoculars-image` in step 2 (src/charts/optics.ts, "What the picture does": a letter F upside down after the objective, the right way round after the 4 reflections, enlarged by the eyepiece), made for this object; generic `bars` "Magnification" in step 3 (Objective 180, Eyepiece 25 mm, `picked: 0`).
-- **Nothing new** beyond that chart.
+- **Light:** the film draws the light as `light` flows, one path per barrel (`flow` for the left, `flows` for the right), grown shot by shot: through the objective, then the two prisms, then the eyepiece. The barrels (which hold the objectives and prisms), the hinge and the focus wheel are glass all through; the eyepieces and the diopter ring are solid.
+- **The camera** frames the whole pair at every shot and orbits round the left barrel's side (64°, 92°, 120°), so the path runs left to right across the frame.
+- **No charts.** The tour's `binoculars-image` chart (src/charts/optics.ts) is no longer used by this page.
+- **Nothing new.**
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Objective | Left eyepiece, Right eyepiece, Diopter ring, Focus wheel, Hinge cap, Hinge; light flow (2 paths) |  |  |
-| 2 | Prisms | Left eyepiece, Right eyepiece, Diopter ring, Focus wheel, Hinge cap, Hinge; light flow (2 paths) | binoculars-image |  |
-| 3 | Eyepiece | Left eyepiece, Right eyepiece, Diopter ring, Focus wheel, Hinge cap, Hinge; light flow (2 paths) | bars: Magnification |  |
-| 4 | Focus | Left eyepiece, Right eyepiece, Focus wheel, Diopter ring |  |  |
-
-Four steps on the page.
+| 0 s | Objective | The big front lens gathers the light and forms an upside-down image inside the barrel. | 6 |  |
+| 6 s | Prisms | Two prisms bounce it four times, turning the picture upright and folding the path short. | 6.5 |  |
+| 12.5 s | Eyepiece | The eyepiece magnifies that upright image, about seven times, for your eye. | 6 |  |
 
 ## 9. Simplified or left out
 
