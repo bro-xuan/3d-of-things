@@ -22,10 +22,10 @@
 </p>
 
 <p align="center">
-  <img src=".github/assets/hero-watch-escapement.webp" width="800" alt="The pocket watch in How it works, step 4 of 6: the case has turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid. Beside them the text reads 'One tooth at a time', over a timing chart of one swing of the balance, slowed down.">
+  <img src=".github/assets/hero-lock-film.webp" width="800" alt="The pin tumbler lock in How it works: the plug and housing have turned to glass, the key is in, and every pin's split sits on a red shear line. Under the model the caption reads 'With the right key, the gap in every pair lines up with the edge of the plug', over a bar to play, pause and scrub the film; beside it, the film's script.">
 </p>
 
-<p align="center"><sub>The pocket watch's escapement in <b>How it works</b>. The case turns to glass, the parts the step is about stay solid and run, and the chart beside them is drawn from the same beat count that turns the wheels.</sub></p>
+<p align="center"><sub>The pin tumbler lock in <b>How it works</b>: a short film of the key going in and turning. The casing turns to glass so the pins can be seen riding the key's cuts, the camera glides round without a cut, and one line of caption says what's happening.</sub></p>
 
 ---
 
@@ -101,14 +101,14 @@ And a **sewing machine**: a Singer 201-2 built in code from Singer's adjuster's 
 
 <table>
   <tr>
-    <td width="33%"><img src=".github/assets/tour-slr-light.webp" alt="The SLR in How it works: amber rays from the lens bounce off the 45 degree mirror up to the focusing screen."></td>
-    <td width="33%"><img src=".github/assets/tour-leica-rangefinder.webp" alt="The Leica's rangefinder: amber rays through both windows meet at the beam splitter; a chart shows the two images in the viewfinder."></td>
-    <td width="33%"><img src=".github/assets/tour-slr-winding.webp" alt="The SLR's winding: a vermilion line runs from the knob through the gear train to the drive key; a chart counts each gear's turns."></td>
+    <td width="33%"><img src=".github/assets/film-reflex-light.webp" alt="The SLR's film, focusing: amber rays from the lens bounce off the 45 degree mirror up to the focusing screen, with the caption under the model."></td>
+    <td width="33%"><img src=".github/assets/film-rangefinder-fire.webp" alt="The Leica's film, firing: the two cloth curtains cross the film gate, slowed so the slit can be seen."></td>
+    <td width="33%"><img src=".github/assets/film-roadster-fans.webp" alt="The Roadster's film: blue air lines run from under the floor to the fans in the tail, the body as glass."></td>
   </tr>
   <tr>
-    <td><img src=".github/assets/tour-leica-shutter.webp" alt="The Leica's shutter: the two cloth curtains in front of the film gate, with a chart of the slit crossing the frame at 1/250 s."></td>
-    <td><img src=".github/assets/tour-roadster-suction.webp" alt="The Roadster's suction fans: blue air lines run from under the floor to the fans, with a chart of the pressure above and below."></td>
-    <td><img src=".github/assets/tour-watch-power.webp" alt="The watch's power step: the crown, the winding wheels and the mainspring in its barrel, with a chart of the spring's pull over 40 hours."></td>
+    <td><img src=".github/assets/film-extinguisher-out.webp" alt="The fire extinguisher's film: the gas drives the powder up the dip tube and out of the hose, drawn as a line through the glass cylinder."></td>
+    <td><img src=".github/assets/film-cassette-drive.webp" alt="The cassette player's film: the motor, belt and brass flywheel turn behind the glass deck, the pinch roller pressing the tape onto the capstan."></td>
+    <td><img src=".github/assets/film-car-drive.webp" alt="The family car's film: a vermilion line runs from the engine through the gearbox and propshaft under the glass body."></td>
   </tr>
 </table>
 
@@ -262,7 +262,7 @@ npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/obje
 `check` finds names the model doesn't have, meshes in no part, positions off the model, film cues that don't exist, captions and films too long, and unfinished text. `qa` drives the real page in headless Chromium on the GPU: it opens every callout, plays the film, checks each shot's caption and labels, and tiles what it saw into a few labelled contact sheets, the film as a strip of frames at even steps:
 
 <p align="center">
-  <img src=".github/assets/qa-tour-sheet.webp" width="800" alt="A contact sheet from npm run qa: the SLR's seven tour steps tiled in one image, each labelled.">
+  <img src=".github/assets/qa-film-strip.webp" width="800" alt="A contact sheet from npm run qa: the pin tumbler lock's film as thirteen frames at even steps, each labelled with its time, the camera gliding round from the key going in to the bolt thrown.">
 </p>
 
 The model build has its own checks: it fails if any generated part crosses another at rest, or if the content file's explode would pass one part through another.
