@@ -67,6 +67,9 @@ export interface Motion {
   swing?: 'balance' | 'pallet' | 'coil';
   /** Degrees either side of rest, for `swing` and `pawl`. */
   amplitude?: number;
+  /** Beats a second of the clock this motion belongs to (any one motion can say it; default 6, a watch's). A seconds
+   *  pendulum beats once a second: its trains step and its `swing: 'balance'` parts swing with that beat. */
+  beats?: number;
   /** Turned by winding the crown: turns per turn of the crown, negative for the other way. */
   wind?: number;
   /** With `wind`: a spiral spring whose inner coils turn as it's wound while its outer end stays put (a mainspring). */
