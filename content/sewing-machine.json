@@ -1039,22 +1039,13 @@
       "tags": [
         {
           "node": "hook",
-          "text": "beak",
+          "text": "hook",
           "at": [
             -0.5943,
             0.1454,
             -0.1066
           ],
           "ride": true
-        },
-        {
-          "node": "bobbin",
-          "text": "bobbin",
-          "at": [
-            -0.6036,
-            0.136,
-            -0.0382
-          ]
         }
       ]
     },
@@ -1095,22 +1086,13 @@
       "tags": [
         {
           "node": "hook",
-          "text": "beak",
+          "text": "hook",
           "at": [
             -0.5943,
             0.1454,
             -0.1066
           ],
           "ride": true
-        },
-        {
-          "node": "bobbin",
-          "text": "bobbin",
-          "at": [
-            -0.6036,
-            0.136,
-            -0.0382
-          ]
         }
       ]
     },
