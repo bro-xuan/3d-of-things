@@ -86,16 +86,15 @@ Nothing runs: the chain is where the weight goes and what answers it. Moving the
 - Chart `arm-torque` (new): weight torque and spring torque against angle, 0–90°, for both arms, with an ordinary spring's (no initial tension) for comparison; markers at the arm's angles.
 - Experiments (new): `arm` (two sliders, readout of both torques) and `unhook` (hold to unhook the springs: the arm sinks; let go and it stays wherever it got to).
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | power flow |  |  |
-| 2 | The load | Shade, Bulb, Lamp holder, Head bracket, Upper bar, Upper link |  |  |
-| 3 | Springs | Upper spring, left, Upper spring, right, Upper bar, Elbow plates | arm-torque: Torque about each pivot | arm |
-| 4 | Parallelograms | Head bracket, Upper bar, Upper link, Elbow plates, Lower arm, Parallel link, Base bracket |  |  |
-| 5 | Lower arm | Lower spring, left, Lower spring, right, Lower arm, Parallel link, Base bracket | arm-torque: Torque about each pivot |  |
-| 6 | Not friction |  | arm-torque: Torque about each pivot | unhook |
+| 0 s | Reach | Push the head out and the lower springs stretch, pulling harder just as the weight does. | 6 | 0.8 s arm-lower → 54 over 4.2 s |
+| 6 s | Lift | Lift the head and the upper springs shorten, easing off just as the weight’s pull does. | 6 | 0.8 s arm-upper → 30 over 4.2 s |
+| 12 s | Let go | Let go and it stays put: at every angle the springs answer the weight exactly. | 5 |  |
 
 
 ## 9. Simplified or left out

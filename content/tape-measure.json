@@ -6,7 +6,7 @@
   "summary": [
     "A tape measure has to fit three metres of ruler in a pocket and bring it back by itself. It does both with steel: a blade curved across its width, stiff enough to stand out in the air yet flat enough to coil, and a spring that keeps the pull you put into it.",
     "Your pull on the hook draws the blade off a drum, and the drum carries the outer end of a flat spiral spring round a post fixed in the case. A shoe under the front button can pinch the blade to hold it, and the hook on its end slides on its rivets.",
-    "Pull all 3 m out and the drum turns 20.3 times, moving the spring's coils off the drum's wall and onto the post; let go and the spring turns it back. Here the blade, drum and spring move together from one set of sums: pull the blade out in the tour, lock it, and watch the hook slide by its own 0.9 mm."
+    "Pull all 3 m out and the drum turns 20.3 times, moving the spring's coils off the drum's wall and onto the post; let go and the spring turns it back. Here the blade, drum and spring move together from one set of sums, and the hook slides by its own 0.9 mm as it is pulled."
   ],
   "model": "models/tape-measure.glb",
   "viewAngle": [
@@ -492,350 +492,171 @@
       ]
     }
   ],
-  "how": [
+  "film": [
     {
-      "label": "The idea",
-      "title": "A spring you wind by pulling",
-      "text": [
-        "The blade is wound on a drum, and inside the drum is a flat spiral spring, its inner end on a post that never moves. Pull the blade out and the drum turns, winding the spring tighter; the spring keeps that work and spends it winding the blade back in.",
-        "All 3 m out turns the drum 20.3 times. The case is off here so you can see the drum, the roll of blade and the spring inside."
-      ],
-      "explode": 0.45,
+      "chapter": "Pull",
+      "caption": "Pull out 16 cm of blade and the drum turns once, winding the spring inside a turn tighter.",
+      "duration": 7,
       "angle": [
-        -62,
-        16
+        -80,
+        14
       ],
+      "fill": 0.85,
       "focus": [
         "blade",
+        "end_hook",
+        "hook_rivets",
         "drum",
         "recoil_spring",
         "spring_post",
+        "lock_button",
+        "brake"
+      ],
+      "frame": [
+        "case_left",
+        "case_right",
         "end_hook"
-      ],
-      "flow": [
-        [
-          -0.0453,
-          0.1134,
-          0.6702
-        ],
-        [
-          -0.0453,
-          0.1862,
-          0.6518
-        ],
-        [
-          -0.0453,
-          0.1878,
-          0.4794
-        ],
-        [
-          -0.0453,
-          0.1862,
-          0.168
-        ],
-        [
-          -0.0453,
-          0.2133,
-          -0.0889
-        ],
-        [
-          -0.0453,
-          0.211,
-          -0.0446
-        ],
-        [
-          -0.1792,
-          0.3187,
-          -0.0446
-        ],
-        [
-          -0.1792,
-          0.7419,
-          -0.0446
-        ]
-      ]
-    },
-    {
-      "label": "Pull",
-      "title": "The blade turns the drum",
-      "text": [
-        "The blade's tail is fixed to the drum's hub, so whatever comes out of the mouth turns the drum. It leaves the roll at the bottom and runs straight out through a guide.",
-        "About 15 cm comes out for each turn, a little less as the roll gets smaller. Pull it out with the slider and let go: the spring winds it back."
-      ],
-      "explode": 0.45,
-      "angle": [
-        -72,
-        10
-      ],
-      "focus": [
-        "blade",
-        "drum",
-        "end_hook",
-        "hook_rivets"
-      ],
-      "flow": [
-        [
-          -0.0453,
-          0.1862,
-          0.6518
-        ],
-        [
-          -0.0453,
-          0.1878,
-          0.4794
-        ],
-        [
-          -0.0453,
-          0.1862,
-          0.168
-        ],
-        [
-          -0.0453,
-          0.2133,
-          -0.0889
-        ],
-        [
-          -0.0453,
-          0.211,
-          -0.0446
-        ]
       ],
       "tags": [
         {
           "node": "drum",
-          "text": "20.3 turns for 3 m",
+          "text": "drum",
           "at": [
             -0.2328,
             0.3569,
             0.1764
+          ],
+          "ride": true
+        },
+        {
+          "node": "recoil_spring",
+          "text": "spring",
+          "at": [
+            -0.1792,
+            0.753,
+            -0.0446
           ]
         }
       ],
-      "try": "tape-pull"
-    },
-    {
-      "label": "Spring",
-      "title": "The spring keeps your pull",
-      "text": [
-        "The spring's outer end goes round with the drum and its inner end stays on the post, so every turn winds it tighter. Its coils move off the drum's wall and pack onto the post.",
-        "It pulls back with 0.5 N at home and 1.4 N with 3 m out: its torque grows with each turn, and it acts through a roll that shrinks as the blade leaves it."
-      ],
-      "explode": 0.45,
-      "angle": [
-        -88,
-        6
-      ],
-      "focus": [
-        "recoil_spring",
-        "drum",
-        "spring_post"
-      ],
-      "flow": [
-        [
-          -0.2328,
-          0.3569,
-          0.1764
-        ],
-        [
-          -0.1792,
-          0.3187,
-          -0.0446
-        ],
-        [
-          -0.1792,
-          0.7419,
-          -0.0446
-        ]
-      ],
-      "chart": {
-        "type": "tape-spring",
-        "title": "What the spring pulls with",
-        "caption": "The pull on the hook as the blade comes out: a turn tighter every 15 cm or so, through a roll that shrinks, so it rises all the way.",
-        "node": "drum",
-        "blade": {
-          "kind": "tape-blade",
-          "centre": [
-            38.05,
-            -2.7
-          ],
-          "hub": 22,
-          "pitch": 0.15,
-          "length": 3227.130076757951,
-          "throat": [
-            11.35,
-            10
-          ],
-          "tip": 38.9,
-          "front": 38,
-          "width": 19,
-          "thickness": 0.13,
-          "cup": 22,
-          "standout": 1600,
-          "fold": [
-            45,
-            1.15
-          ],
-          "flat": 22,
-          "spring": {
-            "kind": "tape-spring",
-            "centre": [
-              38.05,
-              -2.7
-            ],
-            "post": 5,
-            "wall": 19.784999999999997,
-            "thickness": 0.13,
-            "pitch": 0.15,
-            "width": 16,
-            "length": 3837,
-            "start": 2.356194490192345,
-            "loose": 1,
-            "preload": 12,
-            "modulus": 206000,
-            "uSpan": 3837,
-            "fSpan": 0.065,
-            "x0": 0,
-            "turns": 37.1559
-          },
-          "hook": 0.9,
-          "uSpan": 3227.130076757951,
-          "fSpan": 0.065,
-          "x0": 0
+      "cues": [
+        {
+          "at": 0.8,
+          "do": "tape-out",
+          "to": 158,
+          "over": 4.5
         }
-      },
-      "try": "tape-pull"
+      ]
     },
     {
-      "label": "Lock",
-      "title": "A shoe pinches the blade",
-      "text": [
-        "Press the button and the arm under it drives a shoe onto the blade just behind the mouth, pinching it against the guide it runs on. With the lock on, the spring can pull all it likes and the blade stays put.",
-        "Stanley's PowerLock, from 1963, works the same way. Pull some blade out, press the lock and let go."
-      ],
-      "explode": 0.45,
+      "chapter": "Lock",
+      "caption": "Press the lock and a shoe pinches the blade against its guide, so it stays out.",
+      "duration": 5,
       "angle": [
-        -60,
-        14
+        -62,
+        20
       ],
-      "focus": [
-        "lock_button",
-        "brake",
-        "blade"
-      ],
-      "flow": [
-        [
-          -0.0453,
-          0.8301,
-          0.5138
-        ],
-        [
-          -0.0453,
-          0.6705,
-          0.4478
-        ],
-        [
-          -0.0453,
-          0.2372,
-          0.2751
-        ]
-      ],
-      "try": "tape-lock"
-    },
-    {
-      "label": "Curve",
-      "title": "The curve makes it stand up",
-      "text": [
-        "A flat strip of steel 0.13 mm thick would droop like paper. Curved 2 mm deep across its width it is some 300 times stiffer, so it reaches out across a gap; on the drum the curve flattens and it coils.",
-        "A 19 mm blade stands out 1.4–1.85 m before the curve gives near the case, where the bending is greatest, and the blade folds. Run it out and see."
-      ],
-      "angle": [
-        -80,
-        8
-      ],
-      "camera": {
-        "position": [
-          -4.3363,
-          0.7986,
-          1.4084
-        ],
-        "target": [
-          -0.0453,
-          0.1862,
-          0.6518
-        ]
-      },
+      "fill": 0.85,
       "focus": [
         "blade",
         "end_hook",
-        "hook_rivets"
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "Standout by blade width",
-        "caption": "How far each width reaches unsupported. The curve does it: a wider blade carries a deeper curve.",
-        "unit": "Metres it stands out",
-        "picked": 1,
-        "bars": [
-          {
-            "label": "13 mm",
-            "value": 1
-          },
-          {
-            "label": "19 mm",
-            "value": 1.6
-          },
-          {
-            "label": "25 mm",
-            "value": 2.35
-          },
-          {
-            "label": "32 mm",
-            "value": 3.35
-          }
-        ]
-      },
-      "try": "tape-standout"
-    },
-    {
-      "label": "Hook",
-      "title": "The loose hook keeps the zero true",
-      "text": [
-        "The hook wobbles because it should. Its rivets run in slots 0.9 mm longer than they are, and 0.9 mm is the hook's own thickness.",
-        "Hook it over an edge and your pull slides it out, so the zero is its inside face, where the edge is. Push it against a wall and it slides in, so the zero is its outside face, on the wall. Rivet it tight and one of the two would read a hook's thickness wrong."
-      ],
-      "angle": [
-        -30,
-        38
-      ],
-      "camera": {
-        "position": [
-          -0.987,
-          2.0018,
-          2.6515
-        ],
-        "target": [
-          0.1556,
-          0.2164,
-          0.6724
-        ]
-      },
-      "focus": [
-        "end_hook",
         "hook_rivets",
-        "blade"
+        "drum",
+        "recoil_spring",
+        "spring_post",
+        "lock_button",
+        "brake"
+      ],
+      "frame": [
+        "case_left",
+        "case_right",
+        "end_hook"
       ],
       "tags": [
         {
-          "node": "end_hook",
-          "text": "slides 0.9 mm",
+          "node": "lock_button",
+          "text": "lock",
           "at": [
             -0.0453,
-            0.1134,
-            0.6702
+            0.8301,
+            0.5138
+          ]
+        },
+        {
+          "node": "brake",
+          "text": "shoe",
+          "at": [
+            -0.0453,
+            0.2372,
+            0.2751
           ]
         }
       ],
-      "try": "tape-hook"
+      "cues": [
+        {
+          "at": 1,
+          "do": "tape-lock",
+          "to": true
+        }
+      ]
+    },
+    {
+      "chapter": "Let go",
+      "caption": "Let the lock off and the spring unwinds, turning the drum back and reeling the blade in.",
+      "duration": 6,
+      "angle": [
+        -46,
+        16
+      ],
+      "fill": 0.85,
+      "focus": [
+        "blade",
+        "end_hook",
+        "hook_rivets",
+        "drum",
+        "recoil_spring",
+        "spring_post",
+        "lock_button",
+        "brake"
+      ],
+      "frame": [
+        "case_left",
+        "case_right",
+        "end_hook"
+      ],
+      "tags": [
+        {
+          "node": "drum",
+          "text": "drum",
+          "at": [
+            -0.2328,
+            0.3569,
+            0.1764
+          ],
+          "ride": true
+        },
+        {
+          "node": "recoil_spring",
+          "text": "spring",
+          "at": [
+            -0.1792,
+            0.753,
+            -0.0446
+          ]
+        }
+      ],
+      "cues": [
+        {
+          "at": 0.8,
+          "do": "tape-lock",
+          "to": false
+        },
+        {
+          "at": 1,
+          "do": "tape-out",
+          "to": 0,
+          "over": 3.5
+        }
+      ]
     }
   ],
   "credit": {

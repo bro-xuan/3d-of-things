@@ -10,7 +10,8 @@ const { M, U } = space({ space: N?.space });
 const node = (part) => `garden_sprinkler_01_${part}`;
 const [BODY, ARM, LEFT, RIGHT, WHEELS] = ['body_main', 'spinner', 'nozel_left', 'nozel_right', 'wheels'].map(node);
 
-// Points in millimetres in the model's own frame (the swivel's axis is x = 0, z = 0), from its mesh.
+// Points in millimetres in the model's own frame (the swivel's axis is x = 0, z = 0), from its mesh. Each jet runs on
+// from its nozzle's tip the way the nozzle points: outwards, 20° up and 13° back against the turn.
 const P = {
   connector: M(0, 58, 100),
   column_foot: M(0, 52, 2),
@@ -20,11 +21,28 @@ const P = {
   arm_right: M(75, 176, -7),
   tip_left: M(-172, 195, 18),
   tip_right: M(172, 195, -18),
+  jet_left: M(-222, 214, 30),
+  jet_right: M(222, 214, -30),
   wheel: M(150, 37, -110),
 };
 // The arm turns clockwise seen from above (negative about +y), at about 166 rpm at 2 bar.
 const RPM = 166;
 const off = (direction, mm, window) => ({ direction, distance: U(mm), window });
+
+/** What stays solid through the film: the arm and its nozzles. The frame and its column are glass, so the water can be
+ *  seen coming up inside. Every shot frames the whole sprinkler, with room for the arm as it goes round. */
+const SPINNING = [ARM, LEFT, RIGHT];
+const WHOLE = [BODY, ARM, WHEELS];
+/** The water's way: up the column, through the swivel, out along each half of the arm and away from its nozzle. The
+ *  points on the arm go round with it. */
+const ride = (part, at) => ({ node: part, at, ride: true });
+const water = {
+  carries: 'water',
+  flow: [P.connector, P.column_foot, P.column_top, P.hub, ride(ARM, P.arm_left), ride(LEFT, P.tip_left), ride(LEFT, P.jet_left)],
+  flows: [[P.column_top, P.hub, ride(ARM, P.arm_right), ride(RIGHT, P.tip_right), ride(RIGHT, P.jet_right)]],
+};
+/** One tag, on the axis, so it stays put while the arm goes round. */
+const swivel = [{ node: ARM, text: 'swivel', at: P.column_top }];
 
 writeContent('garden-sprinkler', {
   order: 13,
@@ -61,113 +79,42 @@ writeContent('garden-sprinkler', {
   ],
   motion: [{ node: ARM, axis: [0, 1, 0], pivot: P.hub, speed: +(-RPM / 60).toFixed(3) }],
   motionLabel: 'Turn on the tap',
-  how: [
+  // "How it works" as an animation: the water in, its push on the nozzles, and the arm turning at speed.
+  film: [
     {
-      label: 'The idea',
-      title: 'Pushed round by its own water',
-      text: [
-        'Water comes up the column into the arm and leaves through the two nozzles. Each nozzle throws its water outwards and a little sideways, and as it does, the water pushes back on it.',
-        'The two pushes point opposite ways at opposite ends of the arm, so together they turn it. Nothing else drives it: no motor, no gears.',
-      ],
-      angle: [-30, 26],
-      focus: [ARM, LEFT, RIGHT],
-      carries: 'water',
-      flow: [P.connector, P.column_foot, P.column_top, P.hub, { node: ARM, at: P.arm_left, ride: true }, { node: LEFT, at: P.tip_left, ride: true }],
-      flows: [[P.column_top, P.hub, { node: ARM, at: P.arm_right, ride: true }, { node: RIGHT, at: P.tip_right, ride: true }]],
-      tags: [{ node: LEFT, text: '19 m/s jet', at: P.tip_left }],
+      chapter: 'Water in',
+      caption: 'Turn on the tap and water comes up the column, through the swivel and out along the arm.',
+      duration: 6,
+      angle: [-52, 24],
+      fill: 0.5,
+      focus: SPINNING,
+      frame: WHOLE,
+      run: false,
+      ...water,
+      tags: swivel,
     },
     {
-      label: 'Water in',
-      title: 'Up the column, through the swivel',
-      text: [
-        'The hose screws on at the front of the frame. The water turns up the column in the middle and into the arm’s hub, which turns on the top of the column.',
-        'At 3 bar at the tap, about 2 bar is left by the time the water reaches the nozzles, and the two of them pass about 11 litres a minute.',
-      ],
-      angle: [-12, 18],
-      focus: [BODY, ARM],
-      carries: 'water',
-      flow: [P.connector, P.column_foot, P.column_top, P.hub],
-      tags: [
-        { node: BODY, text: 'Hose in', at: P.connector },
-        { node: ARM, text: 'Swivel', at: P.column_top },
-      ],
+      chapter: 'The push',
+      caption: 'Each nozzle throws water back and to the side, and the water pushes the nozzle forwards.',
+      duration: 6,
+      angle: [-32, 30],
+      fill: 0.5,
+      focus: SPINNING,
+      frame: WHOLE,
+      rate: 0.2,
+      ...water,
+      tags: swivel,
     },
     {
-      label: 'The push',
-      title: 'A rocket on a stick',
-      text: [
-        'A nozzle squirting water backwards is pushed forwards, just as a rocket is pushed by its exhaust: it is the water leaving that pushes, not the water pressing on the air. A sprinkler would turn in a vacuum.',
-        'More pressure means faster jets and a harder push, so the arm turns faster and the water goes further. Pick a pressure.',
-      ],
-      angle: [-34, 30],
-      fill: 0.8,
-      focus: [ARM, LEFT, RIGHT],
-      chart: {
-        type: 'bars',
-        title: 'How far it throws',
-        caption: 'From the middle to where 2 mm drops land, in still air.',
-        unit: 'Metres',
-        follow: 'selected',
-        bars: [
-          { label: '1 bar', value: 5.2, note: '82 rpm' },
-          { label: '2 bar', value: 6.8, note: '166 rpm' },
-          { label: '3 bar', value: 7.8, note: '224 rpm' },
-        ],
-      },
-      try: 'speeds',
-      spin: [ARM],
-      speeds: [
-        { label: '1 bar', factor: 82 / RPM, note: 'Jets at 14 m/s, 0.9 N each: the arm turns at about 80 rpm.' },
-        { label: '2 bar', factor: 1, note: 'Jets at 19 m/s, 1.8 N each: about 170 rpm, water out to 7 m.' },
-        { label: '3 bar', factor: 224 / RPM, note: 'Jets at 24 m/s, 2.7 N each: about 220 rpm, water out to nearly 8 m.' },
-      ],
-    },
-    {
-      label: 'Speed',
-      title: 'Where the push goes',
-      text: [
-        'Why doesn’t the arm spin faster and faster? Every drop entering at the middle has to be swung out to the tip at the arm’s speed, and that takes most of the push: at 166 rpm about three quarters of it. Friction in the swivel takes most of the rest.',
-        'Turned fully sideways, the same nozzles would spin the arm at well over 1,000 rpm, but the faster they move, the more their own speed cancels the jets’ and the water drops short. A slight angle throws further.',
-      ],
-      angle: [-30, 34],
-      focus: [ARM, LEFT, RIGHT, BODY],
-      chart: {
-        type: 'bars',
-        title: 'Where the push goes at 166 rpm',
-        caption: 'Shares of the jets’ turning push, 0.13 N·m in all.',
-        unit: '% of the push',
-        bars: [
-          { label: 'Swinging water out', value: 76 },
-          { label: 'Swivel friction', value: 23 },
-          { label: 'Air on the arm', value: 1.5 },
-        ],
-        picked: 0,
-      },
-    },
-    {
-      label: 'Throw',
-      title: '20° up and a little to the side',
-      text: [
-        'Water needs height to travel, so the nozzles tip up 20°. With no air it would carry 25 m; drag on the drops brings it down to about 7 m, a wetted circle 14 m across.',
-        'Run backwards, sucking water in, a sprinkler turns the other way, about 40 times slower: a puzzle Feynman posed, settled by experiment in 2024.',
-      ],
-      angle: [-36, 18],
-      focus: [ARM, LEFT, RIGHT],
-      carries: 'water',
-      flow: [P.hub, { node: ARM, at: P.arm_left, ride: true }, { node: LEFT, at: P.tip_left, ride: true }],
-      chart: {
-        type: 'bars',
-        title: 'Turning the nozzles sideways',
-        caption: 'The more sideways the nozzles point, the faster the arm turns and the shorter the throw (2 bar, 2 mm drops).',
-        unit: 'Metres thrown',
-        bars: [
-          { label: '13°', value: 6.8, note: '166 rpm' },
-          { label: '60°', value: 6.4, note: '1,063 rpm' },
-          { label: '75°', value: 5.0, note: '1,347 rpm' },
-          { label: '90°', value: 2.5, note: '1,474 rpm' },
-        ],
-        picked: 0,
-      },
+      chapter: 'The push',
+      caption: 'Pushed at both ends, the arm turns at about 170 rpm and waters a circle 14 m across.',
+      duration: 6,
+      angle: [-14, 36],
+      fill: 0.5,
+      focus: SPINNING,
+      frame: WHOLE,
+      ...water,
+      tags: swivel,
     },
   ],
   credit: polyHaven('garden_sprinkler_01', 'Garden Sprinkler 01', 'Amal Kumar'),

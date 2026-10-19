@@ -852,342 +852,39 @@
       ]
     }
   ],
-  "how": [
+  "film": [
     {
-      "label": "The idea",
-      "title": "Gas pushes, powder puts it out",
-      "text": [
-        "Inside the red tank, nitrogen at nearly ten times the pressure of the air outside sits on top of 3.3 kg of powder. Open the valve and the gas drives the powder up a tube and out of the hose.",
-        "Nothing has to be pumped, lit or switched on: the push was put in when it was filled, and it waits there for years."
-      ],
+      "chapter": "Pin",
+      "caption": "Pull the pin out of the handle, and the lever is free to move.",
+      "duration": 5,
       "angle": [
-        -34,
-        10
+        -50,
+        16
       ],
-      "fill": 0.82,
+      "fill": 0.5,
       "focus": [
+        "safety_pin",
+        "squeeze_lever",
+        "valve_stem",
+        "valve_spring",
+        "gauge",
         "nitrogen",
         "powder",
         "dip_tube",
-        "valve_body",
         "hose",
         "nozzle"
       ],
-      "flow": [
-        [
-          0,
-          1.1754,
-          -0.0767
-        ],
-        [
-          0.1115,
-          1.048,
-          -0.013
-        ],
-        [
-          0,
-          0.293,
-          -0.0767
-        ],
-        [
-          0,
-          0.7963,
-          -0.0767
-        ],
-        [
-          0,
-          1.3378,
-          -0.0767
-        ],
-        [
-          -0.0398,
-          1.4206,
-          -0.0767
-        ],
-        [
-          -0.0684,
-          1.462,
-          -0.0767
-        ],
-        [
-          -0.087,
-          1.4311,
-          -0.0767
-        ],
-        [
-          -0.1491,
-          1.4559,
-          -0.0782
-        ],
-        [
-          -0.2981,
-          1.118,
-          -0.0708
-        ],
-        [
-          -0.2584,
-          0.7454,
-          -0.0608
-        ],
-        [
-          -0.2584,
-          0.4969,
-          -0.031
-        ],
-        [
-          -0.2584,
-          0.4025,
-          -0.0708
-        ],
-        [
-          -0.2584,
-          0.1491,
-          -0.0708
-        ]
-      ],
-      "tags": [
-        {
-          "node": "nitrogen",
-          "text": "Nitrogen, 9.6 bar",
-          "at": [
-            -0.1216,
-            1.1754,
-            0.0969
-          ]
-        },
-        {
-          "node": "powder",
-          "text": "Powder, 3.3 kg",
-          "at": [
-            -0.119,
-            0.825,
-            0.0932
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Push",
-      "title": "Thirty-five grams of gas",
-      "text": [
-        "The nitrogen is a litre above the powder and nearly two more in the gaps between its grains: about 35 g of it, pressed to 9.6 bar. It is dry, because damp would cake the powder, and it is inert, so it can wait years without reacting with anything.",
-        "The gauge reads it all the time. Green, from 7 to 9.8 bar, means ready; below that it has leaked. Warmth moves the needle too: 10.3 bar on a 40 °C day, 8.2 at −20 °C, with nothing lost."
-      ],
-      "angle": [
-        -18,
-        8
-      ],
-      "fill": 0.8,
-      "focus": [
-        "nitrogen",
-        "gauge",
-        "valve_body"
-      ],
-      "carries": "air",
-      "flows": [
-        [
-          [
-            0,
-            1.1754,
-            -0.0767
-          ],
-          [
-            0.1115,
-            1.048,
-            -0.013
-          ]
-        ],
-        [
-          [
-            0,
-            1.1754,
-            -0.0767
-          ],
-          [
-            0,
-            1.3888,
-            -0.0767
-          ],
-          [
-            -0.0398,
-            1.4206,
-            -0.0767
-          ],
-          [
-            0,
-            1.4311,
-            -0.0111
-          ],
-          {
-            "node": "gauge",
-            "at": [
-              0,
-              1.4311,
-              0.0286
-            ]
-          }
-        ]
-      ],
-      "tags": [
-        {
-          "node": "gauge",
-          "text": "9.6 bar",
-          "at": [
-            0,
-            1.4311,
-            0.0286
-          ]
-        },
-        {
-          "node": "nitrogen",
-          "text": "≈ 35 g of nitrogen",
-          "at": [
-            -0.1216,
-            1.1754,
-            0.0969
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Up",
-      "title": "Up the dip tube from the bottom",
-      "text": [
-        "The gas presses down on the powder’s surface, and the only way out is the dip tube’s mouth, 12 mm off the bottom. Stirred into the gas, the powder flows like a liquid up the 13 mm tube and into the valve.",
-        "So the powder comes out first and the gas behind it. About 0.1 kg below the tube’s mouth never gets out."
-      ],
-      "angle": [
-        -40,
-        6
-      ],
-      "fill": 0.8,
-      "focus": [
-        "powder",
-        "dip_tube"
-      ],
-      "flow": [
-        [
-          0.1115,
-          1.048,
-          -0.013
-        ],
-        [
-          0,
-          0.293,
-          -0.0767
-        ],
-        [
-          0,
-          0.7963,
-          -0.0767
-        ],
-        [
-          0,
-          1.3378,
-          -0.0767
-        ],
-        [
-          0,
-          1.3888,
-          -0.0767
-        ]
-      ],
-      "tags": [
-        {
-          "node": "dip_tube",
-          "text": "Dip tube, 13 mm",
-          "at": [
-            -0.0119,
-            0.6371,
-            -0.0598
-          ]
-        },
-        {
-          "node": "dip_tube",
-          "text": "Mouth, 12 mm off the bottom",
-          "at": [
-            0,
-            0.293,
-            -0.0767
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Valve",
-      "title": "Pin out, lever down, seal open",
-      "text": [
-        "The safety pin locks the lever. With it out, squeezing turns the lever 18° about its pin at the back of the head, and the lever pushes the stem 3.2 mm down. The rubber seal on the stem’s foot leaves its seat and the powder rushes past to the hose.",
-        "Let go, and the spring and the tank’s own pressure push the seal back up: a burst can be stopped and started. Try it, and watch the stem and the spring."
-      ],
-      "angle": [
-        -26,
-        12
-      ],
-      "fill": 0.78,
-      "focus": [
-        "valve_stem",
-        "valve_spring",
-        "squeeze_lever",
-        "safety_pin"
-      ],
       "frame": [
         "valve_body",
+        "carry_handle",
         "squeeze_lever",
-        "safety_pin"
-      ],
-      "flow": [
-        [
-          0,
-          1.3888,
-          -0.0767
-        ],
-        [
-          -0.0398,
-          1.4206,
-          -0.0767
-        ],
-        {
-          "node": "valve_stem",
-          "at": [
-            -0.0398,
-            1.4557,
-            -0.0767
-          ]
-        },
-        [
-          -0.0684,
-          1.462,
-          -0.0767
-        ],
-        [
-          -0.087,
-          1.4311,
-          -0.0767
-        ]
+        "safety_pin",
+        "gauge"
       ],
       "tags": [
         {
-          "node": "valve_stem",
-          "text": "Seal",
-          "at": [
-            -0.0398,
-            1.4557,
-            -0.0767
-          ]
-        },
-        {
-          "node": "valve_spring",
-          "text": "Spring",
-          "at": [
-            -0.0398,
-            1.4213,
-            -0.0767
-          ]
-        },
-        {
           "node": "safety_pin",
-          "text": "Pin",
+          "text": "pin",
           "at": [
             0.0102,
             1.523,
@@ -1195,34 +892,93 @@
           ]
         }
       ],
-      "try": "discharge"
+      "cues": [
+        {
+          "at": 1,
+          "do": "pin",
+          "to": true
+        }
+      ]
     },
     {
-      "label": "Empty",
-      "title": "The gas only pushes",
-      "text": [
-        "The nitrogen leaves with the powder, so the pressure falls as the tank empties: from 9.6 bar to about 1 bar in eleven seconds, by when the powder has gone. Hold the lever and watch the needle drop and the level fall.",
-        "It is easy to think the gas puts the fire out. It doesn’t: turn the extinguisher upside down and the dip tube’s mouth is in the gas, which rushes out in two or three seconds and leaves every gram of powder behind."
-      ],
+      "chapter": "Squeeze",
+      "caption": "Squeeze the lever and it pushes the stem down, taking the seal off its seat.",
+      "duration": 6,
       "angle": [
-        -30,
-        8
+        -32,
+        12
       ],
-      "fill": 0.82,
+      "fill": 0.36,
       "focus": [
+        "safety_pin",
+        "squeeze_lever",
+        "valve_stem",
+        "valve_spring",
+        "gauge",
+        "nitrogen",
         "powder",
         "dip_tube",
-        "gauge",
+        "hose",
+        "nozzle"
+      ],
+      "frame": [
         "valve_body",
+        "carry_handle",
         "squeeze_lever",
-        "valve_stem"
+        "safety_pin",
+        "gauge"
+      ],
+      "tags": [
+        {
+          "node": "squeeze_lever",
+          "text": "lever",
+          "at": [
+            0.0745,
+            1.5901,
+            -0.0767
+          ],
+          "ride": true
+        },
+        {
+          "node": "valve_stem",
+          "text": "seal",
+          "at": [
+            -0.0398,
+            1.4557,
+            -0.0767
+          ]
+        }
+      ],
+      "cues": [
+        {
+          "at": 1,
+          "do": "squeeze",
+          "to": true
+        }
+      ]
+    },
+    {
+      "chapter": "Out",
+      "caption": "The gas drives the powder up the dip tube and out of the hose, losing pressure as it goes.",
+      "duration": 8,
+      "angle": [
+        -16,
+        8
+      ],
+      "fill": 0.8,
+      "focus": [
+        "safety_pin",
+        "squeeze_lever",
+        "valve_stem",
+        "valve_spring",
+        "gauge",
+        "nitrogen",
+        "powder",
+        "dip_tube",
+        "hose",
+        "nozzle"
       ],
       "flow": [
-        [
-          0.1115,
-          1.048,
-          -0.013
-        ],
         [
           0,
           0.293,
@@ -1243,48 +999,19 @@
           1.4206,
           -0.0767
         ],
-        [
-          -0.087,
-          1.4311,
-          -0.0767
-        ]
-      ],
-      "tags": [
         {
-          "node": "gauge",
-          "text": "Gauge",
+          "node": "valve_stem",
           "at": [
-            0,
-            1.4311,
-            0.0286
+            -0.0398,
+            1.4557,
+            -0.0767
           ]
-        }
-      ],
-      "chart": {
-        "type": "extinguisher-discharge",
-        "title": "Pressure as it empties",
-        "caption": "The gauge against seconds with the lever held: upright the powder goes first and the pressure falls with it; upside down only the nitrogen comes out. The dot follows the model."
-      },
-      "try": "squeeze"
-    },
-    {
-      "label": "Out",
-      "title": "Powder on the flames",
-      "text": [
-        "At the nozzle the gas expands and throws the powder 4 to 6 m as a cloud. Aimed at the base of the flames and swept from side to side, it settles on the fuel and gets into the flames themselves.",
-        "Monoammonium phosphate breaks the chain of reactions that keeps a flame alight, and on wood, paper or cloth it melts at about 190 °C into a sticky crust that keeps the air off. It doesn’t conduct, so it is safe on electrical fires: A, B and C."
-      ],
-      "angle": [
-        -48,
-        6
-      ],
-      "fill": 0.82,
-      "focus": [
-        "hose",
-        "nozzle",
-        "valve_body"
-      ],
-      "flow": [
+        },
+        [
+          -0.0684,
+          1.462,
+          -0.0767
+        ],
         [
           -0.087,
           1.4311,
@@ -1323,12 +1050,21 @@
       ],
       "tags": [
         {
-          "node": "nozzle",
-          "text": "4–6 m",
+          "node": "nitrogen",
+          "text": "nitrogen",
           "at": [
-            -0.2584,
-            0.4025,
-            -0.0708
+            0.0956,
+            1.1945,
+            0.0029
+          ]
+        },
+        {
+          "node": "powder",
+          "text": "powder",
+          "at": [
+            -0.0956,
+            0.3759,
+            0.0188
           ]
         }
       ]

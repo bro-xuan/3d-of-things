@@ -26,29 +26,18 @@ const motion = [
   ]),
 ];
 
-const SPRINGS = ['upper_spring_left', 'upper_spring_right', 'lower_spring_left', 'lower_spring_right'];
 const UPPER_ARM = ['head_bracket', 'upper_bar', 'upper_link'];
 const LOWER_ARM = ['elbow_plates', 'lower_arm', 'lower_link'];
 const HEAD = ['shade', 'bulb', 'lamp_holder'];
 const BASE = ['base_bracket', 'clamp', 'clamp_screw'];
+const LAMP = [...HEAD, ...UPPER_ARM, ...LOWER_ARM, ...BASE];
 const shadeAxis = [0, -0.83, -0.56];
 
-/** The weight's way down to the desk: head, upper arm, elbow, lower arm, shoulder, clamp. */
-const weightPath = [
-  { node: 'shade', at: at('bulb'), ride: true },
-  { node: 'head_bracket', at: at('head'), ride: true },
-  { node: 'upper_bar', at: at('upper_bar'), ride: true },
-  { node: 'elbow_plates', at: at('elbow'), ride: true },
-  { node: 'lower_arm', at: at('lower_arm'), ride: true },
-  { node: 'base_bracket', at: at('shoulder') },
-  { node: 'clamp', at: at('clamp') },
+/** The two pairs of springs, named as they work: the tags turn with them. */
+const springTags = [
+  { node: 'upper_spring_right', text: 'upper springs', at: at('upper_spring'), ride: true },
+  { node: 'lower_spring_right', text: 'lower springs', at: at('lower_spring'), ride: true },
 ];
-
-const torqueChart = (caption) => ({
-  type: 'arm-torque',
-  title: 'Torque about each pivot',
-  caption,
-});
 
 writeContent('desk-lamp', {
   order: 16,
@@ -58,7 +47,7 @@ writeContent('desk-lamp', {
   summary: [
     'A desk lamp has to put its light anywhere within reach and stay there, without a knob to tighten at every joint. George Carwardine’s answer, patented in 1932, was a spring whose pull grows with its whole length, hung from a point straight above each pivot. Its torque then rises and falls with the arm’s angle exactly as the weight’s does, and the two cancel everywhere.',
     'The head hangs on a bracket at the end of the upper arm, two bars that make a parallelogram and keep it at one angle. Two springs from a pin above the elbow pivot answer the upper arm. The elbow plates are the far side of a second parallelogram, the lower arm and its parallel link, so they never turn; two more springs from a pin above the shoulder answer everything above it, and the clamp takes it all into the desk.',
-    'Move the head and each arm turns about its pin while its springs stretch or shorten, storing exactly the energy the head gives up. Here the arm moves on sliders, the springs stretch with it and the chart plots both torques from the same numbers; hold the springs off and the arm drops. The masses are estimates and the springs ideal, and the model’s two parallelograms were trued by up to 5 mm.',
+    'Move the head and each arm turns about its pin while its springs stretch or shorten, storing exactly the energy the head gives up. Here each arm moves in turn and its springs stretch or shorten with it, worked out from the same numbers. The masses are estimates and the springs ideal, and the model’s two parallelograms were trued by up to 5 mm.',
   ],
   model: 'models/desk-lamp.glb',
   viewAngle: [-62, 12],
@@ -148,100 +137,36 @@ writeContent('desk-lamp', {
     },
   ],
   motion,
-  how: [
+  // "How it works" as an animation: the arm reaches out, the head lifts, and it stays where it's left.
+  film: [
     {
-      label: 'The idea',
-      title: 'Weightless, not held',
-      text: [
-        'The head’s weight comes down the arm to the clamp, and at each pivot a pair of springs answers it. Their pull is set so that their torque matches the weight’s at every angle, not just one: wherever you leave the head, nothing is left over to move it.',
-        'The upper arm carries 0.4 kg of head 464 mm out; the lower arm carries everything above the elbow, about 0.7 kg, 442 mm out. Four springs, no counterweight, and joints that turn freely.',
-      ],
-      angle: [-62, 12],
-      fill: 0.8,
-      flow: weightPath,
-      tags: [
-        { node: 'shade', text: '0.4 kg', at: at('shade_top') },
-        { node: 'upper_spring_right', text: 'upper springs', at: at('upper_spring') },
-        { node: 'lower_spring_right', text: 'lower springs', at: at('lower_spring') },
-      ],
-    },
-    {
-      label: 'The load',
-      title: 'The weight pulls hardest with the arm level',
-      text: [
-        'About the elbow pin, the head pulls with its weight times its sideways distance from the pin: 0.4 kg × 9.81 × 464 mm × sin ψ, where ψ is the upper arm’s angle from upright. Upright the head sits over the pin and pulls nothing; level, it pulls 1.8 N·m, and the bars add 0.5 more.',
-        'That sine is what the springs have to copy. Any spring that pulled harder at one angle and softer at another would leave the head drifting up or down.',
-      ],
-      angle: [-70, 14],
+      chapter: 'Reach',
+      caption: 'Push the head out and the lower springs stretch, pulling harder just as the weight does.',
+      duration: 6,
+      angle: [-98, 8],
       fill: 0.7,
-      focus: [...HEAD, 'head_bracket', 'upper_bar', 'upper_link'],
-      tags: [
-        { node: 'shade', text: '0.4 kg', at: at('shade_top') },
-        { node: 'upper_bar', text: '464 mm', at: at('upper_bar') },
-      ],
+      frame: LAMP,
+      tags: springTags,
+      cues: [{ at: 0.8, do: 'arm-lower', to: 54, over: 4.2 }],
     },
     {
-      label: 'Springs',
-      title: 'A spring that pulls in proportion to its length',
-      text: [
-        'Each pair hangs from a pin straight above its pivot, a above it, and pulls on a pin b along the arm. If its pull is k times its whole length, its torque about the pivot works out at k·a·b·sin ψ: the same sine as the weight’s. Choose k·a·b = m·g·L and the two cancel at every angle.',
-        'For the upper arm a is 36.3 mm and b 218 mm, so the pair needs 293 N/m. Move the arms and watch the springs stretch and both torques move together on the chart.',
-      ],
+      chapter: 'Lift',
+      caption: 'Lift the head and the upper springs shorten, easing off just as the weight’s pull does.',
+      duration: 6,
       angle: [-78, 10],
-      fill: 0.62,
-      focus: ['upper_spring_left', 'upper_spring_right', 'upper_bar', 'elbow_plates'],
-      frame: [...HEAD, ...UPPER_ARM, ...LOWER_ARM, ...BASE],
-      chart: torqueChart('Solid, the weight’s torque; dashed, the springs’. They lie on one another at every angle. Dotted: springs of the same rate without initial tension.'),
-      try: 'arm',
-      tags: [
-        { node: 'upper_spring_right', text: 'k = 293 N/m', at: at('upper_spring'), ride: true },
-        { node: 'elbow_plates', text: 'a = 36.3 mm', at: at('upper_anchor'), ride: true },
-      ],
-    },
-    {
-      label: 'Parallelograms',
-      title: 'Two parallelograms keep the head level and the anchors upright',
-      text: [
-        'Each arm is a pair of bars of equal length, pinned at both ends: a parallelogram. As it swings, the part at its far end shifts without turning. The head bracket keeps the head’s angle, and the elbow plates keep the upper springs’ anchor straight above the elbow pivot.',
-        'That makes the two arms independent. Move the lower arm and the upper arm’s balance doesn’t change, because nothing it hangs from has turned.',
-      ],
-      angle: [-80, 8],
-      fill: 0.55,
-      focus: [...UPPER_ARM, ...LOWER_ARM, 'base_bracket'],
-      frame: [...HEAD, ...UPPER_ARM, ...LOWER_ARM, ...BASE],
-      tags: [
-        { node: 'head_bracket', text: 'shifts, never turns', at: at('head_link') },
-        { node: 'elbow_plates', text: 'shifts, never turns', at: at('link_elbow') },
-      ],
-    },
-    {
-      label: 'Lower arm',
-      title: 'The lower springs carry everything above the elbow',
-      text: [
-        'The lower arm carries the head, the upper arm and the elbow, about 0.7 kg at its end and its own bars along it: 3.83 N·m × sin θ about the shoulder pin. Its springs hang 65.7 mm above the pin and pull 216 mm along the arm, so the pair needs 270 N/m.',
-        'At the pose modelled, 38° from upright, that is 2.4 N·m each way, and the springs pull 46 N between them.',
-      ],
-      angle: [-66, 12],
       fill: 0.7,
-      focus: ['lower_spring_left', 'lower_spring_right', 'lower_arm', 'lower_link', 'base_bracket'],
-      chart: torqueChart('The lower arm’s curve is the taller: it carries more. The dots mark the arms’ angles now.'),
-      tags: [
-        { node: 'lower_spring_right', text: 'k = 270 N/m', at: at('lower_spring') },
-        { node: 'base_bracket', text: 'a = 65.7 mm', at: at('lower_anchor') },
-      ],
+      frame: LAMP,
+      tags: springTags,
+      cues: [{ at: 0.8, do: 'arm-upper', to: 30, over: 4.2 }],
     },
     {
-      label: 'Not friction',
-      title: 'Unhook the springs and it falls',
-      text: [
-        'It looks as if stiff joints hold the arm where you leave it, but the pins turn freely: the springs carry all the weight. Hold the springs off and the weight has nothing to answer it, and the arm drops to its stops. Let go and the springs are back on: it stays wherever it got to, because it balances there too.',
-        'To hold the arm by friction alone, the shoulder would have to grip with up to 3.8 N·m, and every move would mean forcing it.',
-      ],
-      angle: [-64, 12],
-      fill: 0.62,
-      frame: [...HEAD, ...UPPER_ARM, ...LOWER_ARM, ...BASE],
-      chart: torqueChart('With the springs off, their dots drop to nothing while the weight’s stay on the curve.'),
-      try: 'unhook',
+      chapter: 'Let go',
+      caption: 'Let go and it stays put: at every angle the springs answer the weight exactly.',
+      duration: 5,
+      angle: [-58, 14],
+      fill: 0.7,
+      frame: LAMP,
+      tags: springTags,
     },
   ],
   credit: polyHaven('desk_lamp_arm_01', 'Desk Lamp Arm 01', 'Kuutti Siitonen (modelling and texturing) & Yann Kervran (rigging)', {
