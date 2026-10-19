@@ -40,6 +40,8 @@ import { FilmCamera, type CameraState } from './filmcamera';
 import { ReflexCamera, type ReflexState } from './reflexcamera';
 import { Linkage } from './linkage';
 import { AeroCar, type AeroState, type FlightKind } from './aerocar';
+import { BalancedArm, type ArmState } from './balancedarm';
+import { Stretch, type SpringLayout } from './stretch';
 import { Jets } from './jets';
 
 // Fast raycasts for hover and hotspot occlusion.
@@ -157,6 +159,9 @@ export class Viewer {
   private cameraBody?: FilmCamera | ReflexCamera;
   /** A car's suction fans and thrusters, if it has them: they set the fans', skirts' and wing's controls, and fly it. */
   private aero?: AeroCar;
+  /** A balanced arm (a desk lamp), if this is one: it sets the arm's controls, and its springs stretch with it. */
+  private arm?: BalancedArm;
+  private readonly springs: Stretch[] = [];
   /** Its thrusters' jets. */
   private jets?: Jets;
   /** The whole model, lifted and turned when a car flies. */
@@ -333,8 +338,15 @@ export class Viewer {
     if (this.linkage.has('mirror')) this.cameraBody = new ReflexCamera(this.linkage);
     else if (this.linkage.has('curtain1') || this.linkage.has('focus')) this.cameraBody = new FilmCamera(this.linkage);
     if (this.linkage.has('skirts')) this.aero = new AeroCar(this.linkage);
+    if (this.linkage.has('arm_lower')) {
+      this.arm = new BalancedArm(this.linkage);
+      root.traverse((node) => {
+        const layout = node.userData.spring as SpringLayout | undefined;
+        if (layout) node.traverse((mesh) => void ((mesh as Mesh).isMesh && this.springs.push(new Stretch(mesh as Mesh, layout, root))));
+      });
+    }
     this.linkage.apply();
-    const deforming = new Set([...this.mechanism.deforming, ...this.linkage.deforming]);
+    const deforming = new Set([...this.mechanism.deforming, ...this.linkage.deforming, ...this.springs.map((spring) => spring.mesh)]);
     // How the model can be drawn: as rendered or as a line drawing, with the rest turned to glass around the parts a step is about.
     this.looks = new Looks(this.meshes, (mesh) => this.partByMesh.get(mesh), deforming);
     this.renderer.getDrawingBufferSize(this.looks.resolution);
@@ -946,6 +958,10 @@ export class Viewer {
     this.hold(false);
     this.wind(false);
     this.aero?.reset();
+    if (this.arm) {
+      this.hookSprings(true);
+      this.arm.reset(this.options.reducedMotion);
+    }
   }
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
@@ -1143,6 +1159,32 @@ export class Viewer {
     }
     if (this.jets?.update(state, f?.height ?? 0, dt)) moved = true;
     return moved;
+  }
+
+  // ------------------------------------------------------------- a balanced arm
+
+  /** A balanced arm's angles, torques and springs, for charts and readouts; null if this isn't one. */
+  get armState(): ArmState | null {
+    return this.arm?.state ?? null;
+  }
+
+  /** Moves a balanced arm to these angles (degrees from upright; null leaves one be), as a hand would. */
+  setArm(lower: number | null, upper: number | null): void {
+    this.arm?.set(lower, upper, this.options.reducedMotion);
+  }
+
+  /** Hooks a balanced arm's springs on or off: off, they show as taken out and the arm falls to its stops. */
+  hookSprings(on: boolean): void {
+    if (!this.arm || !this.looks) return;
+    this.arm.hook(on);
+    this.looks.setRemoved(on ? new Set() : new Set(this.springs.map((spring) => spring.mesh)));
+    this.lookChanged();
+  }
+
+  /** Puts a balanced arm back as it was modelled, springs on. */
+  resetArm(): void {
+    this.hookSprings(true);
+    this.arm?.reset(this.options.reducedMotion);
   }
 
   // ------------------------------------------------------------- a camera
@@ -1460,6 +1502,11 @@ export class Viewer {
     const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
     this.cameraBody?.tick(dt);
     if (this.aero && this.tickAero(dt)) this.dirty = true;
+    if (this.arm) {
+      this.arm.tick(dt);
+      const { springs } = this.arm.state;
+      for (const spring of this.springs) if (spring.apply(springs[spring.layout.arm as 'lower' | 'upper'].length)) this.shadowDirty = this.dirty = true;
+    }
     if (this.linkage?.apply() || turned) {
       this.rigs.apply();
       // A path pinned to a crank goes round with it.

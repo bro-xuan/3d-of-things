@@ -5,7 +5,9 @@ import type { Thing } from '../types';
 import type { CameraState } from '../viewer/filmcamera';
 import type { ReflexState } from '../viewer/reflexcamera';
 import type { AeroState } from '../viewer/aerocar';
+import type { ArmState } from '../viewer/balancedarm';
 import type { MechanismState } from '../viewer/rig';
+import { armCharts } from './arm';
 import { cameraCharts } from './camera';
 import { carCharts } from './car';
 import { barsChart, ladderChart, timingChart } from './generic';
@@ -22,6 +24,8 @@ export interface ChartSource {
   camera(): CameraState | ReflexState | null;
   /** What a car's suction fans and thrusters are doing, or null (no viewer yet, or a car without them). */
   aero(): AeroState | null;
+  /** What a balanced arm (a desk lamp) is doing, or null (no viewer yet, or not one). */
+  arm?(): ArmState | null;
   /** How far a part has turned, in radians. */
   angleOf(node: string): number;
   /** Seconds a spinning mechanism has run for, scaled by its speed (a crank turned slowly). */
@@ -58,6 +62,7 @@ const factories: Record<string, ChartFactory> = {
   ...reflexCharts,
   ...carCharts,
   ...roadsterCharts,
+  ...armCharts,
   bars: barsChart,
   ladder: ladderChart,
   timing: timingChart,

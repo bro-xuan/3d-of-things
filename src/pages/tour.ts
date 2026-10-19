@@ -10,6 +10,7 @@ import * as Rangefinder from '../viewer/filmcamera';
 import { STROKES, distanceLabel, slitWidth, speedLabel } from '../viewer/filmcamera';
 import * as Reflex from '../viewer/reflexcamera';
 import { FLOOR, G, LOW_AIR, MASS, corneringG } from '../viewer/aerocar';
+import { LOWER, UPPER } from '../viewer/balancedarm';
 // Only types: the viewer arrives with three.js, after the page is up.
 import type { Viewer } from '../viewer/Viewer';
 
@@ -258,6 +259,7 @@ export class Tour {
         state: () => this.viewer?.mechanismState ?? null,
         camera: () => this.viewer?.cameraState ?? null,
         aero: () => this.viewer?.aeroState ?? null,
+        arm: () => this.viewer?.armState ?? null,
         angleOf: (node) => this.viewer?.angleOf(node) ?? 0,
         time: () => this.viewer?.runTime ?? 0,
         selected: () => this.selected,
@@ -717,6 +719,54 @@ export class Tour {
         this.undoTry = () => this.viewer?.refillAir();
       }
       button(icons.reset, 'Refill the tanks', () => this.viewer?.refillAir());
+    } else if (kind === 'arm' || kind === 'unhook') {
+      // A balanced arm: moved by hand with a slider for each arm, or with its springs held off its pins, so the weight
+      // has nothing to answer it. Hooked on again, the arm stays wherever it got to.
+      const arm = () => this.viewer?.armState ?? null;
+      const nm = (v: number) => `${v.toFixed(1)} N·m`;
+      if (kind === 'arm') {
+        for (const spec of [LOWER, UPPER]) {
+          const label = document.createElement('label');
+          label.className = 'tour__slider';
+          const start = Math.round(arm()?.[spec.name] ?? spec.rest);
+          label.innerHTML = `<span>${spec.name === 'lower' ? 'Lower arm' : 'Upper arm'} · ${spec.min}° to ${spec.max}° from upright</span><input type="range" min="${spec.min}" max="${spec.max}" step="1" value="${start}">`;
+          const input = label.querySelector('input')!;
+          const say = () => input.setAttribute('aria-valuetext', `${input.value}° from upright`);
+          input.addEventListener('input', () => {
+            const v = Number(input.value);
+            if (spec.name === 'lower') this.viewer?.setArm(v, null);
+            else this.viewer?.setArm(null, v);
+            say();
+          });
+          say();
+          host.append(label);
+        }
+        readout(() => {
+          const s = arm();
+          if (!s) return '';
+          const { lower, upper } = s.torque;
+          return `Lower arm at ${Math.round(s.lower)}°: weight ${nm(lower.weight)}, springs ${nm(lower.springs)} · upper arm at ${Math.round(s.upper)}°: ${nm(upper.weight)} and ${nm(upper.springs)}`;
+        });
+      } else {
+        host.append(holdButton('Unhook the springs', 'Press and hold to take the springs off their pins', (on) => this.viewer?.hookSprings(!on)));
+        const back = document.createElement('button');
+        back.type = 'button';
+        back.className = 'button button--try';
+        back.innerHTML = `${icons.reset}<span>Put the arm back</span>`;
+        back.addEventListener('click', () => this.viewer?.resetArm());
+        host.append(back);
+        readout(() => {
+          const s = arm();
+          if (!s) return '';
+          const { lower, upper } = s.torque;
+          if (!s.hooked) {
+            const down = s.lower >= LOWER.max && s.upper >= UPPER.max;
+            return `Springs off: ${nm(lower.weight)} at the shoulder and ${nm(upper.weight)} at the elbow, and nothing to answer them${down ? ': it lies on its stops' : ': it drops'}`;
+          }
+          return `Springs on, arms at ${Math.round(s.lower)}° and ${Math.round(s.upper)}°: they answer ${nm(lower.weight)} and ${nm(upper.weight)}, so it stays put`;
+        });
+      }
+      this.undoTry = () => this.viewer?.resetArm();
     } else if (kind === 'hold') {
       host.append(holdButton('Hold the balance', 'Press and hold to stop the balance', (on) => this.viewer?.hold(on)));
       const label = document.createElement('label');
