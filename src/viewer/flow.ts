@@ -8,6 +8,13 @@ const SAMPLES = 180;
 const COLOURS = { power: new Color('#d24f1f'), light: new Color('#e09a12'), air: new Color('#2f78b8'), water: new Color('#1b93a6') };
 const PAPER = new Color('#fbf8f1');
 
+/** A path's length through its points, as straight runs. */
+function length(points: Vector3[]): number {
+  let sum = 0;
+  for (let i = 1; i < points.length; i++) sum += points[i].distanceTo(points[i - 1]);
+  return sum;
+}
+
 /**
  * The path the power (or the light, or the air) takes through a mechanism, drawn over the model like a line on
  * a diagram: vermilion, on a pale casing that keeps it clear of busy parts behind, with dashes
@@ -31,6 +38,7 @@ export class Flow {
   private segments = 1;
   /** Light goes in straight lines between reflections; power is drawn as a smooth path. */
   private straight = false;
+  private carries: 'power' | 'light' | 'air' | 'water' = 'power';
 
   constructor(scene: Scene) {
     const casing = new LineMaterial({ color: PAPER, linewidth: 7, transparent: true, opacity: 0.7, depthTest: false, depthWrite: false, toneMapped: false });
@@ -74,14 +82,25 @@ export class Flow {
   /** Whether any point rides on a part that turns, so the line has to follow it every frame. */
   rides = false;
 
-  /** Shows a path through these anchors (objects that ride with the parts), drawing it in from the start; none hides it. */
+  /** Shows a path through these anchors (objects that ride with the parts), drawing it in from the start; none hides it.
+   *  A path that carries on from the one drawn (the light going on through the next lens) keeps what's drawn and draws
+   *  on from there. */
   set(anchors: Object3D[] | null, { animate = true, carries = 'power' as 'power' | 'light' | 'air' | 'water' } = {}): void {
+    const before = this.active ? this.anchors.map((anchor) => anchor.getWorldPosition(new Vector3())) : [];
+    const drawnBefore = this.progress * length(before);
+    const sameKind = carries === this.carries;
     for (const anchor of this.anchors) anchor.removeFromParent();
     this.anchors = anchors && anchors.length > 1 ? anchors : [];
     this.rides = this.anchors.some((anchor) => anchor.userData.rides);
     this.straight = carries === 'light';
+    this.carries = carries;
     for (const line of [this.trace, this.dashes]) (line.material as LineMaterial).color.copy(COLOURS[carries]);
     this.progress = animate ? 0 : 1;
+    if (animate && sameKind && before.length > 1) {
+      const after = this.anchors.map((anchor) => anchor.getWorldPosition(new Vector3()));
+      const carriesOn = after.length >= before.length && before.every((p, i) => p.distanceTo(after[i]) < 1e-3);
+      if (carriesOn) this.progress = Math.min(1, drawnBefore / Math.max(1e-9, length(after)));
+    }
     this.drawn = false;
     this.update();
   }
