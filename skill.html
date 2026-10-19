@@ -56,7 +56,7 @@
         <section class="band" id="objects">
           <div class="band__head">
             <h2>The collection</h2>
-            <p>The watch above and twelve more. Each opens on its own page, ready to turn, take apart and run; point at one here to see its insides.</p>
+            <p>The watch above and eighteen more. Each opens on its own page, ready to turn, take apart and run; point at one here to see its insides.</p>
           </div>
           <ul class="objects cells">
             <li><a href="%OBJECTS%#/thing/hand-drill"><span class="objects__pics"><img src="/posters/hand-drill-800.webp" width="800" height="800" loading="lazy" alt="The hand drill, assembled: a crank, a big gear wheel and the chuck on a frame." /><img src="/posters/hand-drill-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Hand drill</span><span class="objects__hook">An 80-tooth wheel on a 24-tooth pinion: the bit turns three and a third times for each turn of the handle.</span></a></li>
@@ -74,6 +74,9 @@
             <li><a href="%OBJECTS%#/thing/cassette-player"><span class="objects__pics"><img src="/posters/cassette-player-800.webp" width="800" height="800" loading="lazy" alt="A teal portable cassette player with a radio dial down its left side." /><img src="/posters/cassette-player-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Personal cassette player</span><span class="objects__hook">A 2 mm steel pin pulls the tape past the head at 4.76 cm/s; the reels only keep it taut.</span></a></li>
             <li><a href="%OBJECTS%#/thing/pin-tumbler-lock"><span class="objects__pics"><img src="/posters/pin-tumbler-lock-800.webp" width="800" height="800" loading="lazy" alt="A brass lock cylinder with its key, a second silver key and a deadbolt latch." /><img src="/posters/pin-tumbler-lock-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Pin tumbler lock</span><span class="objects__hook">The key works nothing inside: it lifts five pins, each to within a tenth of a millimetre of one line.</span></a></li>
             <li><a href="%OBJECTS%#/thing/desk-lamp"><span class="objects__pics"><img src="/posters/desk-lamp-800.webp" width="800" height="800" loading="lazy" alt="An orange clamp-on desk lamp with a cone shade on a two-part, spring-balanced arm." /><img src="/posters/desk-lamp-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Desk lamp</span><span class="objects__hook">Its springs balance the head’s weight at every angle, so the arm stays wherever you let it go.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/sewing-machine"><span class="objects__pics"><img src="/posters/sewing-machine-800.webp" width="800" height="800" loading="lazy" alt="A black Singer 201-2 sewing machine on its bed." /><img src="/posters/sewing-machine-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Sewing machine</span><span class="objects__hook">A hook underneath carries each loop of the top thread right round the bobbin, twice round for every stitch.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/fire-extinguisher"><span class="objects__pics"><img src="/posters/fire-extinguisher-800.webp" width="800" height="800" loading="lazy" alt="A red dry-powder fire extinguisher on its stand." /><img src="/posters/fire-extinguisher-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Fire extinguisher</span><span class="objects__hook">Thirty-five grams of nitrogen push out three kilograms of powder; only the powder fights the fire.</span></a></li>
+            <li><a href="%OBJECTS%#/thing/tape-measure"><span class="objects__pics"><img src="/posters/tape-measure-800.webp" width="800" height="800" loading="lazy" alt="A black and yellow 3 m tape measure." /><img src="/posters/tape-measure-exploded-800.webp" width="800" height="800" loading="lazy" alt="" /></span><span class="objects__title">Tape measure</span><span class="objects__hook">Pull out three metres and wind a spring 20 turns tighter; the loose hook keeps the zero true.</span></a></li>
           </ul>
         </section>
 
@@ -167,7 +170,7 @@ anchors: {
         <section class="band" id="inside">
           <div class="band__head">
             <h2>Building the insides</h2>
-            <p>Most free models are shells. Four of the sixteen had their insides generated inside a downloaded case, and five were generated whole, each laid out from published numbers.</p>
+            <p>Most free models are shells. Six of the nineteen had their insides generated inside a downloaded case, and six were generated whole, each laid out from published numbers.</p>
           </div>
           <figure class="plate">
             <img src="/skill/hero-watch-escapement.webp" width="1600" height="1000" loading="lazy" alt="The pocket watch in How it works: the case turned to glass, leaving the balance wheel, the pallet fork and the escape wheel solid, beside a timing chart of one swing of the balance." />
@@ -210,7 +213,7 @@ anchors: {
             <li><code>npm run models:build</code><span>Fails if any part crosses another at rest, or if taking it apart would pass one part through another.</span></li>
           </ul>
           <div class="prose">
-            <p>Headless Chromium used to draw with software WebGL, at about 460 ms a frame. On the Mac’s GPU it takes 18 to 23 ms, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over the first thirteen in under two.<sup class="ref">4</sup></p>
+            <p>Headless Chromium used to draw with software WebGL, at about 460 ms a frame. On the Mac’s GPU it takes 18 to 23 ms, with the same picture. A whole object’s check now runs in about a minute, and a quick pass over all nineteen in under three.<sup class="ref">4</sup></p>
             <aside class="note"><span class="note__n">4</span>The first run over all ten objects found one real fault: a label on the SLR placed 37 model units from a camera two units across. On the page it had never shown. Once found, it was a one-line fix.</aside>
           </div>
           <figure class="plate">
@@ -268,7 +271,7 @@ anchors: {
         <section class="band band--ink" id="install">
           <div class="band__head">
             <h2>Install</h2>
-            <p>One command adds the skill to your agent. The first time you ask for a machine, it sets up a workspace: a copy of the repository, which is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the sixteen machines as its references.</p>
+            <p>One command adds the skill to your agent. The first time you ask for a machine, it sets up a workspace: a copy of the repository, which is the skill’s kit (the viewer, the model pipeline, the generator kit and the checks), with the nineteen machines as its references.</p>
           </div>
           <ol class="steps cells">
             <li>

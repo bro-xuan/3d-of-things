@@ -6,16 +6,19 @@ import type { CameraState } from '../viewer/filmcamera';
 import type { ReflexState } from '../viewer/reflexcamera';
 import type { AeroState } from '../viewer/aerocar';
 import type { ArmState } from '../viewer/balancedarm';
+import type { ExtinguisherState } from '../viewer/extinguisher';
 import type { MechanismState } from '../viewer/rig';
 import { armCharts } from './arm';
 import type { LockState } from '../viewer/pintumbler';
 import { cameraCharts } from './camera';
 import { carCharts } from './car';
 import { lockCharts } from './lock';
+import { extinguisherCharts } from './extinguisher';
 import { barsChart, ladderChart, timingChart } from './generic';
 import { opticsCharts } from './optics';
 import { reflexCharts } from './reflex';
 import { roadsterCharts } from './roadster';
+import { tapeCharts } from './tape';
 import { watchCharts } from './watch';
 
 /** What a chart can read from the viewer, once it's there. */
@@ -30,6 +33,8 @@ export interface ChartSource {
   arm?(): ArmState | null;
   /** What a pin tumbler lock's keys, pins and plug are doing, or null (no viewer yet, or not a lock). */
   lock?(): LockState | null;
+  /** What an extinguisher's pin, lever and charge are doing, or null (no viewer yet, or not an extinguisher). */
+  extinguisher(): ExtinguisherState | null;
   /** How far a part has turned, in radians. */
   angleOf(node: string): number;
   /** Seconds a spinning mechanism has run for, scaled by its speed (a crank turned slowly). */
@@ -68,6 +73,8 @@ const factories: Record<string, ChartFactory> = {
   ...roadsterCharts,
   ...armCharts,
   ...lockCharts,
+  ...tapeCharts,
+  ...extinguisherCharts,
   bars: barsChart,
   ladder: ladderChart,
   timing: timingChart,

@@ -93,7 +93,9 @@ Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the
   </tr>
 </table>
 
-Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **personal cassette player** (a 2 mm capstan sets the tape's speed; the reels only keep it taut), a **pin tumbler lock** (a Kwikset cylinder whose five pin stacks ride the key's cuts to the shear line, a wrong key that won't turn, and the bolt a quarter turn throws) and a **desk lamp** (an Anglepoise-type arm whose springs match the head's weight at every angle; unhook them and it drops).
+Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **personal cassette player** (a 2 mm capstan sets the tape's speed; the reels only keep it taut), a **pin tumbler lock** (a Kwikset cylinder whose five pin stacks ride the key's cuts to the shear line, a wrong key that won't turn, and the bolt a quarter turn throws), a **desk lamp** (an Anglepoise-type arm whose springs match the head's weight at every angle; unhook them and it drops), a **tape measure** (a spring wound 20 turns tighter as you pull 3 m out, and a loose hook that keeps the zero true) and a **fire extinguisher** (nitrogen that drives its powder up a dip tube, and the pressure falling as it empties).
+
+And a **sewing machine**: a Singer 201-2 built in code from Singer's adjuster's manual, its hook turning twice per stitch to carry each loop of the top thread right round the bobbin.
 
 ## What's on a page
 
@@ -158,7 +160,7 @@ Detail costs time, so here are the real numbers: Claude's active time per object
 | Leica M3 | B | 2 h 07 | 37% |
 | Hasselblad-type SLR | C | 1 h 59 | 33% |
 
-The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and the first thirteen in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
+The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all nineteen in under three. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
 
 The first three objects made with the skill, on 18 October 2026, came in well under it. All three were built in one session: 70 minutes from the request to the last poster, with each object's research running in a subagent alongside.
 
@@ -307,8 +309,11 @@ npm run preview    # serve dist/
 | Personal Cassette Player | [Portable Cassette Player](https://polyhaven.com/a/portable_cassette_player); deck, capstan, flywheel, belts, motor, cells, pinch roller, head, slip clutch, spindles and the cassette's reels, tape, rollers and pressure pad built for this site | Mateusz Sadek | CC0 1.0 |
 | Pin Tumbler Lock | built in code for this site (`objects/pin-tumbler-lock/`), after the Kwikset KW1 cylinder and 660 deadbolt | 3D of Things | CC0 1.0 |
 | Desk Lamp | [Desk Lamp Arm 01](https://polyhaven.com/a/desk_lamp_arm_01); springs rebuilt as coils for this site | Kuutti Siitonen & Yann Kervran | CC0 1.0 |
+| Sewing Machine | built in code for this site (`objects/sewing-machine/`), a Singer 201-2 laid out from Singer's adjuster's manual (Form 18962) and instruction book (Form 20340) | 3D of Things | CC0 1.0 |
+| Tape Measure | [Measuring Tape 01](https://polyhaven.com/a/measuring_tape_01) (case, lock button, belt clip); blade, drum, spring, hook and brake built for this site | Kuutti Siitonen | CC0 1.0 |
+| Fire Extinguisher | [Korean Fire Extinguisher 01](https://polyhaven.com/a/korean_fire_extinguisher_01), scaled to a real 3.3 kg unit; nitrogen, powder, dip tube, valve stem, seal and spring built for this site | UM JOORIN | CC0 1.0 |
 
-All but the SLR, the washing machine, the lock and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; the Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap is left off. The explanations were written for this site.
+All but the SLR, the washing machine, the sewing machine, the lock and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; Singer is a trademark of its owner, named only to say which machine the sewing machine follows. The Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap and the tape measure's wrist strap are left off. The explanations were written for this site.
 
 ## Deploying
 

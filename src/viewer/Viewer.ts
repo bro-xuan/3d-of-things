@@ -43,6 +43,8 @@ import { AeroCar, type AeroState, type FlightKind } from './aerocar';
 import { BalancedArm, type ArmState } from './balancedarm';
 import { Stretch, type SpringLayout } from './stretch';
 import { PinTumbler, type KeyName, type LockState } from './pintumbler';
+import { TapeMeasure, type BladeLayout, type TapeState } from './tapemeasure';
+import { Extinguisher, type ExtinguisherState } from './extinguisher';
 import { Jets } from './jets';
 
 // Fast raycasts for hover and hotspot occlusion.
@@ -88,7 +90,7 @@ export interface ViewerOptions {
   onInteract?: () => void;
 }
 
-export type { AeroState, CameraState, CardContent, FlightKind, LookMode, MechanismState };
+export type { AeroState, CameraState, CardContent, ExtinguisherState, FlightKind, LookMode, MechanismState, TapeState };
 
 /** An orthographic line drawing of the assembled model, for the page's drawings. All of a model's drawings share
  *  one scale and one margin, so they line up as the views on a drawing sheet do. */
@@ -165,6 +167,9 @@ export class Viewer {
   private readonly springs: Stretch[] = [];
   /** A pin tumbler lock's keys, pins and plug, if this is one: it sets their controls. */
   private lock?: PinTumbler;
+  private tape?: TapeMeasure;
+  /** A stored-pressure extinguisher's pin, lever and charge, if it is one: they set its controls as it empties. */
+  private extinguisher?: Extinguisher;
   /** Its thrusters' jets. */
   private jets?: Jets;
   /** The whole model, lifted and turned when a car flies. */
@@ -349,6 +354,9 @@ export class Viewer {
       });
     }
     if (this.linkage.has('lock-turn')) this.lock = new PinTumbler(this.linkage);
+    const blade = this.linkage.has('tape_out') ? this.linkage.stripLayout('tape-blade') : undefined;
+    if (blade) this.tape = new TapeMeasure(this.linkage, blade as BladeLayout);
+    if (this.linkage.has('ext_lever')) this.extinguisher = new Extinguisher(this.linkage);
     this.linkage.apply();
     const deforming = new Set([...this.mechanism.deforming, ...this.linkage.deforming, ...this.springs.map((spring) => spring.mesh)]);
     // How the model can be drawn: as rendered or as a line drawing, with the rest turned to glass around the parts a step is about.
@@ -967,6 +975,8 @@ export class Viewer {
       this.arm.reset(this.options.reducedMotion);
     }
     this.lock?.reset();
+    this.tape?.reset();
+    this.extinguisher?.reset();
   }
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
@@ -1212,6 +1222,59 @@ export class Viewer {
   /** Tries to turn the key a quarter turn, or turns it back. */
   turnKey(on: boolean): void {
     this.lock?.turn(on);
+  }
+
+  // ------------------------------------------------------------- a tape measure
+
+  /** What a tape measure's blade, drum, spring, lock and hook are doing, for charts and readouts; null if this isn't one. */
+  get tapeState(): TapeState | null {
+    return this.tape?.state ?? null;
+  }
+
+  /** Pulls a tape measure's blade out to `mm` (the lock, if on, holds it where it is). */
+  setTapeOut(mm: number): void {
+    this.tape?.setOut(mm);
+  }
+
+  /** Lets go of the blade, so the spring winds it in (unless the lock is on). */
+  letGoTape(): void {
+    this.tape?.letGo();
+  }
+
+  setTapeLock(on: boolean): void {
+    this.tape?.setLock(on);
+  }
+
+  /** The hook pushed against a wall (false) or hooked over an edge and pulled (true). */
+  setTapeHook(hooked: boolean): void {
+    this.tape?.setHook(hooked);
+  }
+
+  // ------------------------------------------------------------- an extinguisher
+
+  /** What an extinguisher's pin, lever and charge are doing, for charts and readouts; null if this isn't one. */
+  get extinguisherState(): ExtinguisherState | null {
+    return this.extinguisher?.state ?? null;
+  }
+
+  /** Pulls an extinguisher's safety pin, or puts it back. */
+  pullPin(out = true): void {
+    this.extinguisher?.pullPin(out);
+  }
+
+  /** Squeezes an extinguisher's lever while `on` (it moves only with the pin out). */
+  squeezeLever(on: boolean): void {
+    this.extinguisher?.squeeze(on);
+  }
+
+  /** Holds an extinguisher upside down, or upright again. */
+  invertExtinguisher(on: boolean): void {
+    this.extinguisher?.setInverted(on);
+  }
+
+  /** Recharges an extinguisher: powder and nitrogen back in. */
+  rechargeExtinguisher(): void {
+    this.extinguisher?.refill();
   }
 
   // ------------------------------------------------------------- a camera
@@ -1535,6 +1598,8 @@ export class Viewer {
       const { springs } = this.arm.state;
       for (const spring of this.springs) if (spring.apply(springs[spring.layout.arm as 'lower' | 'upper'].length)) this.shadowDirty = this.dirty = true;
     }
+    this.tape?.tick(dt);
+    if (this.extinguisher?.tick(dt)) this.dirty = true;
     if (this.linkage?.apply() || turned) {
       this.rigs.apply();
       // A path pinned to a crank goes round with it.

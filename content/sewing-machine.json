@@ -1,0 +1,3257 @@
+{
+  "order": 17,
+  "title": "Sewing Machine",
+  "hook": "The needle never takes its thread through: a hook underneath carries each loop right round the bobbin.",
+  "category": "gears",
+  "summary": [
+    "A hand needle drags its whole length of thread through the cloth at every stitch, so it can’t go fast. A sewing machine never lets go of either thread: the needle pushes a loop of the top thread down through the cloth, and a hook underneath locks it round a second thread from a bobbin.",
+    "In this Singer 201-2 of the 1930s one shaft along the arm turns once per stitch. A crank on its end drives the needle bar and a lever pays out and pulls up the thread; bevel gears down the pillar and along the bed turn the hook under the needle plate twice per stitch; an eccentric and a cam on the same shaft work the feed dog that moves the cloth on.",
+    "Each stitch, the needle goes down, the hook catches its loop and takes it round the bobbin, the take-up lever pulls the two threads tight inside the cloth, and the feed dog carries the cloth one stitch length back. On this model every part moves from that one shaft’s angle, at Singer’s 2 : 1 for the hook; the gear teeth and the head’s size are drawn, not measured."
+  ],
+  "model": "models/sewing-machine.glb",
+  "viewAngle": [
+    -32,
+    16
+  ],
+  "explodeAngle": [
+    -38,
+    24
+  ],
+  "explodeDuration": 2800,
+  "facts": [
+    {
+      "label": "Model",
+      "value": "Singer 201-2, USA, 1935–57"
+    },
+    {
+      "label": "Stitch",
+      "value": "Lockstitch, 6 to 30 to the inch (4.2–0.85 mm)"
+    },
+    {
+      "label": "Hook",
+      "value": "2 turns for every stitch"
+    },
+    {
+      "label": "Needle",
+      "value": "System 15×1, threaded right to left"
+    },
+    {
+      "label": "Weight",
+      "value": "About 13.6 kg, the cast-iron head"
+    }
+  ],
+  "parts": [
+    {
+      "node": "motor",
+      "label": "Motor",
+      "group": "Power",
+      "about": "Singer’s built-on motor, on the back of the arm. A spiral gear on its shaft turns a gear on the balance wheel’s hub; a knee lever sets its speed.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.3272,
+      "window": [
+        0.6,
+        0.8
+      ]
+    },
+    {
+      "node": "balance_wheel",
+      "label": "Balance wheel",
+      "group": "Power",
+      "about": "On the arm shaft’s right end: one turn, one stitch. Turn it by hand towards you; the knob on its face frees it from the shaft to wind a bobbin.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.2545,
+      "window": [
+        0.55,
+        0.75
+      ]
+    },
+    {
+      "node": "arm_shaft",
+      "label": "Arm shaft",
+      "group": "Arm shaft",
+      "about": "Runs the length of the arm and turns once per stitch. Everything else is timed from it: the crank at its left end, the feed cam and eccentric, the bevel gear.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "needle_link",
+      "label": "Needle-bar link",
+      "group": "Arm shaft",
+      "about": "Joins the crank’s pin to a stud on the needle bar, turning the crank’s circle into the bar’s straight 30 mm stroke.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "needle_bar",
+      "label": "Needle bar",
+      "group": "Arm shaft",
+      "about": "Slides up and down in two bushings in the head, the needle clamped at its foot.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "needle",
+      "label": "Needle",
+      "group": "Arm shaft",
+      "about": "A 15×1 needle, flat side to the left. The thread runs in a groove down its front and through the eye near the point, so the needle carries a loop, not an end.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "take_up_lever",
+      "label": "Take-up lever",
+      "group": "Arm shaft",
+      "about": "Rocks in the head with the crank. It lets thread down while the hook carries the loop round the bobbin, then pulls the slack back up to set the stitch.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "upright_shaft",
+      "label": "Upright shaft",
+      "group": "To the hook",
+      "about": "Runs down inside the pillar. The bevel gear at its top is half the size of the arm shaft’s, so it turns twice per stitch.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "hook_drive_shaft",
+      "label": "Hook driving shaft",
+      "group": "To the hook",
+      "about": "Runs along the underside of the bed from the pillar to the hook, with a bevel gear at each end.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "hook",
+      "label": "Rotating hook",
+      "group": "To the hook",
+      "about": "A steel cup turning on a vertical shaft, twice per stitch. Its sharp beak passes the needle just above the eye and catches the loop of thread there.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "bobbin_case",
+      "label": "Bobbin case",
+      "group": "Stitch",
+      "about": "Sits in the hook but doesn’t turn: a finger on its rim rests in a notch. The loop goes right round it, and its spring sets the bobbin thread’s tension.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "bobbin",
+      "label": "Bobbin",
+      "group": "Stitch",
+      "about": "A class 66 bobbin, 20.5 mm across, holding the lower thread. It drops in from above when the slide plate is drawn back.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2,
+      "window": [
+        0.6,
+        0.85
+      ],
+      "then": {
+        "direction": [
+          -1,
+          0,
+          0
+        ],
+        "distance": 0.1818
+      }
+    },
+    {
+      "node": "tension",
+      "label": "Tension",
+      "group": "Stitch",
+      "about": "Two discs squeeze the top thread; the numbered nut sets how hard. The little check spring takes up the slack as the needle comes down.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.5454,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "spool",
+      "label": "Spool",
+      "group": "Stitch",
+      "about": "The top thread, on its pin on top of the arm.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2545,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "presser_foot",
+      "label": "Presser foot",
+      "group": "Stitch",
+      "about": "Holds the cloth down on the feed dog while it moves, and lifts with its bar when you raise the lever behind the head.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.0291,
+      "window": [
+        0.2,
+        0.35
+      ]
+    },
+    {
+      "node": "feed_rod",
+      "label": "Feed connecting rod",
+      "group": "Feed",
+      "about": "Hangs from the feed-lifting eccentric on the arm shaft and works the lifting rock shaft under the bed.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "feed_fork",
+      "label": "Feed forked connection",
+      "group": "Feed",
+      "about": "Straddles the feed cam on the arm shaft; the stitch regulator sets how far it swings, and so how far the cloth moves.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "feed_lift_shaft",
+      "label": "Feed lifting rock shaft",
+      "group": "Feed",
+      "about": "Rocks a few degrees under the bed; its arm lifts the feed bar so the teeth rise through the plate.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "feed_rock_shaft",
+      "label": "Feed rock shaft",
+      "group": "Feed",
+      "about": "Rocks under the bed; its arm pushes the feed bar back while the teeth are up, then forward again.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "feed_dog",
+      "label": "Feed dog",
+      "group": "Feed",
+      "about": "Two rows of teeth on the feed bar. Up, back, down, forward: they grip the cloth from below and walk it on one stitch at a time.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "stitch_lever",
+      "label": "Stitch regulator",
+      "group": "Feed",
+      "about": "Set from 6 to 30 stitches to the inch. Pushed to the top it reverses the feed, and the same stitch is sewn backwards.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.509,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "arm_front",
+      "label": "Arm, front half",
+      "group": "Frame",
+      "about": "The arm is one hollow iron casting with the bed. Its front half lifts away here, as on the Science Museum’s sectioned 201K, to show the shafts inside.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.1273,
+      "window": [
+        0.1,
+        0.42
+      ],
+      "then": {
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "distance": 0.7635
+      }
+    },
+    {
+      "node": "face_plate",
+      "label": "Face plate",
+      "group": "Frame",
+      "about": "Covers the head’s end, where the needle bar, presser bar and take-up lever work.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.2182,
+      "window": [
+        0,
+        0.3
+      ]
+    },
+    {
+      "node": "needle_plate",
+      "label": "Needle plate",
+      "group": "Frame",
+      "about": "The needle goes through its hole and the feed dog’s teeth come up through its slots.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.0218,
+      "window": [
+        0.35,
+        0.6
+      ],
+      "then": {
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "distance": 0.3272
+      }
+    },
+    {
+      "node": "slide_plate",
+      "label": "Slide plate",
+      "group": "Frame",
+      "about": "Slides to the left to get at the bobbin.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.0218,
+      "window": [
+        0.3,
+        0.55
+      ],
+      "then": {
+        "direction": [
+          -1,
+          0,
+          0
+        ],
+        "distance": 0.2545
+      }
+    },
+    {
+      "node": "bed",
+      "label": "Bed and arm",
+      "group": "Frame",
+      "about": "One japanned iron casting: the bed, the pillar and the back of the arm, with bushings for every shaft.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Balance wheel",
+      "text": "One turn of the wheel is one stitch. The motor drives it through a gear on its hub; by hand, always turn it towards you.",
+      "node": "balance_wheel",
+      "position": [
+        0.6872,
+        0.9635,
+        -0.0382
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          1.9342,
+          1.1446,
+          0.8348
+        ],
+        "target": [
+          0.6999,
+          0.7817,
+          0.0636
+        ]
+      }
+    },
+    {
+      "title": "Needle-bar crank",
+      "text": "A crank on the arm shaft’s end and a short link drive the needle bar through a 30 mm stroke, once per turn.",
+      "node": "arm_shaft",
+      "position": [
+        -0.5308,
+        0.8363,
+        -0.0382
+      ],
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -0.6595,
+          0.8822,
+          1.0502
+        ],
+        "target": [
+          -0.432,
+          0.7672,
+          -0.0199
+        ]
+      }
+    },
+    {
+      "title": "Take-up lever",
+      "text": "It pays out thread while the hook takes the loop round the bobbin, then snatches it back up, pulling the two threads tight in the middle of the cloth.",
+      "node": "take_up_lever",
+      "position": [
+        -0.5927,
+        0.8203,
+        0.1182
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -0.9067,
+          1.0287,
+          1.2615
+        ],
+        "target": [
+          -0.5025,
+          0.8203,
+          0.151
+        ]
+      }
+    },
+    {
+      "title": "Tension",
+      "text": "The top thread runs between two discs pressed together by the numbered nut, 0 to 9. Tighter pulls the lock up towards the top of the cloth.",
+      "node": "tension",
+      "position": [
+        -0.4908,
+        0.7036,
+        0.1218
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -0.584,
+          0.8118,
+          1.1218
+        ],
+        "target": [
+          -0.412,
+          0.6726,
+          0.1466
+        ]
+      }
+    },
+    {
+      "title": "Twice as fast",
+      "text": "At the top of the pillar a bevel gear on the arm shaft drives one half its size, so the upright shaft, the shaft under the bed and the hook all turn twice per stitch.",
+      "node": "upright_shaft",
+      "position": [
+        0.4581,
+        0.7235,
+        -0.0382
+      ],
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -0.0278,
+          0.9314,
+          0.8145
+        ],
+        "target": [
+          0.3856,
+          0.7235,
+          -0.072
+        ]
+      }
+    },
+    {
+      "title": "No knot",
+      "text": "The hook’s beak catches the needle’s loop and carries it right round the bobbin case. The take-up lever pulls it up with the bobbin thread inside it: two threads interlocked: a lock, not a knot.",
+      "node": "hook",
+      "position": [
+        -0.5943,
+        0.1454,
+        -0.1066
+      ],
+      "explode": 0.58,
+      "camera": {
+        "position": [
+          -0.6676,
+          0.7713,
+          0.3132
+        ],
+        "target": [
+          -0.5472,
+          0.1091,
+          -0.0177
+        ]
+      }
+    },
+    {
+      "title": "Bobbin",
+      "text": "The lower thread, on a class 66 bobbin 20.5 mm across. It sits in a case that the hook turns round but never touches.",
+      "node": "bobbin",
+      "position": [
+        -0.6036,
+        0.136,
+        -0.0382
+      ],
+      "explode": 0.58,
+      "camera": {
+        "position": [
+          -0.7776,
+          0.7913,
+          0.3912
+        ],
+        "target": [
+          -0.5482,
+          0.136,
+          -0.0062
+        ]
+      }
+    },
+    {
+      "title": "Feed dog",
+      "text": "Its teeth rise through the plate, push the cloth back one stitch length, drop below the plate and come forward again: the four-motion feed.",
+      "node": "feed_dog",
+      "position": [
+        -0.5454,
+        0.1854,
+        -0.0164
+      ],
+      "explode": 0.58,
+      "camera": {
+        "position": [
+          -0.7178,
+          0.4212,
+          0.5991
+        ],
+        "target": [
+          -0.4928,
+          0.1818,
+          -0.019
+        ]
+      }
+    },
+    {
+      "title": "Stitch regulator",
+      "text": "Sets how far the feed dog moves: from 6 stitches to the inch (4.2 mm) down to 30 (0.85 mm). At the top of its slot it sews in reverse.",
+      "node": "stitch_lever",
+      "position": [
+        0.4545,
+        0.4654,
+        0.1291
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          0.1198,
+          0.6499,
+          1.0333
+        ],
+        "target": [
+          0.3772,
+          0.5454,
+          0.0727
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "arm_shaft",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0364,
+        0.7817,
+        -0.0382
+      ],
+      "speed": 0.5
+    },
+    {
+      "node": "balance_wheel",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.6908,
+        0.7817,
+        -0.0382
+      ],
+      "speed": 0.5
+    },
+    {
+      "node": "upright_shaft",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        0.4363,
+        0.3636,
+        -0.0382
+      ],
+      "speed": 1
+    },
+    {
+      "node": "hook_drive_shaft",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0727,
+        0.0436,
+        -0.0382
+      ],
+      "speed": 1
+    },
+    {
+      "node": "hook",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        -0.6036,
+        0.1091,
+        -0.0382
+      ],
+      "speed": -1
+    },
+    {
+      "node": "needle_bar",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        -0.5454,
+        0.6181,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        0,
+        -1,
+        0
+      ],
+      "throw": 0.05454,
+      "rod": 0.13817,
+      "phase": 180
+    },
+    {
+      "node": "needle_link",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.5236,
+        0.6981,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        0,
+        -1,
+        0
+      ],
+      "throw": 0.05454,
+      "rod": 0.13817,
+      "phase": 180,
+      "rocks": true
+    },
+    {
+      "node": "take_up_lever",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.5927,
+        0.8072,
+        -0.1291
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        1,
+        0,
+        0
+      ],
+      "throw": 0.0004838,
+      "rod": 0.002,
+      "phase": 50,
+      "rocks": true
+    },
+    {
+      "node": "feed_rod",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.349,
+        0.1018,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        0,
+        -1,
+        0
+      ],
+      "throw": 0.00273,
+      "rod": 0.68264,
+      "phase": 180,
+      "rocks": true
+    },
+    {
+      "node": "feed_fork",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.3091,
+        0.7817,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        1,
+        0,
+        0
+      ],
+      "throw": 0.0000324,
+      "rod": 0.002,
+      "phase": 180,
+      "rocks": true
+    },
+    {
+      "node": "feed_rock_shaft",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0364,
+        0.1018,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        1,
+        0,
+        0
+      ],
+      "throw": 0.0004,
+      "rod": 0.002,
+      "phase": 0,
+      "rocks": true
+    },
+    {
+      "node": "feed_lift_shaft",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0364,
+        0.1018,
+        -0.1473
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        1,
+        0,
+        0
+      ],
+      "throw": 0.00005,
+      "rod": 0.002,
+      "phase": 90,
+      "rocks": true
+    },
+    {
+      "node": "feed_lifter",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        -0.4,
+        0.16,
+        -0.0382
+      ],
+      "cam": "arm_shaft",
+      "along": [
+        0,
+        1,
+        0
+      ],
+      "lift": 0.00545,
+      "phase": 0,
+      "duration": 200
+    },
+    {
+      "node": "feed_dog",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.4,
+        0.16,
+        -0.0382
+      ],
+      "crank": "arm_shaft",
+      "along": [
+        0,
+        0,
+        1
+      ],
+      "throw": 0.00764,
+      "rod": 1,
+      "phase": 90
+    }
+  ],
+  "motionLabel": "Turn the wheel",
+  "how": [
+    {
+      "label": "The idea",
+      "title": "Two threads, locked inside the cloth",
+      "text": [
+        "The needle takes a loop of the top thread down through the cloth; under the plate the hook catches it and takes it round the bobbin; the take-up lever pulls it back up with the bobbin thread inside it; the feed dog moves the cloth on. Then again.",
+        "All four are timed by one shaft turning once per stitch. Follow the cursor: the hook meets the needle 41° after the bottom of its stroke, when it has risen 2.4 mm and the thread has bulged into a loop beside it."
+      ],
+      "angle": [
+        -35,
+        22
+      ],
+      "explode": 0.58,
+      "rate": 0.25,
+      "focus": [
+        "needle_bar",
+        "needle",
+        "needle_link",
+        "take_up_lever",
+        "hook",
+        "bobbin_case",
+        "bobbin",
+        "feed_dog",
+        "arm_shaft"
+      ],
+      "frame": [
+        "needle_bar",
+        "needle",
+        "take_up_lever",
+        "hook",
+        "feed_dog"
+      ],
+      "tags": [
+        {
+          "node": "needle",
+          "text": "needle: 1 stroke",
+          "at": [
+            -0.5454,
+            0.2436,
+            -0.0382
+          ]
+        },
+        {
+          "node": "hook",
+          "text": "hook: 2 turns",
+          "at": [
+            -0.6036,
+            0.1091,
+            0.0345
+          ]
+        },
+        {
+          "node": "take_up_lever",
+          "text": "take-up",
+          "at": [
+            -0.5927,
+            0.8203,
+            0.1182
+          ]
+        }
+      ],
+      "chart": {
+        "type": "timing",
+        "title": "One stitch, slowed down",
+        "caption": "Every part, through one turn of the arm shaft. The hook catches the loop just after the needle’s lowest point; the feed only moves the cloth while the needle is out of it.",
+        "node": "arm_shaft",
+        "perTurn": 1,
+        "bands": [
+          [
+            0.614,
+            0.97,
+            "loop round the bobbin"
+          ]
+        ],
+        "lanes": [
+          {
+            "name": "Needle",
+            "points": [
+              [
+                0,
+                1
+              ],
+              [
+                0.014,
+                0.997
+              ],
+              [
+                0.028,
+                0.989
+              ],
+              [
+                0.042,
+                0.976
+              ],
+              [
+                0.056,
+                0.958
+              ],
+              [
+                0.069,
+                0.935
+              ],
+              [
+                0.083,
+                0.908
+              ],
+              [
+                0.097,
+                0.877
+              ],
+              [
+                0.111,
+                0.842
+              ],
+              [
+                0.125,
+                0.803
+              ],
+              [
+                0.139,
+                0.762
+              ],
+              [
+                0.153,
+                0.719
+              ],
+              [
+                0.167,
+                0.674
+              ],
+              [
+                0.181,
+                0.627
+              ],
+              [
+                0.194,
+                0.581
+              ],
+              [
+                0.208,
+                0.534
+              ],
+              [
+                0.222,
+                0.487
+              ],
+              [
+                0.236,
+                0.442
+              ],
+              [
+                0.25,
+                0.397
+              ],
+              [
+                0.264,
+                0.354
+              ],
+              [
+                0.278,
+                0.314
+              ],
+              [
+                0.292,
+                0.275
+              ],
+              [
+                0.306,
+                0.239
+              ],
+              [
+                0.319,
+                0.205
+              ],
+              [
+                0.333,
+                0.174
+              ],
+              [
+                0.347,
+                0.145
+              ],
+              [
+                0.361,
+                0.119
+              ],
+              [
+                0.375,
+                0.096
+              ],
+              [
+                0.389,
+                0.076
+              ],
+              [
+                0.403,
+                0.058
+              ],
+              [
+                0.417,
+                0.042
+              ],
+              [
+                0.431,
+                0.029
+              ],
+              [
+                0.444,
+                0.019
+              ],
+              [
+                0.458,
+                0.01
+              ],
+              [
+                0.472,
+                0.005
+              ],
+              [
+                0.486,
+                0.001
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                0.514,
+                0.001
+              ],
+              [
+                0.528,
+                0.005
+              ],
+              [
+                0.542,
+                0.01
+              ],
+              [
+                0.556,
+                0.019
+              ],
+              [
+                0.569,
+                0.029
+              ],
+              [
+                0.583,
+                0.042
+              ],
+              [
+                0.597,
+                0.058
+              ],
+              [
+                0.611,
+                0.076
+              ],
+              [
+                0.625,
+                0.096
+              ],
+              [
+                0.639,
+                0.119
+              ],
+              [
+                0.653,
+                0.145
+              ],
+              [
+                0.667,
+                0.174
+              ],
+              [
+                0.681,
+                0.205
+              ],
+              [
+                0.694,
+                0.239
+              ],
+              [
+                0.708,
+                0.275
+              ],
+              [
+                0.722,
+                0.314
+              ],
+              [
+                0.736,
+                0.354
+              ],
+              [
+                0.75,
+                0.397
+              ],
+              [
+                0.764,
+                0.442
+              ],
+              [
+                0.778,
+                0.487
+              ],
+              [
+                0.792,
+                0.534
+              ],
+              [
+                0.806,
+                0.581
+              ],
+              [
+                0.819,
+                0.627
+              ],
+              [
+                0.833,
+                0.674
+              ],
+              [
+                0.847,
+                0.719
+              ],
+              [
+                0.861,
+                0.762
+              ],
+              [
+                0.875,
+                0.803
+              ],
+              [
+                0.889,
+                0.842
+              ],
+              [
+                0.903,
+                0.877
+              ],
+              [
+                0.917,
+                0.908
+              ],
+              [
+                0.931,
+                0.935
+              ],
+              [
+                0.944,
+                0.958
+              ],
+              [
+                0.958,
+                0.976
+              ],
+              [
+                0.972,
+                0.989
+              ],
+              [
+                0.986,
+                0.997
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "name": "Take-up lever",
+            "points": [
+              [
+                0,
+                0.878
+              ],
+              [
+                0.014,
+                0.906
+              ],
+              [
+                0.028,
+                0.93
+              ],
+              [
+                0.042,
+                0.951
+              ],
+              [
+                0.056,
+                0.968
+              ],
+              [
+                0.069,
+                0.982
+              ],
+              [
+                0.083,
+                0.992
+              ],
+              [
+                0.097,
+                0.998
+              ],
+              [
+                0.111,
+                1
+              ],
+              [
+                0.125,
+                0.998
+              ],
+              [
+                0.139,
+                0.992
+              ],
+              [
+                0.153,
+                0.982
+              ],
+              [
+                0.167,
+                0.968
+              ],
+              [
+                0.181,
+                0.951
+              ],
+              [
+                0.194,
+                0.93
+              ],
+              [
+                0.208,
+                0.906
+              ],
+              [
+                0.222,
+                0.878
+              ],
+              [
+                0.236,
+                0.848
+              ],
+              [
+                0.25,
+                0.815
+              ],
+              [
+                0.264,
+                0.779
+              ],
+              [
+                0.278,
+                0.741
+              ],
+              [
+                0.292,
+                0.702
+              ],
+              [
+                0.306,
+                0.661
+              ],
+              [
+                0.319,
+                0.619
+              ],
+              [
+                0.333,
+                0.576
+              ],
+              [
+                0.347,
+                0.532
+              ],
+              [
+                0.361,
+                0.488
+              ],
+              [
+                0.375,
+                0.445
+              ],
+              [
+                0.389,
+                0.402
+              ],
+              [
+                0.403,
+                0.36
+              ],
+              [
+                0.417,
+                0.319
+              ],
+              [
+                0.431,
+                0.279
+              ],
+              [
+                0.444,
+                0.241
+              ],
+              [
+                0.458,
+                0.205
+              ],
+              [
+                0.472,
+                0.172
+              ],
+              [
+                0.486,
+                0.141
+              ],
+              [
+                0.5,
+                0.112
+              ],
+              [
+                0.514,
+                0.087
+              ],
+              [
+                0.528,
+                0.064
+              ],
+              [
+                0.542,
+                0.045
+              ],
+              [
+                0.556,
+                0.029
+              ],
+              [
+                0.569,
+                0.016
+              ],
+              [
+                0.583,
+                0.007
+              ],
+              [
+                0.597,
+                0.002
+              ],
+              [
+                0.611,
+                0
+              ],
+              [
+                0.625,
+                0.002
+              ],
+              [
+                0.639,
+                0.007
+              ],
+              [
+                0.653,
+                0.016
+              ],
+              [
+                0.667,
+                0.029
+              ],
+              [
+                0.681,
+                0.045
+              ],
+              [
+                0.694,
+                0.064
+              ],
+              [
+                0.708,
+                0.087
+              ],
+              [
+                0.722,
+                0.112
+              ],
+              [
+                0.736,
+                0.141
+              ],
+              [
+                0.75,
+                0.172
+              ],
+              [
+                0.764,
+                0.205
+              ],
+              [
+                0.778,
+                0.241
+              ],
+              [
+                0.792,
+                0.279
+              ],
+              [
+                0.806,
+                0.319
+              ],
+              [
+                0.819,
+                0.36
+              ],
+              [
+                0.833,
+                0.402
+              ],
+              [
+                0.847,
+                0.445
+              ],
+              [
+                0.861,
+                0.488
+              ],
+              [
+                0.875,
+                0.532
+              ],
+              [
+                0.889,
+                0.576
+              ],
+              [
+                0.903,
+                0.619
+              ],
+              [
+                0.917,
+                0.661
+              ],
+              [
+                0.931,
+                0.702
+              ],
+              [
+                0.944,
+                0.741
+              ],
+              [
+                0.958,
+                0.779
+              ],
+              [
+                0.972,
+                0.815
+              ],
+              [
+                0.986,
+                0.848
+              ],
+              [
+                1,
+                0.878
+              ]
+            ]
+          },
+          {
+            "name": "Feed dog up",
+            "points": [
+              [
+                0,
+                1
+              ],
+              [
+                0.014,
+                0.994
+              ],
+              [
+                0.028,
+                0.976
+              ],
+              [
+                0.042,
+                0.946
+              ],
+              [
+                0.056,
+                0.905
+              ],
+              [
+                0.069,
+                0.854
+              ],
+              [
+                0.083,
+                0.794
+              ],
+              [
+                0.097,
+                0.727
+              ],
+              [
+                0.111,
+                0.655
+              ],
+              [
+                0.125,
+                0.578
+              ],
+              [
+                0.139,
+                0.5
+              ],
+              [
+                0.153,
+                0.422
+              ],
+              [
+                0.167,
+                0.345
+              ],
+              [
+                0.181,
+                0.273
+              ],
+              [
+                0.194,
+                0.206
+              ],
+              [
+                0.208,
+                0.146
+              ],
+              [
+                0.222,
+                0.095
+              ],
+              [
+                0.236,
+                0.054
+              ],
+              [
+                0.25,
+                0.024
+              ],
+              [
+                0.264,
+                0.006
+              ],
+              [
+                0.278,
+                0
+              ],
+              [
+                0.292,
+                0
+              ],
+              [
+                0.306,
+                0
+              ],
+              [
+                0.319,
+                0
+              ],
+              [
+                0.333,
+                0
+              ],
+              [
+                0.347,
+                0
+              ],
+              [
+                0.361,
+                0
+              ],
+              [
+                0.375,
+                0
+              ],
+              [
+                0.389,
+                0
+              ],
+              [
+                0.403,
+                0
+              ],
+              [
+                0.417,
+                0
+              ],
+              [
+                0.431,
+                0
+              ],
+              [
+                0.444,
+                0
+              ],
+              [
+                0.458,
+                0
+              ],
+              [
+                0.472,
+                0
+              ],
+              [
+                0.486,
+                0
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                0.514,
+                0
+              ],
+              [
+                0.528,
+                0
+              ],
+              [
+                0.542,
+                0
+              ],
+              [
+                0.556,
+                0
+              ],
+              [
+                0.569,
+                0
+              ],
+              [
+                0.583,
+                0
+              ],
+              [
+                0.597,
+                0
+              ],
+              [
+                0.611,
+                0
+              ],
+              [
+                0.625,
+                0
+              ],
+              [
+                0.639,
+                0
+              ],
+              [
+                0.653,
+                0
+              ],
+              [
+                0.667,
+                0
+              ],
+              [
+                0.681,
+                0
+              ],
+              [
+                0.694,
+                0
+              ],
+              [
+                0.708,
+                0
+              ],
+              [
+                0.722,
+                0
+              ],
+              [
+                0.736,
+                0.006
+              ],
+              [
+                0.75,
+                0.024
+              ],
+              [
+                0.764,
+                0.054
+              ],
+              [
+                0.778,
+                0.095
+              ],
+              [
+                0.792,
+                0.146
+              ],
+              [
+                0.806,
+                0.206
+              ],
+              [
+                0.819,
+                0.273
+              ],
+              [
+                0.833,
+                0.345
+              ],
+              [
+                0.847,
+                0.422
+              ],
+              [
+                0.861,
+                0.5
+              ],
+              [
+                0.875,
+                0.578
+              ],
+              [
+                0.889,
+                0.655
+              ],
+              [
+                0.903,
+                0.727
+              ],
+              [
+                0.917,
+                0.794
+              ],
+              [
+                0.931,
+                0.854
+              ],
+              [
+                0.944,
+                0.905
+              ],
+              [
+                0.958,
+                0.946
+              ],
+              [
+                0.972,
+                0.976
+              ],
+              [
+                0.986,
+                0.994
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "name": "Feed dog back",
+            "points": [
+              [
+                0,
+                0.5
+              ],
+              [
+                0.014,
+                0.544
+              ],
+              [
+                0.028,
+                0.587
+              ],
+              [
+                0.042,
+                0.629
+              ],
+              [
+                0.056,
+                0.671
+              ],
+              [
+                0.069,
+                0.711
+              ],
+              [
+                0.083,
+                0.75
+              ],
+              [
+                0.097,
+                0.787
+              ],
+              [
+                0.111,
+                0.821
+              ],
+              [
+                0.125,
+                0.854
+              ],
+              [
+                0.139,
+                0.883
+              ],
+              [
+                0.153,
+                0.91
+              ],
+              [
+                0.167,
+                0.933
+              ],
+              [
+                0.181,
+                0.953
+              ],
+              [
+                0.194,
+                0.97
+              ],
+              [
+                0.208,
+                0.983
+              ],
+              [
+                0.222,
+                0.992
+              ],
+              [
+                0.236,
+                0.998
+              ],
+              [
+                0.25,
+                1
+              ],
+              [
+                0.264,
+                0.998
+              ],
+              [
+                0.278,
+                0.992
+              ],
+              [
+                0.292,
+                0.983
+              ],
+              [
+                0.306,
+                0.97
+              ],
+              [
+                0.319,
+                0.953
+              ],
+              [
+                0.333,
+                0.933
+              ],
+              [
+                0.347,
+                0.91
+              ],
+              [
+                0.361,
+                0.883
+              ],
+              [
+                0.375,
+                0.854
+              ],
+              [
+                0.389,
+                0.821
+              ],
+              [
+                0.403,
+                0.787
+              ],
+              [
+                0.417,
+                0.75
+              ],
+              [
+                0.431,
+                0.711
+              ],
+              [
+                0.444,
+                0.671
+              ],
+              [
+                0.458,
+                0.629
+              ],
+              [
+                0.472,
+                0.587
+              ],
+              [
+                0.486,
+                0.544
+              ],
+              [
+                0.5,
+                0.5
+              ],
+              [
+                0.514,
+                0.456
+              ],
+              [
+                0.528,
+                0.413
+              ],
+              [
+                0.542,
+                0.371
+              ],
+              [
+                0.556,
+                0.329
+              ],
+              [
+                0.569,
+                0.289
+              ],
+              [
+                0.583,
+                0.25
+              ],
+              [
+                0.597,
+                0.213
+              ],
+              [
+                0.611,
+                0.179
+              ],
+              [
+                0.625,
+                0.146
+              ],
+              [
+                0.639,
+                0.117
+              ],
+              [
+                0.653,
+                0.09
+              ],
+              [
+                0.667,
+                0.067
+              ],
+              [
+                0.681,
+                0.047
+              ],
+              [
+                0.694,
+                0.03
+              ],
+              [
+                0.708,
+                0.017
+              ],
+              [
+                0.722,
+                0.008
+              ],
+              [
+                0.736,
+                0.002
+              ],
+              [
+                0.75,
+                0
+              ],
+              [
+                0.764,
+                0.002
+              ],
+              [
+                0.778,
+                0.008
+              ],
+              [
+                0.792,
+                0.017
+              ],
+              [
+                0.806,
+                0.03
+              ],
+              [
+                0.819,
+                0.047
+              ],
+              [
+                0.833,
+                0.067
+              ],
+              [
+                0.847,
+                0.09
+              ],
+              [
+                0.861,
+                0.117
+              ],
+              [
+                0.875,
+                0.146
+              ],
+              [
+                0.889,
+                0.179
+              ],
+              [
+                0.903,
+                0.213
+              ],
+              [
+                0.917,
+                0.25
+              ],
+              [
+                0.931,
+                0.289
+              ],
+              [
+                0.944,
+                0.329
+              ],
+              [
+                0.958,
+                0.371
+              ],
+              [
+                0.972,
+                0.413
+              ],
+              [
+                0.986,
+                0.456
+              ],
+              [
+                1,
+                0.5
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Power",
+      "title": "One turn of the wheel, one stitch",
+      "text": [
+        "The motor on the back of the arm turns the balance wheel through a pair of gears hidden under its cover; the wheel is fixed to the arm shaft, so a turn of the wheel by hand does just the same. Everything else hangs off that shaft.",
+        "Hold the button and count: each turn of the shaft is one stitch. At full speed the motor runs it at hundreds of stitches a minute; here it turns once every two seconds."
+      ],
+      "angle": [
+        125,
+        18
+      ],
+      "explode": 0.45,
+      "focus": [
+        "motor",
+        "balance_wheel",
+        "arm_shaft"
+      ],
+      "flow": [
+        [
+          0.6254,
+          0.7454,
+          -0.2527
+        ],
+        [
+          0.6508,
+          0.8108,
+          -0.0891
+        ],
+        [
+          0.6181,
+          0.7817,
+          -0.0382
+        ],
+        [
+          -0.0364,
+          0.7817,
+          -0.0382
+        ],
+        [
+          -0.5018,
+          0.8472,
+          -0.0382
+        ]
+      ],
+      "tags": [
+        {
+          "node": "balance_wheel",
+          "text": "1 turn = 1 stitch",
+          "at": [
+            0.6872,
+            0.9635,
+            -0.0382
+          ]
+        }
+      ],
+      "try": "run",
+      "count": [
+        {
+          "node": "arm_shaft",
+          "label": "Stitches"
+        }
+      ]
+    },
+    {
+      "label": "Needle",
+      "title": "A crank drives the needle; a lever feeds it thread",
+      "text": [
+        "The crank on the arm shaft’s left end swings the link, and the link drives the needle bar through a 30 mm stroke. Beside it the take-up lever rocks: down while the needle and hook need thread, up to pull the stitch tight.",
+        "The top thread comes from the spool, between the tension discs, through the eye of the take-up lever and down to the needle. The needle’s eye goes below the cloth with a loop of it; the needle itself never lets go."
+      ],
+      "angle": [
+        -22,
+        10
+      ],
+      "explode": 0.45,
+      "rate": 0.35,
+      "focus": [
+        "arm_shaft",
+        "needle_link",
+        "needle_bar",
+        "needle",
+        "take_up_lever"
+      ],
+      "flow": [
+        [
+          -0.0364,
+          0.7817,
+          -0.0382
+        ],
+        [
+          -0.5018,
+          0.8472,
+          -0.0382
+        ],
+        {
+          "node": "needle_link",
+          "at": [
+            -0.5181,
+            0.7672,
+            -0.0382
+          ],
+          "ride": true
+        },
+        {
+          "node": "needle_bar",
+          "at": [
+            -0.5323,
+            0.4545,
+            -0.0382
+          ],
+          "ride": true
+        },
+        {
+          "node": "needle",
+          "at": [
+            -0.5454,
+            0.2145,
+            -0.0382
+          ],
+          "ride": true
+        }
+      ],
+      "tags": [
+        {
+          "node": "needle_bar",
+          "text": "30 mm stroke",
+          "at": [
+            -0.5323,
+            0.4545,
+            -0.0382
+          ]
+        },
+        {
+          "node": "take_up_lever",
+          "text": "take-up lever",
+          "at": [
+            -0.5927,
+            0.8203,
+            0.1182
+          ]
+        }
+      ]
+    },
+    {
+      "label": "To the hook",
+      "title": "Gears turn the hook twice for every stitch",
+      "text": [
+        "At the top of the pillar a bevel gear on the arm shaft drives a gear half its size on the upright shaft. At the bottom a second pair turns the drive along the underside of the bed, and a third pair turns the hook on its vertical shaft.",
+        "Singer’s manual gives the hook two turns to each stroke of the needle bar. One turn catches a loop; on the other the beak passes the needle while it’s up and catches nothing. Count them."
+      ],
+      "angle": [
+        -30,
+        -18
+      ],
+      "explode": 0.45,
+      "focus": [
+        "arm_shaft",
+        "upright_shaft",
+        "hook_drive_shaft",
+        "hook"
+      ],
+      "flow": [
+        [
+          -0.0364,
+          0.7817,
+          -0.0382
+        ],
+        [
+          0.4581,
+          0.7235,
+          -0.0382
+        ],
+        [
+          0.4509,
+          0.4,
+          -0.0382
+        ],
+        [
+          0.4072,
+          0.0727,
+          -0.0382
+        ],
+        [
+          -0.0727,
+          0.0436,
+          -0.0382
+        ],
+        [
+          -0.5745,
+          0.0727,
+          -0.0382
+        ],
+        [
+          -0.6036,
+          0.1091,
+          -0.0382
+        ]
+      ],
+      "tags": [
+        {
+          "node": "upright_shaft",
+          "text": "2 turns a stitch",
+          "at": [
+            0.4509,
+            0.4,
+            -0.0382
+          ]
+        },
+        {
+          "node": "hook",
+          "text": "2 turns a stitch",
+          "at": [
+            -0.6036,
+            0.1091,
+            0.0345
+          ]
+        }
+      ],
+      "chart": {
+        "type": "ladder",
+        "title": "Turns, for one stitch",
+        "caption": "The 2 : 1 is Singer’s; Singer published no tooth counts, so it is drawn here as 32 teeth driving 16 at the top, and 1 : 1 below.",
+        "unit": "Turns, for one turn of the arm shaft",
+        "ticks": [
+          0,
+          1,
+          2
+        ],
+        "rungs": [
+          {
+            "name": "Arm shaft",
+            "value": 1,
+            "note": "1 turn",
+            "node": "arm_shaft"
+          },
+          {
+            "name": "Upright shaft",
+            "value": 2,
+            "note": "2 turns",
+            "step": "×2",
+            "node": "upright_shaft"
+          },
+          {
+            "name": "Hook driving shaft",
+            "value": 2,
+            "note": "2 turns",
+            "step": "×1",
+            "node": "hook_drive_shaft"
+          },
+          {
+            "name": "Hook",
+            "value": 2,
+            "note": "2 turns",
+            "step": "×1",
+            "node": "hook"
+          }
+        ]
+      },
+      "try": "run",
+      "count": [
+        {
+          "node": "arm_shaft",
+          "label": "Stitches"
+        },
+        {
+          "node": "hook",
+          "label": "Hook turns"
+        }
+      ]
+    },
+    {
+      "label": "The stitch",
+      "title": "No knot: the hook takes the loop round the bobbin",
+      "text": [
+        "It looks as if the needle must carry the thread through and back, or tie a knot underneath. It does neither. As the needle starts back up, the thread beside it bulges into a loop; the hook’s beak catches the loop and carries it right round the bobbin case, the take-up lever pulls it up, and the bobbin thread is left lying inside it.",
+        "The two threads interlock in the middle of the cloth, and neither has a free end: the stitch is a lock, not a knot. That’s why the case sits still in the hook, held by a finger: the loop has to pass all the way round it."
+      ],
+      "angle": [
+        -40,
+        40
+      ],
+      "explode": 0.58,
+      "rate": 0.12,
+      "fill": 0.6,
+      "focus": [
+        "hook",
+        "bobbin_case",
+        "bobbin",
+        "needle",
+        "needle_bar",
+        "feed_dog"
+      ],
+      "frame": [
+        "hook",
+        "bobbin_case",
+        "needle"
+      ],
+      "tags": [
+        {
+          "node": "hook",
+          "text": "beak",
+          "at": [
+            -0.5943,
+            0.1454,
+            -0.1066
+          ],
+          "ride": true
+        },
+        {
+          "node": "bobbin",
+          "text": "bobbin thread",
+          "at": [
+            -0.6036,
+            0.136,
+            -0.0382
+          ]
+        }
+      ],
+      "chart": {
+        "type": "timing",
+        "title": "The loop’s trip round the bobbin",
+        "caption": "The beak meets the needle just after its lowest point and has the loop round the case before the take-up lever pulls it up.",
+        "node": "arm_shaft",
+        "perTurn": 1,
+        "bands": [
+          [
+            0.614,
+            0.97,
+            "loop round the bobbin"
+          ]
+        ],
+        "lanes": [
+          {
+            "name": "Needle",
+            "points": [
+              [
+                0,
+                1
+              ],
+              [
+                0.014,
+                0.997
+              ],
+              [
+                0.028,
+                0.989
+              ],
+              [
+                0.042,
+                0.976
+              ],
+              [
+                0.056,
+                0.958
+              ],
+              [
+                0.069,
+                0.935
+              ],
+              [
+                0.083,
+                0.908
+              ],
+              [
+                0.097,
+                0.877
+              ],
+              [
+                0.111,
+                0.842
+              ],
+              [
+                0.125,
+                0.803
+              ],
+              [
+                0.139,
+                0.762
+              ],
+              [
+                0.153,
+                0.719
+              ],
+              [
+                0.167,
+                0.674
+              ],
+              [
+                0.181,
+                0.627
+              ],
+              [
+                0.194,
+                0.581
+              ],
+              [
+                0.208,
+                0.534
+              ],
+              [
+                0.222,
+                0.487
+              ],
+              [
+                0.236,
+                0.442
+              ],
+              [
+                0.25,
+                0.397
+              ],
+              [
+                0.264,
+                0.354
+              ],
+              [
+                0.278,
+                0.314
+              ],
+              [
+                0.292,
+                0.275
+              ],
+              [
+                0.306,
+                0.239
+              ],
+              [
+                0.319,
+                0.205
+              ],
+              [
+                0.333,
+                0.174
+              ],
+              [
+                0.347,
+                0.145
+              ],
+              [
+                0.361,
+                0.119
+              ],
+              [
+                0.375,
+                0.096
+              ],
+              [
+                0.389,
+                0.076
+              ],
+              [
+                0.403,
+                0.058
+              ],
+              [
+                0.417,
+                0.042
+              ],
+              [
+                0.431,
+                0.029
+              ],
+              [
+                0.444,
+                0.019
+              ],
+              [
+                0.458,
+                0.01
+              ],
+              [
+                0.472,
+                0.005
+              ],
+              [
+                0.486,
+                0.001
+              ],
+              [
+                0.5,
+                0
+              ],
+              [
+                0.514,
+                0.001
+              ],
+              [
+                0.528,
+                0.005
+              ],
+              [
+                0.542,
+                0.01
+              ],
+              [
+                0.556,
+                0.019
+              ],
+              [
+                0.569,
+                0.029
+              ],
+              [
+                0.583,
+                0.042
+              ],
+              [
+                0.597,
+                0.058
+              ],
+              [
+                0.611,
+                0.076
+              ],
+              [
+                0.625,
+                0.096
+              ],
+              [
+                0.639,
+                0.119
+              ],
+              [
+                0.653,
+                0.145
+              ],
+              [
+                0.667,
+                0.174
+              ],
+              [
+                0.681,
+                0.205
+              ],
+              [
+                0.694,
+                0.239
+              ],
+              [
+                0.708,
+                0.275
+              ],
+              [
+                0.722,
+                0.314
+              ],
+              [
+                0.736,
+                0.354
+              ],
+              [
+                0.75,
+                0.397
+              ],
+              [
+                0.764,
+                0.442
+              ],
+              [
+                0.778,
+                0.487
+              ],
+              [
+                0.792,
+                0.534
+              ],
+              [
+                0.806,
+                0.581
+              ],
+              [
+                0.819,
+                0.627
+              ],
+              [
+                0.833,
+                0.674
+              ],
+              [
+                0.847,
+                0.719
+              ],
+              [
+                0.861,
+                0.762
+              ],
+              [
+                0.875,
+                0.803
+              ],
+              [
+                0.889,
+                0.842
+              ],
+              [
+                0.903,
+                0.877
+              ],
+              [
+                0.917,
+                0.908
+              ],
+              [
+                0.931,
+                0.935
+              ],
+              [
+                0.944,
+                0.958
+              ],
+              [
+                0.958,
+                0.976
+              ],
+              [
+                0.972,
+                0.989
+              ],
+              [
+                0.986,
+                0.997
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "notes": [
+              [
+                0.614,
+                "caught"
+              ]
+            ]
+          },
+          {
+            "name": "Take-up lever",
+            "points": [
+              [
+                0,
+                0.878
+              ],
+              [
+                0.014,
+                0.906
+              ],
+              [
+                0.028,
+                0.93
+              ],
+              [
+                0.042,
+                0.951
+              ],
+              [
+                0.056,
+                0.968
+              ],
+              [
+                0.069,
+                0.982
+              ],
+              [
+                0.083,
+                0.992
+              ],
+              [
+                0.097,
+                0.998
+              ],
+              [
+                0.111,
+                1
+              ],
+              [
+                0.125,
+                0.998
+              ],
+              [
+                0.139,
+                0.992
+              ],
+              [
+                0.153,
+                0.982
+              ],
+              [
+                0.167,
+                0.968
+              ],
+              [
+                0.181,
+                0.951
+              ],
+              [
+                0.194,
+                0.93
+              ],
+              [
+                0.208,
+                0.906
+              ],
+              [
+                0.222,
+                0.878
+              ],
+              [
+                0.236,
+                0.848
+              ],
+              [
+                0.25,
+                0.815
+              ],
+              [
+                0.264,
+                0.779
+              ],
+              [
+                0.278,
+                0.741
+              ],
+              [
+                0.292,
+                0.702
+              ],
+              [
+                0.306,
+                0.661
+              ],
+              [
+                0.319,
+                0.619
+              ],
+              [
+                0.333,
+                0.576
+              ],
+              [
+                0.347,
+                0.532
+              ],
+              [
+                0.361,
+                0.488
+              ],
+              [
+                0.375,
+                0.445
+              ],
+              [
+                0.389,
+                0.402
+              ],
+              [
+                0.403,
+                0.36
+              ],
+              [
+                0.417,
+                0.319
+              ],
+              [
+                0.431,
+                0.279
+              ],
+              [
+                0.444,
+                0.241
+              ],
+              [
+                0.458,
+                0.205
+              ],
+              [
+                0.472,
+                0.172
+              ],
+              [
+                0.486,
+                0.141
+              ],
+              [
+                0.5,
+                0.112
+              ],
+              [
+                0.514,
+                0.087
+              ],
+              [
+                0.528,
+                0.064
+              ],
+              [
+                0.542,
+                0.045
+              ],
+              [
+                0.556,
+                0.029
+              ],
+              [
+                0.569,
+                0.016
+              ],
+              [
+                0.583,
+                0.007
+              ],
+              [
+                0.597,
+                0.002
+              ],
+              [
+                0.611,
+                0
+              ],
+              [
+                0.625,
+                0.002
+              ],
+              [
+                0.639,
+                0.007
+              ],
+              [
+                0.653,
+                0.016
+              ],
+              [
+                0.667,
+                0.029
+              ],
+              [
+                0.681,
+                0.045
+              ],
+              [
+                0.694,
+                0.064
+              ],
+              [
+                0.708,
+                0.087
+              ],
+              [
+                0.722,
+                0.112
+              ],
+              [
+                0.736,
+                0.141
+              ],
+              [
+                0.75,
+                0.172
+              ],
+              [
+                0.764,
+                0.205
+              ],
+              [
+                0.778,
+                0.241
+              ],
+              [
+                0.792,
+                0.279
+              ],
+              [
+                0.806,
+                0.319
+              ],
+              [
+                0.819,
+                0.36
+              ],
+              [
+                0.833,
+                0.402
+              ],
+              [
+                0.847,
+                0.445
+              ],
+              [
+                0.861,
+                0.488
+              ],
+              [
+                0.875,
+                0.532
+              ],
+              [
+                0.889,
+                0.576
+              ],
+              [
+                0.903,
+                0.619
+              ],
+              [
+                0.917,
+                0.661
+              ],
+              [
+                0.931,
+                0.702
+              ],
+              [
+                0.944,
+                0.741
+              ],
+              [
+                0.958,
+                0.779
+              ],
+              [
+                0.972,
+                0.815
+              ],
+              [
+                0.986,
+                0.848
+              ],
+              [
+                1,
+                0.878
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "Feed",
+      "title": "Up, back, down, forward",
+      "text": [
+        "An eccentric on the arm shaft rocks the lifting shaft under the bed, which raises the feed dog’s teeth through the plate; the feed cam and the forked connection rock the other shaft, which pushes the dog back. Up, back, down, forward: it grips the cloth from below and walks it on.",
+        "The stitch regulator sets how far the dog travels, from 4.2 mm (6 stitches to the inch, as on this model) down to 0.85 mm. The cloth only moves while the needle is out of it."
+      ],
+      "angle": [
+        -24,
+        -12
+      ],
+      "explode": 0.45,
+      "rate": 0.35,
+      "focus": [
+        "arm_shaft",
+        "feed_rod",
+        "feed_fork",
+        "feed_lift_shaft",
+        "feed_rock_shaft",
+        "feed_dog",
+        "stitch_lever"
+      ],
+      "flow": [
+        [
+          0.3091,
+          0.7745,
+          -0.0382
+        ],
+        [
+          0.3091,
+          0.4363,
+          -0.0309
+        ],
+        [
+          0.0727,
+          0.1127,
+          -0.0382
+        ],
+        [
+          -0.3345,
+          0.1309,
+          -0.0382
+        ],
+        {
+          "node": "feed_dog",
+          "at": [
+            -0.5581,
+            0.1854,
+            -0.0382
+          ],
+          "ride": true
+        }
+      ],
+      "tags": [
+        {
+          "node": "feed_dog",
+          "text": "4.2 mm a stitch",
+          "at": [
+            -0.5454,
+            0.1854,
+            -0.0164
+          ]
+        },
+        {
+          "node": "feed_lift_shaft",
+          "text": "lifts",
+          "at": [
+            0.0727,
+            0.1127,
+            -0.1473
+          ]
+        },
+        {
+          "node": "feed_rock_shaft",
+          "text": "pushes",
+          "at": [
+            0.0727,
+            0.1127,
+            -0.0382
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Stitch length",
+        "caption": "Millimetres per stitch at the regulator’s settings. This model runs at the longest, 6 to the inch.",
+        "unit": "mm a stitch, by stitches to the inch",
+        "picked": 0,
+        "bars": [
+          {
+            "label": "6",
+            "value": 4.2
+          },
+          {
+            "label": "8",
+            "value": 3.2
+          },
+          {
+            "label": "10",
+            "value": 2.5
+          },
+          {
+            "label": "12",
+            "value": 2.1
+          },
+          {
+            "label": "16",
+            "value": 1.6
+          },
+          {
+            "label": "20",
+            "value": 1.3
+          },
+          {
+            "label": "30",
+            "value": 0.85
+          }
+        ]
+      }
+    }
+  ],
+  "credit": {
+    "title": "Sewing machine, a Singer 201-2",
+    "author": "3D of Things",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "built in code for this site",
+    "sourceUrl": "",
+    "extra": {
+      "label": "Sources",
+      "text": "Laid out from Singer’s Adjuster’s Manual for the 201 (Form 18962, 1936) and the 201-2 instruction book (Form 20340, 1951), with the Science Museum’s 201K records. The head’s size, the needle stroke and the gear teeth are drawn, not measured; the take-up lever rocks smoothly in time with the crank, its drive link left out. Singer is a trademark of its owner; this illustration has nothing to do with the company."
+    }
+  },
+  "build": {
+    "generate": "objects/sewing-machine/generate.mjs",
+    "hints": "objects/sewing-machine/hints.json"
+  }
+}

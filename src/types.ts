@@ -79,7 +79,8 @@ export interface Motion {
   /** Moved by one of the mechanism's controls instead of by time: a camera's `focus` (lens extension, mm), `aperture`
    *  (stops from wide open), `curtain1` and `curtain2` (0 cocked to 1 run), `lever` (0–1 of a stroke), `film`
    *  (frames wound on) or `release` (0–1); a desk lamp's `arm_lower` and `arm_upper` (src/viewer/balancedarm.ts); a
-   *  lock's `lock-key`, `lock-wrong` and `lock-turn` (src/viewer/pintumbler.ts). See src/viewer/linkage.ts. */
+   *  lock's `lock-key`, `lock-wrong` and `lock-turn` (src/viewer/pintumbler.ts); an extinguisher's `ext_pin` and `ext_lever`
+   *  (0–1), `ext_bar` (gauge bar) or `ext_used` (0–1 of the powder gone). See src/viewer/linkage.ts. */
   control?: string;
   /** With `control`: turns per unit of the control, counted from `from` (default 0). */
   turn?: number;
@@ -92,6 +93,9 @@ export interface Motion {
   cloth?: boolean;
   /** With `control`: film whose picture moves along it, this many tiles of its texture per unit of the control. */
   scroll?: number;
+  /** With `control`: a strip of steel bent along a path as the control moves (a tape measure's blade paying out, its
+   *  spring winding: `tape_out` mm, `tape_drum` turns); its node carries the layout (from the build). */
+  strip?: boolean;
   /** Driven by the crank on the node named here (one that spins) instead of turning itself: a piston slides along
    *  `along` as the crankpin goes round (`throw` and `rod`, the crank's radius and the rod's length, in model units;
    *  `phase`, the crankpin's angle from the top in degrees with the crank at rest), and with `rocks` a connecting rod
@@ -167,8 +171,9 @@ export interface Step {
    *  crank or motor) and 'speeds' (pick one of `speeds`) for anything that spins, for a camera 'focus',
    *  'aperture', 'shutter' (pick a speed and fire) and 'advance' (wind on a frame), and for a car with fans and
    *  thrusters 'suction' (switch the fans on), 'grip' (pick a speed), 'thrust' (fire the rear thrusters) and 'fly'; for a desk lamp 'arm' (move
-   *  each arm) and 'unhook' (hold the springs off), and for a lock 'lock-insert' (push the key in) and 'lock-turn'
-   *  (pick a key and turn). */
+   *  each arm) and 'unhook' (hold the springs off), for a lock 'lock-insert' (push the key in) and 'lock-turn'
+   *  (pick a key and turn), and for an extinguisher 'discharge' (pull the pin, squeeze, upright or upside down;
+   *  'squeeze' starts with the pin out). */
   try?: string;
   /** For 'run': turns to count while it runs, e.g. the crank's and the bit's. */
   count?: { node: string; label: string }[];
