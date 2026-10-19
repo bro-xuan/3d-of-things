@@ -167,19 +167,20 @@ Isothermal x = 1 − [p_atm(V_s + V_d)/p_t − V_d]/V_s; adiabatic x = 1 − [(V
 
 - **A hidden driver:** `stroke`, an empty node under the base (kit `hiddenDriver`, so the build's prune keeps it), turns at 0.5 turns a second. The plunger follows it with a `crank` motion (throw half the 420 mm stroke, a rod long enough that the stroke is close to a sine) and the check valve's ball lifts on a `cam` on the same driver for 44° of each turn, at the bottom of the downstroke (phase −158°).
 - **Rest pose:** the plunger is moved up by the stroke in the build, so the model rests at the top of its stroke and every framing holds the whole stroke.
-- **Reused:** `crank` and `cam` (made for the family car's engine); the `run` experiment (Push); generic charts `bars` (Push, Filling) and `timing` (Squeeze); flows `power` and `air`.
+- **Film:** the pump keeps stroking through every shot at 0.5× (`rate`), down in 2 s and up in 2 s, and each caption names one part of the stroke. The plunger and the ball are solid; the barrel, the top cap, the base, the hose and the head are glass. Every shot uses the same exact camera distance on the pump's middle, so the whole pump, the handle at the top of its stroke and the base, stays in frame at one size while the camera goes round; a frame round the plunger would depend on where in its stroke it was when the film started.
+- **Reused:** `crank` and `cam` (made for the family car's engine); the `air` flow.
 - **New:** `hiddenDriver` in the kit, and a viewer fix: crank throws and cam lifts are now model units whatever the parent's scale (src/viewer/rig.ts). They had been applied in the glTF's metres, which moved the plunger twice its stroke, and the family car's pistons the wrong distance too.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Handle and piston, Barrel |  |  |
-| 2 | Push | Handle and piston, Barrel, Top cap; power flow | bars: Push needed on the handle | run, counting Strokes |
-| 3 | Squeeze | Handle and piston, Barrel, Ball valve; air flow; at 0.4× speed | timing: One stroke, slowed down |  |
-| 4 | Refill | Handle and piston, Top cap, Barrel; air flow |  |  |
-| 5 | Out | Base, Ball valve, Hose, Head; air flow |  |  |
-| 6 | Filling | Barrel, Base, Handle and piston | bars: Strokes to fill |  |
+| 0 s | Push | Pushing the handle drives the piston down the barrel, squeezing the air beneath it. | 6 |  |
+| 6 s | Push | Near the bottom the air beats the tyre’s pressure, and lifts the ball valve to get out. | 6 |  |
+| 12 s | Out | It runs up the hose and through the head into the tyre; the ball stops it coming back. | 6 |  |
+| 18 s | Refill | Pulling up, the piston’s cup folds and lets air in round the rod to fill the barrel again. | 6 |  |
 
 ## 9. Simplified or left out
 

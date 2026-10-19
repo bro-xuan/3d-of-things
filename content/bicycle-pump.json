@@ -333,35 +333,32 @@
     }
   ],
   "motionLabel": "Pump",
-  "how": [
+  "film": [
     {
-      "label": "The idea",
-      "title": "Squeezing air into air",
-      "text": [
-        "A road bike’s tyre holds air at about 7 bar, seven times the pressure of the air outside. To get more in, the pump has to squeeze its own air until it is at an even higher pressure, and then open a door to the tyre.",
-        "That is all a pump is: a barrel, a piston to squeeze, and a valve that only opens one way."
-      ],
-      "angle": [
-        -26,
-        12
-      ],
+      "chapter": "Push",
+      "caption": "Pushing the handle drives the piston down the barrel, squeezing the air beneath it.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          -2.8559,
+          1.9572,
+          4.9156
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.031
+        ]
+      },
+      "rate": 0.5,
       "focus": [
         "plunger",
-        "barrel"
+        "check_valve"
       ],
       "tags": [
         {
-          "node": "barrel",
-          "text": "30 mm bore",
-          "at": [
-            0.0318,
-            0.5788,
-            -0.0314
-          ]
-        },
-        {
           "node": "plunger",
-          "text": "Piston",
+          "text": "piston",
           "at": [
             0.0289,
             0.9358,
@@ -371,101 +368,24 @@
       ]
     },
     {
-      "label": "Push",
-      "title": "Your weight on 7 cm²",
-      "text": [
-        "The piston’s face is 7 cm². The air under it pushes back with the pressure times that area, so at 6 bar the handle needs 424 newtons: the weight of 43 kg. At 8 bar it needs 565, nearly all of a 70 kg rider.",
-        "That, not the pump, is what limits a floor pump: you stand on the base and lean your weight on the handle. Hold the button and pump."
-      ],
-      "angle": [
-        -24,
-        10
-      ],
-      "fill": 0.78,
-      "focus": [
-        "plunger",
-        "barrel",
-        "top_cap"
-      ],
-      "flow": [
-        [
+      "chapter": "Push",
+      "caption": "Near the bottom the air beats the tyre’s pressure, and lifts the ball valve to get out.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          -0.4945,
+          2.1559,
+          5.6207
+        ],
+        "target": [
           0,
-          1.9102,
-          -0.0314
-        ],
-        [
-          0,
-          1.3506,
-          -0.0314
-        ],
-        [
-          0,
-          0.9261,
-          -0.0314
-        ],
-        {
-          "node": "plunger",
-          "at": [
-            0.0289,
-            0.9358,
-            -0.0314
-          ]
-        }
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "Push needed on the handle",
-        "caption": "Pressure times the piston’s 7.07 cm², against a 70 kg person’s weight.",
-        "unit": "Newtons",
-        "bars": [
-          {
-            "label": "2 bar",
-            "value": 141
-          },
-          {
-            "label": "4 bar",
-            "value": 283
-          },
-          {
-            "label": "6 bar",
-            "value": 424
-          },
-          {
-            "label": "8 bar",
-            "value": 565
-          },
-          {
-            "label": "70 kg",
-            "value": 687,
-            "note": "body weight"
-          }
-        ],
-        "picked": 2
+          0.95,
+          -0.031
+        ]
       },
-      "try": "run",
-      "count": [
-        {
-          "node": "stroke",
-          "label": "Strokes"
-        }
-      ]
-    },
-    {
-      "label": "Squeeze",
-      "title": "The valve opens at the very end",
-      "text": [
-        "Going down, the piston squeezes the barrel’s air into less and less room. Its pressure only passes the tyre’s, 6 bar, once the air is in a seventh of its first volume: after about 86% of the stroke. Until then the ball valve stays shut and nothing goes in.",
-        "So most of each push only squeezes; the last 6 cm or so actually fill the tyre. The fuller the tyre, the later the valve opens."
-      ],
-      "angle": [
-        -20,
-        8
-      ],
-      "fill": 0.8,
-      "rate": 0.4,
+      "rate": 0.5,
       "focus": [
         "plunger",
-        "barrel",
         "check_valve"
       ],
       "carries": "air",
@@ -500,562 +420,44 @@
       "tags": [
         {
           "node": "check_valve",
-          "text": "Ball valve",
+          "text": "ball valve",
           "at": [
             0,
             0.079,
             0.0342
           ]
-        }
-      ],
-      "chart": {
-        "type": "timing",
-        "title": "One stroke, slowed down",
-        "caption": "The air under the piston against a tyre at 6 bar: the valve opens only when the barrel catches up. The cursor follows the pump.",
-        "node": "stroke",
-        "perTurn": 1,
-        "bands": [
-          [
-            0.377,
-            0.5,
-            "into the tyre"
-          ]
-        ],
-        "lanes": [
-          {
-            "name": "Handle",
-            "points": [
-              [
-                0,
-                1
-              ],
-              [
-                0.020833333333333332,
-                0.996
-              ],
-              [
-                0.041666666666666664,
-                0.983
-              ],
-              [
-                0.0625,
-                0.962
-              ],
-              [
-                0.08333333333333333,
-                0.933
-              ],
-              [
-                0.10416666666666667,
-                0.897
-              ],
-              [
-                0.125,
-                0.854
-              ],
-              [
-                0.14583333333333334,
-                0.804
-              ],
-              [
-                0.16666666666666666,
-                0.75
-              ],
-              [
-                0.1875,
-                0.691
-              ],
-              [
-                0.20833333333333334,
-                0.629
-              ],
-              [
-                0.22916666666666666,
-                0.565
-              ],
-              [
-                0.25,
-                0.5
-              ],
-              [
-                0.2708333333333333,
-                0.435
-              ],
-              [
-                0.2916666666666667,
-                0.371
-              ],
-              [
-                0.3125,
-                0.309
-              ],
-              [
-                0.3333333333333333,
-                0.25
-              ],
-              [
-                0.3541666666666667,
-                0.196
-              ],
-              [
-                0.375,
-                0.146
-              ],
-              [
-                0.3958333333333333,
-                0.103
-              ],
-              [
-                0.4166666666666667,
-                0.067
-              ],
-              [
-                0.4375,
-                0.038
-              ],
-              [
-                0.4583333333333333,
-                0.017
-              ],
-              [
-                0.4791666666666667,
-                0.004
-              ],
-              [
-                0.5,
-                0
-              ],
-              [
-                0.5208333333333334,
-                0.004
-              ],
-              [
-                0.5416666666666666,
-                0.017
-              ],
-              [
-                0.5625,
-                0.038
-              ],
-              [
-                0.5833333333333334,
-                0.067
-              ],
-              [
-                0.6041666666666666,
-                0.103
-              ],
-              [
-                0.625,
-                0.146
-              ],
-              [
-                0.6458333333333334,
-                0.196
-              ],
-              [
-                0.6666666666666666,
-                0.25
-              ],
-              [
-                0.6875,
-                0.309
-              ],
-              [
-                0.7083333333333334,
-                0.371
-              ],
-              [
-                0.7291666666666666,
-                0.435
-              ],
-              [
-                0.75,
-                0.5
-              ],
-              [
-                0.7708333333333334,
-                0.565
-              ],
-              [
-                0.7916666666666666,
-                0.629
-              ],
-              [
-                0.8125,
-                0.691
-              ],
-              [
-                0.8333333333333334,
-                0.75
-              ],
-              [
-                0.8541666666666666,
-                0.804
-              ],
-              [
-                0.875,
-                0.854
-              ],
-              [
-                0.8958333333333334,
-                0.897
-              ],
-              [
-                0.9166666666666666,
-                0.933
-              ],
-              [
-                0.9375,
-                0.962
-              ],
-              [
-                0.9583333333333334,
-                0.983
-              ],
-              [
-                0.9791666666666666,
-                0.996
-              ],
-              [
-                1,
-                1
-              ]
-            ],
-            "notes": [
-              [
-                0.25,
-                "down"
-              ],
-              [
-                0.75,
-                "up"
-              ]
-            ]
-          },
-          {
-            "name": "Barrel’s air",
-            "points": [
-              [
-                0,
-                0
-              ],
-              [
-                0.020833333333333332,
-                0.001
-              ],
-              [
-                0.041666666666666664,
-                0.003
-              ],
-              [
-                0.0625,
-                0.007
-              ],
-              [
-                0.08333333333333333,
-                0.012
-              ],
-              [
-                0.10416666666666667,
-                0.019
-              ],
-              [
-                0.125,
-                0.029
-              ],
-              [
-                0.14583333333333334,
-                0.041
-              ],
-              [
-                0.16666666666666666,
-                0.056
-              ],
-              [
-                0.1875,
-                0.074
-              ],
-              [
-                0.20833333333333334,
-                0.098
-              ],
-              [
-                0.22916666666666666,
-                0.128
-              ],
-              [
-                0.25,
-                0.167
-              ],
-              [
-                0.2708333333333333,
-                0.217
-              ],
-              [
-                0.2916666666666667,
-                0.283
-              ],
-              [
-                0.3125,
-                0.373
-              ],
-              [
-                0.3333333333333333,
-                0.5
-              ],
-              [
-                0.3541666666666667,
-                0.685
-              ],
-              [
-                0.375,
-                0.971
-              ],
-              [
-                0.3958333333333333,
-                1
-              ],
-              [
-                0.4166666666666667,
-                1
-              ],
-              [
-                0.4375,
-                1
-              ],
-              [
-                0.4583333333333333,
-                1
-              ],
-              [
-                0.4791666666666667,
-                1
-              ],
-              [
-                0.5,
-                0
-              ],
-              [
-                0.5208333333333334,
-                0
-              ],
-              [
-                0.5416666666666666,
-                0
-              ],
-              [
-                0.5625,
-                0
-              ],
-              [
-                0.5833333333333334,
-                0
-              ],
-              [
-                0.6041666666666666,
-                0
-              ],
-              [
-                0.625,
-                0
-              ],
-              [
-                0.6458333333333334,
-                0
-              ],
-              [
-                0.6666666666666666,
-                0
-              ],
-              [
-                0.6875,
-                0
-              ],
-              [
-                0.7083333333333334,
-                0
-              ],
-              [
-                0.7291666666666666,
-                0
-              ],
-              [
-                0.75,
-                0
-              ],
-              [
-                0.7708333333333334,
-                0
-              ],
-              [
-                0.7916666666666666,
-                0
-              ],
-              [
-                0.8125,
-                0
-              ],
-              [
-                0.8333333333333334,
-                0
-              ],
-              [
-                0.8541666666666666,
-                0
-              ],
-              [
-                0.875,
-                0
-              ],
-              [
-                0.8958333333333334,
-                0
-              ],
-              [
-                0.9166666666666666,
-                0
-              ],
-              [
-                0.9375,
-                0
-              ],
-              [
-                0.9583333333333334,
-                0
-              ],
-              [
-                0.9791666666666666,
-                0
-              ],
-              [
-                1,
-                0
-              ]
-            ],
-            "notes": [
-              [
-                0.377,
-                "6 bar"
-              ]
-            ]
-          },
-          {
-            "name": "Valve open",
-            "points": [
-              [
-                0,
-                0
-              ],
-              [
-                0.372,
-                0
-              ],
-              [
-                0.377,
-                1
-              ],
-              [
-                0.495,
-                1
-              ],
-              [
-                0.5,
-                0
-              ],
-              [
-                1,
-                0
-              ]
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "label": "Refill",
-      "title": "The cup folds on the way up",
-      "text": [
-        "Pulling the handle up leaves a growing empty space under the piston. The cup’s lip faces down, so now it folds inward and lets air past from above, where it came in round the rod at the top cap.",
-        "Going down again, the squeezed air pushes the lip out against the barrel’s wall and it seals: the cup is the pump’s inlet valve."
-      ],
-      "angle": [
-        -28,
-        14
-      ],
-      "fill": 0.78,
-      "focus": [
-        "plunger",
-        "top_cap",
-        "barrel"
-      ],
-      "carries": "air",
-      "flow": [
-        [
-          0,
-          1.011,
-          -0.0314
-        ],
-        [
-          0,
-          0.9261,
-          -0.0314
-        ],
-        {
-          "node": "plunger",
-          "at": [
-            0.0289,
-            0.9358,
-            -0.0314
-          ]
         },
         {
-          "node": "plunger",
+          "node": "head",
+          "text": "head",
           "at": [
-            0,
-            0.8933,
-            -0.0314
-          ]
-        }
-      ],
-      "tags": [
-        {
-          "node": "plunger",
-          "text": "Cup seal",
-          "at": [
-            0.0289,
-            0.9068,
-            -0.0314
-          ]
-        },
-        {
-          "node": "top_cap",
-          "text": "Air in",
-          "at": [
-            0.0347,
-            0.9937,
-            -0.0314
+            0.1544,
+            0.82,
+            0.0024
           ]
         }
       ]
     },
     {
-      "label": "Out",
-      "title": "Through the ball, the hose and the head",
-      "text": [
-        "Once the ball lifts, the air runs across the base, up the hose and through the head into the tyre’s valve. Between strokes the tyre’s pressure pushes the ball back on its seat, so nothing leaks back while you lift the handle.",
-        "The head’s lever squeezes a gasket round the valve stem. A Schrader valve, as on a car, is held open by a pin in the head; a Presta valve opens when the pump’s pressure beats the tyre’s."
-      ],
-      "angle": [
-        26,
-        14
-      ],
-      "fill": 0.82,
+      "chapter": "Out",
+      "caption": "It runs up the hose and through the head into the tyre; the ball stops it coming back.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          2.1082,
+          2.3531,
+          5.1869
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.031
+        ]
+      },
+      "rate": 0.5,
       "focus": [
-        "base",
-        "check_valve",
-        "hose",
-        "head"
+        "plunger",
+        "check_valve"
       ],
       "carries": "air",
       "flow": [
@@ -1100,59 +502,95 @@
       ],
       "tags": [
         {
-          "node": "head",
-          "text": "Head",
-          "at": [
-            0.1544,
-            0.82,
-            0.0024
-          ]
-        },
-        {
           "node": "check_valve",
-          "text": "Ball valve",
+          "text": "ball valve",
           "at": [
             0,
             0.079,
             0.0342
           ]
+        },
+        {
+          "node": "head",
+          "text": "head",
+          "at": [
+            0.1544,
+            0.82,
+            0.0024
+          ]
         }
       ]
     },
     {
-      "label": "Filling",
-      "title": "Two dozen strokes for a road tyre",
-      "text": [
-        "A road tyre holds about a litre of air; to bring it to 7 bar the pump has to push in seven more litres of outside air, about 24 strokes. A wide mountain-bike tyre holds five times as much, but needs only 2 bar.",
-        "Squeezing warms the air, by a couple of hundred degrees for an instant at the barrel’s foot, though it is only a fraction of a gram. After a whole tyre the bottom of the barrel feels warm."
-      ],
-      "angle": [
-        -30,
-        10
-      ],
-      "focus": [
-        "barrel",
-        "base",
-        "plunger"
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "Strokes to fill",
-        "caption": "From flat, with about 300 cm³ of outside air a stroke.",
-        "unit": "Strokes",
-        "bars": [
-          {
-            "label": "Road 700×25",
-            "value": 24,
-            "note": "7 bar"
-          },
-          {
-            "label": "MTB 29×2.3",
-            "value": 35,
-            "note": "2 bar"
-          }
+      "chapter": "Refill",
+      "caption": "Pulling up, the piston’s cup folds and lets air in round the rod to fill the barrel again.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          4.1822,
+          2.3531,
+          3.7347
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.031
         ]
-      }
+      },
+      "rate": 0.5,
+      "focus": [
+        "plunger",
+        "check_valve"
+      ],
+      "carries": "air",
+      "flow": [
+        [
+          0,
+          1.011,
+          -0.0314
+        ],
+        [
+          0,
+          0.9261,
+          -0.0314
+        ],
+        {
+          "node": "plunger",
+          "at": [
+            0.0289,
+            0.9358,
+            -0.0314
+          ]
+        },
+        {
+          "node": "plunger",
+          "at": [
+            0,
+            0.8933,
+            -0.0314
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "top_cap",
+          "text": "air in",
+          "at": [
+            0.0347,
+            0.9937,
+            -0.0314
+          ]
+        },
+        {
+          "node": "plunger",
+          "text": "cup",
+          "at": [
+            0.0289,
+            0.9068,
+            -0.0314
+          ]
+        }
+      ]
     }
   ],
   "credit": {

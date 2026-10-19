@@ -59,21 +59,19 @@ The page gives no groups; the order is the page's.
 ## 7. Mechanism map
 
 - **Time:** four `speed` spins, each with a `pivot` on its own axle. Crank & drive wheel: −0.4 turns a second about z (the sideways crank axle). Drive pinion and Chuck & bit: −1.3333 about y (the vertical spindle), 3⅓ times the crank. Idler pinion: +1.3333 about y, the other way. `motionLabel` "Turn the crank".
-- **Step 1** runs at 0.5× (`rate`); its "Your hand" tag and its flow `ride` round with the crank, as does the 'Crank handle' callout.
-- **Experiment:** `run` in step 2 (Gears): hold the "Turn the crank" button, and the readout counts the turns of the Crank and the Bit.
-- **Charts:** generic `ladder` "Turns, gear to gear" in step 2 (Crank 1, Pinion & bit 3.33, each rung with a dial following its node); generic `bars` "The trade" in step 3 (Speed 3.33, Turning force 0.3).
-- **Flows:** `power` in all three steps: handle to axle; wheel to Drive pinion; pinion down through the Chuck & bit.
-- **Nothing new:** generic spins, `run`, `ladder` and `bars`.
+- **Film:** the spins run at real time through all three shots. The "handle" tag and the power flow's first points `ride` round with the crank, as does the 'Crank handle' callout. Every shot frames the whole drill, top handle to bit, at one size, on the frame and the chuck and bit (whose box doesn't change as they turn, where the crank's handle would swing it about); the camera only goes round.
+- **Flows:** `power`, one path through the whole film: handle round to the axle, down the wheel to the Drive pinion, down through the Chuck & bit to its tip.
+- **Nothing new:** generic spins and the `power` flow.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Your arm | Crank & drive wheel; power flow; at 0.5× speed |  |  |
-| 2 | Gears | Crank & drive wheel, Drive pinion, Idler pinion; power flow | ladder: Turns, gear to gear | run, counting Crank, Bit |
-| 3 | The bit | Drive pinion, Chuck & bit; power flow | bars: The trade |  |
-
-Three steps on the page.
+| 0 s | Crank | Your hand on the crank turns the big wheel round, once for every turn of the handle. | 6 |  |
+| 6 s | Gears | Its 80 face teeth turn the 24-tooth pinion on the spindle 3⅓ times for every turn. | 7 |  |
+| 13 s | Bit | The chuck turns with the spindle, so the bit spins 3⅓ times as fast as your hand. | 6 |  |
 
 ## 9. Simplified or left out
 
