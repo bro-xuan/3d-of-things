@@ -42,6 +42,7 @@ import { Linkage } from './linkage';
 import { AeroCar, type AeroState, type FlightKind } from './aerocar';
 import { BalancedArm, type ArmState } from './balancedarm';
 import { Stretch, type SpringLayout } from './stretch';
+import { PinTumbler, type KeyName, type LockState } from './pintumbler';
 import { Jets } from './jets';
 
 // Fast raycasts for hover and hotspot occlusion.
@@ -162,6 +163,8 @@ export class Viewer {
   /** A balanced arm (a desk lamp), if this is one: it sets the arm's controls, and its springs stretch with it. */
   private arm?: BalancedArm;
   private readonly springs: Stretch[] = [];
+  /** A pin tumbler lock's keys, pins and plug, if this is one: it sets their controls. */
+  private lock?: PinTumbler;
   /** Its thrusters' jets. */
   private jets?: Jets;
   /** The whole model, lifted and turned when a car flies. */
@@ -345,6 +348,7 @@ export class Viewer {
         if (layout) node.traverse((mesh) => void ((mesh as Mesh).isMesh && this.springs.push(new Stretch(mesh as Mesh, layout, root))));
       });
     }
+    if (this.linkage.has('lock-turn')) this.lock = new PinTumbler(this.linkage);
     this.linkage.apply();
     const deforming = new Set([...this.mechanism.deforming, ...this.linkage.deforming, ...this.springs.map((spring) => spring.mesh)]);
     // How the model can be drawn: as rendered or as a line drawing, with the rest turned to glass around the parts a step is about.
@@ -962,6 +966,7 @@ export class Viewer {
       this.hookSprings(true);
       this.arm.reset(this.options.reducedMotion);
     }
+    this.lock?.reset();
   }
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
@@ -1185,6 +1190,28 @@ export class Viewer {
   resetArm(): void {
     this.hookSprings(true);
     this.arm?.reset(this.options.reducedMotion);
+  }
+
+  // ------------------------------------------------------------- a lock
+
+  /** What a pin tumbler lock's keys, pins and plug are doing, for charts and readouts; null if this isn't one. */
+  get lockState(): LockState | null {
+    return this.lock?.state ?? null;
+  }
+
+  /** Puts the right key or the wrong one in the lock, or takes the key out. */
+  chooseKey(key: KeyName): void {
+    this.lock?.choose(key, this.options.reducedMotion);
+  }
+
+  /** Slides the key in the lock this fraction of the way in. */
+  insertKey(fraction: number): void {
+    this.lock?.setInsert(fraction);
+  }
+
+  /** Tries to turn the key a quarter turn, or turns it back. */
+  turnKey(on: boolean): void {
+    this.lock?.turn(on);
   }
 
   // ------------------------------------------------------------- a camera
@@ -1501,6 +1528,7 @@ export class Viewer {
     if (this.container.hasAttribute('data-moving') !== moving) this.container.toggleAttribute('data-moving', moving);
     const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
     this.cameraBody?.tick(dt);
+    this.lock?.tick(dt);
     if (this.aero && this.tickAero(dt)) this.dirty = true;
     if (this.arm) {
       this.arm.tick(dt);

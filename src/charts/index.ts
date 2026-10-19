@@ -8,8 +8,10 @@ import type { AeroState } from '../viewer/aerocar';
 import type { ArmState } from '../viewer/balancedarm';
 import type { MechanismState } from '../viewer/rig';
 import { armCharts } from './arm';
+import type { LockState } from '../viewer/pintumbler';
 import { cameraCharts } from './camera';
 import { carCharts } from './car';
+import { lockCharts } from './lock';
 import { barsChart, ladderChart, timingChart } from './generic';
 import { opticsCharts } from './optics';
 import { reflexCharts } from './reflex';
@@ -26,6 +28,8 @@ export interface ChartSource {
   aero(): AeroState | null;
   /** What a balanced arm (a desk lamp) is doing, or null (no viewer yet, or not one). */
   arm?(): ArmState | null;
+  /** What a pin tumbler lock's keys, pins and plug are doing, or null (no viewer yet, or not a lock). */
+  lock?(): LockState | null;
   /** How far a part has turned, in radians. */
   angleOf(node: string): number;
   /** Seconds a spinning mechanism has run for, scaled by its speed (a crank turned slowly). */
@@ -63,6 +67,7 @@ const factories: Record<string, ChartFactory> = {
   ...carCharts,
   ...roadsterCharts,
   ...armCharts,
+  ...lockCharts,
   bars: barsChart,
   ladder: ladderChart,
   timing: timingChart,

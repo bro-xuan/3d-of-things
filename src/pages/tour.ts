@@ -11,6 +11,7 @@ import { STROKES, distanceLabel, slitWidth, speedLabel } from '../viewer/filmcam
 import * as Reflex from '../viewer/reflexcamera';
 import { FLOOR, G, LOW_AIR, MASS, corneringG } from '../viewer/aerocar';
 import { LOWER, UPPER } from '../viewer/balancedarm';
+import { TURN, type KeyName, type LockState } from '../viewer/pintumbler';
 // Only types: the viewer arrives with three.js, after the page is up.
 import type { Viewer } from '../viewer/Viewer';
 
@@ -260,6 +261,7 @@ export class Tour {
         camera: () => this.viewer?.cameraState ?? null,
         aero: () => this.viewer?.aeroState ?? null,
         arm: () => this.viewer?.armState ?? null,
+        lock: () => this.viewer?.lockState ?? null,
         angleOf: (node) => this.viewer?.angleOf(node) ?? 0,
         time: () => this.viewer?.runTime ?? 0,
         selected: () => this.selected,
@@ -767,6 +769,50 @@ export class Tour {
         });
       }
       this.undoTry = () => this.viewer?.resetArm();
+    } else if (kind === 'lock-insert' || kind === 'lock-turn') {
+      // A pin tumbler lock: push the key in by hand and watch the pins ride its cuts, or pick a key and try to turn it.
+      const lock = () => this.viewer?.lockState ?? null;
+      if (kind === 'lock-insert') {
+        this.viewer?.chooseKey('right');
+        const label = document.createElement('label');
+        label.className = 'tour__slider';
+        label.innerHTML = `<span>Push the key in · from out to all the way</span><input type="range" min="0" max="100" step="1" value="${Math.round((lock()?.insert ?? 1) * 100)}">`;
+        const input = label.querySelector('input')!;
+        const say = () => input.setAttribute('aria-valuetext', `${input.value}% in`);
+        input.addEventListener('input', () => {
+          this.viewer?.insertKey(Number(input.value) / 100);
+          say();
+        });
+        say();
+        host.append(label);
+      } else {
+        const keys: [KeyName, string][] = [['right', 'Right key'], ['wrong', 'Wrong key'], ['none', 'No key']];
+        const group = document.createElement('div');
+        group.className = 'tour__choices';
+        group.setAttribute('role', 'radiogroup');
+        group.setAttribute('aria-label', 'Key');
+        const mark = (key: KeyName) => group.querySelectorAll('button').forEach((b, i) => b.setAttribute('aria-checked', String(keys[i][0] === key)));
+        for (const [key, text] of keys) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'tour__choice';
+          button.setAttribute('role', 'radio');
+          button.textContent = text;
+          button.addEventListener('click', () => {
+            this.viewer?.chooseKey(key);
+            mark(key);
+          });
+          group.append(button);
+        }
+        host.append(group);
+        mark(lock()?.wanted ?? 'right');
+        host.append(holdButton('Turn the key', 'Press and hold to turn', (on) => this.viewer?.turnKey(on)));
+      }
+      readout(() => lockReadout(lock()));
+      this.undoTry = () => {
+        this.viewer?.turnKey(false);
+        this.viewer?.chooseKey('right');
+      };
     } else if (kind === 'hold') {
       host.append(holdButton('Hold the balance', 'Press and hold to stop the balance', (on) => this.viewer?.hold(on)));
       const label = document.createElement('label');
@@ -797,6 +843,21 @@ export class Tour {
     this.tryBox.remove();
     this.bar.remove();
   }
+}
+
+/** A pin tumbler lock's readout: how far the key is in, which pins hold the plug and by how much, or how far it has turned. */
+function lockReadout(s: LockState | null): string {
+  if (!s) return '';
+  if (s.angle > 0.5) return s.angle >= TURN - 0.5 ? `Turned a quarter turn: the bolt is out ${s.bolt.toFixed(1)} mm` : `Turning: ${Math.round(s.angle)}°, the bolt ${s.bolt.toFixed(1)} mm out`;
+  if (s.busy) return s.wanted === 'none' ? 'Taking the key out…' : `Putting the ${s.wanted} key in…`;
+  const crossing = s.stacks.map((t, i) => ({ ...t, n: i + 1 })).filter((t) => t.crossing);
+  const held = s.blocked ? ', so the plug won’t turn' : '';
+  if (s.key === 'none') return `No key: all five drivers sit across the shear line${held}`;
+  if (s.insert < 0.999) return `Key ${Math.round(s.insert * 100)}% in · ${5 - crossing.length} of 5 splits on the shear line`;
+  if (!crossing.length) return `${s.key === 'right' ? 'Right key' : 'Key'} all the way in: all five splits on the shear line · hold to turn`;
+  const mm = (v: number) => `${Math.abs(v).toFixed(2)} mm`;
+  const what = crossing.map((t) => (t.crossing === 'driver' ? `driver ${t.n} is ${mm(t.split)} down in the plug` : `key pin ${t.n} is ${mm(t.split)} up in the housing`));
+  return `${s.key === 'wrong' ? 'Wrong key' : 'Key'}: ${what.join(', ')}${held}`;
 }
 
 /** What a reflex camera's release is doing, t ms after it was pressed. */
