@@ -71,15 +71,17 @@ The page gives no groups; the order is the page's.
 - **No `try` experiment;** the dials, switch and focus knob don't move.
 - **Nothing new:** generic spins, `timing` and `ladder`.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Film path | Feed reel, Take-up reel, Film guide roller, Reel arm; power flow; at 0.6× speed |  |  |
-| 2 | The gate | Feed reel, Take-up reel, Film guide roller; power flow; at 0.6× speed | timing: One frame, slowed down |  |
-| 3 | Light | Focus knob; light flow | ladder: From frame to screen |  |
+| 0 s | The film | The front reel feeds the film down into the machine, and the rear reel winds it back up. | 6 |  |
+| 6 s | The film | Behind the lens a claw pulls it down one frame and holds it still, 18 times a second. | 6 |  |
+| 12 s | Light | The lamp shines through each still frame, and the lens throws it onto the screen. | 7 |  |
 
-Three steps on the page.
+Solid throughout: the Feed reel, Take-up reel and Film guide roller; the body is glass, so the film's path down to the gate (a `power` line) and the lamp's light through the lens (a `light` line) show inside it. The claw and the shutter have no parts, so the gate is a tag. Real speed.
 
 ## 9. Simplified or left out
 
@@ -89,3 +91,5 @@ Three steps on the page.
 ## 10. Log
 
 Not recorded per stage: built before the procedure; the first six Poly Haven objects, this one among them, took 1 h 16 in all (references/procedure.md, "How long it takes").
+
+19 October 2026: "How it works" became a film (references/film.md), 3 shots, 19 s; the three tour steps and their charts came off the page.

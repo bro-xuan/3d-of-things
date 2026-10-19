@@ -127,19 +127,17 @@ Nothing runs on time: every motion has a `control`. filmcamera.ts (`FilmCamera`,
 - **Flows:** `light` on Lens (four paths) and Rangefinder (three); `power` on Winding on, from the lever through the idler to the sprocket and along the film to the take-up spool.
 - **Build checks:** augment.mjs fails if a generated part clashes with anything (bar its `CONTACTS`) or if the content's explode passes one piece through another (README).
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Lens | Optical unit, Film, Shutter; light flow (4 paths) |  |  |
-| 2 | Focus | Lens mount, Focusing ring, Optical unit, Aperture ring, Lens hood | focus-extension | focus |
-| 3 | Rangefinder | Rangefinder optics, Moving lens, Frame-line mask; light flow (3 paths) | rangefinder-view: | focus |
-| 4 | Coupling | Roller arm, Moving lens, Rangefinder cam | rangefinder-triangle: | focus |
-| 5 | Aperture | Iris, iris_blade_1, iris_blade_2, iris_blade_3, iris_blade_4, iris_blade_5, iris_blade_6, iris_blade_7, iris_blade_8, iris_ring, Aperture ring | iris-stops | aperture |
-| 6 | Shutter | Shutter, First curtain, Second curtain, Curtain rollers, roller_a2, roller_b1, roller_b2; hides Back door, Pressure plate, Film | shutter-timing | shutter |
-| 7 | Winding on | Film, Film cassette, Take-up spool, Sprocket, Advance gears, Advance lever, Shutter, First curtain, Second curtain, Curtain rollers, roller_a2, roller_b1, roller_b2; power flow; hides Back door, Pressure plate | film-advance | advance |
+| 0 s | Focus | Turning the ring screws the lens out to focus at 1 m; its cam sets the rangefinder to match. | 6 | 0 s speed → 0.01; 1 s focus → 1 over 4 s |
+| 6 s | Fire | The release lets the first curtain uncover the film; 1/100 s later the second covers it. | 6 | 1 s fire |
+| 12 s | Wind on | Two strokes of the lever pull the next frame across and wind both curtains back. | 6 | 1 s wind-on; 3 s wind-on |
 
-Settings as the steps start (content: `settings`): Lens at ∞ and f/1.4; Rangefinder and Aperture at ∞; Shutter at 1/250 s. Steps 3 and 4 give their charts as `{ type, subject: 2 }` with no title, hence the bare colon.
+Solid throughout: the Optical unit and Focusing ring, the Roller arm and Moving lens, the Shutter release, both curtains and the Curtain rollers, the Film, `cassette_spool`, Sprocket, Take-up spool, Advance gears and Advance lever; the body, Top cover, Back door and Film cassette are glass. Every shot runs at 1/120 (`rate`), so the shutter's 28 ms at 1/100 s (the second curtain 10 ms behind, a 20 mm slit) takes 3.4 s; the lever's strokes run in real time, 0.75 s each. Shot 3's power flow runs from the lever through the idler to the Sprocket and along the film to the Take-up spool.
 
 ## 9. Simplified or left out
 
@@ -157,3 +155,5 @@ Settings as the steps start (content: `settings`): Lens at ∞ and f/1.4; Rangef
 ## 10. Log
 
 Not recorded per stage: built before the standard procedure, in 2 h 07 of active time (references/procedure.md, "How long it takes": Leica M3, tier B).
+
+19 October 2026: "How it works" became a film (references/film.md), 3 shots, 18 s: focus at 1 m, fire at 1/100 s, wind on; the seven tour steps, their charts and experiments came off the page.

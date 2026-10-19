@@ -308,6 +308,8 @@ export class Mechanism {
   private rate = 1;
   private targetRate = 1;
   private lag = 0;
+  /** The visitor's time at the last tick (ms): a paused film gives no time, while the clock on the wall goes on. */
+  private wall: number | null = null;
   /** Turns of the crown so far, and how fast it's turning. */
   private crown = 0;
   private windSpeed = 0;
@@ -510,7 +512,10 @@ export class Mechanism {
     if (stopped && this.held) this.rate = 0;
     const target = stopped ? 0 : this.targetRate;
     this.rate += (target - this.rate) * (1 - Math.exp(-dt / (target === 0 ? 0.08 : 0.25)));
-    if (target < 1 || !this.catchUp) this.lag += (1 - this.rate) * dt;
+    // Held back, it falls behind by however much real time went by, less what it ran: paused, slowed or sped up.
+    const elapsed = this.wall === null ? dt : (now.getTime() - this.wall) / 1000;
+    this.wall = now.getTime();
+    if (target < 1 || !this.catchUp) this.lag += elapsed - this.rate * dt;
     else this.lag = this.lag < 1e-3 ? 0 : this.lag * Math.exp(-dt / 0.3);
     const beat = (secondsOfDay(now) - this.lag) * BEATS_PER_SECOND;
     if (Math.floor(beat) > Math.floor(this.beat) && Math.floor(beat) - Math.floor(this.beat) < 3) this.onBeat?.(Math.floor(beat));

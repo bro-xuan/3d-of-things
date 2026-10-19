@@ -1,6 +1,6 @@
 // Writes content/rangefinder-camera.json from the page's text and where the build put things
 // (objects/rangefinder-camera/hints.json, written by `npm run models:build -- rangefinder-camera`): the motions'
-// pivots, curves and rates come from the hints, and the tour's rays, flows and tags are given in millimetres in the
+// pivots, curves and rates come from the hints, and the film's power path and tags are given in millimetres in the
 // camera's frame (M). The callouts' positions and cameras, and the explode distances, are still typed in model
 // space. Run it after every build:
 //   node objects/rangefinder-camera/content.mjs
@@ -41,168 +41,80 @@ const motion = [
   { node: 'take_up_spool', control: 'film', ...up(H.takeUp), turn: H.film.perTurn.takeUp },
   { node: 'cassette_spool', control: 'film', ...up(H.cassette), turn: H.film.perTurn.cassette },
 ];
-const fromModel = (p) => p.map((v, i) => (v - H.space.origin[i]) * H.space.mmPerUnit);
+/** The lens's axis, x and y in mm. */
 const AX = [9.95, 33.8];
-const film = -10.4;
-const ray = (entry, aim, slope) => [M(AX[0], entry + 44 * slope, 110), M(AX[0], entry, 66), M(AX[0], aim, film)];
-const tan = Math.tan((6 * Math.PI) / 180);
-const below = AX[1] - 51.6 * tan;
-const above = AX[1] + 51.6 * tan;
-const beam = { y: 67.35, z: 9 };
-const lensParts = ['lens', 'focus_ring', 'optics', 'aperture_ring', 'hood'];
-const iris = [...Array.from({ length: 9 }, (_, k) => `iris_blade_${k}`), 'iris_ring'];
-const rollers = ['roller_a1', 'roller_a2', 'roller_b1', 'roller_b2'];
+const fromModel = (p) => p.map((v, i) => (v - H.space.origin[i]) * H.space.mmPerUnit);
 const idler = fromModel(H.idler);
-const how = [
+
+// ------------------------------------------------------------------ film
+/** What stays solid through the film: the lens and what focusing moves, the curtains and their rollers, and the film
+ *  with what winds it on. The body, the top cover, the back and the cassette are glass, so the gate shows through. */
+const MOVING = ['optics', 'focus_ring', 'roller_lever', 'swinging_lens', 'release_button', 'first_curtain', 'second_curtain', 'roller_a1', 'film', 'cassette_spool', 'sprocket', 'take_up_spool', 'advance_gear', 'advance_lever'];
+/** The shutter in slow motion: its 28 ms run at 1/100 s (18 ms a curtain, the second 10 ms behind) takes 3.4 s. The
+ *  same in every shot, so the film runs the same however it's reached. */
+const SLOW = 1 / 120;
+/** The power's path as the lever winds on: from the lever, through the idler to the sprocket, along the film to the take-up spool. */
+const windPath = [
+  { node: 'advance_lever', at: M(-24, 75.2, -9), ride: true },
+  { node: 'advance_lever', at: M(-43.7, 70, 5.8) },
+  M(-43.7, 56, 5.8),
+  M(idler[0], 56, idler[2]),
+  M(-28, 56, -4.4),
+  M(-28, 33.8, -10.6),
+  M(-53, 33.8, -6.6),
+];
+const film = [
   {
-    label: 'Lens',
-    title: 'The lens makes the picture',
-    text: [
-      'Light from every point of a scene spreads out in all directions. The lens catches a cone of it from each point and bends it back to a point on the film, 27.8 mm behind the mount. All those points together are the picture: upside down, back to front, and 24 by 36 mm.',
-      'Eight glass elements share the bending, so the picture stays sharp from the middle to the corners even with the iris wide open at f/1.4.',
-    ],
-    angle: [62, 12],
-    fill: 0.8,
-    focus: ['optics', 'film', 'shutter'],
-    frame: ['optics', 'shutter'],
-    carries: 'light',
-    flow: ray(AX[1] + 10, below, tan),
-    flows: [ray(AX[1] + 1, below, tan), ray(AX[1] - 1, above, -tan), ray(AX[1] - 10, above, -tan)],
+    chapter: 'Focus',
+    caption: 'Turning the ring screws the lens out to focus at 1 m; its cam sets the rangefinder to match.',
+    duration: 6,
+    angle: [48, 22],
+    fill: 0.55,
+    rate: SLOW,
+    focus: MOVING,
+    frame: ['optics', 'focus_ring', 'roller_lever', 'swinging_lens'],
     tags: [
-      { node: 'optics', text: 'Eight elements', at: M(AX[0], AX[1] + 22, 52) },
-      { node: 'film', text: 'Film', at: M(AX[0] + 20, AX[1] + 18, film) },
+      { node: 'focus_ring', text: 'focusing ring', at: M(AX[0], AX[1] + 27, 32) },
+      { node: 'roller_lever', text: 'cam and roller', at: M(7.1, 52.4, 9.2), ride: true },
     ],
-    settings: { focus: 0, aperture: 1.4 },
+    cues: [
+      { at: 0, do: 'speed', to: 1 / 100 },
+      { at: 1, do: 'focus', to: 1, over: 4 },
+    ],
   },
   {
-    label: 'Focus',
-    title: 'Focusing: moving the glass',
-    text: [
-      'A lens brings distant things to a point at its focal length. Anything nearer forms its image a little further back, so to keep it on the film the glass has to come forward: 1.4 mm for something 2 m away, 4.5 mm for 0.7 m.',
-      'Turning the focusing ring screws the whole optical unit out on a fine thread, a helicoid. Try it, and watch the front of the lens come forward.',
-    ],
-    angle: [78, 14],
-    fill: 0.75,
-    focus: lensParts,
-    frame: ['lens', 'optics'],
-    chart: 'focus-extension',
-    try: 'focus',
+    chapter: 'Fire',
+    caption: 'The release lets the first curtain uncover the film; 1/100 s later the second covers it.',
+    duration: 6,
+    angle: [12, 46],
+    fill: 0.6,
+    rate: SLOW,
+    focus: MOVING,
+    frame: ['film'],
     tags: [
-      { node: 'focus_ring', text: 'Focusing ring', at: M(AX[0], AX[1] + 27, 32) },
-      { node: 'optics', text: 'Optical unit', at: M(AX[0], AX[1] + 22, 64) },
+      { node: 'first_curtain', text: 'first curtain', at: M(14, 47, -8) },
+      { node: 'second_curtain', text: 'second curtain', at: M(-15, 21, -8.6) },
     ],
+    cues: [{ at: 1, do: 'fire' }],
   },
   {
-    label: 'Rangefinder',
-    title: 'Two views of one subject',
-    text: [
-      'The small window and the viewfinder look at the same scene from 68.5 mm apart. A prism behind the small window sends its view across the camera, through a moving lens, to a half-silvered prism behind the eyepiece, which lays it over the direct view as a bright patch in the middle of the finder.',
-      'For a subject 2 m away, the small window’s line of sight has to turn in by 1.96° to meet it. Until it does, the patch shows the subject twice, side by side. Focus until the two pictures meet.',
-    ],
-    angle: [-18, 34],
-    fill: 0.8,
-    focus: ['rangefinder', 'swinging_lens', 'frame_mask'],
-    carries: 'light',
-    flow: [M(-22.65, beam.y, 60), M(-22.65, beam.y, 17.2), M(-22.65, beam.y, beam.z), M(45.5, beam.y, beam.z), M(45.5, beam.y, -16.7), M(45.5, beam.y, -36)],
-    flows: [
-      [M(45.5, beam.y + 2.6, 60), M(45.5, beam.y + 2.6, 16.4), M(45.5, beam.y + 2.6, -16.7), M(45.5, beam.y + 2.6, -36)],
-      [M(20.1, beam.y + 1.4, 34), M(20.1, beam.y + 1.4, beam.z), M(45.5, beam.y + 1.4, beam.z), M(45.5, beam.y + 1.4, -16.7)],
-    ],
+    chapter: 'Wind on',
+    caption: 'Two strokes of the lever pull the next frame across and wind both curtains back.',
+    duration: 6,
+    angle: [-22, 44],
+    fill: 0.6,
+    rate: SLOW,
+    focus: MOVING,
+    frame: ['film', 'advance_lever'],
+    flow: windPath,
     tags: [
-      { node: 'top_plate', text: 'Rangefinder window', at: M(-22.65, 72, 17.6) },
-      { node: 'top_plate', text: 'Viewfinder window', at: M(39.5, 61.2, 16.8) },
-      { node: 'swinging_lens', text: 'Moving lens', at: M(-16.5, 71.5, beam.z) },
-      { node: 'rangefinder', text: 'Beam splitter', at: M(41.2, beam.y - 2.5, beam.z - 3.5) },
+      { node: 'advance_lever', text: 'advance lever', at: M(-26, 77.5, -10), ride: true },
+      { node: 'sprocket', text: 'sprocket', at: M(-28, 52, -11.6) },
     ],
-    chart: { type: 'rangefinder-view', subject: 2 },
-    try: 'focus',
-    settings: { focus: 0 },
-  },
-  {
-    label: 'Coupling',
-    title: 'The lens tells the rangefinder',
-    text: [
-      'The rangefinder has to know where the lens is focused. On the back of the optical unit is a cam: as the lens comes forward, it pushes a small roller in the camera’s mount, and the roller’s arm turns a shaft that rises into the rangefinder.',
-      'At its top the same shaft swings the moving lens about a millimetre across the beam, which tilts the small window’s view by up to 5.6°: always the angle to the distance the lens is set at. So when the two pictures meet, the lens is focused on the subject.',
+    cues: [
+      { at: 1, do: 'wind-on' },
+      { at: 3, do: 'wind-on' },
     ],
-    angle: [-34, 20],
-    fill: 0.7,
-    focus: ['roller_lever', 'swinging_lens', 'rf_cam'],
-    frame: ['roller_lever', 'rf_cam'],
-    tags: [
-      { node: 'rf_cam', text: 'Cam', at: M(7.2, 51.6, 11.0) },
-      { node: 'roller_lever', text: 'Roller', at: M(7.1, 52.4, 9.2), ride: true },
-      { node: 'roller_lever', text: 'Shaft', at: M(-12, 60, 7.5) },
-      { node: 'swinging_lens', text: 'Moving lens', at: M(-16.5, 71.5, beam.z) },
-    ],
-    chart: { type: 'rangefinder-triangle', subject: 2 },
-    try: 'focus',
-  },
-  {
-    label: 'Aperture',
-    title: 'The iris: how much light',
-    text: [
-      'Between the lens’s glass elements are nine thin blades. Turning the aperture ring swings them in on their pins together, closing a round hole in the middle of the lens.',
-      'Each stop halves the light, so f/16 lets in 1/128 of what f/1.4 does. Stopping down also deepens how much in front of and behind the subject looks sharp: the pairs of numbers beside the distance scale show how much.',
-    ],
-    angle: [8, 10],
-    fill: 0.62,
-    focus: [...iris, 'aperture_ring'],
-    frame: iris,
-    chart: 'iris-stops',
-    try: 'aperture',
-    tags: [{ node: 'aperture_ring', text: 'Aperture ring', at: M(AX[0] + 18, AX[1] + 20, 48.8) }],
-    settings: { focus: 0 },
-  },
-  {
-    label: 'Shutter',
-    title: 'Two curtains and a slit',
-    text: [
-      'Just in front of the film are two curtains of rubberised cloth. Pressing the release lets the first go: its spring roller pulls it across the frame in about 18 ms, uncovering the film. After the time set on the dial the second follows, and covers it again.',
-      'So the exposure is the delay between the two. At 1/1000 s the second curtain runs only 2 mm behind the first, a narrow slit of light sweeping across the film; every part of it still gets the same thousandth of a second. Here it runs slowed down.',
-    ],
-    angle: [196, 8],
-    fill: 0.72,
-    focus: ['shutter', 'first_curtain', 'second_curtain', ...rollers],
-    frame: ['shutter'],
-    hide: ['back_door', 'pressure_plate', 'film'],
-    chart: 'shutter-timing',
-    try: 'shutter',
-    tags: [
-      { node: 'first_curtain', text: 'First curtain', at: M(14, 47, -8) },
-      { node: 'second_curtain', text: 'Second curtain', at: M(-15, 21, -8.6) },
-    ],
-    settings: { speed: 1 / 250 },
-  },
-  {
-    label: 'Winding on',
-    title: 'Winding on, and cocking the shutter',
-    text: [
-      'Two strokes of the lever turn the sprocket once. Its teeth sit in the film’s perforations, so one turn pulls exactly one frame, 38 mm, out of the cassette and across the gate, while a slipping clutch lets the take-up spool reel it in.',
-      'The same strokes wind both curtains back across the frame together, overlapping so no light gets in, and set their springs for the next picture. Until it has fired, the lever won’t move: you can’t wind on twice.',
-    ],
-    angle: [206, 38],
-    fill: 0.8,
-    focus: ['film', 'film_cassette', 'take_up_spool', 'sprocket', 'advance_gear', 'advance_lever', 'shutter', 'first_curtain', 'second_curtain', ...rollers],
-    frame: ['film', 'advance_lever', 'take_up_spool', 'film_cassette'],
-    hide: ['back_door', 'pressure_plate'],
-    flow: [
-      { node: 'advance_lever', at: M(-24, 75.2, -9), ride: true },
-      { node: 'advance_lever', at: M(-43.7, 70, 5.8) },
-      M(-43.7, 56, 5.8),
-      M(idler[0], 56, idler[2]),
-      M(-28, 56, -4.4),
-      M(-28, 33.8, -10.6),
-      M(-53, 33.8, -6.6),
-    ],
-    tags: [
-      { node: 'sprocket', text: 'Sprocket', at: M(-28, 52, -11.6) },
-      { node: 'take_up_spool', text: 'Take-up spool', at: M(-52.5, 54, -8) },
-      { node: 'film_cassette', text: 'Cassette', at: M(52.5, 54, -12) },
-      { node: 'advance_lever', text: 'Advance lever', at: M(-26, 77.5, -10), ride: true },
-    ],
-    chart: 'film-advance',
-    try: 'advance',
   },
 ];
 writeContent('rangefinder-camera', {
@@ -273,5 +185,5 @@ writeContent('rangefinder-camera', {
   credit: polyHaven('Camera_01', 'Camera 01', 'Rajil Jose Macatangay', { label: 'Insides', text: 'The shutter, film transport, rangefinder optics and iris were built for 3D of Things after the Leica M3, and fitted inside the model.' }),
   build: { augment: 'objects/rangefinder-camera/augment.mjs', hints: 'objects/rangefinder-camera/hints.json' },
   motion,
-  how,
+  film,
 });

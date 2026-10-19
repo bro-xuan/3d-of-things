@@ -830,6 +830,278 @@
       "coil": true
     }
   ],
+  "film": [
+    {
+      "chapter": "Power",
+      "caption": "The wound mainspring turns the barrel, and its teeth drive the train of wheels.",
+      "duration": 6,
+      "angle": [
+        -50,
+        18
+      ],
+      "fill": 0.76,
+      "focus": [
+        "mainspring",
+        "centre_wheel",
+        "third_wheel",
+        "fourth_wheel",
+        "escape_wheel",
+        "pallet_fork",
+        "balance_wheel",
+        "hairspring",
+        "cannon_pinion",
+        "minute_wheel",
+        "hour_wheel",
+        "vintage_pocket_watch_hour_hand",
+        "vintage_pocket_watch_minute_hand",
+        "vintage_pocket_watch_second_hand"
+      ],
+      "frame": [
+        "case"
+      ],
+      "flow": [
+        {
+          "node": "mainspring",
+          "at": [
+            -0.0126,
+            0.7803,
+            -0.007
+          ]
+        },
+        {
+          "node": "mainspring",
+          "at": [
+            -0.0715,
+            0.6992,
+            -0.007
+          ]
+        },
+        {
+          "node": "barrel",
+          "at": [
+            -0.0084,
+            0.6284,
+            -0.0196
+          ]
+        },
+        {
+          "node": "centre_wheel",
+          "at": [
+            -0.0018,
+            0.6043,
+            -0.0284
+          ]
+        },
+        {
+          "node": "third_wheel",
+          "at": [
+            -0.1097,
+            0.5462,
+            -0.0284
+          ]
+        },
+        {
+          "node": "third_wheel",
+          "at": [
+            -0.1363,
+            0.5365,
+            -0.0309
+          ]
+        },
+        {
+          "node": "third_wheel",
+          "at": [
+            -0.159,
+            0.5471,
+            -0.0321
+          ]
+        },
+        {
+          "node": "third_wheel",
+          "at": [
+            -0.1484,
+            0.5698,
+            -0.0333
+          ]
+        },
+        {
+          "node": "third_wheel",
+          "at": [
+            -0.1218,
+            0.5795,
+            -0.0357
+          ]
+        },
+        {
+          "node": "fourth_wheel",
+          "at": [
+            -0.0018,
+            0.6043,
+            -0.0432
+          ]
+        },
+        {
+          "node": "fourth_wheel",
+          "at": [
+            -0.0018,
+            0.4708,
+            -0.0432
+          ]
+        },
+        {
+          "node": "escape_wheel",
+          "at": [
+            -0.0018,
+            0.4597,
+            -0.0507
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "mainspring",
+          "text": "mainspring",
+          "at": [
+            0.11,
+            0.84,
+            -0.007
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Escapement",
+      "caption": "Slowed ten times: each swing of the balance lets the escape wheel slip half a tooth, a tick.",
+      "duration": 6,
+      "angle": [
+        -24,
+        14
+      ],
+      "fill": 0.76,
+      "rate": 0.1,
+      "focus": [
+        "mainspring",
+        "centre_wheel",
+        "third_wheel",
+        "fourth_wheel",
+        "escape_wheel",
+        "pallet_fork",
+        "balance_wheel",
+        "hairspring",
+        "cannon_pinion",
+        "minute_wheel",
+        "hour_wheel",
+        "vintage_pocket_watch_hour_hand",
+        "vintage_pocket_watch_minute_hand",
+        "vintage_pocket_watch_second_hand"
+      ],
+      "frame": [
+        "case"
+      ],
+      "tags": [
+        {
+          "node": "escape_wheel",
+          "text": "escape wheel",
+          "at": [
+            0.05,
+            0.51,
+            -0.05
+          ]
+        },
+        {
+          "node": "pallet_fork",
+          "text": "pallet fork",
+          "at": [
+            0.14,
+            0.4,
+            -0.05
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Escapement",
+      "caption": "The hairspring swings the balance to and fro three times a second: that sets the pace.",
+      "duration": 6,
+      "angle": [
+        0,
+        12
+      ],
+      "fill": 0.76,
+      "rate": 0.1,
+      "focus": [
+        "mainspring",
+        "centre_wheel",
+        "third_wheel",
+        "fourth_wheel",
+        "escape_wheel",
+        "pallet_fork",
+        "balance_wheel",
+        "hairspring",
+        "cannon_pinion",
+        "minute_wheel",
+        "hour_wheel",
+        "vintage_pocket_watch_hour_hand",
+        "vintage_pocket_watch_minute_hand",
+        "vintage_pocket_watch_second_hand"
+      ],
+      "frame": [
+        "case"
+      ],
+      "tags": [
+        {
+          "node": "balance_wheel",
+          "text": "balance",
+          "at": [
+            0.3,
+            0.3,
+            -0.05
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Hands",
+      "caption": "The train turns the hands: the seconds hand once a minute, the minute hand once an hour.",
+      "duration": 6,
+      "angle": [
+        24,
+        10
+      ],
+      "fill": 0.76,
+      "focus": [
+        "mainspring",
+        "centre_wheel",
+        "third_wheel",
+        "fourth_wheel",
+        "escape_wheel",
+        "pallet_fork",
+        "balance_wheel",
+        "hairspring",
+        "cannon_pinion",
+        "minute_wheel",
+        "hour_wheel",
+        "vintage_pocket_watch_hour_hand",
+        "vintage_pocket_watch_minute_hand",
+        "vintage_pocket_watch_second_hand"
+      ],
+      "frame": [
+        "case"
+      ],
+      "tags": [
+        {
+          "node": "vintage_pocket_watch_second_hand",
+          "text": "seconds hand",
+          "at": [
+            -0.09,
+            0.68,
+            0.048
+          ],
+          "ride": true
+        }
+      ]
+    }
+  ],
   "annotations": [
     {
       "title": "Crown",
@@ -1038,747 +1310,5 @@
     "rate": 0.05,
     "explode": 0.5
   },
-  "explodeDuration": 2800,
-  "how": [
-    {
-      "label": "The idea",
-      "title": "Stored energy, let out in even steps",
-      "text": [
-        "A watch is a chain. A wound spring pushes, a train of wheels carries the push, and the escapement lets it out one tick at a time, at the pace a swinging balance sets. The hands just count the ticks.",
-        "The red line is the power: from the crown you wind to the balance that spends it."
-      ],
-      "angle": [
-        200,
-        22
-      ],
-      "fill": 0.86,
-      "focus": [
-        "winding_stem",
-        "winding_pinion",
-        "crown_wheel",
-        "ratchet_click",
-        "mainspring",
-        "barrel",
-        "centre_wheel",
-        "third_wheel",
-        "fourth_wheel",
-        "escape_wheel",
-        "pallet_fork",
-        "balance_wheel",
-        "hairspring",
-        "cannon_pinion",
-        "minute_wheel",
-        "hour_wheel",
-        "vintage_pocket_watch_hour_hand",
-        "vintage_pocket_watch_minute_hand",
-        "vintage_pocket_watch_second_hand"
-      ],
-      "flow": [
-        {
-          "node": "winding_stem",
-          "at": [
-            -0.0018,
-            1.411,
-            -0.0046
-          ]
-        },
-        {
-          "node": "winding_stem",
-          "at": [
-            -0.0018,
-            1.1631,
-            -0.0046
-          ]
-        },
-        {
-          "node": "crown_wheel",
-          "at": [
-            -0.0018,
-            1.0411,
-            -0.0411
-          ]
-        },
-        {
-          "node": "crown_wheel",
-          "at": [
-            -0.0018,
-            0.9664,
-            -0.0411
-          ]
-        },
-        {
-          "node": "ratchet_wheel",
-          "at": [
-            -0.0313,
-            0.8936,
-            -0.0411
-          ]
-        },
-        {
-          "node": "ratchet_wheel",
-          "at": [
-            -0.0609,
-            0.8207,
-            -0.0411
-          ]
-        },
-        {
-          "node": "mainspring",
-          "at": [
-            -0.0126,
-            0.7803,
-            -0.007
-          ]
-        },
-        {
-          "node": "mainspring",
-          "at": [
-            -0.0715,
-            0.6992,
-            -0.007
-          ]
-        },
-        {
-          "node": "barrel",
-          "at": [
-            -0.0084,
-            0.6284,
-            -0.0196
-          ]
-        },
-        {
-          "node": "centre_wheel",
-          "at": [
-            -0.0018,
-            0.6043,
-            -0.0284
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1097,
-            0.5462,
-            -0.0284
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1363,
-            0.5365,
-            -0.0309
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.159,
-            0.5471,
-            -0.0321
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1484,
-            0.5698,
-            -0.0333
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1218,
-            0.5795,
-            -0.0357
-          ]
-        },
-        {
-          "node": "fourth_wheel",
-          "at": [
-            -0.0018,
-            0.6043,
-            -0.0432
-          ]
-        },
-        {
-          "node": "fourth_wheel",
-          "at": [
-            -0.0018,
-            0.4708,
-            -0.0432
-          ]
-        },
-        {
-          "node": "escape_wheel",
-          "at": [
-            -0.0018,
-            0.4597,
-            -0.0507
-          ]
-        },
-        {
-          "node": "escape_wheel",
-          "at": [
-            0.047,
-            0.4187,
-            -0.0507
-          ]
-        },
-        {
-          "node": "pallet_fork",
-          "at": [
-            0.0608,
-            0.4071,
-            -0.0506
-          ]
-        },
-        {
-          "node": "pallet_fork",
-          "at": [
-            0.1301,
-            0.349,
-            -0.0506
-          ]
-        },
-        {
-          "node": "balance_wheel",
-          "at": [
-            0.1301,
-            0.349,
-            -0.0553
-          ]
-        },
-        {
-          "node": "balance_wheel",
-          "at": [
-            0.1452,
-            0.3363,
-            -0.0734
-          ]
-        }
-      ],
-      "chart": "watch-chain"
-    },
-    {
-      "label": "Power",
-      "title": "Winding stores the energy",
-      "text": [
-        "The crown turns a pinion on the stem, which turns the crown wheel and then the ratchet wheel on the barrel’s arbor, coiling the mainspring tight. The click lets the ratchet turn one way only.",
-        "The spring’s outer end pulls on the barrel, and that pull drives the watch for about 40 hours."
-      ],
-      "angle": [
-        160,
-        26
-      ],
-      "fill": 0.74,
-      "focus": [
-        "winding_stem",
-        "winding_pinion",
-        "crown_wheel",
-        "ratchet_click",
-        "mainspring",
-        "barrel"
-      ],
-      "flow": [
-        {
-          "node": "winding_stem",
-          "at": [
-            -0.0018,
-            1.411,
-            -0.0046
-          ]
-        },
-        {
-          "node": "winding_stem",
-          "at": [
-            -0.0018,
-            1.1631,
-            -0.0046
-          ]
-        },
-        {
-          "node": "crown_wheel",
-          "at": [
-            -0.0018,
-            1.0411,
-            -0.0411
-          ]
-        },
-        {
-          "node": "crown_wheel",
-          "at": [
-            -0.0018,
-            0.9664,
-            -0.0411
-          ]
-        },
-        {
-          "node": "ratchet_wheel",
-          "at": [
-            -0.0313,
-            0.8936,
-            -0.0411
-          ]
-        },
-        {
-          "node": "ratchet_wheel",
-          "at": [
-            -0.0609,
-            0.8207,
-            -0.0411
-          ]
-        },
-        {
-          "node": "mainspring",
-          "at": [
-            -0.0126,
-            0.7803,
-            -0.007
-          ]
-        },
-        {
-          "node": "mainspring",
-          "at": [
-            -0.0715,
-            0.6992,
-            -0.007
-          ]
-        },
-        {
-          "node": "barrel",
-          "at": [
-            -0.0084,
-            0.6284,
-            -0.0196
-          ]
-        }
-      ],
-      "tags": [
-        {
-          "node": "crown",
-          "text": "You turn this",
-          "at": [
-            0.07,
-            1.42,
-            -0.01
-          ]
-        },
-        {
-          "node": "ratchet_click",
-          "text": "Click: one way only",
-          "at": [
-            -0.19,
-            0.89,
-            -0.05
-          ]
-        },
-        {
-          "node": "barrel",
-          "text": "Barrel: 1 turn in 8 hours",
-          "at": [
-            -0.24,
-            0.73,
-            -0.03
-          ]
-        }
-      ],
-      "chart": "watch-power",
-      "try": "wind"
-    },
-    {
-      "label": "Gear train",
-      "title": "The train multiplies the speed",
-      "text": [
-        "The barrel turns once in eight hours. Its 80 teeth drive the centre wheel’s pinion of 10, eight times faster: once an hour, the minute hand’s pace. Three more meshes take it to once a minute for the seconds hand, and twelve times a minute at the escape wheel."
-      ],
-      "angle": [
-        198,
-        20
-      ],
-      "fill": 0.8,
-      "focus": [
-        "mainspring",
-        "barrel",
-        "centre_wheel",
-        "third_wheel",
-        "fourth_wheel",
-        "escape_wheel"
-      ],
-      "flow": [
-        {
-          "node": "barrel",
-          "at": [
-            -0.0609,
-            0.8207,
-            -0.0196
-          ]
-        },
-        {
-          "node": "barrel",
-          "at": [
-            -0.0084,
-            0.6284,
-            -0.0196
-          ]
-        },
-        {
-          "node": "centre_wheel",
-          "at": [
-            -0.0018,
-            0.6043,
-            -0.0284
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1097,
-            0.5462,
-            -0.0284
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1363,
-            0.5365,
-            -0.0309
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.159,
-            0.5471,
-            -0.0321
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1484,
-            0.5698,
-            -0.0333
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "at": [
-            -0.1218,
-            0.5795,
-            -0.0357
-          ]
-        },
-        {
-          "node": "fourth_wheel",
-          "at": [
-            -0.0018,
-            0.6043,
-            -0.0432
-          ]
-        },
-        {
-          "node": "fourth_wheel",
-          "at": [
-            -0.0018,
-            0.4708,
-            -0.0432
-          ]
-        },
-        {
-          "node": "escape_wheel",
-          "at": [
-            -0.0018,
-            0.4597,
-            -0.0507
-          ]
-        }
-      ],
-      "tags": [
-        {
-          "node": "barrel",
-          "text": "1 turn / 8 h",
-          "at": [
-            -0.2,
-            0.95,
-            -0.03
-          ]
-        },
-        {
-          "node": "centre_wheel",
-          "text": "1 turn / hour",
-          "at": [
-            0.11,
-            0.7,
-            -0.03
-          ]
-        },
-        {
-          "node": "third_wheel",
-          "text": "8 turns / hour",
-          "at": [
-            -0.27,
-            0.5,
-            -0.04
-          ]
-        },
-        {
-          "node": "fourth_wheel",
-          "text": "1 turn / minute",
-          "at": [
-            0.13,
-            0.57,
-            -0.05
-          ]
-        },
-        {
-          "node": "escape_wheel",
-          "text": "12 turns / minute",
-          "at": [
-            -0.07,
-            0.4,
-            -0.06
-          ]
-        }
-      ],
-      "chart": "watch-train"
-    },
-    {
-      "label": "Escapement",
-      "title": "One tooth at a time",
-      "text": [
-        "Left alone, the train would spin out in seconds. The pallet fork holds it: one of its two red jewels always blocks a tooth of the escape wheel.",
-        "On each beat the balance knocks the fork across. A tooth slips free, pushes on the jewel’s slanted face, and the fork passes that push to the balance. Then the other jewel catches the next tooth."
-      ],
-      "angle": [
-        172,
-        24
-      ],
-      "fill": 0.66,
-      "rate": 0.06,
-      "focus": [
-        "escape_wheel",
-        "pallet_fork",
-        "balance_wheel"
-      ],
-      "flow": [
-        {
-          "node": "escape_wheel",
-          "at": [
-            -0.0018,
-            0.4597,
-            -0.0507
-          ]
-        },
-        {
-          "node": "escape_wheel",
-          "at": [
-            0.047,
-            0.4187,
-            -0.0507
-          ]
-        },
-        {
-          "node": "pallet_fork",
-          "at": [
-            0.0608,
-            0.4071,
-            -0.0506
-          ]
-        },
-        {
-          "node": "pallet_fork",
-          "at": [
-            0.1301,
-            0.349,
-            -0.0506
-          ]
-        },
-        {
-          "node": "balance_wheel",
-          "at": [
-            0.1301,
-            0.349,
-            -0.0553
-          ]
-        },
-        {
-          "node": "balance_wheel",
-          "at": [
-            0.1452,
-            0.3363,
-            -0.0734
-          ]
-        }
-      ],
-      "tags": [
-        {
-          "node": "escape_wheel",
-          "text": "Escape wheel",
-          "at": [
-            -0.0018,
-            0.535,
-            -0.06
-          ]
-        },
-        {
-          "node": "pallet_fork",
-          "text": "Pallet fork",
-          "at": [
-            0.122,
-            0.356,
-            -0.06
-          ]
-        }
-      ],
-      "chart": "watch-escapement",
-      "try": "loose"
-    },
-    {
-      "label": "Balance",
-      "title": "The balance keeps the time",
-      "text": [
-        "The balance and its hairspring are an oscillator, a pendulum that works at any angle: the spring pulls the wheel back toward the middle, it overshoots, and it’s pulled back again, three full swings a second.",
-        "A weaker push only makes the swings smaller. They take the same time, so the watch keeps its rate freshly wound or nearly run down."
-      ],
-      "angle": [
-        148,
-        26
-      ],
-      "fill": 0.7,
-      "rate": 0.12,
-      "focus": [
-        "balance_wheel",
-        "hairspring",
-        "pallet_fork",
-        "escape_wheel"
-      ],
-      "tags": [
-        {
-          "node": "balance_wheel",
-          "text": "3 swings / second",
-          "at": [
-            0.28,
-            0.27,
-            -0.07
-          ]
-        },
-        {
-          "node": "hairspring",
-          "text": "Hairspring",
-          "at": [
-            0.2,
-            0.39,
-            -0.09
-          ]
-        }
-      ],
-      "chart": "watch-balance",
-      "try": "hold"
-    },
-    {
-      "label": "Hands",
-      "title": "Turning beats back into time",
-      "text": [
-        "The hands only count. The minute hand rides on the cannon pinion, which turns with the centre wheel once an hour, and two more wheels gear that down twelve times for the hour hand.",
-        "The seconds hand sits on the fourth wheel’s arbor, which runs up through the middle of both."
-      ],
-      "angle": [
-        34,
-        22
-      ],
-      "fill": 0.72,
-      "focus": [
-        "cannon_pinion",
-        "minute_wheel",
-        "hour_wheel",
-        "vintage_pocket_watch_hour_hand",
-        "vintage_pocket_watch_minute_hand",
-        "vintage_pocket_watch_second_hand"
-      ],
-      "flow": [
-        {
-          "node": "cannon_pinion",
-          "at": [
-            -0.0018,
-            0.6043,
-            0.0281
-          ]
-        },
-        {
-          "node": "cannon_pinion",
-          "at": [
-            -0.0222,
-            0.6117,
-            0.0222
-          ]
-        },
-        {
-          "node": "minute_wheel",
-          "at": [
-            -0.0832,
-            0.6339,
-            0.0222
-          ]
-        },
-        {
-          "node": "minute_wheel",
-          "at": [
-            -0.0669,
-            0.628,
-            0.0285
-          ]
-        },
-        {
-          "node": "hour_wheel",
-          "at": [
-            -0.0018,
-            0.6043,
-            0.0321
-          ]
-        }
-      ],
-      "tags": [
-        {
-          "node": "minute_wheel",
-          "text": "Minute wheel: ÷3",
-          "at": [
-            -0.16,
-            0.66,
-            0.03
-          ]
-        },
-        {
-          "node": "hour_wheel",
-          "text": "Hour wheel: ÷4",
-          "at": [
-            -0.06,
-            0.53,
-            0.04
-          ]
-        },
-        {
-          "node": "vintage_pocket_watch_minute_hand",
-          "text": "1 turn / hour",
-          "at": [
-            0.15,
-            0.7,
-            0.05
-          ]
-        }
-      ],
-      "chart": "watch-hands",
-      "frame": [
-        "cannon_pinion",
-        "minute_wheel",
-        "hour_wheel"
-      ],
-      "hide": [
-        "dial",
-        "crystal"
-      ]
-    }
-  ]
+  "explodeDuration": 2800
 }

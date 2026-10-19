@@ -1,9 +1,9 @@
 // Writes content/pocket-watch.json from the page's text and where the build put things
 // (objects/pocket-watch/hints.json, written by `npm run models:build -- pocket-watch`): the moving parts' pivots and
-// the tour's power paths come from the hints, and the callouts inside the case are placed from the movement's layout
+// the film's power path come from the hints, and the callouts inside the case are placed from the movement's layout
 // (movement.mjs), so they stay on their parts while the explode is tuned. Still typed in model space: the movement
 // frame's scale and origin (K and M; the hints don't carry them), the hands' pivot, the two callouts on the case
-// (crown and bow) and the tour's tags. Run it after every build:
+// (crown and bow) and the film's tags. Run it after every build:
 //   node objects/pocket-watch/content.mjs
 import { polyHaven, pose, readHints, writeContent } from '../../scripts/kit/content.mjs';
 import { layout, zh } from './movement.mjs';
@@ -165,135 +165,81 @@ const annotations = [
   },
 ];
 
-// ------------------------------------------------------------------ tour
-// The power's paths through the movement, from movement.mjs `flowPaths` by way of the hints. The whole chain, for
-// the first step, is the first three joined, less the points each repeats from the one before (the train's first two,
-// the escapement's first).
-const { power, train, escapement, hands } = H.flow;
-const chain = [...power, ...train.slice(2), ...escapement.slice(1)];
+// ------------------------------------------------------------------ film
+// What stays solid through the film: the mainspring and every wheel it drives, down to the balance and up to the
+// hands. The case, the dial, the plate, the bridges and the barrel are glass, so the train shows through them.
+const MOVING = [
+  'mainspring',
+  'centre_wheel',
+  'third_wheel',
+  'fourth_wheel',
+  'escape_wheel',
+  'pallet_fork',
+  'balance_wheel',
+  'hairspring',
+  'cannon_pinion',
+  'minute_wheel',
+  'hour_wheel',
+  'vintage_pocket_watch_hour_hand',
+  'vintage_pocket_watch_minute_hand',
+  'vintage_pocket_watch_second_hand',
+];
+/** Every shot frames the whole watch at one size; the camera goes round it, and the solid train inside does the work. */
+const WHOLE = ['case'];
+const FILL = 0.76;
+/** The escapement in slow motion: a tenth of real speed, a tick every 1.7 s. */
+const SLOW = 0.1;
+// The power's path, from movement.mjs `flowPaths` by way of the hints: from the mainspring through the barrel's teeth
+// and the train to the escape wheel (the power path's last three points, then the train's less the two it repeats).
+const { power, train } = H.flow;
+const chain = [...power.slice(-3), ...train.slice(2)];
 
-const how = [
+const film = [
   {
-    label: 'The idea',
-    title: 'Stored energy, let out in even steps',
-    text: [
-      'A watch is a chain. A wound spring pushes, a train of wheels carries the push, and the escapement lets it out one tick at a time, at the pace a swinging balance sets. The hands just count the ticks.',
-      'The red line is the power: from the crown you wind to the balance that spends it.',
-    ],
-    angle: [200, 22],
-    fill: 0.86,
-    focus: [
-      'winding_stem',
-      'winding_pinion',
-      'crown_wheel',
-      'ratchet_click',
-      'mainspring',
-      'barrel',
-      'centre_wheel',
-      'third_wheel',
-      'fourth_wheel',
-      'escape_wheel',
-      'pallet_fork',
-      'balance_wheel',
-      'hairspring',
-      'cannon_pinion',
-      'minute_wheel',
-      'hour_wheel',
-      'vintage_pocket_watch_hour_hand',
-      'vintage_pocket_watch_minute_hand',
-      'vintage_pocket_watch_second_hand',
-    ],
+    chapter: 'Power',
+    caption: 'The wound mainspring turns the barrel, and its teeth drive the train of wheels.',
+    duration: 6,
+    angle: [-50, 18],
+    fill: FILL,
+    focus: MOVING,
+    frame: WHOLE,
     flow: chain,
-    chart: 'watch-chain',
+    tags: [{ node: 'mainspring', text: 'mainspring', at: [0.11, 0.84, -0.007] }],
   },
   {
-    label: 'Power',
-    title: 'Winding stores the energy',
-    text: [
-      'The crown turns a pinion on the stem, which turns the crown wheel and then the ratchet wheel on the barrel’s arbor, coiling the mainspring tight. The click lets the ratchet turn one way only.',
-      'The spring’s outer end pulls on the barrel, and that pull drives the watch for about 40 hours.',
-    ],
-    angle: [160, 26],
-    fill: 0.74,
-    focus: ['winding_stem', 'winding_pinion', 'crown_wheel', 'ratchet_click', 'mainspring', 'barrel'],
-    flow: power,
+    chapter: 'Escapement',
+    caption: 'Slowed ten times: each swing of the balance lets the escape wheel slip half a tooth, a tick.',
+    duration: 6,
+    angle: [-24, 14],
+    fill: FILL,
+    rate: SLOW,
+    focus: MOVING,
+    frame: WHOLE,
     tags: [
-      { node: 'crown', text: 'You turn this', at: [0.07, 1.42, -0.01] },
-      { node: 'ratchet_click', text: 'Click: one way only', at: [-0.19, 0.89, -0.05] },
-      { node: 'barrel', text: 'Barrel: 1 turn in 8 hours', at: [-0.24, 0.73, -0.03] },
+      { node: 'escape_wheel', text: 'escape wheel', at: [0.05, 0.51, -0.05] },
+      { node: 'pallet_fork', text: 'pallet fork', at: [0.14, 0.4, -0.05] },
     ],
-    chart: 'watch-power',
-    try: 'wind',
   },
   {
-    label: 'Gear train',
-    title: 'The train multiplies the speed',
-    text: [
-      'The barrel turns once in eight hours. Its 80 teeth drive the centre wheel’s pinion of 10, eight times faster: once an hour, the minute hand’s pace. Three more meshes take it to once a minute for the seconds hand, and twelve times a minute at the escape wheel.',
-    ],
-    angle: [198, 20],
-    fill: 0.8,
-    focus: ['mainspring', 'barrel', 'centre_wheel', 'third_wheel', 'fourth_wheel', 'escape_wheel'],
-    flow: train,
-    tags: [
-      { node: 'barrel', text: '1 turn / 8 h', at: [-0.2, 0.95, -0.03] },
-      { node: 'centre_wheel', text: '1 turn / hour', at: [0.11, 0.7, -0.03] },
-      { node: 'third_wheel', text: '8 turns / hour', at: [-0.27, 0.5, -0.04] },
-      { node: 'fourth_wheel', text: '1 turn / minute', at: [0.13, 0.57, -0.05] },
-      { node: 'escape_wheel', text: '12 turns / minute', at: [-0.07, 0.4, -0.06] },
-    ],
-    chart: 'watch-train',
+    chapter: 'Escapement',
+    caption: 'The hairspring swings the balance to and fro three times a second: that sets the pace.',
+    duration: 6,
+    angle: [0, 12],
+    fill: FILL,
+    rate: SLOW,
+    focus: MOVING,
+    frame: WHOLE,
+    tags: [{ node: 'balance_wheel', text: 'balance', at: [0.3, 0.3, -0.05] }],
   },
   {
-    label: 'Escapement',
-    title: 'One tooth at a time',
-    text: [
-      'Left alone, the train would spin out in seconds. The pallet fork holds it: one of its two red jewels always blocks a tooth of the escape wheel.',
-      'On each beat the balance knocks the fork across. A tooth slips free, pushes on the jewel’s slanted face, and the fork passes that push to the balance. Then the other jewel catches the next tooth.',
-    ],
-    angle: [172, 24],
-    fill: 0.66,
-    rate: 0.06,
-    focus: ['escape_wheel', 'pallet_fork', 'balance_wheel'],
-    flow: escapement,
-    tags: [{ node: 'escape_wheel', text: 'Escape wheel', at: [-0.0018, 0.535, -0.06] }, { node: 'pallet_fork', text: 'Pallet fork', at: [0.122, 0.356, -0.06] }],
-    chart: 'watch-escapement',
-    try: 'loose',
-  },
-  {
-    label: 'Balance',
-    title: 'The balance keeps the time',
-    text: [
-      'The balance and its hairspring are an oscillator, a pendulum that works at any angle: the spring pulls the wheel back toward the middle, it overshoots, and it’s pulled back again, three full swings a second.',
-      'A weaker push only makes the swings smaller. They take the same time, so the watch keeps its rate freshly wound or nearly run down.',
-    ],
-    angle: [148, 26],
-    fill: 0.7,
-    rate: 0.12,
-    focus: ['balance_wheel', 'hairspring', 'pallet_fork', 'escape_wheel'],
-    tags: [{ node: 'balance_wheel', text: '3 swings / second', at: [0.28, 0.27, -0.07] }, { node: 'hairspring', text: 'Hairspring', at: [0.2, 0.39, -0.09] }],
-    chart: 'watch-balance',
-    try: 'hold',
-  },
-  {
-    label: 'Hands',
-    title: 'Turning beats back into time',
-    text: [
-      'The hands only count. The minute hand rides on the cannon pinion, which turns with the centre wheel once an hour, and two more wheels gear that down twelve times for the hour hand.',
-      'The seconds hand sits on the fourth wheel’s arbor, which runs up through the middle of both.',
-    ],
-    angle: [34, 22],
-    fill: 0.72,
-    focus: ['cannon_pinion', 'minute_wheel', 'hour_wheel', 'vintage_pocket_watch_hour_hand', 'vintage_pocket_watch_minute_hand', 'vintage_pocket_watch_second_hand'],
-    flow: hands,
-    tags: [
-      { node: 'minute_wheel', text: 'Minute wheel: ÷3', at: [-0.16, 0.66, 0.03] },
-      { node: 'hour_wheel', text: 'Hour wheel: ÷4', at: [-0.06, 0.53, 0.04] },
-      { node: 'vintage_pocket_watch_minute_hand', text: '1 turn / hour', at: [0.15, 0.7, 0.05] },
-    ],
-    chart: 'watch-hands',
-    frame: ['cannon_pinion', 'minute_wheel', 'hour_wheel'],
-    hide: ['dial', 'crystal'],
+    chapter: 'Hands',
+    caption: 'The train turns the hands: the seconds hand once a minute, the minute hand once an hour.',
+    duration: 6,
+    angle: [24, 10],
+    fill: FILL,
+    focus: MOVING,
+    frame: WHOLE,
+    tags: [{ node: 'vintage_pocket_watch_second_hand', text: 'seconds hand', at: [-0.09, 0.68, 0.048], ride: true }],
   },
 ];
 
@@ -317,6 +263,7 @@ writeContent('pocket-watch', {
   ],
   parts,
   motion,
+  film,
   annotations,
   credit: polyHaven('vintage_pocket_watch', 'Vintage Pocket Watch', 'Tal Swicegood', { label: 'Movement', text: 'Built for 3D of Things from real tooth counts, and fitted inside the case.' }),
   explodeAngle: [122, 17],
@@ -324,5 +271,4 @@ writeContent('pocket-watch', {
   motionLabel: 'Slow motion',
   slowMotion: { rate: 0.05, explode: RUNNING },
   explodeDuration: 2800,
-  how,
 });

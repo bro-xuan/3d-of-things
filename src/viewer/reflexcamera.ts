@@ -224,6 +224,22 @@ export class ReflexCamera {
     if (!this.running) this.speed = seconds;
   }
 
+  /** Back to rest at once, as the model is built: focused at infinity, f/8 and 1/125 s, wound, the dark slide in (a film seeking). */
+  reset(): void {
+    this.extension = this.extensionTarget = 0;
+    this.stop = this.stopTarget = REST_STOP;
+    this.speed = SPEEDS[REST_SPEED];
+    this.cocked = true;
+    this.shot = null;
+    this.values = { key: 0, blades: 0, iris: 0, mirror: 0, flaps: 0, pressed: 0 };
+    this.wind = null;
+    this.turns = this.frames = this.ratchetTeeth = 0;
+    this.slide = this.slideTarget = 0;
+    this.preview = false;
+    this.irisOpen = 0;
+    this.push();
+  }
+
   /** Closes the iris down to the stop set while looking, to see the depth of field (or opens it again). */
   setPreview(on: boolean): void {
     this.preview = on;

@@ -1,6 +1,6 @@
 // Writes content/reflex-camera.json from the page's text and where the build put things
 // (objects/reflex-camera/hints.json, written by `npm run models:build -- reflex-camera`): the motions' pivots, gears
-// and rates come from the hints, and the callouts, tags and the tour's rays and power paths are given in millimetres
+// and rates come from the hints, and the callouts, tags and the film's rays and power paths are given in millimetres
 // in the camera's frame (M); only the explode and camera distances are in model units. Run it after every build:
 //   node objects/reflex-camera/content.mjs
 import { builtInCode, pose, r4, readHints, space, writeContent } from '../../scripts/kit/content.mjs';
@@ -74,7 +74,7 @@ const annotations = [
   { title: 'Focusing screen', text: 'Ground glass on top of the mirror box. You look down at the picture on it, the right way up but reversed left to right.', node: 'screen', position: M(20, 43.2, 52), explode: 0.4, camera: pose(M(0, 66, 41), [-34, 20], 1.75) },
 ];
 
-// ------------------------------------------------------------------ tour
+// ------------------------------------------------------------------ film
 const lensNodes = ['lens', 'optics', 'focus_ring'];
 const blades = [...Array.from({ length: 5 }, (_, k) => `shutter_blade_${k}`), ...Array.from({ length: 5 }, (_, k) => `iris_blade_${k}`)];
 /** A ray from in front of the lens to the mirror and up to the screen: at height h (mm) entering, bent to hit the mirror at m. */
@@ -82,7 +82,6 @@ const reflexRay = (h, m) => {
   const zm = 41 - m;
   return [M(0, h, 160), M(0, h * 0.82, 128), M(0, m, zm), M(0, 41.6, zm)];
 };
-const filmRay = (h, m) => [M(0, h, 160), M(0, h * 0.82, 128), M(0, -m, 0.1)];
 // The power path, in mm: the knob, its gear, the idler, the cross gear, along the cross shaft to the drive shaft and its key.
 const mm = (p) => p.map((v, i) => (v - H.space.origin[i]) * MM);
 const G = (name) => mm(H.gears[name].at);
@@ -105,146 +104,90 @@ const magazinePath = [
   flowTo('take_up_spool', [0, 30.4, -22.5]),
 ];
 
-const how = [
+/** What stays solid through the film: the lens's glass and what the release and the knob move, and the film. The body,
+ *  the mirror box, the lens's mount, the finder and the magazine are glass, so the mirror and the flaps show. The dark
+ *  slide is pulled out as the film starts, and left out of the picture. */
+const MOVING = [
+  'optics',
+  'focus_ring',
+  ...blades,
+  'mirror',
+  'flap_upper',
+  'flap_lower',
+  'release_button',
+  'knob',
+  'wind_gear',
+  'idler_gear',
+  'cross_shaft',
+  'drive_shaft',
+  'flap_barrel',
+  'magazine_gear',
+  'magazine_input',
+  'magazine_idler',
+  'spool_drive',
+  'take_up_spool',
+  'supply_spool',
+  'film',
+];
+/** The release in slow motion: its 82 ms at 1/125 s takes 3.3 s. The same in every shot, so the film runs the same however
+ *  it's reached. */
+const SLOW = 1 / 40;
+const film = [
   {
-    label: 'Light',
-    title: 'Looking down at the picture',
-    text: [
-      'Open the hood and look down: the picture is right there on a sheet of ground glass on top of the camera. The lens makes it, and a mirror at 45° behind the lens throws it up to the screen.',
-      'The screen is exactly as far from the lens as the film is, 74.9 mm by way of the mirror, so whatever is sharp on the screen will be sharp on the film. It is the right way up, but reversed left to right, as anything in a mirror is.',
-    ],
-    angle: [-72, 14],
-    fill: 0.8,
-    focus: [...lensNodes, 'mirror', 'screen'],
-    hide: ['finder'],
+    chapter: 'Focus',
+    caption: 'Focusing screws the lens out until the picture the mirror throws up to the screen is sharp.',
+    duration: 6,
+    angle: [-56, 28],
+    fill: 0.6,
+    rate: SLOW,
+    focus: MOVING,
+    frame: [...lensNodes, 'mirror', 'screen'],
+    hide: ['dark_slide'],
     carries: 'light',
     flow: reflexRay(12, 6),
     flows: [reflexRay(0, 0), reflexRay(-12, -6)],
     tags: [
-      { node: 'mirror', text: 'Mirror at 45°', at: M(-30, 14, 27) },
-      { node: 'screen', text: 'Screen', at: M(-30, 43.2, 60) },
+      { node: 'mirror', text: 'mirror', at: M(-30, 14, 27), ride: true },
+      { node: 'screen', text: 'screen', at: M(-30, 43.2, 60) },
     ],
-    chart: 'reflex-path',
-    settings: { focus: 0, slide: 'in' },
+    cues: [
+      { at: 0, do: 'slide', to: true },
+      { at: 1, do: 'focus', to: 2, over: 4 },
+    ],
   },
   {
-    label: 'Focus',
-    title: 'Focusing: the glass comes forward',
-    text: [
-      'An 80 mm lens brings distant things to a point 80 mm behind it. Anything nearer forms its picture further back, so the glass has to come forward to keep it on the film (and on the screen): 3.4 mm for something 2 m away, 8.75 mm for the nearest 0.9 m.',
-      'Turning the focusing ring screws the whole optical unit out on a fine thread, a helicoid, while the bayonet stays put. Try it, and watch the picture on the screen come sharp as the lens comes out.',
-    ],
-    angle: [-70, 12],
-    fill: 0.72,
-    focus: [...lensNodes],
-    tags: [{ node: 'focus_ring', text: 'Focusing ring', at: M(0, 35, 106) }],
-    try: 'focus',
-    chart: 'reflex-focus',
-    settings: { focus: 0 },
-  },
-  {
-    label: 'Shutter',
-    title: 'A shutter inside the lens',
-    text: [
-      'There is no shutter in the body to speak of: each lens carries its own, five thin blades between the front and back glass, with the five blades of the iris beside them. The blades open from the middle and shut again, so the whole picture is lit at once, and a flash can be used at any speed.',
-      'The rings set the speed, 1 s to 1/500 s, and the stop, f/2.8 to f/22. Each step on either ring halves or doubles the light, so many pairs give the same exposure. While you look, the iris stays wide open for a bright screen; it closes to the stop set only when you take the picture. Here it closes as you turn the ring.',
-    ],
-    angle: [26, 10],
-    fill: 0.62,
-    focus: [...blades, 'aperture_ring', 'speed_ring'],
-    frame: [...blades],
-    try: 'aperture',
-    chart: 'light-pairs',
-    settings: { aperture: 8 },
-  },
-  {
-    label: 'Release',
-    title: 'Pressing the release',
-    text: [
-      'A press of the button starts a chain of events, all over in a few hundredths of a second. The lens’s shutter, open while you looked, snaps shut and the iris closes down. The mirror swings up out of the light. Two flaps behind it, which kept the film dark while the lens was open, fold out of the way. Only then, 50 ms in, does the shutter in the lens open for the exposure.',
-      'Letting go closes the flaps again. The mirror stays up and the finder dark until you wind on. Fire it in slow motion and watch each step take its turn; the chart is drawn from the factory’s own timing chart.',
-    ],
-    angle: [-64, 8],
-    fill: 0.72,
-    focus: ['mirror', 'flap_upper', 'flap_lower', ...blades, 'release_button', 'drive_shaft'],
+    chapter: 'Fire',
+    caption: 'The release flips up the mirror and opens the flaps, and only then fires the lens’s shutter.',
+    duration: 6,
+    angle: [-80, 34],
+    fill: 0.6,
+    rate: SLOW,
+    focus: MOVING,
     frame: ['mirror', 'flap_upper', 'flap_lower', 'optics'],
+    hide: ['dark_slide'],
     tags: [
-      { node: 'mirror', text: 'Mirror', at: M(-30, 14, 27) },
-      { node: 'flap_upper', text: 'Rear flaps', at: M(-30, 20, 6.6) },
-      { node: 'optics', text: 'Shutter', at: M(-30, 0, 88) },
+      { node: 'mirror', text: 'mirror', at: M(-30, 14, 27), ride: true },
+      { node: 'flap_upper', text: 'rear flaps', at: M(-30, 20, 6.6), ride: true },
     ],
-    rate: 1 / 40,
-    try: 'shutter',
-    chart: 'release-sequence',
-    settings: { speed: 1 / 125, slide: 'out' },
+    cues: [{ at: 1, do: 'fire' }],
   },
   {
-    label: 'Winding',
-    title: 'One turn puts it all back',
-    text: [
-      'The knob on the side turns a gear train on the right-hand wall. One turn turns the drive key back 309°, which winds the lens’s shutter and opens its blades and iris for viewing; a cam on the knob’s shaft lowers the mirror; the barrel that works the flaps is wound; and the last gear reaches through the back of the body into the magazine, which winds the film on one frame.',
-      'Firing let the key spin the other way, driven by its own spring, while a ratchet let the knob stand still. Take a picture and turn the knob, and watch the power go round.',
-    ],
-    angle: [-98, 10],
-    fill: 0.85,
-    focus: ['knob', 'mechanism_plate', 'wind_gear', 'idler_gear', 'flap_barrel', 'magazine_gear', 'cross_shaft', 'drive_shaft', 'magazine_input', 'magazine_idler', 'spool_drive', 'take_up_spool'],
-    frame: ['knob', 'mechanism_plate', 'drive_shaft'],
+    chapter: 'Wind on',
+    caption: 'One turn of the knob lowers the mirror, cocks the shutter and winds the film on a frame.',
+    duration: 6,
+    angle: [-104, 28],
+    fill: 0.6,
+    rate: SLOW,
+    focus: MOVING,
+    frame: ['knob', 'mechanism_plate', 'drive_shaft', 'take_up_spool'],
+    hide: ['dark_slide'],
     flow: windPath,
     flows: [magazinePath],
     tags: [
-      { node: 'drive_shaft', text: 'Drive key', at: M(0, -23, 71) },
-      // G() gives millimetres (for the flow paths); a tag wants model space, as the barrel's pivot does.
-      { node: 'flap_barrel', text: 'Flaps’ spring', at: H.gears.aux.at },
+      { node: 'knob', text: 'knob' },
+      { node: 'drive_shaft', text: 'drive key', at: M(0, -23, 71) },
     ],
-    try: 'advance',
-    chart: {
-      type: 'ladder',
-      title: 'Turns for one turn of the knob',
-      caption: 'The gears between the knob and the lens turn its drive key back 30/35 of a turn, the 309° the release spun it.',
-      unit: 'Turns',
-      rungs: [
-        { name: 'Knob', value: 1, note: '1 turn', node: 'knob' },
-        { name: 'Idler', value: 1.875, step: '×1.88', note: '1.9 turns', node: 'idler_gear' },
-        { name: 'Drive key', value: 0.857, step: '×0.46', note: '309°', node: 'drive_shaft' },
-        { name: 'Magazine', value: 1.5, step: '×1.75', note: '1½ turns', node: 'magazine_gear' },
-      ],
-    },
-    settings: { slide: 'out' },
-  },
-  {
-    label: 'Magazine',
-    title: 'Film in a box of its own',
-    text: [
-      'The film lives in the magazine on the back, not in the camera. Twelve frames of 120 film, 56 mm square, run up from the bottom spool, round a roller, flat across the picture window, round another roller and onto the top spool. A pressure plate behind holds it flat.',
-      'In front of the film is the dark slide. Push it in and the magazine can come off in the middle of a roll, to change from colour to black and white and back; with it in, the camera won’t fire. The insert slides out of the side for loading.',
-    ],
-    angle: [-130, 18],
-    fill: 0.8,
-    explode: 0.24,
-    focus: ['magazine', 'insert', 'supply_spool', 'take_up_spool', 'film', 'dark_slide'],
-    tags: [
-      { node: 'dark_slide', text: 'Dark slide', at: M(30, 50, 2) },
-      { node: 'take_up_spool', text: 'Take-up spool', at: M(-20, 43, -22.5) },
-      { node: 'supply_spool', text: 'Supply spool', at: M(-20, -42, -22.5) },
-    ],
-    try: 'slide',
-    chart: 'film-roll',
-    settings: { slide: 'in' },
-  },
-  {
-    label: 'Flash',
-    title: 'Why a shutter in every lens',
-    text: [
-      'A focal-plane shutter, like the rangefinder’s cloth curtains, uncovers the film as a moving slit; above 1/50 s it never has the whole frame open, so a flash would light only a stripe. A leaf shutter opens from the middle and has the whole picture open at once at every speed.',
-      'The price is a shutter in every lens, and a body that needs its own flaps to keep the film dark while you look through the open lens. Fire at 1/500 s and watch the blades: they are barely open before they shut.',
-    ],
-    angle: [8, 6],
-    fill: 0.6,
-    focus: [...blades],
-    rate: 1 / 120,
-    try: 'shutter',
-    chart: 'leaf-shutter',
-    settings: { speed: 1 / 500, slide: 'out' },
+    cues: [{ at: 1, do: 'wind-on' }],
   },
 ];
 
@@ -273,7 +216,7 @@ writeContent('reflex-camera', {
   parts,
   annotations,
   motion,
-  how,
+  film,
   credit: builtInCode('Medium-format SLR, after the Hasselblad 500C/M', 'Laid out from the 500C/M’s published dimensions and the factory service manual’s exploded views and release-sequence chart.'),
   build: { generate: 'objects/reflex-camera/generate.mjs', hints: 'objects/reflex-camera/hints.json' },
 });

@@ -1583,153 +1583,43 @@
       "turn": 0.672
     }
   ],
-  "how": [
+  "film": [
     {
-      "label": "Lens",
-      "title": "The lens makes the picture",
-      "text": [
-        "Light from every point of a scene spreads out in all directions. The lens catches a cone of it from each point and bends it back to a point on the film, 27.8 mm behind the mount. All those points together are the picture: upside down, back to front, and 24 by 36 mm.",
-        "Eight glass elements share the bending, so the picture stays sharp from the middle to the corners even with the iris wide open at f/1.4."
-      ],
+      "chapter": "Focus",
+      "caption": "Turning the ring screws the lens out to focus at 1 m; its cam sets the rangefinder to match.",
+      "duration": 6,
       "angle": [
-        62,
-        12
+        48,
+        22
       ],
-      "fill": 0.8,
+      "fill": 0.55,
+      "rate": 0.008333333333333333,
       "focus": [
         "optics",
-        "film",
-        "shutter"
-      ],
-      "frame": [
-        "optics",
-        "shutter"
-      ],
-      "carries": "light",
-      "flow": [
-        [
-          0.0964,
-          0.4905,
-          0.8632
-        ],
-        [
-          0.0964,
-          0.4431,
-          0.4126
-        ],
-        [
-          0.0964,
-          0.2851,
-          -0.3699
-        ]
-      ],
-      "flows": [
-        [
-          [
-            0.0964,
-            0.3983,
-            0.8632
-          ],
-          [
-            0.0964,
-            0.3509,
-            0.4126
-          ],
-          [
-            0.0964,
-            0.2851,
-            -0.3699
-          ]
-        ],
-        [
-          [
-            0.0964,
-            0.2831,
-            0.8632
-          ],
-          [
-            0.0964,
-            0.3304,
-            0.4126
-          ],
-          [
-            0.0964,
-            0.3962,
-            -0.3699
-          ]
-        ],
-        [
-          [
-            0.0964,
-            0.1909,
-            0.8632
-          ],
-          [
-            0.0964,
-            0.2383,
-            0.4126
-          ],
-          [
-            0.0964,
-            0.3962,
-            -0.3699
-          ]
-        ]
-      ],
-      "tags": [
-        {
-          "node": "optics",
-          "text": "Eight elements",
-          "at": [
-            0.0964,
-            0.566,
-            0.2692
-          ]
-        },
-        {
-          "node": "film",
-          "text": "Film",
-          "at": [
-            0.3012,
-            0.525,
-            -0.3699
-          ]
-        }
-      ],
-      "settings": {
-        "focus": 0,
-        "aperture": 1.4
-      }
-    },
-    {
-      "label": "Focus",
-      "title": "Focusing: moving the glass",
-      "text": [
-        "A lens brings distant things to a point at its focal length. Anything nearer forms its image a little further back, so to keep it on the film the glass has to come forward: 1.4 mm for something 2 m away, 4.5 mm for 0.7 m.",
-        "Turning the focusing ring screws the whole optical unit out on a fine thread, a helicoid. Try it, and watch the front of the lens come forward."
-      ],
-      "angle": [
-        78,
-        14
-      ],
-      "fill": 0.75,
-      "focus": [
-        "lens",
         "focus_ring",
-        "optics",
-        "aperture_ring",
-        "hood"
+        "roller_lever",
+        "swinging_lens",
+        "release_button",
+        "first_curtain",
+        "second_curtain",
+        "roller_a1",
+        "film",
+        "cassette_spool",
+        "sprocket",
+        "take_up_spool",
+        "advance_gear",
+        "advance_lever"
       ],
       "frame": [
-        "lens",
-        "optics"
+        "optics",
+        "focus_ring",
+        "roller_lever",
+        "swinging_lens"
       ],
-      "chart": "focus-extension",
-      "try": "focus",
       "tags": [
         {
           "node": "focus_ring",
-          "text": "Focusing ring",
+          "text": "focusing ring",
           "at": [
             0.0964,
             0.6172,
@@ -1737,314 +1627,63 @@
           ]
         },
         {
-          "node": "optics",
-          "text": "Optical unit",
-          "at": [
-            0.0964,
-            0.566,
-            0.3921
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Rangefinder",
-      "title": "Two views of one subject",
-      "text": [
-        "The small window and the viewfinder look at the same scene from 68.5 mm apart. A prism behind the small window sends its view across the camera, through a moving lens, to a half-silvered prism behind the eyepiece, which lays it over the direct view as a bright patch in the middle of the finder.",
-        "For a subject 2 m away, the small window’s line of sight has to turn in by 1.96° to meet it. Until it does, the patch shows the subject twice, side by side. Focus until the two pictures meet."
-      ],
-      "angle": [
-        -18,
-        34
-      ],
-      "fill": 0.8,
-      "focus": [
-        "rangefinder",
-        "swinging_lens",
-        "frame_mask"
-      ],
-      "carries": "light",
-      "flow": [
-        [
-          -0.2375,
-          0.6843,
-          0.3511
-        ],
-        [
-          -0.2375,
-          0.6843,
-          -0.0872
-        ],
-        [
-          -0.2375,
-          0.6843,
-          -0.1712
-        ],
-        [
-          0.4605,
-          0.6843,
-          -0.1712
-        ],
-        [
-          0.4605,
-          0.6843,
-          -0.4344
-        ],
-        [
-          0.4605,
-          0.6843,
-          -0.6321
-        ]
-      ],
-      "flows": [
-        [
-          [
-            0.4605,
-            0.7109,
-            0.3511
-          ],
-          [
-            0.4605,
-            0.7109,
-            -0.0954
-          ],
-          [
-            0.4605,
-            0.7109,
-            -0.4344
-          ],
-          [
-            0.4605,
-            0.7109,
-            -0.6321
-          ]
-        ],
-        [
-          [
-            0.2004,
-            0.6986,
-            0.0848
-          ],
-          [
-            0.2004,
-            0.6986,
-            -0.1712
-          ],
-          [
-            0.4605,
-            0.6986,
-            -0.1712
-          ],
-          [
-            0.4605,
-            0.6986,
-            -0.4344
-          ]
-        ]
-      ],
-      "tags": [
-        {
-          "node": "top_plate",
-          "text": "Rangefinder window",
-          "at": [
-            -0.2375,
-            0.7319,
-            -0.0831
-          ]
-        },
-        {
-          "node": "top_plate",
-          "text": "Viewfinder window",
-          "at": [
-            0.3991,
-            0.6213,
-            -0.0913
-          ]
-        },
-        {
-          "node": "swinging_lens",
-          "text": "Moving lens",
-          "at": [
-            -0.1745,
-            0.7268,
-            -0.1712
-          ]
-        },
-        {
-          "node": "rangefinder",
-          "text": "Beam splitter",
-          "at": [
-            0.4165,
-            0.6587,
-            -0.2071
-          ]
-        }
-      ],
-      "chart": {
-        "type": "rangefinder-view",
-        "subject": 2
-      },
-      "try": "focus",
-      "settings": {
-        "focus": 0
-      }
-    },
-    {
-      "label": "Coupling",
-      "title": "The lens tells the rangefinder",
-      "text": [
-        "The rangefinder has to know where the lens is focused. On the back of the optical unit is a cam: as the lens comes forward, it pushes a small roller in the camera’s mount, and the roller’s arm turns a shaft that rises into the rangefinder.",
-        "At its top the same shaft swings the moving lens about a millimetre across the beam, which tilts the small window’s view by up to 5.6°: always the angle to the distance the lens is set at. So when the two pictures meet, the lens is focused on the subject."
-      ],
-      "angle": [
-        -34,
-        20
-      ],
-      "fill": 0.7,
-      "focus": [
-        "roller_lever",
-        "swinging_lens",
-        "rf_cam"
-      ],
-      "frame": [
-        "roller_lever",
-        "rf_cam"
-      ],
-      "tags": [
-        {
-          "node": "rf_cam",
-          "text": "Cam",
-          "at": [
-            0.0682,
-            0.523,
-            -0.1507
-          ]
-        },
-        {
           "node": "roller_lever",
-          "text": "Roller",
+          "text": "cam and roller",
           "at": [
             0.0672,
             0.5312,
             -0.1692
           ],
           "ride": true
-        },
-        {
-          "node": "roller_lever",
-          "text": "Shaft",
-          "at": [
-            -0.1284,
-            0.609,
-            -0.1866
-          ]
-        },
-        {
-          "node": "swinging_lens",
-          "text": "Moving lens",
-          "at": [
-            -0.1745,
-            0.7268,
-            -0.1712
-          ]
         }
       ],
-      "chart": {
-        "type": "rangefinder-triangle",
-        "subject": 2
-      },
-      "try": "focus"
-    },
-    {
-      "label": "Aperture",
-      "title": "The iris: how much light",
-      "text": [
-        "Between the lens’s glass elements are nine thin blades. Turning the aperture ring swings them in on their pins together, closing a round hole in the middle of the lens.",
-        "Each stop halves the light, so f/16 lets in 1/128 of what f/1.4 does. Stopping down also deepens how much in front of and behind the subject looks sharp: the pairs of numbers beside the distance scale show how much."
-      ],
-      "angle": [
-        8,
-        10
-      ],
-      "fill": 0.62,
-      "focus": [
-        "iris_blade_0",
-        "iris_blade_1",
-        "iris_blade_2",
-        "iris_blade_3",
-        "iris_blade_4",
-        "iris_blade_5",
-        "iris_blade_6",
-        "iris_blade_7",
-        "iris_blade_8",
-        "iris_ring",
-        "aperture_ring"
-      ],
-      "frame": [
-        "iris_blade_0",
-        "iris_blade_1",
-        "iris_blade_2",
-        "iris_blade_3",
-        "iris_blade_4",
-        "iris_blade_5",
-        "iris_blade_6",
-        "iris_blade_7",
-        "iris_blade_8",
-        "iris_ring"
-      ],
-      "chart": "iris-stops",
-      "try": "aperture",
-      "tags": [
+      "cues": [
         {
-          "node": "aperture_ring",
-          "text": "Aperture ring",
-          "at": [
-            0.2808,
-            0.5455,
-            0.2364
-          ]
+          "at": 0,
+          "do": "speed",
+          "to": 0.01
+        },
+        {
+          "at": 1,
+          "do": "focus",
+          "to": 1,
+          "over": 4
         }
-      ],
-      "settings": {
-        "focus": 0
-      }
+      ]
     },
     {
-      "label": "Shutter",
-      "title": "Two curtains and a slit",
-      "text": [
-        "Just in front of the film are two curtains of rubberised cloth. Pressing the release lets the first go: its spring roller pulls it across the frame in about 18 ms, uncovering the film. After the time set on the dial the second follows, and covers it again.",
-        "So the exposure is the delay between the two. At 1/1000 s the second curtain runs only 2 mm behind the first, a narrow slit of light sweeping across the film; every part of it still gets the same thousandth of a second. Here it runs slowed down."
-      ],
+      "chapter": "Fire",
+      "caption": "The release lets the first curtain uncover the film; 1/100 s later the second covers it.",
+      "duration": 6,
       "angle": [
-        196,
-        8
+        12,
+        46
       ],
-      "fill": 0.72,
+      "fill": 0.6,
+      "rate": 0.008333333333333333,
       "focus": [
-        "shutter",
+        "optics",
+        "focus_ring",
+        "roller_lever",
+        "swinging_lens",
+        "release_button",
         "first_curtain",
         "second_curtain",
         "roller_a1",
-        "roller_a2",
-        "roller_b1",
-        "roller_b2"
+        "film",
+        "cassette_spool",
+        "sprocket",
+        "take_up_spool",
+        "advance_gear",
+        "advance_lever"
       ],
       "frame": [
-        "shutter"
-      ],
-      "hide": [
-        "back_door",
-        "pressure_plate",
         "film"
       ],
-      "chart": "shutter-timing",
-      "try": "shutter",
       "tags": [
         {
           "node": "first_curtain",
-          "text": "First curtain",
+          "text": "first curtain",
           "at": [
             0.1379,
             0.4759,
@@ -2053,7 +1692,7 @@
         },
         {
           "node": "second_curtain",
-          "text": "Second curtain",
+          "text": "second curtain",
           "at": [
             -0.1591,
             0.2096,
@@ -2061,46 +1700,42 @@
           ]
         }
       ],
-      "settings": {
-        "speed": 0.004
-      }
+      "cues": [
+        {
+          "at": 1,
+          "do": "fire"
+        }
+      ]
     },
     {
-      "label": "Winding on",
-      "title": "Winding on, and cocking the shutter",
-      "text": [
-        "Two strokes of the lever turn the sprocket once. Its teeth sit in the film’s perforations, so one turn pulls exactly one frame, 38 mm, out of the cassette and across the gate, while a slipping clutch lets the take-up spool reel it in.",
-        "The same strokes wind both curtains back across the frame together, overlapping so no light gets in, and set their springs for the next picture. Until it has fired, the lever won’t move: you can’t wind on twice."
-      ],
+      "chapter": "Wind on",
+      "caption": "Two strokes of the lever pull the next frame across and wind both curtains back.",
+      "duration": 6,
       "angle": [
-        206,
-        38
+        -22,
+        44
       ],
-      "fill": 0.8,
+      "fill": 0.6,
+      "rate": 0.008333333333333333,
       "focus": [
-        "film",
-        "film_cassette",
-        "take_up_spool",
-        "sprocket",
-        "advance_gear",
-        "advance_lever",
-        "shutter",
+        "optics",
+        "focus_ring",
+        "roller_lever",
+        "swinging_lens",
+        "release_button",
         "first_curtain",
         "second_curtain",
         "roller_a1",
-        "roller_a2",
-        "roller_b1",
-        "roller_b2"
+        "film",
+        "cassette_spool",
+        "sprocket",
+        "take_up_spool",
+        "advance_gear",
+        "advance_lever"
       ],
       "frame": [
         "film",
-        "advance_lever",
-        "take_up_spool",
-        "film_cassette"
-      ],
-      "hide": [
-        "back_door",
-        "pressure_plate"
+        "advance_lever"
       ],
       "flow": [
         {
@@ -2148,45 +1783,35 @@
       ],
       "tags": [
         {
-          "node": "sprocket",
-          "text": "Sprocket",
-          "at": [
-            -0.2923,
-            0.5271,
-            -0.3822
-          ]
-        },
-        {
-          "node": "take_up_spool",
-          "text": "Take-up spool",
-          "at": [
-            -0.5432,
-            0.5476,
-            -0.3453
-          ]
-        },
-        {
-          "node": "film_cassette",
-          "text": "Cassette",
-          "at": [
-            0.5322,
-            0.5476,
-            -0.3863
-          ]
-        },
-        {
           "node": "advance_lever",
-          "text": "Advance lever",
+          "text": "advance lever",
           "at": [
             -0.2718,
             0.7882,
             -0.3658
           ],
           "ride": true
+        },
+        {
+          "node": "sprocket",
+          "text": "sprocket",
+          "at": [
+            -0.2923,
+            0.5271,
+            -0.3822
+          ]
         }
       ],
-      "chart": "film-advance",
-      "try": "advance"
+      "cues": [
+        {
+          "at": 1,
+          "do": "wind-on"
+        },
+        {
+          "at": 3,
+          "do": "wind-on"
+        }
+      ]
     }
   ]
 }
