@@ -1,0 +1,1502 @@
+{
+  "order": 16,
+  "title": "Pin Tumbler Lock",
+  "hook": "Five pin stacks, each split at its own height: only the right key lifts every split to one line.",
+  "category": "home",
+  "summary": [
+    "A door lock has to know one key from thousands of others, with no power, for decades. A pin tumbler lock does it with a line: the plug that turns with the key can only turn while nothing crosses the thin gap between it and the shell round it.",
+    "Five stacks of pins sit in holes drilled across that gap, pushed down by springs, and each stack is split in two at a different height. The key’s cuts lift each stack by just the right amount to bring every split onto the gap. Then the plug turns, and its tailpiece turns the deadbolt.",
+    "This one is laid out from Schlage’s published keying figures: cuts 3.97 mm apart, ten depths 0.381 mm apart, pins 2.92 mm across. On the model the key slides in and the pins ride its edge, worked out from the same figures; try the right key and a wrong one."
+  ],
+  "model": "models/door-lock.glb",
+  "viewAngle": [
+    -38,
+    22
+  ],
+  "explodeAngle": [
+    -46,
+    24
+  ],
+  "explodeDuration": 3000,
+  "facts": [
+    {
+      "label": "Pin stacks",
+      "value": "5, each pin 2.92 mm across"
+    },
+    {
+      "label": "Cut depths",
+      "value": "10, 0.381 mm (.015 in) apart"
+    },
+    {
+      "label": "This key",
+      "value": "2-7-4-9-5"
+    },
+    {
+      "label": "Plug",
+      "value": "12.7 mm (½ in) across"
+    },
+    {
+      "label": "Combinations",
+      "value": "up to 100,000"
+    },
+    {
+      "label": "Real size",
+      "value": "shell 17 × 27 × 30 mm, key 54 mm"
+    }
+  ],
+  "parts": [
+    {
+      "node": "key",
+      "label": "Key",
+      "group": "Key",
+      "about": "Nickel silver, cut 2-7-4-9-5 from bow to tip. Its shoulder stops it against the plug’s face, so each cut ends up under its own pin.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 1.1936,
+      "window": [
+        0.66,
+        0.82
+      ]
+    },
+    {
+      "node": "wrong_key",
+      "label": "Wrong key",
+      "group": "Key",
+      "about": "The same blank cut 2-7-4-6-5: its fourth cut is three steps, 1.14 mm, shallower than it should be.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "spring_cover",
+      "label": "Spring cover",
+      "group": "Pin stacks",
+      "about": "A strip pressed over the tops of the shell’s five chambers. The springs push against it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.4945,
+      "window": [
+        0.2,
+        0.36
+      ]
+    },
+    {
+      "node": "springs",
+      "label": "Springs",
+      "group": "Pin stacks",
+      "about": "Five small coil springs, one on each stack. They push every stack down, so with no key in, each driver pin drops across into the plug.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.4604,
+      "window": [
+        0.3,
+        0.46
+      ]
+    },
+    {
+      "node": "driver_pin_1",
+      "label": "Driver pin 1",
+      "group": "Pin stacks",
+      "about": "Steel, 5.97 mm. The maker pairs long driver pins with shallow cuts and short ones with deep cuts, so every stack is close to the same height. With no key in, it sits half in the plug and holds it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3922,
+      "window": [
+        0.4,
+        0.56
+      ]
+    },
+    {
+      "node": "driver_pin_2",
+      "label": "Driver pin 2",
+      "group": "Pin stacks",
+      "about": "Steel, 4.19 mm. The maker pairs long driver pins with shallow cuts and short ones with deep cuts, so every stack is close to the same height.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3922,
+      "window": [
+        0.4,
+        0.56
+      ]
+    },
+    {
+      "node": "driver_pin_3",
+      "label": "Driver pin 3",
+      "group": "Pin stacks",
+      "about": "Steel, 5.08 mm. The maker pairs long driver pins with shallow cuts and short ones with deep cuts, so every stack is close to the same height.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3922,
+      "window": [
+        0.4,
+        0.56
+      ]
+    },
+    {
+      "node": "driver_pin_4",
+      "label": "Driver pin 4",
+      "group": "Pin stacks",
+      "about": "Steel, 4.19 mm. The maker pairs long driver pins with shallow cuts and short ones with deep cuts, so every stack is close to the same height.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3922,
+      "window": [
+        0.4,
+        0.56
+      ]
+    },
+    {
+      "node": "driver_pin_5",
+      "label": "Driver pin 5",
+      "group": "Pin stacks",
+      "about": "Steel, 5.08 mm. The maker pairs long driver pins with shallow cuts and short ones with deep cuts, so every stack is close to the same height.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3922,
+      "window": [
+        0.4,
+        0.56
+      ]
+    },
+    {
+      "node": "key_pin_1",
+      "label": "Key pin 1",
+      "group": "Pin stacks",
+      "about": "First key pin: 4.95 mm, for a 2 cut. Its tip rides the key; its top has to end exactly at the plug’s surface.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3581,
+      "window": [
+        0.5,
+        0.66
+      ]
+    },
+    {
+      "node": "key_pin_2",
+      "label": "Key pin 2",
+      "group": "Pin stacks",
+      "about": "Second key pin: 6.86 mm, for a 7 cut. Its tip rides the key; its top has to end exactly at the plug’s surface.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3581,
+      "window": [
+        0.5,
+        0.66
+      ]
+    },
+    {
+      "node": "key_pin_3",
+      "label": "Key pin 3",
+      "group": "Pin stacks",
+      "about": "Third key pin: 5.71 mm, for a 4 cut. Its tip rides the key; its top has to end exactly at the plug’s surface.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3581,
+      "window": [
+        0.5,
+        0.66
+      ]
+    },
+    {
+      "node": "key_pin_4",
+      "label": "Key pin 4",
+      "group": "Pin stacks",
+      "about": "Fourth key pin: 7.62 mm, for a 9 cut. Its tip rides the key; its top has to end exactly at the plug’s surface.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3581,
+      "window": [
+        0.5,
+        0.66
+      ]
+    },
+    {
+      "node": "key_pin_5",
+      "label": "Key pin 5",
+      "group": "Pin stacks",
+      "about": "Fifth key pin: 6.10 mm, for a 5 cut. Its tip rides the key; its top has to end exactly at the plug’s surface.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.3581,
+      "window": [
+        0.5,
+        0.66
+      ]
+    },
+    {
+      "node": "plug",
+      "label": "Plug",
+      "group": "Plug and shell",
+      "about": "The part that turns: brass, 12.7 mm across, with the keyway up its middle and five holes drilled down into it. Only it and what’s in it turn with the key.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.6821,
+      "window": [
+        0.82,
+        0.98
+      ]
+    },
+    {
+      "node": "shell",
+      "label": "Shell",
+      "group": "Plug and shell",
+      "about": "The fixed body. The plug turns in its bore; the five chambers drilled up through the ridge on top hold the driver pins and springs.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "retaining_clip",
+      "label": "Retaining clip",
+      "group": "Output",
+      "about": "A spring-steel horseshoe in a groove on the plug’s tail. It stops the plug sliding out of the front; take it off and the plug comes out, which is how a locksmith rekeys a lock.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.3751,
+      "window": [
+        0.1,
+        0.28
+      ]
+    },
+    {
+      "node": "tailpiece",
+      "label": "Tailpiece",
+      "group": "Output",
+      "about": "A flat steel bar in the slot across the plug’s tail. It reaches through the door to the deadbolt, and a quarter turn of it throws the bolt.",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "distance": 0.5116,
+      "window": [
+        0,
+        0.18
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Key",
+      "text": "The only part you push. Its five cuts, 3.97 mm apart, are ground to depths in steps of 0.381 mm: one depth for each pin stack.",
+      "node": "key",
+      "position": [
+        -0.1386,
+        0.1978,
+        0.179
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -1.9303,
+          1.3547,
+          2.3844
+        ],
+        "target": [
+          -0.1437,
+          0.1918,
+          -0.2643
+        ]
+      }
+    },
+    {
+      "title": "Pin stacks",
+      "text": "Each of the five holes holds a key pin, a driver pin and a spring. The key pins are cut to this key; the driver pins sit on them, pushed down.",
+      "node": "driver_pin_2",
+      "position": [
+        -0.1358,
+        0.3759,
+        -0.2274
+      ],
+      "explode": 0.52,
+      "camera": {
+        "position": [
+          -3.7589,
+          1.7596,
+          1.6148
+        ],
+        "target": [
+          -0.1607,
+          0.7435,
+          -0.2984
+        ]
+      }
+    },
+    {
+      "title": "Springs",
+      "text": "Each spring pushes its stack down onto the key. Pull the key out and they push every driver pin across into the plug, which locks it.",
+      "node": "springs",
+      "position": [
+        -0.1387,
+        0.4828,
+        -0.295
+      ],
+      "explode": 0.4,
+      "camera": {
+        "position": [
+          -3.189,
+          1.7909,
+          1.7442
+        ],
+        "target": [
+          -0.1607,
+          0.7435,
+          -0.2984
+        ]
+      }
+    },
+    {
+      "title": "Shear line",
+      "text": "Where the plug meets the shell: here, the edge of the brass plug in the face. With the right key all the way in, the split in every stack lands on it, to within a few hundredths of a millimetre.",
+      "node": "plug",
+      "position": [
+        -0.1607,
+        0.3487,
+        -0.0597
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -1.0401,
+          0.8076,
+          2.1169
+        ],
+        "target": [
+          -0.1607,
+          0.3086,
+          -0.0597
+        ]
+      }
+    },
+    {
+      "title": "Plug",
+      "text": "Turns as soon as nothing crosses the shear line. The key only lines the splits up; your wrist does the turning, and all the work on the bolt.",
+      "node": "plug",
+      "position": [
+        -0.0524,
+        0.1978,
+        -0.2643
+      ],
+      "explode": 0.9,
+      "camera": {
+        "position": [
+          -3.548,
+          1.4998,
+          2.5439
+        ],
+        "target": [
+          -0.1607,
+          0.2319,
+          -0.2984
+        ]
+      }
+    },
+    {
+      "title": "Retaining clip",
+      "text": "Holds the plug in from behind. A locksmith takes it off to slide the plug out and fit pins for a new key.",
+      "node": "retaining_clip",
+      "position": [
+        -0.0311,
+        0.1978,
+        -0.581
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -2.0591,
+          0.8706,
+          -3.3153
+        ],
+        "target": [
+          -0.3963,
+          0.1637,
+          -0.4352
+        ]
+      }
+    },
+    {
+      "title": "Tailpiece",
+      "text": "Turns with the plug and carries the turn through the door. In a deadbolt a quarter turn of it throws the bolt.",
+      "node": "tailpiece",
+      "position": [
+        -0.1607,
+        0.2933,
+        -0.8441
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -3.0601,
+          1.5805,
+          -2.2839
+        ],
+        "target": [
+          -0.3259,
+          0.2319,
+          -0.3694
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "plug",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        -0.1607,
+        0.2319,
+        -0.0597
+      ],
+      "control": "lockTurn",
+      "turn": -1
+    },
+    {
+      "node": "key",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "control": "lockKey",
+      "slide": [
+        0,
+        0,
+        0.0171
+      ]
+    },
+    {
+      "node": "key",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "control": "lockSwap",
+      "slide": [
+        -0.4434,
+        0,
+        0
+      ]
+    },
+    {
+      "node": "wrong_key",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "control": "lockWrong",
+      "slide": [
+        0,
+        0,
+        -0.0171
+      ]
+    },
+    {
+      "node": "wrong_key",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "control": "lockSwap",
+      "slide": [
+        -0.4434,
+        0,
+        0
+      ]
+    },
+    {
+      "node": "key_pin_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "driver_pin_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_0",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.01568,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.01282,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.00997,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.00712,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.00428,
+        0
+      ]
+    },
+    {
+      "node": "spring_1_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin1",
+      "slide": [
+        0,
+        0.00143,
+        0
+      ]
+    },
+    {
+      "node": "key_pin_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "driver_pin_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_0",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.01568,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.01282,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.00997,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.00712,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.00428,
+        0
+      ]
+    },
+    {
+      "node": "spring_2_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin2",
+      "slide": [
+        0,
+        0.00143,
+        0
+      ]
+    },
+    {
+      "node": "key_pin_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "driver_pin_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_0",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.01568,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.01282,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.00997,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.00712,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.00428,
+        0
+      ]
+    },
+    {
+      "node": "spring_3_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin3",
+      "slide": [
+        0,
+        0.00143,
+        0
+      ]
+    },
+    {
+      "node": "key_pin_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "driver_pin_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_0",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.01568,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.01282,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.00997,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.00712,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.00428,
+        0
+      ]
+    },
+    {
+      "node": "spring_4_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin4",
+      "slide": [
+        0,
+        0.00143,
+        0
+      ]
+    },
+    {
+      "node": "key_pin_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "driver_pin_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.0171,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_0",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.01568,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_1",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.01282,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_2",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.00997,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_3",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.00712,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_4",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.00428,
+        0
+      ]
+    },
+    {
+      "node": "spring_5_5",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "control": "lockPin5",
+      "slide": [
+        0,
+        0.00143,
+        0
+      ]
+    }
+  ],
+  "how": [
+    {
+      "label": "The idea",
+      "title": "Five split pins and one line",
+      "text": [
+        "The plug, the brass cylinder the key goes into, turns inside a fixed shell. Five stacks of pins cross the line between them, each pushed down by a spring, and each stack is split in two at a different height.",
+        "With no key, the upper pins reach down into the plug and hold it. The right key lifts each stack until its split sits exactly on that line, the shear line. Then nothing crosses it, and the plug can turn."
+      ],
+      "angle": [
+        72,
+        12
+      ],
+      "fill": 0.8,
+      "focus": [
+        "key",
+        "plug",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5",
+        "springs",
+        "tailpiece"
+      ],
+      "flow": [
+        {
+          "node": "key",
+          "at": [
+            -0.1386,
+            0.1978,
+            0.179
+          ]
+        },
+        {
+          "node": "key",
+          "at": [
+            -0.1437,
+            0.1918,
+            -0.2643
+          ]
+        },
+        [
+          -0.1607,
+          0.2319,
+          -0.2984
+        ],
+        [
+          -0.1607,
+          0.2319,
+          -0.6053
+        ],
+        [
+          -0.1607,
+          0.2319,
+          -0.9123
+        ]
+      ],
+      "tags": [
+        {
+          "node": "plug",
+          "text": "Shear line",
+          "at": [
+            -0.1607,
+            0.3402,
+            -0.2984
+          ]
+        }
+      ],
+      "chart": "lock-stacks"
+    },
+    {
+      "label": "Key in",
+      "title": "The blade lifts every stack in turn",
+      "text": [
+        "As the key slides in, its tip pushes each stack up against its spring, and every stack rises and falls over the cuts as they pass under it. The springs keep each key pin pressed on the key’s edge all the way.",
+        "Slide the key in and out. Only in the last fraction of a millimetre, with the shoulder against the plug’s face, does each cut sit under its own pin."
+      ],
+      "angle": [
+        86,
+        6
+      ],
+      "fill": 0.85,
+      "focus": [
+        "key",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5",
+        "springs"
+      ],
+      "frame": [
+        "plug",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5"
+      ],
+      "chart": "lock-stacks",
+      "try": "lock-insert"
+    },
+    {
+      "label": "The cuts",
+      "title": "Ten depths, 0.38 mm apart",
+      "text": [
+        "Each cut is ground with a 100° cutter to one of ten depths, 0.381 mm apart. This key is cut 2-7-4-9-5: depth 2 at the bow, depth 9, the deepest, fourth.",
+        "The pins are cut to match. A key pin is 0.381 mm longer for each step deeper its cut is, so its top always lands at the same height: on the shear line, 6.35 mm above the plug’s middle."
+      ],
+      "angle": [
+        90,
+        4
+      ],
+      "fill": 0.8,
+      "focus": [
+        "key",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5"
+      ],
+      "tags": [
+        {
+          "node": "key",
+          "text": "2",
+          "at": [
+            -0.1437,
+            0.2557,
+            -0.1597
+          ]
+        },
+        {
+          "node": "key",
+          "text": "7",
+          "at": [
+            -0.1437,
+            0.2232,
+            -0.2274
+          ]
+        },
+        {
+          "node": "key",
+          "text": "4",
+          "at": [
+            -0.1437,
+            0.2427,
+            -0.295
+          ]
+        },
+        {
+          "node": "key",
+          "text": "9",
+          "at": [
+            -0.1437,
+            0.2103,
+            -0.3627
+          ]
+        },
+        {
+          "node": "key",
+          "text": "5",
+          "at": [
+            -0.1437,
+            0.2362,
+            -0.4303
+          ]
+        }
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "How deep each cut goes",
+        "caption": "Into the blade from its top edge, cut by cut from the bow: 2-7-4-9-5.",
+        "unit": "Depth, mm",
+        "bars": [
+          {
+            "label": "1",
+            "value": 0.97,
+            "note": "depth 2"
+          },
+          {
+            "label": "2",
+            "value": 2.87,
+            "note": "depth 7"
+          },
+          {
+            "label": "3",
+            "value": 1.73,
+            "note": "depth 4"
+          },
+          {
+            "label": "4",
+            "value": 3.63,
+            "note": "depth 9"
+          },
+          {
+            "label": "5",
+            "value": 2.11,
+            "note": "depth 5"
+          }
+        ],
+        "picked": 3
+      }
+    },
+    {
+      "label": "Shear line",
+      "title": "Five splits on one line",
+      "text": [
+        "With the key all the way in, every key pin’s top and every driver pin’s bottom meet exactly at the plug’s surface. Nothing crosses from the shell into the plug.",
+        "Cut depth plus key pin is 12.70 mm for every depth, the plug’s diameter, and Schlage cuts its depths to within 0.05 mm. Keys that mustn’t open each other’s locks differ by at least two steps, 0.76 mm, somewhere: one step is too close to be sure of."
+      ],
+      "angle": [
+        90,
+        3
+      ],
+      "fill": 0.62,
+      "focus": [
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5"
+      ],
+      "frame": [
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5"
+      ],
+      "tags": [
+        {
+          "node": "plug",
+          "text": "Shear line",
+          "at": [
+            -0.1358,
+            0.3402,
+            -0.1597
+          ]
+        }
+      ],
+      "chart": "lock-stacks"
+    },
+    {
+      "label": "Turn",
+      "title": "Your wrist does the work",
+      "text": [
+        "It is easy to think the key opens the lock by pushing something. It doesn’t: pushing it in only lines the splits up. The turning is yours. The key turns the plug, the key pins ride round in it, and the driver pins stay behind in the shell.",
+        "The plug’s tail turns the tailpiece, and in a deadbolt a quarter turn of the tailpiece throws the bolt. Hold the button to turn the key."
+      ],
+      "angle": [
+        30,
+        18
+      ],
+      "fill": 0.78,
+      "focus": [
+        "key",
+        "plug",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "tailpiece",
+        "retaining_clip"
+      ],
+      "flow": [
+        {
+          "node": "key",
+          "at": [
+            -0.1386,
+            0.1978,
+            0.179
+          ]
+        },
+        [
+          -0.1607,
+          0.3086,
+          -0.0597
+        ],
+        [
+          -0.1607,
+          0.2319,
+          -0.2984
+        ],
+        [
+          -0.1607,
+          0.2319,
+          -0.6053
+        ],
+        [
+          -0.1607,
+          0.2319,
+          -0.9123
+        ]
+      ],
+      "try": "lock-turn"
+    },
+    {
+      "label": "Wrong key",
+      "title": "One cut off, and nothing turns",
+      "text": [
+        "The wrong key is cut 2-7-4-6-5. Four cuts match; the fourth is three steps too shallow, so it lifts the fourth key pin 1.14 mm too high, across the shear line into the shell.",
+        "Push as hard as you like: the plug moves a degree or so and stops on that one pin. Change keys, then hold to turn."
+      ],
+      "angle": [
+        76,
+        10
+      ],
+      "fill": 0.85,
+      "focus": [
+        "key",
+        "wrong_key",
+        "key_pin_1",
+        "key_pin_2",
+        "key_pin_3",
+        "key_pin_4",
+        "key_pin_5",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5"
+      ],
+      "frame": [
+        "plug",
+        "driver_pin_1",
+        "driver_pin_2",
+        "driver_pin_3",
+        "driver_pin_4",
+        "driver_pin_5"
+      ],
+      "chart": "lock-stacks",
+      "try": "lock-keys"
+    }
+  ],
+  "credit": {
+    "title": "Pin tumbler deadbolt cylinder, five pins",
+    "author": "3D of Things",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "built in code for this site",
+    "sourceUrl": "",
+    "extra": {
+      "label": "Sources",
+      "text": "Keyed to Schlage Classic specifications from the maker’s service manuals (Allegion): cut spacing, depths, pin lengths and plug size. Simplified: the keyway is a plain slot without the C profile’s wards, the shell is shown without the deadbolt’s housing and trim, the bolt is left out, and the springs are drawn as six even coils. No particular Schlage part; Schlage is named only for its published numbers."
+    }
+  },
+  "build": {
+    "generate": "objects/door-lock/generate.mjs",
+    "hints": "objects/door-lock/hints.json"
+  }
+}

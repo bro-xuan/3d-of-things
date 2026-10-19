@@ -10,8 +10,10 @@ import * as Rangefinder from '../viewer/filmcamera';
 import { STROKES, distanceLabel, slitWidth, speedLabel } from '../viewer/filmcamera';
 import * as Reflex from '../viewer/reflexcamera';
 import { FLOOR, G, LOW_AIR, MASS, corneringG } from '../viewer/aerocar';
+import { tapeTry } from './tapetry';
 // Only types: the viewer arrives with three.js, after the page is up.
 import type { Viewer } from '../viewer/Viewer';
+import { lockTry } from './locktry';
 
 /** Slow motion, for steps that run at full speed, is this fraction of real time. */
 const SLOW = 1 / 16;
@@ -258,6 +260,8 @@ export class Tour {
         state: () => this.viewer?.mechanismState ?? null,
         camera: () => this.viewer?.cameraState ?? null,
         aero: () => this.viewer?.aeroState ?? null,
+        lock: () => this.viewer?.lockState ?? null,
+        extinguisher: () => this.viewer?.extinguisherState ?? null,
         angleOf: (node) => this.viewer?.angleOf(node) ?? 0,
         time: () => this.viewer?.runTime ?? 0,
         selected: () => this.selected,
@@ -717,6 +721,70 @@ export class Tour {
         this.undoTry = () => this.viewer?.refillAir();
       }
       button(icons.reset, 'Refill the tanks', () => this.viewer?.refillAir());
+    } else if (kind === 'lock-insert' || kind === 'lock-turn' || kind === 'lock-keys') {
+      // A pin tumbler lock's key: src/pages/locktry.ts.
+      this.undoTry = lockTry(kind, host, readout, () => this.viewer, holdButton);
+    } else if (kind === 'tape-pull' || kind === 'tape-lock' || kind === 'tape-standout' || kind === 'tape-hook') {
+      // A tape measure's blade, lock and hook (src/pages/tapetry.ts).
+      this.undoTry = tapeTry(kind, host, readout, () => this.viewer);
+    } else if (kind === 'discharge' || kind === 'squeeze') {
+      // An extinguisher: pull the pin, squeeze the lever and watch the pressure and the powder fall; held upside down,
+      // only the nitrogen comes out. 'squeeze' starts with the pin already out.
+      const ext = () => this.viewer?.extinguisherState ?? null;
+      const pin = document.createElement('button');
+      pin.type = 'button';
+      pin.className = 'button button--try';
+      const pinLabel = (out: boolean) => (pin.innerHTML = `${out ? icons.reset : icons.lift}<span>${out ? 'Put the pin back' : 'Pull the pin'}</span>`);
+      let pulled = kind === 'squeeze';
+      this.viewer?.pullPin(pulled);
+      pinLabel(pulled);
+      pin.addEventListener('click', () => {
+        pulled = !pulled;
+        this.viewer?.pullPin(pulled);
+        pinLabel(pulled);
+      });
+      host.append(pin, holdButton('Squeeze the lever', 'Press and hold to squeeze', (on) => this.viewer?.squeezeLever(on)));
+      const group = document.createElement('div');
+      group.className = 'tour__choices';
+      group.setAttribute('role', 'radiogroup');
+      group.setAttribute('aria-label', 'Which way up');
+      const choose = (down: boolean) => {
+        this.viewer?.invertExtinguisher(down);
+        group.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-checked', String(k === (down ? 1 : 0))));
+      };
+      ['Upright', 'Upside down'].forEach((text, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'tour__choice';
+        b.setAttribute('role', 'radio');
+        b.textContent = text;
+        b.addEventListener('click', () => choose(i === 1));
+        group.append(b);
+      });
+      host.append(group);
+      choose(false);
+      const recharge = document.createElement('button');
+      recharge.type = 'button';
+      recharge.className = 'button button--try';
+      recharge.innerHTML = `${icons.reset}<span>Recharge</span>`;
+      recharge.addEventListener('click', () => this.viewer?.rechargeExtinguisher());
+      host.append(recharge);
+      readout(() => {
+        const s = ext();
+        if (!s) return '';
+        const left = `${s.bar.toFixed(1)} bar · ${s.powder.toFixed(2)} kg of powder left`;
+        if (s.blocked) return `The pin holds the lever: pull it first · ${left}`;
+        if (s.rate > 0) return `Powder out at ${s.rate.toFixed(2)} kg/s · ${left} · ${s.seconds.toFixed(1)} s`;
+        if (s.gasOnly) return s.inverted ? `Upside down: only nitrogen comes out · ${left}` : `The powder is spent: the last nitrogen blows through · ${left}`;
+        if (s.bar < 0.05) return `Empty · ${s.powder.toFixed(2)} kg of powder stays behind · Recharge to try again`;
+        return `${s.bar >= 7 && s.bar <= 9.8 ? 'In the green' : 'Out of the green'} · ${left}${s.seconds > 0 ? ` · ${s.seconds.toFixed(1)} s used` : ''}`;
+      });
+      this.undoTry = () => {
+        this.viewer?.squeezeLever(false);
+        this.viewer?.invertExtinguisher(false);
+        this.viewer?.pullPin(false);
+        this.viewer?.rechargeExtinguisher();
+      };
     } else if (kind === 'hold') {
       host.append(holdButton('Hold the balance', 'Press and hold to stop the balance', (on) => this.viewer?.hold(on)));
       const label = document.createElement('label');

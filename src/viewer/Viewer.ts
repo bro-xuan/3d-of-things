@@ -40,6 +40,9 @@ import { FilmCamera, type CameraState } from './filmcamera';
 import { ReflexCamera, type ReflexState } from './reflexcamera';
 import { Linkage } from './linkage';
 import { AeroCar, type AeroState, type FlightKind } from './aerocar';
+import { PinLock, type KeyName, type LockState } from './pinlock';
+import { TapeMeasure, type BladeLayout, type TapeState } from './tapemeasure';
+import { Extinguisher, type ExtinguisherState } from './extinguisher';
 import { Jets } from './jets';
 
 // Fast raycasts for hover and hotspot occlusion.
@@ -85,7 +88,7 @@ export interface ViewerOptions {
   onInteract?: () => void;
 }
 
-export type { AeroState, CameraState, CardContent, FlightKind, LookMode, MechanismState };
+export type { AeroState, CameraState, CardContent, ExtinguisherState, FlightKind, LookMode, MechanismState, TapeState };
 
 /** An orthographic line drawing of the assembled model, for the page's drawings. All of a model's drawings share
  *  one scale and one margin, so they line up as the views on a drawing sheet do. */
@@ -157,6 +160,11 @@ export class Viewer {
   private cameraBody?: FilmCamera | ReflexCamera;
   /** A car's suction fans and thrusters, if it has them: they set the fans', skirts' and wing's controls, and fly it. */
   private aero?: AeroCar;
+  /** A pin tumbler lock's key, pins and plug, if this is one: they set the keys', pins' and plug's controls. */
+  private pinLock?: PinLock;
+  private tape?: TapeMeasure;
+  /** A stored-pressure extinguisher's pin, lever and charge, if it is one: they set its controls as it empties. */
+  private extinguisher?: Extinguisher;
   /** Its thrusters' jets. */
   private jets?: Jets;
   /** The whole model, lifted and turned when a car flies. */
@@ -333,6 +341,10 @@ export class Viewer {
     if (this.linkage.has('mirror')) this.cameraBody = new ReflexCamera(this.linkage);
     else if (this.linkage.has('curtain1') || this.linkage.has('focus')) this.cameraBody = new FilmCamera(this.linkage);
     if (this.linkage.has('skirts')) this.aero = new AeroCar(this.linkage);
+    if (this.linkage.has('lockTurn')) this.pinLock = new PinLock(this.linkage);
+    const blade = this.linkage.has('tape_out') ? this.linkage.stripLayout('tape-blade') : undefined;
+    if (blade) this.tape = new TapeMeasure(this.linkage, blade as BladeLayout);
+    if (this.linkage.has('ext_lever')) this.extinguisher = new Extinguisher(this.linkage);
     this.linkage.apply();
     const deforming = new Set([...this.mechanism.deforming, ...this.linkage.deforming]);
     // How the model can be drawn: as rendered or as a line drawing, with the rest turned to glass around the parts a step is about.
@@ -946,6 +958,9 @@ export class Viewer {
     this.hold(false);
     this.wind(false);
     this.aero?.reset();
+    this.pinLock?.reset();
+    this.tape?.reset();
+    this.extinguisher?.reset();
   }
 
   /** Shows a step: takes the model apart as far as it says, and frames the parts it's about from its angle (or flies
@@ -1143,6 +1158,81 @@ export class Viewer {
     }
     if (this.jets?.update(state, f?.height ?? 0, dt)) moved = true;
     return moved;
+  }
+
+  // ------------------------------------------------------------- a lock
+
+  /** What a pin tumbler lock's key, pins and plug are doing, for charts and readouts; null if this isn't one. */
+  get lockState(): LockState | null {
+    return this.pinLock?.state ?? null;
+  }
+
+  /** Slides the key in the lock to this far out (mm; 0 is all the way in). */
+  setKeyOut(mm: number): void {
+    this.pinLock?.setOut(mm);
+  }
+
+  /** Holds the key turned, or lets it go. */
+  turnKey(on: boolean): void {
+    this.pinLock?.setTurning(on);
+  }
+
+  /** Puts this key in the lock, changing keys first if the other is in. */
+  chooseKey(key: KeyName): void {
+    this.pinLock?.choose(key);
+  }
+
+  // ------------------------------------------------------------- a tape measure
+
+  /** What a tape measure's blade, drum, spring, lock and hook are doing, for charts and readouts; null if this isn't one. */
+  get tapeState(): TapeState | null {
+    return this.tape?.state ?? null;
+  }
+
+  /** Pulls a tape measure's blade out to `mm` (the lock, if on, holds it where it is). */
+  setTapeOut(mm: number): void {
+    this.tape?.setOut(mm);
+  }
+
+  /** Lets go of the blade, so the spring winds it in (unless the lock is on). */
+  letGoTape(): void {
+    this.tape?.letGo();
+  }
+
+  setTapeLock(on: boolean): void {
+    this.tape?.setLock(on);
+  }
+
+  /** The hook pushed against a wall (false) or hooked over an edge and pulled (true). */
+  setTapeHook(hooked: boolean): void {
+    this.tape?.setHook(hooked);
+  }
+
+  // ------------------------------------------------------------- an extinguisher
+
+  /** What an extinguisher's pin, lever and charge are doing, for charts and readouts; null if this isn't one. */
+  get extinguisherState(): ExtinguisherState | null {
+    return this.extinguisher?.state ?? null;
+  }
+
+  /** Pulls an extinguisher's safety pin, or puts it back. */
+  pullPin(out = true): void {
+    this.extinguisher?.pullPin(out);
+  }
+
+  /** Squeezes an extinguisher's lever while `on` (it moves only with the pin out). */
+  squeezeLever(on: boolean): void {
+    this.extinguisher?.squeeze(on);
+  }
+
+  /** Holds an extinguisher upside down, or upright again. */
+  invertExtinguisher(on: boolean): void {
+    this.extinguisher?.setInverted(on);
+  }
+
+  /** Recharges an extinguisher: powder and nitrogen back in. */
+  rechargeExtinguisher(): void {
+    this.extinguisher?.refill();
   }
 
   // ------------------------------------------------------------- a camera
@@ -1460,6 +1550,9 @@ export class Viewer {
     const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
     this.cameraBody?.tick(dt);
     if (this.aero && this.tickAero(dt)) this.dirty = true;
+    this.pinLock?.tick(dt);
+    this.tape?.tick(dt);
+    if (this.extinguisher?.tick(dt)) this.dirty = true;
     if (this.linkage?.apply() || turned) {
       this.rigs.apply();
       // A path pinned to a crank goes round with it.

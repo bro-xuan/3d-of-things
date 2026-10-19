@@ -2,6 +2,7 @@ import { Box3, Vector3, type Mesh, type MeshStandardMaterial, type Object3D, typ
 import type { Motion } from '../types';
 import { Cloth, type ClothLayout } from './cloth';
 import type { NodeRig, Rigs } from './rig';
+import { Strip, type StripLayout } from './strip';
 
 type Resolve = (name: string) => Object3D | undefined;
 
@@ -34,6 +35,7 @@ export class Linkage {
   private readonly slides = new Map<NodeRig, { motion: Motion; vector: Vector3 }[]>();
   private readonly cloths: { cloth: Cloth; motion: Motion }[] = [];
   private readonly scrolls: { texture: Texture; base: number; motion: Motion }[] = [];
+  private readonly strips: { strip: Strip; motion: Motion }[] = [];
 
   constructor(motions: Motion[], resolve: Resolve, rigs: Rigs, root: Object3D) {
     for (const motion of motions) {
@@ -47,6 +49,15 @@ export class Linkage {
         node.traverse((object) => {
           const mesh = object as Mesh;
           if (mesh.isMesh && mesh.geometry.attributes._cloth) this.cloths.push({ cloth: new Cloth(mesh, layout, root), motion });
+        });
+        continue;
+      }
+      if (motion.strip) {
+        const layout = node.userData.strip as StripLayout | undefined;
+        if (!layout) continue;
+        node.traverse((object) => {
+          const mesh = object as Mesh;
+          if (mesh.isMesh && mesh.geometry.attributes._cloth) this.strips.push({ strip: new Strip(mesh, layout, root), motion });
         });
         continue;
       }
@@ -85,7 +96,12 @@ export class Linkage {
 
   /** Meshes whose vertices move (they can't keep a raycast index). */
   get deforming(): Mesh[] {
-    return this.cloths.map(({ cloth }) => cloth.mesh);
+    return [...this.cloths.map(({ cloth }) => cloth.mesh), ...this.strips.map(({ strip }) => strip.mesh)];
+  }
+
+  /** The layout of the first strip of steel of this kind (a tape measure's blade), from the build. */
+  stripLayout(kind: string): StripLayout | undefined {
+    return this.strips.find(({ strip }) => strip.layout.kind === kind)?.strip.layout;
   }
 
   set(control: string, value: number): void {
@@ -108,6 +124,7 @@ export class Linkage {
       for (const { motion, vector } of list) rig.extra.addScaledVector(vector, amount(motion, value(motion)));
     }
     for (const { cloth, motion } of this.cloths) if (changed(motion)) cloth.apply(amount(motion, value(motion)));
+    for (const { strip, motion } of this.strips) if (changed(motion)) strip.apply(amount(motion, value(motion)));
     for (const { texture, base, motion } of this.scrolls) if (changed(motion)) texture.offset.x = base + amount(motion, value(motion)) * (motion.scroll ?? 0);
     this.dirty.clear();
     return true;

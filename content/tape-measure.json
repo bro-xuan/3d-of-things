@@ -1,0 +1,857 @@
+{
+  "order": 17,
+  "title": "Tape Measure",
+  "hook": "Pull out three metres and you wind a spring 20 turns tighter; let go and it winds the blade back in.",
+  "category": "home",
+  "summary": [
+    "A tape measure has to fit three metres of ruler in a pocket and bring it back by itself. It does both with steel: a blade curved across its width, stiff enough to stand out in the air yet flat enough to coil, and a spring that keeps the pull you put into it.",
+    "Your pull on the hook draws the blade off a drum, and the drum carries the outer end of a flat spiral spring round a post fixed in the case. A shoe under the front button can pinch the blade to hold it, and the hook on its end slides on its rivets.",
+    "Pull all 3 m out and the drum turns 20.3 times, moving the spring's coils off the drum's wall and onto the post; let go and the spring turns it back. Here the blade, drum and spring move together from one set of sums: pull the blade out in the tour, lock it, and watch the hook slide by its own 0.9 mm."
+  ],
+  "model": "models/tape-measure.glb",
+  "viewAngle": [
+    -35,
+    16
+  ],
+  "explodeAngle": [
+    -58,
+    18
+  ],
+  "explodeDuration": 2600,
+  "facts": [
+    {
+      "label": "Blade",
+      "value": "3 m × 19 mm steel, 0.13 mm thick"
+    },
+    {
+      "label": "Drum",
+      "value": "20.3 turns from home to 3 m"
+    },
+    {
+      "label": "Accuracy",
+      "value": "Class II: ±0.9 mm over 3 m"
+    },
+    {
+      "label": "Hook play",
+      "value": "0.9 mm, its own thickness"
+    },
+    {
+      "label": "Standout",
+      "value": "1.4–1.85 m for a 19 mm blade"
+    },
+    {
+      "label": "Real size",
+      "value": "41 × 74 × 85 mm"
+    }
+  ],
+  "parts": [
+    {
+      "node": "end_hook",
+      "label": "End hook",
+      "group": "Your pull",
+      "about": "Where your pull goes in: 0.9 mm of steel riveted to the blade's end. It slides on its rivets by exactly its own thickness, so the zero is right whether it's hooked or pushed.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.35,
+      "window": [
+        0.6,
+        0.85
+      ]
+    },
+    {
+      "node": "hook_rivets",
+      "label": "Rivets",
+      "group": "Your pull",
+      "about": "Two rivets fixed in the blade, running in slots in the hook 0.9 mm longer than they are.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.2,
+      "window": [
+        0.5,
+        0.7
+      ]
+    },
+    {
+      "node": "blade",
+      "label": "Blade",
+      "group": "Blade",
+      "about": "3 m of steel 0.13 mm thick and 19 mm wide, curved across its width. On the drum it lies flat, about 20 turns deep; out in the air the curve stiffens it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "drum",
+      "label": "Drum",
+      "group": "Drum",
+      "about": "A 44 mm hub with the blade's tail fixed to it. About 15 cm of blade turns it once; inside is the spring's barrel.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "recoil_spring",
+      "label": "Recoil spring",
+      "group": "Spring",
+      "about": "3.8 m of spring steel 0.13 mm thick and 16 mm wide, coiled 37 turns deep in the drum: its inner end on the post, its outer end on the drum.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.45,
+      "window": [
+        0.75,
+        1
+      ]
+    },
+    {
+      "node": "spring_post",
+      "label": "Spring post",
+      "group": "Spring",
+      "about": "Moulded into the right half of the case: the spring's inner end hooks on it and the drum turns round it. It never moves, so the drum's turning winds the spring.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.5,
+      "window": [
+        0.8,
+        1
+      ]
+    },
+    {
+      "node": "lock_button",
+      "label": "Lock button",
+      "group": "Lock",
+      "about": "Press it 2 mm into its recess and the shoe under it drops onto the blade.",
+      "direction": [
+        0,
+        0.6,
+        0.8
+      ],
+      "distance": 0.55,
+      "window": [
+        0.4,
+        0.65
+      ]
+    },
+    {
+      "node": "brake",
+      "label": "Brake shoe",
+      "group": "Lock",
+      "about": "An arm from the button down inside the case's front wall, ending in a shoe just over the blade behind the mouth. Locked, it pinches the blade against the guide under it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "case_left",
+      "label": "Case, left half",
+      "group": "Case",
+      "about": "One of two moulded halves under a rubber skin; this one carries the label.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.6,
+      "window": [
+        0.1,
+        0.45
+      ],
+      "then": {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 1.1
+      }
+    },
+    {
+      "node": "case_right",
+      "label": "Case, right half",
+      "group": "Case",
+      "about": "The other half: the spring's post stands from its wall, and the guide the blade runs out on is moulded into it.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.75,
+      "window": [
+        0.1,
+        0.45
+      ]
+    },
+    {
+      "node": "belt_clip",
+      "label": "Belt clip",
+      "group": "Case",
+      "about": "Sprung steel, screwed to the case where the spring's post is.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.25,
+      "window": [
+        0,
+        0.25
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "title": "The end hook",
+      "text": "Your pull starts here, on 0.9 mm of steel riveted to the end of the blade. It is loose on purpose (number 6).",
+      "position": [
+        -0.0453,
+        0.1134,
+        0.6702
+      ],
+      "node": "end_hook",
+      "camera": {
+        "position": [
+          0.8348,
+          0.6974,
+          1.8512
+        ],
+        "target": [
+          -0.1434,
+          0.203,
+          0.6855
+        ]
+      }
+    },
+    {
+      "title": "The blade",
+      "text": "Steel 0.13 mm thick and 19 mm wide, curved across its width. It leaves the drum's roll at the bottom and runs out through a guide in the mouth; on the roll it lies flat, 20 turns deep.",
+      "position": [
+        -0.2043,
+        0.9286,
+        -0.3401
+      ],
+      "node": "blade",
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -2.2132,
+          1.2946,
+          1.1667
+        ],
+        "target": [
+          -0.0453,
+          0.6331,
+          0.3776
+        ]
+      }
+    },
+    {
+      "title": "The drum",
+      "text": "The blade's tail is fixed to this 44 mm hub, so every 15 cm or so you pull turns it once: 20.3 turns for the whole 3 m.",
+      "position": [
+        -0.2328,
+        0.3569,
+        0.1764
+      ],
+      "node": "drum",
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -2.4234,
+          1.0672,
+          0.5926
+        ],
+        "target": [
+          -0.0453,
+          0.6331,
+          -0.0446
+        ]
+      }
+    },
+    {
+      "title": "The recoil spring",
+      "text": "3.8 m of spring steel inside the drum, its inner end on a post fixed to the case and its outer end on the drum. Pull the blade out and the drum winds it tighter, its coils moving off the drum's wall onto the post.",
+      "position": [
+        -0.1792,
+        0.8385,
+        -0.2499
+      ],
+      "node": "recoil_spring",
+      "explode": 0.45,
+      "camera": {
+        "position": [
+          -2.2319,
+          0.8631,
+          0.0318
+        ],
+        "target": [
+          -0.0453,
+          0.6331,
+          -0.0446
+        ]
+      }
+    },
+    {
+      "title": "The lock",
+      "text": "Press the button 2 mm and a shoe on its arm drops onto the blade just behind the mouth, pinching it against the guide under it. The spring can no longer pull it in.",
+      "position": [
+        -0.0453,
+        0.8301,
+        0.5138
+      ],
+      "node": "lock_button",
+      "camera": {
+        "position": [
+          -2.0028,
+          1.4913,
+          1.5841
+        ],
+        "target": [
+          -0.1554,
+          0.6705,
+          0.2905
+        ]
+      }
+    },
+    {
+      "title": "The loose hook is meant to be",
+      "text": "It isn't worn. The rivets run in slots 0.9 mm longer than they are, so the hook slides by exactly its own thickness: out when you hook an edge, in when you push against a wall. Both readings start at the true zero.",
+      "position": [
+        -0.0453,
+        0.2164,
+        0.5564
+      ],
+      "node": "hook_rivets",
+      "camera": {
+        "position": [
+          0.3064,
+          1.1163,
+          1.5757
+        ],
+        "target": [
+          -0.1468,
+          0.2164,
+          0.6037
+        ]
+      }
+    },
+    {
+      "title": "The case",
+      "text": "Two moulded halves under a rubber skin. The right one carries the spring's post and the guide the blade runs out on.",
+      "position": [
+        -0.3399,
+        0.6992,
+        -0.2672
+      ],
+      "node": "case_left",
+      "camera": {
+        "position": [
+          -2.4351,
+          1.1737,
+          0.8252
+        ],
+        "target": [
+          -0.0453,
+          0.6331,
+          -0.0446
+        ]
+      }
+    },
+    {
+      "title": "The belt clip",
+      "text": "Sprung steel, held by one screw into the case where the spring's post stands.",
+      "position": [
+        0.3397,
+        0.7829,
+        -0.0998
+      ],
+      "node": "belt_clip",
+      "camera": {
+        "position": [
+          2.5457,
+          1.2819,
+          -0.9027
+        ],
+        "target": [
+          0.3397,
+          0.7829,
+          -0.0998
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "drum",
+      "control": "tape_drum",
+      "turn": 1,
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0453,
+        0.6331,
+        -0.0446
+      ]
+    },
+    {
+      "node": "blade",
+      "control": "tape_out",
+      "strip": true,
+      "axis": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "node": "recoil_spring",
+      "control": "tape_drum",
+      "strip": true,
+      "axis": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "node": "end_hook",
+      "control": "tape_out",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "slide": [
+        0,
+        0,
+        0.0167
+      ]
+    },
+    {
+      "node": "end_hook",
+      "control": "tape_hook",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "slide": [
+        0,
+        0,
+        0.0151
+      ]
+    },
+    {
+      "node": "hook_rivets",
+      "control": "tape_out",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "slide": [
+        0,
+        0,
+        0.0167
+      ]
+    },
+    {
+      "node": "lock_button",
+      "control": "tape_lock",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "slide": [
+        0,
+        -0.01776,
+        -0.02841
+      ]
+    }
+  ],
+  "how": [
+    {
+      "label": "The idea",
+      "title": "A spring you wind by pulling",
+      "text": [
+        "The blade is wound on a drum, and inside the drum is a flat spiral spring, its inner end on a post that never moves. Pull the blade out and the drum turns, winding the spring tighter; the spring keeps that work and spends it winding the blade back in.",
+        "All 3 m out turns the drum 20.3 times. The case is off here so you can see the drum, the roll of blade and the spring inside."
+      ],
+      "explode": 0.45,
+      "angle": [
+        -62,
+        16
+      ],
+      "focus": [
+        "blade",
+        "drum",
+        "recoil_spring",
+        "spring_post",
+        "end_hook"
+      ],
+      "flow": [
+        [
+          -0.0453,
+          0.1134,
+          0.6702
+        ],
+        [
+          -0.0453,
+          0.1862,
+          0.6518
+        ],
+        [
+          -0.0453,
+          0.1878,
+          0.4794
+        ],
+        [
+          -0.0453,
+          0.1862,
+          0.168
+        ],
+        [
+          -0.0453,
+          0.2133,
+          -0.0889
+        ],
+        [
+          -0.0453,
+          0.211,
+          -0.0446
+        ],
+        [
+          -0.1792,
+          0.3187,
+          -0.0446
+        ],
+        [
+          -0.1792,
+          0.7419,
+          -0.0446
+        ]
+      ]
+    },
+    {
+      "label": "Pull",
+      "title": "The blade turns the drum",
+      "text": [
+        "The blade's tail is fixed to the drum's hub, so whatever comes out of the mouth turns the drum. It leaves the roll at the bottom and runs straight out through a guide.",
+        "About 15 cm comes out for each turn, a little less as the roll gets smaller. Pull it out with the slider and let go: the spring winds it back."
+      ],
+      "explode": 0.45,
+      "angle": [
+        -72,
+        10
+      ],
+      "focus": [
+        "blade",
+        "drum",
+        "end_hook",
+        "hook_rivets"
+      ],
+      "flow": [
+        [
+          -0.0453,
+          0.1862,
+          0.6518
+        ],
+        [
+          -0.0453,
+          0.1878,
+          0.4794
+        ],
+        [
+          -0.0453,
+          0.1862,
+          0.168
+        ],
+        [
+          -0.0453,
+          0.2133,
+          -0.0889
+        ],
+        [
+          -0.0453,
+          0.211,
+          -0.0446
+        ]
+      ],
+      "tags": [
+        {
+          "node": "drum",
+          "text": "20.3 turns for 3 m",
+          "at": [
+            -0.2328,
+            0.3569,
+            0.1764
+          ]
+        }
+      ],
+      "try": "tape-pull"
+    },
+    {
+      "label": "Spring",
+      "title": "The spring keeps your pull",
+      "text": [
+        "The spring's outer end goes round with the drum and its inner end stays on the post, so every turn winds it tighter. Its coils move off the drum's wall and pack onto the post.",
+        "It pulls back with 0.5 N at home and 1.4 N with 3 m out: its torque grows with each turn, and it acts through a roll that shrinks as the blade leaves it."
+      ],
+      "explode": 0.45,
+      "angle": [
+        -88,
+        6
+      ],
+      "focus": [
+        "recoil_spring",
+        "drum",
+        "spring_post"
+      ],
+      "flow": [
+        [
+          -0.2328,
+          0.3569,
+          0.1764
+        ],
+        [
+          -0.1792,
+          0.3187,
+          -0.0446
+        ],
+        [
+          -0.1792,
+          0.7419,
+          -0.0446
+        ]
+      ],
+      "chart": {
+        "type": "tape-spring",
+        "title": "What the spring pulls with",
+        "caption": "The pull on the hook as the blade comes out: a turn tighter every 15 cm or so, through a roll that shrinks, so it rises all the way.",
+        "node": "drum",
+        "blade": {
+          "kind": "tape-blade",
+          "centre": [
+            38.05,
+            -2.7
+          ],
+          "hub": 22,
+          "pitch": 0.15,
+          "length": 3227.130076757951,
+          "throat": [
+            11.35,
+            10
+          ],
+          "tip": 38.9,
+          "front": 38,
+          "width": 19,
+          "thickness": 0.13,
+          "cup": 22,
+          "standout": 1600,
+          "fold": [
+            45,
+            1.15
+          ],
+          "flat": 22,
+          "spring": {
+            "kind": "tape-spring",
+            "centre": [
+              38.05,
+              -2.7
+            ],
+            "post": 5,
+            "wall": 19.784999999999997,
+            "thickness": 0.13,
+            "pitch": 0.15,
+            "width": 16,
+            "length": 3837,
+            "start": 2.356194490192345,
+            "loose": 1,
+            "preload": 12,
+            "modulus": 206000,
+            "uSpan": 3837,
+            "fSpan": 0.065,
+            "x0": 0,
+            "turns": 37.1559
+          },
+          "hook": 0.9,
+          "uSpan": 3227.130076757951,
+          "fSpan": 0.065,
+          "x0": 0
+        }
+      },
+      "try": "tape-pull"
+    },
+    {
+      "label": "Lock",
+      "title": "A shoe pinches the blade",
+      "text": [
+        "Press the button and the arm under it drives a shoe onto the blade just behind the mouth, pinching it against the guide it runs on. With the lock on, the spring can pull all it likes and the blade stays put.",
+        "Stanley's PowerLock, from 1963, works the same way. Pull some blade out, press the lock and let go."
+      ],
+      "explode": 0.45,
+      "angle": [
+        -60,
+        14
+      ],
+      "focus": [
+        "lock_button",
+        "brake",
+        "blade"
+      ],
+      "flow": [
+        [
+          -0.0453,
+          0.8301,
+          0.5138
+        ],
+        [
+          -0.0453,
+          0.6705,
+          0.4478
+        ],
+        [
+          -0.0453,
+          0.2372,
+          0.2751
+        ]
+      ],
+      "try": "tape-lock"
+    },
+    {
+      "label": "Curve",
+      "title": "The curve makes it stand up",
+      "text": [
+        "A flat strip of steel 0.13 mm thick would droop like paper. Curved 2 mm deep across its width it is some 300 times stiffer, so it reaches out across a gap; on the drum the curve flattens and it coils.",
+        "A 19 mm blade stands out 1.4–1.85 m before the curve gives near the case, where the bending is greatest, and the blade folds. Run it out and see."
+      ],
+      "angle": [
+        -80,
+        8
+      ],
+      "camera": {
+        "position": [
+          -4.3363,
+          0.7986,
+          1.4084
+        ],
+        "target": [
+          -0.0453,
+          0.1862,
+          0.6518
+        ]
+      },
+      "focus": [
+        "blade",
+        "end_hook",
+        "hook_rivets"
+      ],
+      "chart": {
+        "type": "bars",
+        "title": "Standout by blade width",
+        "caption": "How far each width reaches unsupported. The curve does it: a wider blade carries a deeper curve.",
+        "unit": "Metres it stands out",
+        "picked": 1,
+        "bars": [
+          {
+            "label": "13 mm",
+            "value": 1
+          },
+          {
+            "label": "19 mm",
+            "value": 1.6
+          },
+          {
+            "label": "25 mm",
+            "value": 2.35
+          },
+          {
+            "label": "32 mm",
+            "value": 3.35
+          }
+        ]
+      },
+      "try": "tape-standout"
+    },
+    {
+      "label": "Hook",
+      "title": "The loose hook keeps the zero true",
+      "text": [
+        "The hook wobbles because it should. Its rivets run in slots 0.9 mm longer than they are, and 0.9 mm is the hook's own thickness.",
+        "Hook it over an edge and your pull slides it out, so the zero is its inside face, where the edge is. Push it against a wall and it slides in, so the zero is its outside face, on the wall. Rivet it tight and one of the two would read a hook's thickness wrong."
+      ],
+      "angle": [
+        -30,
+        38
+      ],
+      "camera": {
+        "position": [
+          -0.987,
+          2.0018,
+          2.6515
+        ],
+        "target": [
+          0.1556,
+          0.2164,
+          0.6724
+        ]
+      },
+      "focus": [
+        "end_hook",
+        "hook_rivets",
+        "blade"
+      ],
+      "tags": [
+        {
+          "node": "end_hook",
+          "text": "slides 0.9 mm",
+          "at": [
+            -0.0453,
+            0.1134,
+            0.6702
+          ]
+        }
+      ],
+      "try": "tape-hook"
+    }
+  ],
+  "credit": {
+    "title": "Measuring Tape 01",
+    "author": "Kuutti Siitonen",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/measuring_tape_01",
+    "extra": {
+      "label": "Built for this site",
+      "text": "The case cut into its halves and given walls, the mouth opened; the blade, drum, spring and its post, hook with slotted rivets and brake generated from a Stanley PowerLock 3 m × 19 mm and its patents. The blade's curve, the spring's size and pull, and the lock as a press are this model's own; the wrist strap is left off."
+    }
+  },
+  "build": {
+    "augment": "objects/tape-measure/augment.mjs",
+    "hints": "objects/tape-measure/hints.json"
+  }
+}

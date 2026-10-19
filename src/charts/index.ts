@@ -5,13 +5,18 @@ import type { Thing } from '../types';
 import type { CameraState } from '../viewer/filmcamera';
 import type { ReflexState } from '../viewer/reflexcamera';
 import type { AeroState } from '../viewer/aerocar';
+import type { ExtinguisherState } from '../viewer/extinguisher';
+import type { LockState } from '../viewer/pinlock';
 import type { MechanismState } from '../viewer/rig';
 import { cameraCharts } from './camera';
 import { carCharts } from './car';
+import { extinguisherCharts } from './extinguisher';
+import { lockCharts } from './lock';
 import { barsChart, ladderChart, timingChart } from './generic';
 import { opticsCharts } from './optics';
 import { reflexCharts } from './reflex';
 import { roadsterCharts } from './roadster';
+import { tapeCharts } from './tape';
 import { watchCharts } from './watch';
 
 /** What a chart can read from the viewer, once it's there. */
@@ -22,6 +27,10 @@ export interface ChartSource {
   camera(): CameraState | ReflexState | null;
   /** What a car's suction fans and thrusters are doing, or null (no viewer yet, or a car without them). */
   aero(): AeroState | null;
+  /** What a pin tumbler lock's key and pins are doing, or null (no viewer yet, or not a lock). */
+  lock?(): LockState | null;
+  /** What an extinguisher's pin, lever and charge are doing, or null (no viewer yet, or not an extinguisher). */
+  extinguisher(): ExtinguisherState | null;
   /** How far a part has turned, in radians. */
   angleOf(node: string): number;
   /** Seconds a spinning mechanism has run for, scaled by its speed (a crank turned slowly). */
@@ -58,6 +67,9 @@ const factories: Record<string, ChartFactory> = {
   ...reflexCharts,
   ...carCharts,
   ...roadsterCharts,
+  ...lockCharts,
+  ...tapeCharts,
+  ...extinguisherCharts,
   bars: barsChart,
   ladder: ladderChart,
   timing: timingChart,

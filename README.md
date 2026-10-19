@@ -93,7 +93,11 @@ Claude sizes it, writes a truth sheet of real numbers and sources, scaffolds the
   </tr>
 </table>
 
-Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step) and a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in).
+Also on the site: a **hand drill** (an 80-tooth wheel turning a 24-tooth pinion), **binoculars** (the prisms that fold the light and turn the picture upright), a **microscope**, an **8 mm film projector** (the claw and the two-bladed shutter, in step), a **bicycle pump** (a cup seal that folds one way and a ball valve that keeps the tyre's air in), a **tape measure** (a spring wound 20 turns tighter as you pull 3 m out, and a loose hook that keeps the zero true) and a **fire extinguisher** (nitrogen that drives its powder up a dip tube, and the pressure falling as it empties).
+
+The **pin tumbler lock** is built in code to Schlage's published keying figures: slide the key in and watch five pin stacks ride its cuts up to the shear line, then try a key with one cut wrong.
+
+And a **sewing machine**: a Singer 201-2 built in code from Singer's adjuster's manual, its hook turning twice per stitch to carry each loop of the top thread right round the bobbin.
 
 ## What's on a page
 
@@ -158,7 +162,7 @@ Detail costs time, so here are the real numbers: Claude's active time per object
 | Leica M3 | B | 2 h 07 | 37% |
 | Hasselblad-type SLR | C | 1 h 59 | 33% |
 
-The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all thirteen in under two. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
+The biggest cost wasn't the modelling: it was checking. Every object got its own Playwright scripts, launched with software WebGL at about 460 ms a frame, with fixed sleeps of 2.5–4.5 s per view. The skill replaces them with one runner driven by the content file, on the GPU (18–23 ms a frame), which checks a whole object in about a minute and all seventeen in about two and a half. With the scaffold, the generator kit and named anchors, the target was about an hour for a tier B or C object, with more checks than before.
 
 The first three objects made with the skill, on 18 October 2026, came in well under it. All three were built in one session: 70 minutes from the request to the last poster, with each object's research running in a subagent alongside.
 
@@ -304,8 +308,12 @@ npm run preview    # serve dist/
 | Washing Machine | built in code for this site (`objects/washing-machine/`), a typical European front-loader; no particular make | 3D of Things | CC0 1.0 |
 | Bicycle Pump | [Tire Pump](https://polyhaven.com/a/tire_pump); piston, cup seal, air passage and ball valve built for this site | Garrison Gager | CC0 1.0 |
 | Garden Sprinkler | [Garden Sprinkler 01](https://polyhaven.com/a/garden_sprinkler_01) | Amal Kumar | CC0 1.0 |
+| Sewing Machine | built in code for this site (`objects/sewing-machine/`), a Singer 201-2 laid out from Singer's adjuster's manual (Form 18962) and instruction book (Form 20340) | 3D of Things | CC0 1.0 |
+| Pin Tumbler Lock | built in code for this site (`objects/door-lock/`), a five-pin deadbolt cylinder keyed to Schlage Classic specifications; no particular Schlage part | 3D of Things | CC0 1.0 |
+| Tape Measure | [Measuring Tape 01](https://polyhaven.com/a/measuring_tape_01) (case, lock button, belt clip); blade, drum, spring, hook and brake built for this site | Kuutti Siitonen | CC0 1.0 |
+| Fire Extinguisher | [Korean Fire Extinguisher 01](https://polyhaven.com/a/korean_fire_extinguisher_01), scaled to a real 3.3 kg unit; nitrogen, powder, dip tube, valve stem, seal and spring built for this site | UM JOORIN | CC0 1.0 |
 
-All but the SLR, the washing machine and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; the Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap is left off. The explanations were written for this site.
+All but the SLR, the washing machine, the sewing machine, the pin tumbler lock and the two cars from [Poly Haven](https://polyhaven.com). Tesla and the Roadster's name are trademarks of Tesla, Inc.; Singer is a trademark of its owner, named only to say which machine the sewing machine follows, and Schlage is a trademark of Allegion, named only for its published keying figures. The Roadster here is an illustration made for this site, which has nothing to do with Tesla, and its insides are simplified (Tesla hasn't shown the layout of its tanks, lines and nozzles). The film projector's loose power cord is hidden in the viewer, and the camera's strap and the tape measure's wrist strap are left off. The explanations were written for this site.
 
 ## Deploying
 
