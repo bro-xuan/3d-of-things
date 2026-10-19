@@ -8,7 +8,7 @@ Reconstructed on 18 October 2026 from the shipped page (content/microscope.json,
 
 - **Exactly what:** a compound microscope lit by a mirror under the stage, with its objectives on a turret (summary, facts, parts), from Poly Haven's "Vintage Microscope" by Luis José Fernández Rodríguez. Make, model and year: not stated on the page.
 - **Real size:** 40 cm tall (facts: "Real size"). No other dimensions stated.
-- **The problem it solves:** not stated as such; the page has it magnify a specimen cut thin enough to see through, lit from below (summary, how step 1).
+- **The problem it solves:** not stated as such; the page has it magnify a specimen cut thin enough to see through, lit from below (summary; film shot 1).
 - **Its one big idea (the principle):** magnifying in two stages that multiply: the objective forms an enlarged image inside the tube and the eyepiece enlarges that again, so a 40× objective under a 10× eyepiece gives 400× (summary).
 
 ## 2. Sources
@@ -33,9 +33,9 @@ source → transmission → control → output. One line each, naming the parts.
 | Quantity | Value | Source |
 |---|---|---|
 | Objectives | 3, of different strengths, on the nosepiece | content: callout 'Objectives' |
-| Objective strengths named | 10× and 40× | content: summary; how step 2 text and tag |
-| Eyepiece | usually 10× | content: callout 'Eyepiece'; how step 2 tag |
-| Magnification | objective × eyepiece: 10 × 10 = 100×, 40 × 10 = 400× | content: facts 'Magnification'; summary; how step 2 text and chart 'How big it looks' |
+| Objective strengths named | 10× and 40× | content: summary (the film names 10×) |
+| Eyepiece | usually 10× | content: callout 'Eyepiece'; film shot 3 caption |
+| Magnification | objective × eyepiece: 10 × 10 = 100×, 40 × 10 = 400× | content: facts 'Magnification'; summary; film shot 3 caption |
 | Real size | 40 cm tall | content: facts |
 
 The third objective's strength is not stated on the page.
@@ -62,19 +62,20 @@ The page gives no groups; the order is the page's.
 ## 7. Mechanism map
 
 - **Nothing moves:** no `motion`, no `motionLabel`, no `try` experiment. The turret, the focus rack and the mirror's swing are in the text only. Taking it apart moves the parts out in three stages (0–2); Arm & stage and Foot stay put.
-- **Light:** steps 1 and 2 carry `light` flows: into the Mirror and up through the Condenser to the slide (step 1), then up through the Objectives and Tube & eyepiece (step 2).
-- **Charts:** generic `ladder` "How big it looks" in step 2, log scale (Specimen 1×, Objective 10×, Eyepiece 100×).
+- **Light:** the film draws the light as one `light` flow, grown shot by shot: from a window to the Mirror and up through the Condenser to the slide, then through the Objectives to the image in the tube, then out of the eyepiece. The Mirror, Condenser, Objectives and Tube & eyepiece are solid all through; Arm & stage, Foot, Mirror arm and Focus knobs are glass.
+- **The camera** frames the whole optical column at every shot and orbits slowly (20°, 38°, 56°), rising a little.
+- **No charts.**
 - **Nothing new.**
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Light | Mirror, Mirror arm, Condenser; light flow |  |  |
-| 2 | Lenses | Objectives, Tube & eyepiece, Condenser, Mirror; light flow | ladder: How big it looks |  |
-| 3 | Focus | Focus knobs, Tube & eyepiece, Objectives |  |  |
-
-Three steps on the page.
+| 0 s | Light | The mirror catches daylight and sends it up through the condenser onto the slide. | 6 |  |
+| 6 s | Objective | Just above the slide, the objective forms an enlarged image inside the tube. | 6 |  |
+| 12 s | Eyepiece | The eyepiece magnifies it again: a 10× objective under a 10× eyepiece makes 100×. | 6.5 |  |
 
 ## 9. Simplified or left out
 

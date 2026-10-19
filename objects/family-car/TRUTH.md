@@ -8,7 +8,7 @@ Reconstructed on 18 October 2026 from the shipped page (content/family-car.json,
 
 - **Exactly what:** no particular make: a three-box family saloon of the 1970s or 80s, petrol four at the front driving the rear wheels through a clutch, a four-speed gearbox, a propshaft and a differential in a live rear axle (content: summary; spec.mjs header).
 - **Real size:** 4,500 mm long on a 2,650 mm wheelbase (content: facts); track 1,440 mm front and rear, body half-width up to 862 mm, roof 1,400 mm, 14-inch wheels on 185/70 tyres (spec.mjs). "Proportions of a typical 1970s–80s saloon" (spec.mjs), not one car's measurements.
-- **The problem it solves:** getting the power of petrol burnt at the front to the rear wheels, both to pull and to cruise, and round a bend; the car "carries its own fuel and has to cool itself" (content: summary, tour steps 1, 3, 4).
+- **The problem it solves:** getting the power of petrol burnt at the front to the rear wheels, both to pull and to cruise, and round a bend; the car "carries its own fuel and has to cool itself" (content: summary; the quote is from the old tour, section 4).
 - **Its one big idea (the principle):** four pistons pushed down in turn by burning petrol turn a crankshaft; a camshaft at half its speed opens each cylinder's valves for its four strokes; the gearbox trades speed for pulling power; the differential lets the rear wheels turn at different speeds in a bend (content: summary).
 
 ## 2. Sources
@@ -25,7 +25,7 @@ Reconstructed on 18 October 2026 from the shipped page (content/family-car.json,
 1. **Source:** petrol from the Fuel tank under the boot floor and air through the Intake (filter, runners), burnt in four cylinders of the Engine block under the Cylinder head's spark plugs; the 12 V Battery for the starter, the sparks and the lights.
 2. **Transmission:** Pistons and rods → Crankshaft (flywheel at the back) → Clutch → Gearbox (Gears: input shaft, layshaft, main shaft) → Propshaft, a universal joint at each end → Differential (pinion, crown wheel, spider gears) in the Rear axle → Half shafts → rear wheels.
 3. **Control:** the Timing belt turns the Camshaft at half the crank's speed and its lobes open the valves, two to a cylinder, firing 1, 3, 4, 2; the Clutch pedal lets the drive go; the lever locks one gear to the main shaft; the spider gears share the drive between the half shafts in a bend.
-4. **Output:** the rear wheels; the heat goes out through the Radiator (water pumped round the block and head, air pulled by the Fan) and the Exhaust. Rough shares: wheels 25 %, exhaust 35 %, cooling 30 %, friction 10 % (content: Layout chart).
+4. **Output:** the rear wheels; the heat goes out through the Radiator (water pumped round the block and head, air pulled by the Fan) and the Exhaust. Rough shares: wheels 25 %, exhaust 35 %, cooling 30 %, friction 10 % (old tour: Layout chart).
 
 ## 4. Numbers
 
@@ -37,22 +37,24 @@ Reconstructed on 18 October 2026 from the shipped page (content/family-car.json,
 | Engine | two litres, four cylinders in a row | content: facts; spec.mjs: `engine` comment |
 | Bore × stroke | 88 × 82 mm | content: facts; spec.mjs: `engine` |
 | Rod, bore spacing | rod 140 mm; cylinders 96 mm apart; crank throw half the stroke | spec.mjs: `engine.rod`, `engine.spacing`; engine.mjs: `r = E.stroke / 2` |
-| Firing order | 1, 3, 4, 2, one every half turn; cylinders 1–4 fire at 0, 540, 180, 360 crank degrees | content: tour "Four strokes"; engine.mjs: `FIRING` |
+| Firing order | 1, 3, 4, 2, one every half turn; cylinders 1–4 fire at 0, 540, 180, 360 crank degrees | old tour: "Four strokes"; engine.mjs: `FIRING` |
 | Crankpins | cylinders 1 and 4 at 0°, 2 and 3 at 180° | engine.mjs: `phases`; content: motion `phase` |
 | Valves | two to a cylinder; lift 9 mm; open over 120° of the camshaft's turn; intake fully open a quarter turn of the camshaft after the exhaust | content: parts (`cylinder_head`); engine.mjs: `LIFT`, `DURATION`, valve loop |
 | Timing belt | crank pulley 20 teeth, cam pulley 40: camshaft at half the crank's speed | engine.mjs: `spur` teeth; content: parts (`timing_belt`) |
 | Flywheel | starter ring of 110 teeth | engine.mjs |
 | Gear teeth (layshaft : main) | constant mesh 30 : 20; 3rd 26 : 24; 2nd 21 : 29; 1st 15 : 35; module 3 | engine.mjs: `GEARS` |
-| Gear ratios | 1st 3.5, 2nd 2.07, 3rd 1.38, 4th 1 (direct) | content: tour "Gearbox" (speeds, chart); engine.mjs: `ratio` |
-| Final drive | 3.9 : 1, pinion 10 teeth, crown wheel 39 | content: facts, tour "Differential"; engine.mjs: `GEARS.final` |
+| Gear ratios | 1st 3.5, 2nd 2.07, 3rd 1.38, 4th 1 (direct) | old tour: "Gearbox" (speeds, chart); engine.mjs: `ratio` |
+| Final drive | 3.9 : 1, pinion 10 teeth, crown wheel 39 | content: facts; old tour: "Differential"; engine.mjs: `GEARS.final` |
 | Differential gears | spider gears 10 teeth, side gears on the half shafts 16 | engine.mjs |
 | Rear springs | leaf springs of four leaves each side, a damper each side | content: parts (`rear_springs`); engine.mjs |
 | Front suspension | two wishbones and a coil-over at each corner, steering rack | content: parts (`suspension`); platform.mjs |
 | Battery | 12 V | content: parts (`battery`) |
-| Energy shares | wheels 25, exhaust 35, cooling 30, friction 10 % ("rough shares at a steady speed") | content: tour "Layout" chart |
+| Energy shares | wheels 25, exhaust 35, cooling 30, friction 10 % ("rough shares at a steady speed") | old tour: "Layout" chart |
 | Viewer speeds (turns a second) | crank, fan, clutch, input and main shafts, propshaft, pinion 2; camshaft 1; layshaft −1.3333; free gears 3rd 1.4444, 2nd 0.9655, 1st 0.5714; carrier, half shafts and wheels 0.5128 (fourth gear); spider gears ±0.1231 | content: motion; content.mjs ("the engine at a steady 2, the rest in fourth gear") |
-| In a bend | outside wheel ×1.15, inside ×0.85 | content: tour "Differential" speeds; content.mjs: `bend` 0.15 |
-| Four strokes step | runs at 0.35× | content: tour `rate` |
+| In a bend | outside wheel ×1.15, inside ×0.85 | old tour: "Differential" speeds; content.mjs: `bend` 0.15 |
+| Film | runs at 0.4× all through, straight ahead (spider gears still) | content: film `rate`, `spin` |
+
+“Old tour” is the step-by-step tour this page had before its film: those numbers are no longer on the page, but the code still runs on them.
 
 ## 5. The misconception
 
@@ -103,27 +105,26 @@ The rpm are the viewer's (content.mjs: the crank at a steady 2 turns a second, t
 
 ## 7. Mechanism map
 
-- **Time (`speed`):** every spinning part turns at its turns a second (section 4) in rig.ts's `Mechanism`. Steps run it unless they say `try: 'run'` (src/pages/tour.ts).
+- **Time (`speed`):** every spinning part turns at its turns a second (section 4) in rig.ts's `Mechanism`. The film runs it all through at 0.4×, with the spider gears held still (`spin` 0): straight ahead.
 - **Crank:** the four pistons and their rods follow the crankshaft (`crank`, `throw`, `rod`, `phase`; rods `rocks`), worked out in rig.ts's `follow()`.
 - **Cam:** the eight valves follow the camshaft (`cam`, `lift`, `phase`, `duration` 120), through rig.ts's `openness()`.
 - **Controls, jets:** none.
-- **Tries:** `run` (Four strokes: hold Drive, counting Crankshaft and Camshaft turns); `speeds` (Gearbox: 1st, 2nd, 3rd, 4th scale the output side by 1/ratio; Differential: Straight, Bend left, Bend right set each half shaft, wheel and spider gear by its own factor).
-- **Charts (src/charts/generic.ts):** `bars` (where the petrol's energy goes; gear ratios, following the chosen gear), `timing` (each piston's height through one camshaft turn, cursor on the camshaft), `ladder` (dials on the half shafts and the crown wheel). Nothing new: no car-specific viewer module or chart (src/charts/car.ts's motor chart is the Roadster's).
+- **Film:** everything the engine turns is solid, from the pistons, valves and crankshaft through the clutch, gears and propshaft to the differential, half shafts and rear wheels; the body, the engine block and head, the gearbox case, the axle casing and the front wheels are glass. One power `flow`, grown from the crankshaft to the pinion (shot 2) on to the left rear wheel (shot 3), with a second path (`flows`) to the right one. Every shot frames the whole car, so none of it runs over the script panel; the camera orbits the car's left so the power runs left to right (44°, 80°, 118°).
+- **No tries or charts.** The old tour's `bars`, `timing` and `ladder` charts (src/charts/generic.ts) and its `run` and `speeds` tries are no longer used by this page. Nothing new: no car-specific viewer module.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Layout | Engine block, Cylinder head, Crankshaft, Clutch, Gearbox, Propshaft, Rear axle, Differential, Half shafts, Rear left wheel, Rear right wheel, Radiator, Fuel tank, Exhaust; power flow; apart 0.6 | bars: Where the petrol’s energy goes |  |
-| 2 | Four strokes | Pistons and rods, Crankshaft, Camshaft, valve_in_1, valve_ex_1, valve_in_2, valve_ex_2, valve_in_3, valve_ex_3, valve_in_4, valve_ex_4; apart 0.6; at 0.35× speed | timing: The four strokes, cylinder by cylinder | run, counting Crankshaft, Camshaft |
-| 3 | Gearbox | Gears, layshaft, mainshaft, gear_1, gear_2, gear_3, Propshaft, Clutch; apart 0.6 | bars: Engine turns for each turn of the propshaft | speeds: 1st / 2nd / 3rd / 4th |
-| 4 | Differential | Differential, pinion, spider_1, spider_2, Half shafts, halfshaft_right, Rear left wheel, Rear right wheel, Propshaft; apart 0.6 | ladder: The two wheels and the crown wheel | speeds: Straight / Bend left / Bend right |
-| 5 | Cooling | Radiator, Fan, Engine block, Cylinder head; apart 0.6 |  |  |
+| 0 s | Engine | Petrol burns above each piston in turn and drives it down, turning the crankshaft. | 6.5 |  |
+| 6.5 s | Drive | Through the clutch and gearbox, the propshaft carries the turn back under the floor. | 6 |  |
+| 12.5 s | Drive | At the back the pinion turns the crown wheel, and the half shafts turn the rear wheels. | 6.5 |  |
 
 ## 9. Simplified or left out
 
 - No particular make: "the layout and sizes of a typical rear-wheel-drive saloon of the 1970s and 80s" (credit.extra); "its sizes are those of a typical saloon of the time" (summary).
-- The energy shares are "rough shares at a steady speed" (Layout chart).
 - The viewer runs the engine at a steady 2 turns a second with the rest in fourth gear (content.mjs); the clutch never lets go and the lever and selectors don't move.
 - In the code: no water pump, oil pump, ignition parts or fuel line to the engine are built, though the text has the water "pumped round passages in the block and the head".
 

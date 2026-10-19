@@ -3,7 +3,7 @@
 //   node objects/tape-measure/content.mjs
 // The numbers in the words come from the same layout the model and its viewer module run on (tape.mjs).
 import { polyHaven, pose, readHints, writeContent } from '../../scripts/kit/content.mjs';
-import { L, bladePath, maxOut, springTorque } from './tape.mjs';
+import { L, bladePath, maxOut } from './tape.mjs';
 
 const H = readHints('tape-measure');
 const A = H.anchors;
@@ -14,13 +14,31 @@ const most = maxOut(blade);
 const turnsAt = (mm) => (bladePath(blade, mm).drum - bladePath(blade, 0).drum) / (2 * Math.PI);
 const drumTurns = turnsAt(most);
 const perTurn = Math.round(most / drumTurns / 10);
-const pull = (mm) => springTorque(spring, turnsAt(mm)) / bladePath(blade, mm).roll;
 const springMetres = (spring.length / 1000).toFixed(1);
 const play = L.hook.thickness;
 const n = (v, d = 1) => v.toFixed(d);
 
 const off = (direction, distance, window) => ({ direction, distance, window });
 const stay = { direction: [0, 1, 0], distance: 0 };
+
+/** What stays solid through the film: the blade and its hook, the drum, the spring and its post, and the lock. The
+ *  case's halves and the clip are glass, so the spring can be seen winding inside them. */
+const MOVING = ['blade', 'end_hook', 'hook_rivets', 'drum', 'recoil_spring', 'spring_post', 'lock_button', 'brake'];
+/** What every shot frames: the case, and the hook wherever it gets to. */
+const SHOWN = ['case_left', 'case_right', 'end_hook'];
+/** The blade the film pulls out (mm): one turn of the drum, from home (a little more than the average turn, as the roll
+ *  is at its fattest). */
+const PULLED = (() => {
+  let [lo, hi] = [0, 400];
+  for (let i = 0; i < 40; i++) [lo, hi] = turnsAt((lo + hi) / 2) < 1 ? [(lo + hi) / 2, hi] : [lo, (lo + hi) / 2];
+  return Math.round(hi);
+})();
+/** The drum's tag goes round with it on its rim, so its one turn shows (the drum itself is a plain ring); the spring's sits
+ *  inside that circle, above the post. */
+const springTags = [
+  { node: 'drum', text: 'drum', at: A.drum_lip, ride: true },
+  { node: 'recoil_spring', text: 'spring', at: [A.spring_inner[0], +(A.centre[1] + 0.12).toFixed(3), A.centre[2]] },
+];
 
 writeContent('tape-measure', {
   order: 19,
@@ -30,7 +48,7 @@ writeContent('tape-measure', {
   summary: [
     'A tape measure has to fit three metres of ruler in a pocket and bring it back by itself. It does both with steel: a blade curved across its width, stiff enough to stand out in the air yet flat enough to coil, and a spring that keeps the pull you put into it.',
     'Your pull on the hook draws the blade off a drum, and the drum carries the outer end of a flat spiral spring round a post fixed in the case. A shoe under the front button can pinch the blade to hold it, and the hook on its end slides on its rivets.',
-    `Pull all 3 m out and the drum turns ${n(drumTurns)} times, moving the spring's coils off the drum's wall and onto the post; let go and the spring turns it back. Here the blade, drum and spring move together from one set of sums: pull the blade out in the tour, lock it, and watch the hook slide by its own ${play} mm.`,
+    `Pull all 3 m out and the drum turns ${n(drumTurns)} times, moving the spring's coils off the drum's wall and onto the post; let go and the spring turns it back. Here the blade, drum and spring move together from one set of sums, and the hook slides by its own ${play} mm as it is pulled.`,
   ],
   model: 'models/tape-measure.glb',
   viewAngle: [-35, 16],
@@ -127,103 +145,47 @@ writeContent('tape-measure', {
     { node: 'hook_rivets', control: 'tape_out', axis: [0, 0, 1], slide: [0, 0, U(1)] },
     { node: 'lock_button', control: 'tape_lock', axis: [1, 0, 0], slide: H.press.map((c) => +(c * U(H.pressMm)).toFixed(5)) },
   ],
-  how: [
+  // "How it works" as an animation: the blade pulled out a turn's worth, the lock on, and the blade wound back in. Every
+  // shot frames the case and the hook out as far as it goes, so the camera only goes round.
+  film: [
     {
-      label: 'The idea',
-      title: 'A spring you wind by pulling',
-      text: [
-        'The blade is wound on a drum, and inside the drum is a flat spiral spring, its inner end on a post that never moves. Pull the blade out and the drum turns, winding the spring tighter; the spring keeps that work and spends it winding the blade back in.',
-        `All 3 m out turns the drum ${n(drumTurns)} times. The case is off here so you can see the drum, the roll of blade and the spring inside.`,
-      ],
-      explode: 0.45,
-      angle: [-62, 16],
-      focus: ['blade', 'drum', 'recoil_spring', 'spring_post', 'end_hook'],
-      flow: [A.hook_lip, A.blade_tip, A.mouth, A.throat, A.touch, A.roll_bottom, A.spring_outer, A.spring_inner],
+      chapter: 'Pull',
+      caption: `Pull out ${Math.round(PULLED / 10)} cm of blade and the drum turns once, winding the spring inside a turn tighter.`,
+      duration: 7,
+      angle: [-80, 14],
+      fill: 0.85,
+      focus: MOVING,
+      frame: SHOWN,
+      tags: springTags,
+      cues: [{ at: 0.8, do: 'tape-out', to: PULLED, over: 4.5 }],
     },
     {
-      label: 'Pull',
-      title: 'The blade turns the drum',
-      text: [
-        "The blade's tail is fixed to the drum's hub, so whatever comes out of the mouth turns the drum. It leaves the roll at the bottom and runs straight out through a guide.",
-        `About ${perTurn} cm comes out for each turn, a little less as the roll gets smaller. Pull it out with the slider and let go: the spring winds it back.`,
+      chapter: 'Lock',
+      caption: 'Press the lock and a shoe pinches the blade against its guide, so it stays out.',
+      duration: 5,
+      angle: [-62, 20],
+      fill: 0.85,
+      focus: MOVING,
+      frame: SHOWN,
+      tags: [
+        { node: 'lock_button', text: 'lock', at: A.button },
+        { node: 'brake', text: 'shoe', at: A.shoe },
       ],
-      explode: 0.45,
-      angle: [-72, 10],
-      focus: ['blade', 'drum', 'end_hook', 'hook_rivets'],
-      flow: [A.blade_tip, A.mouth, A.throat, A.touch, A.roll_bottom],
-      tags: [{ node: 'drum', text: `${n(drumTurns)} turns for 3 m`, at: A.drum_lip }],
-      try: 'tape-pull',
+      cues: [{ at: 1, do: 'tape-lock', to: true }],
     },
     {
-      label: 'Spring',
-      title: 'The spring keeps your pull',
-      text: [
-        "The spring's outer end goes round with the drum and its inner end stays on the post, so every turn winds it tighter. Its coils move off the drum's wall and pack onto the post.",
-        `It pulls back with ${n(pull(0))} N at home and ${n(pull(most))} N with 3 m out: its torque grows with each turn, and it acts through a roll that shrinks as the blade leaves it.`,
+      chapter: 'Let go',
+      caption: 'Let the lock off and the spring unwinds, turning the drum back and reeling the blade in.',
+      duration: 6,
+      angle: [-46, 16],
+      fill: 0.85,
+      focus: MOVING,
+      frame: SHOWN,
+      tags: springTags,
+      cues: [
+        { at: 0.8, do: 'tape-lock', to: false },
+        { at: 1, do: 'tape-out', to: 0, over: 3.5 },
       ],
-      explode: 0.45,
-      angle: [-88, 6],
-      focus: ['recoil_spring', 'drum', 'spring_post'],
-      flow: [A.drum_lip, A.spring_outer, A.spring_inner],
-      chart: {
-        type: 'tape-spring',
-        title: 'What the spring pulls with',
-        caption: `The pull on the hook as the blade comes out: a turn tighter every ${perTurn} cm or so, through a roll that shrinks, so it rises all the way.`,
-        node: 'drum',
-        blade,
-      },
-      try: 'tape-pull',
-    },
-    {
-      label: 'Lock',
-      title: 'A shoe pinches the blade',
-      text: [
-        'Press the button and the arm under it drives a shoe onto the blade just behind the mouth, pinching it against the guide it runs on. With the lock on, the spring can pull all it likes and the blade stays put.',
-        "Stanley's PowerLock, from 1963, works the same way. Pull some blade out, press the lock and let go.",
-      ],
-      explode: 0.45,
-      angle: [-60, 14],
-      focus: ['lock_button', 'brake', 'blade'],
-      flow: [A.button, A.stem, A.shoe],
-      try: 'tape-lock',
-    },
-    {
-      label: 'Curve',
-      title: 'The curve makes it stand up',
-      text: [
-        'A flat strip of steel 0.13 mm thick would droop like paper. Curved 2 mm deep across its width it is some 300 times stiffer, so it reaches out across a gap; on the drum the curve flattens and it coils.',
-        'A 19 mm blade stands out 1.4–1.85 m before the curve gives near the case, where the bending is greatest, and the blade folds. Run it out and see.',
-      ],
-      angle: [-80, 8],
-      camera: pose(A.blade_tip, [-80, 8], 4.4),
-      focus: ['blade', 'end_hook', 'hook_rivets'],
-      chart: {
-        type: 'bars',
-        title: 'Standout by blade width',
-        caption: 'How far each width reaches unsupported. The curve does it: a wider blade carries a deeper curve.',
-        unit: 'Metres it stands out',
-        picked: 1,
-        bars: [
-          { label: '13 mm', value: 1.0 },
-          { label: '19 mm', value: 1.6 },
-          { label: '25 mm', value: 2.35 },
-          { label: '32 mm', value: 3.35 },
-        ],
-      },
-      try: 'tape-standout',
-    },
-    {
-      label: 'Hook',
-      title: 'The loose hook keeps the zero true',
-      text: [
-        `The hook wobbles because it should. Its rivets run in slots ${play} mm longer than they are, and ${play} mm is the hook's own thickness.`,
-        "Hook it over an edge and your pull slides it out, so the zero is its inside face, where the edge is. Push it against a wall and it slides in, so the zero is its outside face, on the wall. Rivet it tight and one of the two would read a hook's thickness wrong.",
-      ],
-      angle: [-30, 38],
-      camera: pose(A.rivet, [-30, 38], 2.9, { card: 'right' }),
-      focus: ['end_hook', 'hook_rivets', 'blade'],
-      tags: [{ node: 'end_hook', text: `slides ${play} mm`, at: A.hook_lip }],
-      try: 'tape-hook',
     },
   ],
   credit: polyHaven('measuring_tape_01', 'Measuring Tape 01', 'Kuutti Siitonen', {

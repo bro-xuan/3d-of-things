@@ -1394,20 +1394,268 @@
       "inside": true
     }
   ],
-  "how": [
+  "film": [
     {
-      "label": "Layout",
-      "title": "From the engine to the rear wheels",
-      "text": [
-        "The engine at the front makes the power. It goes back through the clutch and the gearbox, along the propshaft under the floor, and into the rear axle, where the differential turns it through a right angle and out along the half shafts to the wheels.",
-        "A car like this carries its own fuel and has to cool itself: the tank is under the boot, the radiator in the nose, the exhaust runs the length of the car, and a battery starts it all."
-      ],
+      "chapter": "Engine",
+      "caption": "Petrol burns above each piston in turn and drives it down, turning the crankshaft.",
+      "duration": 6.5,
       "angle": [
-        -40,
-        26
+        44,
+        34
       ],
-      "fill": 0.9,
-      "explode": 0.6,
+      "fill": 0.84,
+      "focus": [
+        "piston_1",
+        "rod_1",
+        "piston_2",
+        "rod_2",
+        "piston_3",
+        "rod_3",
+        "piston_4",
+        "rod_4",
+        "crankshaft",
+        "camshaft",
+        "valve_in_1",
+        "valve_ex_1",
+        "valve_in_2",
+        "valve_ex_2",
+        "valve_in_3",
+        "valve_ex_3",
+        "valve_in_4",
+        "valve_ex_4",
+        "clutch",
+        "gear_input",
+        "layshaft",
+        "mainshaft",
+        "gear_1",
+        "gear_2",
+        "gear_3",
+        "propshaft",
+        "pinion",
+        "diff_carrier",
+        "spider_1",
+        "spider_2",
+        "halfshaft_left",
+        "halfshaft_right",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "rate": 0.4,
+      "spin": {
+        "spider_1": 0,
+        "spider_2": 0
+      },
+      "frame": [
+        "body",
+        "front_bumper",
+        "rear_bumper",
+        "wheel_fl",
+        "wheel_fr",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "tags": [
+        {
+          "node": "piston_1",
+          "text": "pistons",
+          "at": [
+            0,
+            0.2431,
+            0.6732
+          ]
+        },
+        {
+          "node": "crankshaft",
+          "text": "crankshaft",
+          "at": [
+            0,
+            0.1102,
+            0.5524
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Drive",
+      "caption": "Through the clutch and gearbox, the propshaft carries the turn back under the floor.",
+      "duration": 6,
+      "angle": [
+        80,
+        32
+      ],
+      "fill": 0.84,
+      "focus": [
+        "piston_1",
+        "rod_1",
+        "piston_2",
+        "rod_2",
+        "piston_3",
+        "rod_3",
+        "piston_4",
+        "rod_4",
+        "crankshaft",
+        "camshaft",
+        "valve_in_1",
+        "valve_ex_1",
+        "valve_in_2",
+        "valve_ex_2",
+        "valve_in_3",
+        "valve_ex_3",
+        "valve_in_4",
+        "valve_ex_4",
+        "clutch",
+        "gear_input",
+        "layshaft",
+        "mainshaft",
+        "gear_1",
+        "gear_2",
+        "gear_3",
+        "propshaft",
+        "pinion",
+        "diff_carrier",
+        "spider_1",
+        "spider_2",
+        "halfshaft_left",
+        "halfshaft_right",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "rate": 0.4,
+      "spin": {
+        "spider_1": 0,
+        "spider_2": 0
+      },
+      "frame": [
+        "body",
+        "front_bumper",
+        "rear_bumper",
+        "wheel_fl",
+        "wheel_fr",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "flow": [
+        {
+          "node": "crankshaft",
+          "at": [
+            0,
+            0.1368,
+            0.6079
+          ]
+        },
+        {
+          "node": "clutch",
+          "at": [
+            0,
+            0.1368,
+            0.5144
+          ]
+        },
+        {
+          "node": "mainshaft",
+          "at": [
+            0,
+            0.1368,
+            0.4179
+          ]
+        },
+        {
+          "node": "propshaft",
+          "at": [
+            0,
+            0.1268,
+            0
+          ]
+        },
+        {
+          "node": "pinion",
+          "at": [
+            0,
+            0.1167,
+            -0.4426
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "node": "mainshaft",
+          "text": "gearbox",
+          "at": [
+            0,
+            0.1634,
+            0.4179
+          ]
+        },
+        {
+          "node": "propshaft",
+          "text": "propshaft",
+          "at": [
+            0,
+            0.142,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Drive",
+      "caption": "At the back the pinion turns the crown wheel, and the half shafts turn the rear wheels.",
+      "duration": 6.5,
+      "angle": [
+        118,
+        30
+      ],
+      "fill": 0.84,
+      "focus": [
+        "piston_1",
+        "rod_1",
+        "piston_2",
+        "rod_2",
+        "piston_3",
+        "rod_3",
+        "piston_4",
+        "rod_4",
+        "crankshaft",
+        "camshaft",
+        "valve_in_1",
+        "valve_ex_1",
+        "valve_in_2",
+        "valve_ex_2",
+        "valve_in_3",
+        "valve_ex_3",
+        "valve_in_4",
+        "valve_ex_4",
+        "clutch",
+        "gear_input",
+        "layshaft",
+        "mainshaft",
+        "gear_1",
+        "gear_2",
+        "gear_3",
+        "propshaft",
+        "pinion",
+        "diff_carrier",
+        "spider_1",
+        "spider_2",
+        "halfshaft_left",
+        "halfshaft_right",
+        "wheel_rl",
+        "wheel_rr"
+      ],
+      "rate": 0.4,
+      "spin": {
+        "spider_1": 0,
+        "spider_2": 0
+      },
+      "frame": [
+        "body",
+        "front_bumper",
+        "rear_bumper",
+        "wheel_fl",
+        "wheel_fr",
+        "wheel_rl",
+        "wheel_rr"
+      ],
       "flow": [
         {
           "node": "crankshaft",
@@ -1474,1163 +1722,38 @@
           ]
         }
       ],
-      "focus": [
-        "engine_block",
-        "cylinder_head",
-        "crankshaft",
-        "clutch",
-        "gearbox",
-        "propshaft",
-        "rear_axle",
-        "diff_carrier",
-        "halfshaft_left",
-        "wheel_rl",
-        "wheel_rr",
-        "radiator",
-        "fuel_tank",
-        "exhaust"
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "Where the petrol’s energy goes",
-        "caption": "Rough shares at a steady speed: only about a quarter of the energy in the fuel ends up turning the wheels.",
-        "unit": "% of the fuel’s energy",
-        "bars": [
+      "flows": [
+        [
           {
-            "label": "Wheels",
-            "value": 25
-          },
-          {
-            "label": "Exhaust",
-            "value": 35
-          },
-          {
-            "label": "Cooling",
-            "value": 30
-          },
-          {
-            "label": "Friction",
-            "value": 10
-          }
-        ],
-        "picked": 0
-      }
-    },
-    {
-      "label": "Four strokes",
-      "title": "Suck, squeeze, bang, blow",
-      "text": [
-        "Each cylinder works in four strokes, two turns of the crankshaft. The piston goes down with the intake valve open, drawing in air and petrol; comes up with both valves shut, squeezing them; the spark plug fires and the burning mixture drives it down, the only stroke that does any work; and it comes up again with the exhaust valve open, pushing the burnt gas out.",
-        "The four cylinders fire in the order 1, 3, 4, 2, one every half turn, so one of them is always on its power stroke. The camshaft turns once for every two turns of the crankshaft, and its lobes open each valve at its moment."
-      ],
-      "angle": [
-        -35,
-        28
-      ],
-      "fill": 0.75,
-      "explode": 0.6,
-      "rate": 0.35,
-      "focus": [
-        "piston_1",
-        "crankshaft",
-        "camshaft",
-        "valve_in_1",
-        "valve_ex_1",
-        "valve_in_2",
-        "valve_ex_2",
-        "valve_in_3",
-        "valve_ex_3",
-        "valve_in_4",
-        "valve_ex_4"
-      ],
-      "frame": [
-        "engine_block",
-        "cylinder_head"
-      ],
-      "tags": [
-        {
-          "node": "camshaft",
-          "text": "Camshaft",
-          "at": [
-            0,
-            0.2849,
-            0.5524
-          ]
-        },
-        {
-          "node": "crankshaft",
-          "text": "Crankshaft",
-          "at": [
-            0,
-            0.1102,
-            0.5524
-          ]
-        },
-        {
-          "node": "piston_1",
-          "text": "Cylinder 1",
-          "at": [
-            0,
-            0.2431,
-            0.6732
-          ]
-        }
-      ],
-      "try": "run",
-      "count": [
-        {
-          "node": "crankshaft",
-          "label": "Crankshaft"
-        },
-        {
-          "node": "camshaft",
-          "label": "Camshaft"
-        }
-      ],
-      "chart": {
-        "type": "timing",
-        "title": "The four strokes, cylinder by cylinder",
-        "caption": "Each line is a piston’s height, cylinders 1 to 4 from the front, through one turn of the camshaft. They fire 1, 3, 4, 2, so a power stroke starts every half turn of the crank.",
-        "node": "camshaft",
-        "perTurn": 1,
-        "lanes": [
-          {
-            "name": "1",
-            "points": [
-              [
-                0,
-                1
-              ],
-              [
-                0.0208,
-                0.9781
-              ],
-              [
-                0.0417,
-                0.9146
-              ],
-              [
-                0.0625,
-                0.8165
-              ],
-              [
-                0.0833,
-                0.6942
-              ],
-              [
-                0.1042,
-                0.5597
-              ],
-              [
-                0.125,
-                0.4251
-              ],
-              [
-                0.1458,
-                0.3008
-              ],
-              [
-                0.1667,
-                0.1942
-              ],
-              [
-                0.1875,
-                0.1094
-              ],
-              [
-                0.2083,
-                0.0486
-              ],
-              [
-                0.2292,
-                0.0121
-              ],
-              [
-                0.25,
-                0
-              ],
-              [
-                0.2708,
-                0.0121
-              ],
-              [
-                0.2917,
-                0.0486
-              ],
-              [
-                0.3125,
-                0.1094
-              ],
-              [
-                0.3333,
-                0.1942
-              ],
-              [
-                0.3542,
-                0.3008
-              ],
-              [
-                0.375,
-                0.4251
-              ],
-              [
-                0.3958,
-                0.5597
-              ],
-              [
-                0.4167,
-                0.6942
-              ],
-              [
-                0.4375,
-                0.8165
-              ],
-              [
-                0.4583,
-                0.9146
-              ],
-              [
-                0.4792,
-                0.9781
-              ],
-              [
-                0.5,
-                1
-              ],
-              [
-                0.5208,
-                0.9781
-              ],
-              [
-                0.5417,
-                0.9146
-              ],
-              [
-                0.5625,
-                0.8165
-              ],
-              [
-                0.5833,
-                0.6942
-              ],
-              [
-                0.6042,
-                0.5597
-              ],
-              [
-                0.625,
-                0.4251
-              ],
-              [
-                0.6458,
-                0.3008
-              ],
-              [
-                0.6667,
-                0.1942
-              ],
-              [
-                0.6875,
-                0.1094
-              ],
-              [
-                0.7083,
-                0.0486
-              ],
-              [
-                0.7292,
-                0.0121
-              ],
-              [
-                0.75,
-                0
-              ],
-              [
-                0.7708,
-                0.0121
-              ],
-              [
-                0.7917,
-                0.0486
-              ],
-              [
-                0.8125,
-                0.1094
-              ],
-              [
-                0.8333,
-                0.1942
-              ],
-              [
-                0.8542,
-                0.3008
-              ],
-              [
-                0.875,
-                0.4251
-              ],
-              [
-                0.8958,
-                0.5597
-              ],
-              [
-                0.9167,
-                0.6942
-              ],
-              [
-                0.9375,
-                0.8165
-              ],
-              [
-                0.9583,
-                0.9146
-              ],
-              [
-                0.9792,
-                0.9781
-              ],
-              [
-                1,
-                1
-              ]
-            ],
-            "notes": [
-              [
-                0.125,
-                "Power"
-              ],
-              [
-                0.375,
-                "Exhaust"
-              ],
-              [
-                0.625,
-                "Intake"
-              ],
-              [
-                0.875,
-                "Squeeze"
-              ]
+            "node": "diff_carrier",
+            "at": [
+              0,
+              0.1167,
+              -0.5034
             ]
           },
           {
-            "name": "2",
-            "points": [
-              [
-                0,
-                0
-              ],
-              [
-                0.0208,
-                0.0121
-              ],
-              [
-                0.0417,
-                0.0486
-              ],
-              [
-                0.0625,
-                0.1094
-              ],
-              [
-                0.0833,
-                0.1942
-              ],
-              [
-                0.1042,
-                0.3008
-              ],
-              [
-                0.125,
-                0.4251
-              ],
-              [
-                0.1458,
-                0.5597
-              ],
-              [
-                0.1667,
-                0.6942
-              ],
-              [
-                0.1875,
-                0.8165
-              ],
-              [
-                0.2083,
-                0.9146
-              ],
-              [
-                0.2292,
-                0.9781
-              ],
-              [
-                0.25,
-                1
-              ],
-              [
-                0.2708,
-                0.9781
-              ],
-              [
-                0.2917,
-                0.9146
-              ],
-              [
-                0.3125,
-                0.8165
-              ],
-              [
-                0.3333,
-                0.6942
-              ],
-              [
-                0.3542,
-                0.5597
-              ],
-              [
-                0.375,
-                0.4251
-              ],
-              [
-                0.3958,
-                0.3008
-              ],
-              [
-                0.4167,
-                0.1942
-              ],
-              [
-                0.4375,
-                0.1094
-              ],
-              [
-                0.4583,
-                0.0486
-              ],
-              [
-                0.4792,
-                0.0121
-              ],
-              [
-                0.5,
-                0
-              ],
-              [
-                0.5208,
-                0.0121
-              ],
-              [
-                0.5417,
-                0.0486
-              ],
-              [
-                0.5625,
-                0.1094
-              ],
-              [
-                0.5833,
-                0.1942
-              ],
-              [
-                0.6042,
-                0.3008
-              ],
-              [
-                0.625,
-                0.4251
-              ],
-              [
-                0.6458,
-                0.5597
-              ],
-              [
-                0.6667,
-                0.6942
-              ],
-              [
-                0.6875,
-                0.8165
-              ],
-              [
-                0.7083,
-                0.9146
-              ],
-              [
-                0.7292,
-                0.9781
-              ],
-              [
-                0.75,
-                1
-              ],
-              [
-                0.7708,
-                0.9781
-              ],
-              [
-                0.7917,
-                0.9146
-              ],
-              [
-                0.8125,
-                0.8165
-              ],
-              [
-                0.8333,
-                0.6942
-              ],
-              [
-                0.8542,
-                0.5597
-              ],
-              [
-                0.875,
-                0.4251
-              ],
-              [
-                0.8958,
-                0.3008
-              ],
-              [
-                0.9167,
-                0.1942
-              ],
-              [
-                0.9375,
-                0.1094
-              ],
-              [
-                0.9583,
-                0.0486
-              ],
-              [
-                0.9792,
-                0.0121
-              ],
-              [
-                1,
-                0
-              ]
-            ],
-            "notes": [
-              [
-                0.875,
-                "Power"
-              ],
-              [
-                0.125,
-                "Exhaust"
-              ],
-              [
-                0.375,
-                "Intake"
-              ],
-              [
-                0.625,
-                "Squeeze"
-              ]
+            "node": "halfshaft_right",
+            "at": [
+              -0.1596,
+              0.1167,
+              -0.5034
             ]
           },
           {
-            "name": "3",
-            "points": [
-              [
-                0,
-                0
-              ],
-              [
-                0.0208,
-                0.0121
-              ],
-              [
-                0.0417,
-                0.0486
-              ],
-              [
-                0.0625,
-                0.1094
-              ],
-              [
-                0.0833,
-                0.1942
-              ],
-              [
-                0.1042,
-                0.3008
-              ],
-              [
-                0.125,
-                0.4251
-              ],
-              [
-                0.1458,
-                0.5597
-              ],
-              [
-                0.1667,
-                0.6942
-              ],
-              [
-                0.1875,
-                0.8165
-              ],
-              [
-                0.2083,
-                0.9146
-              ],
-              [
-                0.2292,
-                0.9781
-              ],
-              [
-                0.25,
-                1
-              ],
-              [
-                0.2708,
-                0.9781
-              ],
-              [
-                0.2917,
-                0.9146
-              ],
-              [
-                0.3125,
-                0.8165
-              ],
-              [
-                0.3333,
-                0.6942
-              ],
-              [
-                0.3542,
-                0.5597
-              ],
-              [
-                0.375,
-                0.4251
-              ],
-              [
-                0.3958,
-                0.3008
-              ],
-              [
-                0.4167,
-                0.1942
-              ],
-              [
-                0.4375,
-                0.1094
-              ],
-              [
-                0.4583,
-                0.0486
-              ],
-              [
-                0.4792,
-                0.0121
-              ],
-              [
-                0.5,
-                0
-              ],
-              [
-                0.5208,
-                0.0121
-              ],
-              [
-                0.5417,
-                0.0486
-              ],
-              [
-                0.5625,
-                0.1094
-              ],
-              [
-                0.5833,
-                0.1942
-              ],
-              [
-                0.6042,
-                0.3008
-              ],
-              [
-                0.625,
-                0.4251
-              ],
-              [
-                0.6458,
-                0.5597
-              ],
-              [
-                0.6667,
-                0.6942
-              ],
-              [
-                0.6875,
-                0.8165
-              ],
-              [
-                0.7083,
-                0.9146
-              ],
-              [
-                0.7292,
-                0.9781
-              ],
-              [
-                0.75,
-                1
-              ],
-              [
-                0.7708,
-                0.9781
-              ],
-              [
-                0.7917,
-                0.9146
-              ],
-              [
-                0.8125,
-                0.8165
-              ],
-              [
-                0.8333,
-                0.6942
-              ],
-              [
-                0.8542,
-                0.5597
-              ],
-              [
-                0.875,
-                0.4251
-              ],
-              [
-                0.8958,
-                0.3008
-              ],
-              [
-                0.9167,
-                0.1942
-              ],
-              [
-                0.9375,
-                0.1094
-              ],
-              [
-                0.9583,
-                0.0486
-              ],
-              [
-                0.9792,
-                0.0121
-              ],
-              [
-                1,
-                0
-              ]
-            ],
-            "notes": [
-              [
-                0.375,
-                "Power"
-              ],
-              [
-                0.625,
-                "Exhaust"
-              ],
-              [
-                0.875,
-                "Intake"
-              ],
-              [
-                0.125,
-                "Squeeze"
-              ]
-            ]
-          },
-          {
-            "name": "4",
-            "points": [
-              [
-                0,
-                1
-              ],
-              [
-                0.0208,
-                0.9781
-              ],
-              [
-                0.0417,
-                0.9146
-              ],
-              [
-                0.0625,
-                0.8165
-              ],
-              [
-                0.0833,
-                0.6942
-              ],
-              [
-                0.1042,
-                0.5597
-              ],
-              [
-                0.125,
-                0.4251
-              ],
-              [
-                0.1458,
-                0.3008
-              ],
-              [
-                0.1667,
-                0.1942
-              ],
-              [
-                0.1875,
-                0.1094
-              ],
-              [
-                0.2083,
-                0.0486
-              ],
-              [
-                0.2292,
-                0.0121
-              ],
-              [
-                0.25,
-                0
-              ],
-              [
-                0.2708,
-                0.0121
-              ],
-              [
-                0.2917,
-                0.0486
-              ],
-              [
-                0.3125,
-                0.1094
-              ],
-              [
-                0.3333,
-                0.1942
-              ],
-              [
-                0.3542,
-                0.3008
-              ],
-              [
-                0.375,
-                0.4251
-              ],
-              [
-                0.3958,
-                0.5597
-              ],
-              [
-                0.4167,
-                0.6942
-              ],
-              [
-                0.4375,
-                0.8165
-              ],
-              [
-                0.4583,
-                0.9146
-              ],
-              [
-                0.4792,
-                0.9781
-              ],
-              [
-                0.5,
-                1
-              ],
-              [
-                0.5208,
-                0.9781
-              ],
-              [
-                0.5417,
-                0.9146
-              ],
-              [
-                0.5625,
-                0.8165
-              ],
-              [
-                0.5833,
-                0.6942
-              ],
-              [
-                0.6042,
-                0.5597
-              ],
-              [
-                0.625,
-                0.4251
-              ],
-              [
-                0.6458,
-                0.3008
-              ],
-              [
-                0.6667,
-                0.1942
-              ],
-              [
-                0.6875,
-                0.1094
-              ],
-              [
-                0.7083,
-                0.0486
-              ],
-              [
-                0.7292,
-                0.0121
-              ],
-              [
-                0.75,
-                0
-              ],
-              [
-                0.7708,
-                0.0121
-              ],
-              [
-                0.7917,
-                0.0486
-              ],
-              [
-                0.8125,
-                0.1094
-              ],
-              [
-                0.8333,
-                0.1942
-              ],
-              [
-                0.8542,
-                0.3008
-              ],
-              [
-                0.875,
-                0.4251
-              ],
-              [
-                0.8958,
-                0.5597
-              ],
-              [
-                0.9167,
-                0.6942
-              ],
-              [
-                0.9375,
-                0.8165
-              ],
-              [
-                0.9583,
-                0.9146
-              ],
-              [
-                0.9792,
-                0.9781
-              ],
-              [
-                1,
-                1
-              ]
-            ],
-            "notes": [
-              [
-                0.625,
-                "Power"
-              ],
-              [
-                0.875,
-                "Exhaust"
-              ],
-              [
-                0.125,
-                "Intake"
-              ],
-              [
-                0.375,
-                "Squeeze"
-              ]
+            "node": "wheel_rr",
+            "at": [
+              -0.2735,
+              0.1167,
+              -0.5034
             ]
           }
         ]
-      }
-    },
-    {
-      "label": "Gearbox",
-      "title": "Gears for pulling, and for speed",
-      "text": [
-        "An engine only works well over a band of speeds, so the gearbox lets it turn faster than the wheels when the car needs to pull (in first, three and a half turns of the engine for each turn of the propshaft) and at the same speed when it cruises (in fourth, the input and the output locked together).",
-        "All the gears are always in mesh. The layshaft below is driven by the input shaft, and its gears drive one gear for each speed, turning freely on the main shaft; choosing a gear locks that one to the shaft. Pick a gear and watch the propshaft."
-      ],
-      "angle": [
-        -55,
-        24
-      ],
-      "fill": 0.7,
-      "explode": 0.6,
-      "focus": [
-        "gear_input",
-        "layshaft",
-        "mainshaft",
-        "gear_1",
-        "gear_2",
-        "gear_3",
-        "propshaft",
-        "clutch"
-      ],
-      "frame": [
-        "gearbox"
       ],
       "tags": [
-        {
-          "node": "layshaft",
-          "text": "Layshaft",
-          "at": [
-            0,
-            0.0836,
-            0.4179
-          ]
-        },
-        {
-          "node": "gear_1",
-          "text": "1st",
-          "at": [
-            0,
-            0.1634,
-            0.3856
-          ]
-        },
-        {
-          "node": "gear_input",
-          "text": "Input",
-          "at": [
-            0,
-            0.1634,
-            0.4901
-          ]
-        }
-      ],
-      "try": "speeds",
-      "spin": [
-        "mainshaft",
-        "propshaft",
-        "pinion",
-        "diff_carrier",
-        "halfshaft_left",
-        "halfshaft_right",
-        "wheel_fl",
-        "wheel_fr",
-        "wheel_rl",
-        "wheel_rr"
-      ],
-      "speeds": [
-        {
-          "label": "1st",
-          "factor": 0.2857,
-          "note": "3.5 turns of the engine for one of the propshaft"
-        },
-        {
-          "label": "2nd",
-          "factor": 0.4828,
-          "note": "2.07 to 1"
-        },
-        {
-          "label": "3rd",
-          "factor": 0.7222,
-          "note": "1.38 to 1"
-        },
-        {
-          "label": "4th",
-          "factor": 1,
-          "note": "Direct: the input and the output locked together"
-        }
-      ],
-      "chart": {
-        "type": "bars",
-        "title": "Engine turns for each turn of the propshaft",
-        "caption": "In first the engine turns three and a half times for each turn of the propshaft, so the wheels get three and a half times its pull.",
-        "unit": "Ratio",
-        "follow": "selected",
-        "bars": [
-          {
-            "label": "1st",
-            "value": 3.5
-          },
-          {
-            "label": "2nd",
-            "value": 2.07
-          },
-          {
-            "label": "3rd",
-            "value": 1.38
-          },
-          {
-            "label": "4th",
-            "value": 1
-          }
-        ]
-      }
-    },
-    {
-      "label": "Differential",
-      "title": "Letting the wheels turn at different speeds",
-      "text": [
-        "In a bend the outside wheel travels further than the inside one, so it has to turn faster. The propshaft’s pinion turns the crown wheel and the carrier with it; in the carrier, the spider gears drive the half shafts’ gears. Straight ahead the spiders don’t turn and both shafts go round with the carrier; in a bend the spiders roll round, and one shaft gains what the other loses.",
-        "The pinion has ten teeth and the crown wheel thirty-nine: the last reduction between the engine and the wheels, 3.9 to 1."
-      ],
-      "angle": [
-        -150,
-        30
-      ],
-      "fill": 0.7,
-      "explode": 0.6,
-      "focus": [
-        "diff_carrier",
-        "pinion",
-        "spider_1",
-        "spider_2",
-        "halfshaft_left",
-        "halfshaft_right",
-        "wheel_rl",
-        "wheel_rr",
-        "propshaft"
-      ],
-      "frame": [
-        "rear_axle",
-        "wheel_rl",
-        "wheel_rr"
-      ],
-      "tags": [
-        {
-          "node": "pinion",
-          "text": "Pinion",
-          "at": [
-            0,
-            0.1395,
-            -0.4464
-          ]
-        },
         {
           "node": "diff_carrier",
-          "text": "Crown wheel",
+          "text": "crown wheel",
           "at": [
             0.0228,
             0.1623,
@@ -2638,132 +1761,12 @@
           ]
         },
         {
-          "node": "spider_1",
-          "text": "Spider gears",
+          "node": "halfshaft_left",
+          "text": "half shaft",
           "at": [
-            0,
-            0.1433,
-            -0.5186
-          ]
-        }
-      ],
-      "try": "speeds",
-      "spin": [
-        "halfshaft_left",
-        "halfshaft_right",
-        "wheel_rl",
-        "wheel_rr",
-        "wheel_fl",
-        "wheel_fr",
-        "spider_1",
-        "spider_2"
-      ],
-      "speeds": [
-        {
-          "label": "Straight",
-          "factor": 1,
-          "note": "Both wheels at the carrier’s speed; the spider gears still",
-          "factors": {
-            "spider_1": 0,
-            "spider_2": 0
-          }
-        },
-        {
-          "label": "Bend left",
-          "factor": 1,
-          "note": "The right wheel outside, faster; the left one slower",
-          "factors": {
-            "halfshaft_right": 1.15,
-            "wheel_rr": 1.15,
-            "wheel_fr": 1.15,
-            "halfshaft_left": 0.85,
-            "wheel_rl": 0.85,
-            "wheel_fl": 0.85,
-            "spider_1": -1,
-            "spider_2": -1
-          }
-        },
-        {
-          "label": "Bend right",
-          "factor": 1,
-          "note": "The left wheel outside, faster; the right one slower",
-          "factors": {
-            "halfshaft_left": 1.15,
-            "wheel_rl": 1.15,
-            "wheel_fl": 1.15,
-            "halfshaft_right": 0.85,
-            "wheel_rr": 0.85,
-            "wheel_fr": 0.85,
-            "spider_1": 1,
-            "spider_2": 1
-          }
-        }
-      ],
-      "chart": {
-        "type": "ladder",
-        "title": "The two wheels and the crown wheel",
-        "caption": "The dials turn with the half shafts and the crown wheel: in a bend, the outside wheel runs ahead of the crown wheel by as much as the inside one falls behind.",
-        "unit": "Turns a second",
-        "rungs": [
-          {
-            "name": "Left wheel",
-            "value": 1,
-            "node": "halfshaft_left"
-          },
-          {
-            "name": "Crown wheel",
-            "value": 1,
-            "node": "diff_carrier"
-          },
-          {
-            "name": "Right wheel",
-            "value": 1,
-            "node": "halfshaft_right"
-          }
-        ]
-      }
-    },
-    {
-      "label": "Cooling",
-      "title": "Throwing heat away",
-      "text": [
-        "Burning petrol in the cylinders makes far more heat than work, and the engine would seize without a way to get rid of it. Water is pumped round passages in the block and the head, then through the radiator in the nose, where the air coming through the grille (and pulled by the fan) cools it.",
-        "About as much of the fuel’s energy goes into the radiator as goes out of the exhaust, and each of them is more than turns the wheels."
-      ],
-      "angle": [
-        -75,
-        26
-      ],
-      "fill": 0.75,
-      "explode": 0.6,
-      "focus": [
-        "radiator",
-        "fan",
-        "engine_block",
-        "cylinder_head"
-      ],
-      "frame": [
-        "radiator",
-        "fan",
-        "engine_block"
-      ],
-      "tags": [
-        {
-          "node": "radiator",
-          "text": "Radiator",
-          "at": [
-            0,
-            0.2887,
-            0.7864
-          ]
-        },
-        {
-          "node": "fan",
-          "text": "Fan",
-          "at": [
-            0,
-            0.2128,
-            0.7378
+            0.1444,
+            0.1281,
+            -0.5034
           ]
         }
       ]

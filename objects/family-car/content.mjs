@@ -1,10 +1,10 @@
 // Writes content/family-car.json, the content file for a car with an engine (a spec with an `engine`): its
 // text, its parts and how they come off, its motions (pistons on the crank, valves on the cam, the gearbox,
-// the differential), its callouts and its "How it works". It runs the build (without the checks) for where
+// the differential), its callouts and its "How it works" film. It runs the build (without the checks) for where
 // the wheels, the engine's moving parts and the gears sit in model space.
 //   node objects/family-car/content.mjs
 import { writeContent } from '../../scripts/kit/content.mjs';
-import { FIRING, GEARS, LIFT, DURATION, ratio } from '../../scripts/kit/cars/engine.mjs';
+import { GEARS, LIFT, DURATION, ratio } from '../../scripts/kit/cars/engine.mjs';
 import generate from './generate.mjs';
 import spec from './spec.mjs';
 
@@ -115,16 +115,8 @@ function petrolContent({ car, spec, H }) {
     { title: 'Exhaust', text: 'Burnt gas out through the catalytic converter and the silencer.', node: 'exhaust', position: M(-200, 300, 0), explode: 0.6, camera: pose(M(-200, 260, -200), [-70, 18], 1.3) },
   ];
 
-  // The four strokes of each cylinder through one turn of the camshaft (two of the crank), as the piston's height.
-  const height = (t) => E.r * Math.cos(t) + Math.sqrt(E.L ** 2 - (E.r * Math.sin(t)) ** 2);
-  const [hMin, hMax] = [height(Math.PI), height(0)];
-  const lanes = E.pistons.map((p, k) => {
-    const f = FIRING[k];
-    const points = [];
-    for (let deg = 0; deg <= 720; deg += 15) points.push([r4(deg / 720), r4((height(((deg + p.phase) * Math.PI) / 180) - hMin) / (hMax - hMin))]);
-    const at = (d) => r4((((f + d) % 720) + 720) % 720 / 720);
-    return { name: `${k + 1}`, points, notes: [[at(90), 'Power'], [at(270), 'Exhaust'], [at(450), 'Intake'], [at(630), 'Squeeze']] };
-  });
+  // The power's path: from the crankshaft back through the clutch, the gearbox and the propshaft to the pinion, round
+  // the crown wheel and out along a half shaft to each rear wheel.
   const flowPath = [
     { node: 'crankshaft', at: M(0, eng.yc, 1600) },
     { node: 'clutch', at: M(0, eng.yc, zRear - 60) },
@@ -135,112 +127,82 @@ function petrolContent({ car, spec, H }) {
     { node: 'halfshaft_left', at: M(420, axleY, zr) },
     { node: 'wheel_rl', at: M(spec.track[1] / 2, axleY, zr) },
   ];
-  const drive = ['mainshaft', 'propshaft', 'pinion', 'diff_carrier', 'halfshaft_left', 'halfshaft_right', ...wheelNames.map((n) => `wheel_${n}`)];
-  const outer = (side) => ({ [`halfshaft_${side}`]: 1 + bend, [`wheel_r${side[0]}`]: 1 + bend, [`wheel_f${side[0]}`]: 1 + bend });
-  const inner = (side) => ({ [`halfshaft_${side}`]: 1 - bend, [`wheel_r${side[0]}`]: 1 - bend, [`wheel_f${side[0]}`]: 1 - bend });
-  const how = [
+  const otherWheel = [
+    { node: 'diff_carrier', at: M(0, axleY, zr) },
+    { node: 'halfshaft_right', at: M(-420, axleY, zr) },
+    { node: 'wheel_rr', at: M(-spec.track[1] / 2, axleY, zr) },
+  ];
+  // "How it works" as a film: the engine turning the rear wheels, the camera following the power back along the car.
+  // What stays solid: everything the engine turns, from the pistons to the rear wheels. The body, the engine block and
+  // head, the gearbox case and the axle casing are glass; so are the front wheels, which only roll.
+  const MOVING = [
+    ...E.pistons.flatMap((p) => [p.node, p.rod]),
+    'crankshaft',
+    'camshaft',
+    ...E.valves.map((v) => v.node),
+    'clutch',
+    'gear_input',
+    'layshaft',
+    'mainshaft',
+    'gear_1',
+    'gear_2',
+    'gear_3',
+    'propshaft',
+    'pinion',
+    'diff_carrier',
+    'spider_1',
+    'spider_2',
+    'halfshaft_left',
+    'halfshaft_right',
+    'wheel_rl',
+    'wheel_rr',
+  ];
+  // Every shot frames the whole car, so none of it runs over the script beside the stage.
+  const WHOLE = ['body', 'front_bumper', 'rear_bumper', ...wheelNames.map((n) => `wheel_${n}`)];
+  // Slowed down so the pistons can be followed, the same all through; straight ahead, so the spider gears stay still.
+  const pace = { focus: MOVING, rate: 0.4, spin: { spider_1: 0, spider_2: 0 } };
+  const film = [
     {
-      label: 'Layout',
-      title: 'From the engine to the rear wheels',
-      text: [
-        'The engine at the front makes the power. It goes back through the clutch and the gearbox, along the propshaft under the floor, and into the rear axle, where the differential turns it through a right angle and out along the half shafts to the wheels.',
-        'A car like this carries its own fuel and has to cool itself: the tank is under the boot, the radiator in the nose, the exhaust runs the length of the car, and a battery starts it all.',
+      chapter: 'Engine',
+      caption: 'Petrol burns above each piston in turn and drives it down, turning the crankshaft.',
+      duration: 6.5,
+      angle: [44, 34],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
+      tags: [
+        { node: 'piston_1', text: 'pistons', at: M(0, 640, eng.front - 70) },
+        { node: 'crankshaft', text: 'crankshaft', at: M(0, eng.yc - 70, zRear + 40) },
       ],
-      angle: [-40, 26],
-      fill: 0.9,
-      explode: 0.6,
+    },
+    {
+      chapter: 'Drive',
+      caption: 'Through the clutch and gearbox, the propshaft carries the turn back under the floor.',
+      duration: 6,
+      angle: [80, 32],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
+      flow: flowPath.slice(0, 5),
+      tags: [
+        { node: 'mainshaft', text: 'gearbox', at: M(0, eng.yc + 70, 1100) },
+        { node: 'propshaft', text: 'propshaft', at: M(0, (eng.yc + axleY) / 2 + 40, 0) },
+      ],
+    },
+    {
+      chapter: 'Drive',
+      caption: 'At the back the pinion turns the crown wheel, and the half shafts turn the rear wheels.',
+      duration: 6.5,
+      angle: [118, 30],
+      fill: 0.84,
+      ...pace,
+      frame: WHOLE,
       flow: flowPath,
-      focus: ['engine_block', 'cylinder_head', 'crankshaft', 'clutch', 'gearbox', 'propshaft', 'rear_axle', 'diff_carrier', 'halfshaft_left', 'wheel_rl', 'wheel_rr', 'radiator', 'fuel_tank', 'exhaust'],
-      chart: { type: 'bars', title: 'Where the petrol’s energy goes', caption: 'Rough shares at a steady speed: only about a quarter of the energy in the fuel ends up turning the wheels.', unit: '% of the fuel’s energy', bars: [{ label: 'Wheels', value: 25 }, { label: 'Exhaust', value: 35 }, { label: 'Cooling', value: 30 }, { label: 'Friction', value: 10 }], picked: 0 },
-    },
-    {
-      label: 'Four strokes',
-      title: 'Suck, squeeze, bang, blow',
-      text: [
-        'Each cylinder works in four strokes, two turns of the crankshaft. The piston goes down with the intake valve open, drawing in air and petrol; comes up with both valves shut, squeezing them; the spark plug fires and the burning mixture drives it down, the only stroke that does any work; and it comes up again with the exhaust valve open, pushing the burnt gas out.',
-        'The four cylinders fire in the order 1, 3, 4, 2, one every half turn, so one of them is always on its power stroke. The camshaft turns once for every two turns of the crankshaft, and its lobes open each valve at its moment.',
-      ],
-      angle: [-35, 28],
-      fill: 0.75,
-      explode: 0.6,
-      rate: 0.35,
-      focus: ['piston_1', 'crankshaft', 'camshaft', ...E.valves.map((v) => v.node)],
-      frame: ['engine_block', 'cylinder_head'],
+      flows: [otherWheel],
       tags: [
-        { node: 'camshaft', text: 'Camshaft', at: M(0, 750, zRear + 40) },
-        { node: 'crankshaft', text: 'Crankshaft', at: M(0, eng.yc - 70, zRear + 40) },
-        { node: 'piston_1', text: 'Cylinder 1', at: M(0, 640, eng.front - 70) },
+        { node: 'diff_carrier', text: 'crown wheel', at: M(60, axleY + 120, zr) },
+        { node: 'halfshaft_left', text: 'half shaft', at: M(380, axleY + 30, zr) },
       ],
-      try: 'run',
-      count: [{ node: 'crankshaft', label: 'Crankshaft' }, { node: 'camshaft', label: 'Camshaft' }],
-      chart: { type: 'timing', title: 'The four strokes, cylinder by cylinder', caption: 'Each line is a piston’s height, cylinders 1 to 4 from the front, through one turn of the camshaft. They fire 1, 3, 4, 2, so a power stroke starts every half turn of the crank.', node: 'camshaft', perTurn: 1, lanes },
-    },
-    {
-      label: 'Gearbox',
-      title: 'Gears for pulling, and for speed',
-      text: [
-        'An engine only works well over a band of speeds, so the gearbox lets it turn faster than the wheels when the car needs to pull (in first, three and a half turns of the engine for each turn of the propshaft) and at the same speed when it cruises (in fourth, the input and the output locked together).',
-        'All the gears are always in mesh. The layshaft below is driven by the input shaft, and its gears drive one gear for each speed, turning freely on the main shaft; choosing a gear locks that one to the shaft. Pick a gear and watch the propshaft.',
-      ],
-      angle: [-55, 24],
-      fill: 0.7,
-      explode: 0.6,
-      focus: ['gear_input', 'layshaft', 'mainshaft', 'gear_1', 'gear_2', 'gear_3', 'propshaft', 'clutch'],
-      frame: ['gearbox'],
-      tags: [
-        { node: 'layshaft', text: 'Layshaft', at: M(0, eng.yc - 140, 1100) },
-        { node: 'gear_1', text: '1st', at: M(0, eng.yc + 70, 1015) },
-        { node: 'gear_input', text: 'Input', at: M(0, eng.yc + 70, 1290) },
-      ],
-      try: 'speeds',
-      spin: drive,
-      speeds: [
-        { label: '1st', factor: r4(1 / ratios.first), note: `${ratios.first.toFixed(1)} turns of the engine for one of the propshaft` },
-        { label: '2nd', factor: r4(1 / ratios.second), note: `${ratios.second.toFixed(2)} to 1` },
-        { label: '3rd', factor: r4(1 / ratios.third), note: `${ratios.third.toFixed(2)} to 1` },
-        { label: '4th', factor: 1, note: 'Direct: the input and the output locked together' },
-      ],
-      chart: { type: 'bars', title: 'Engine turns for each turn of the propshaft', caption: 'In first the engine turns three and a half times for each turn of the propshaft, so the wheels get three and a half times its pull.', unit: 'Ratio', follow: 'selected', bars: [{ label: '1st', value: +ratios.first.toFixed(2) }, { label: '2nd', value: +ratios.second.toFixed(2) }, { label: '3rd', value: +ratios.third.toFixed(2) }, { label: '4th', value: 1 }] },
-    },
-    {
-      label: 'Differential',
-      title: 'Letting the wheels turn at different speeds',
-      text: [
-        'In a bend the outside wheel travels further than the inside one, so it has to turn faster. The propshaft’s pinion turns the crown wheel and the carrier with it; in the carrier, the spider gears drive the half shafts’ gears. Straight ahead the spiders don’t turn and both shafts go round with the carrier; in a bend the spiders roll round, and one shaft gains what the other loses.',
-        'The pinion has ten teeth and the crown wheel thirty-nine: the last reduction between the engine and the wheels, 3.9 to 1.',
-      ],
-      angle: [-150, 30],
-      fill: 0.7,
-      explode: 0.6,
-      focus: ['diff_carrier', 'pinion', 'spider_1', 'spider_2', 'halfshaft_left', 'halfshaft_right', 'wheel_rl', 'wheel_rr', 'propshaft'],
-      frame: ['rear_axle', 'wheel_rl', 'wheel_rr'],
-      tags: [
-        { node: 'pinion', text: 'Pinion', at: M(0, axleY + 60, zr + 150) },
-        { node: 'diff_carrier', text: 'Crown wheel', at: M(60, axleY + 120, zr) },
-        { node: 'spider_1', text: 'Spider gears', at: M(0, axleY + 70, zr - 40) },
-      ],
-      try: 'speeds',
-      spin: ['halfshaft_left', 'halfshaft_right', 'wheel_rl', 'wheel_rr', 'wheel_fl', 'wheel_fr', 'spider_1', 'spider_2'],
-      speeds: [
-        { label: 'Straight', factor: 1, note: 'Both wheels at the carrier’s speed; the spider gears still', factors: { spider_1: 0, spider_2: 0 } },
-        { label: 'Bend left', factor: 1, note: 'The right wheel outside, faster; the left one slower', factors: { ...outer('right'), ...inner('left'), spider_1: -1, spider_2: -1 } },
-        { label: 'Bend right', factor: 1, note: 'The left wheel outside, faster; the right one slower', factors: { ...outer('left'), ...inner('right'), spider_1: 1, spider_2: 1 } },
-      ],
-      chart: { type: 'ladder', title: 'The two wheels and the crown wheel', caption: 'The dials turn with the half shafts and the crown wheel: in a bend, the outside wheel runs ahead of the crown wheel by as much as the inside one falls behind.', unit: 'Turns a second', rungs: [{ name: 'Left wheel', value: 1, node: 'halfshaft_left' }, { name: 'Crown wheel', value: 1, node: 'diff_carrier' }, { name: 'Right wheel', value: 1, node: 'halfshaft_right' }] },
-    },
-    {
-      label: 'Cooling',
-      title: 'Throwing heat away',
-      text: [
-        'Burning petrol in the cylinders makes far more heat than work, and the engine would seize without a way to get rid of it. Water is pumped round passages in the block and the head, then through the radiator in the nose, where the air coming through the grille (and pulled by the fan) cools it.',
-        'About as much of the fuel’s energy goes into the radiator as goes out of the exhaust, and each of them is more than turns the wheels.',
-      ],
-      angle: [-75, 26],
-      fill: 0.75,
-      explode: 0.6,
-      focus: ['radiator', 'fan', 'engine_block', 'cylinder_head'],
-      frame: ['radiator', 'fan', 'engine_block'],
-      tags: [{ node: 'radiator', text: 'Radiator', at: M(0, 760, 2070) }, { node: 'fan', text: 'Fan', at: M(0, eng.yc + 200, eng.front + 100) }],
     },
   ];
 
@@ -271,7 +233,7 @@ function petrolContent({ car, spec, H }) {
     parts,
     annotations,
     motion,
-    how,
+    film,
     credit: {
       title: 'Family Car, built in code',
       author: '3D of Things',

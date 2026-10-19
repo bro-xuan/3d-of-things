@@ -1,9 +1,26 @@
 // Writes content/microscope.json. Converted key for key on 18 October 2026 from the hand-written JSON the page
-// shipped with, so it writes the same file byte for byte. Its positions and cameras are still typed in model
+// shipped with (its "How it works" is now a film). Its positions and cameras are still typed in model
 // space, as they were in the JSON: when the model changes, place them from the model with placer(nodeBounds(...))
 // (scripts/kit/nodes.mjs), as the newer objects' builders do.
 //   node objects/microscope/content.mjs
 import { writeContent } from '../../scripts/kit/content.mjs';
+
+/** What stays solid through the film: the mirror and the lenses the light goes through (the condenser, the objectives
+ *  on their turret, the tube with its eyepiece). The arm and stage, the foot, the mirror's arm and the focus knobs
+ *  are glass. */
+const SOLID = ['vintage_microscope_mirror_base', 'vintage_microscope_condenser', 'vintage_microscope_revolver', 'vintage_microscope_eye_piece'];
+/** The light's path: from a window to the mirror, straight up through the condenser to the slide, through the
+ *  objective to the image it forms in the tube, and out of the eyepiece. */
+const LIGHT = [
+  [-0.58, 0.44, 0.42],
+  [0, 0.18, 0.113],
+  { node: 'vintage_microscope_condenser', at: [0, 0.5, 0.113] },
+  [0, 0.715, 0.113],
+  { node: 'vintage_microscope_revolver', at: [0, 0.83, 0.113] },
+  { node: 'vintage_microscope_eye_piece', at: [0, 1.3, 0.113] },
+  { node: 'vintage_microscope_eye_piece', at: [0, 1.72, 0.113] },
+  [0, 1.98, 0.113],
+];
 
 writeContent('microscope', {
   order: 4,
@@ -105,6 +122,48 @@ writeContent('microscope', {
       camera: { position: [0.363, 0.619, 1.063], target: [0.02, 0.233, 0.206] },
     },
   ],
+  // "How it works" as a film: the light up through the microscope, from the mirror to the eye.
+  film: [
+    {
+      chapter: 'Light',
+      caption: 'The mirror catches daylight and sends it up through the condenser onto the slide.',
+      duration: 6,
+      angle: [20, 8],
+      fill: 0.74,
+      focus: SOLID,
+      carries: 'light',
+      flow: LIGHT.slice(0, 4),
+      tags: [
+        { node: 'vintage_microscope_mirror_base', text: 'mirror', at: [0.1, 0.2, 0.2] },
+        { node: 'vintage_microscope_rack_mount_support', text: 'slide', at: [0.12, 0.72, 0.2] },
+      ],
+    },
+    {
+      chapter: 'Objective',
+      caption: 'Just above the slide, the objective forms an enlarged image inside the tube.',
+      duration: 6,
+      angle: [38, 12],
+      fill: 0.74,
+      focus: SOLID,
+      carries: 'light',
+      flow: LIGHT.slice(0, 6),
+      tags: [
+        { node: 'vintage_microscope_revolver', text: 'objective', at: [0.06, 0.84, 0.15] },
+        { node: 'vintage_microscope_eye_piece', text: 'image', at: [0.07, 1.3, 0.15] },
+      ],
+    },
+    {
+      chapter: 'Eyepiece',
+      caption: 'The eyepiece magnifies it again: a 10× objective under a 10× eyepiece makes 100×.',
+      duration: 6.5,
+      angle: [56, 16],
+      fill: 0.74,
+      focus: SOLID,
+      carries: 'light',
+      flow: LIGHT,
+      tags: [{ node: 'vintage_microscope_eye_piece', text: 'eyepiece', at: [0.07, 1.7, 0.15] }],
+    },
+  ],
   credit: {
     title: 'Vintage Microscope',
     author: 'Luis José Fernández Rodríguez',
@@ -113,70 +172,4 @@ writeContent('microscope', {
     source: 'Poly Haven',
     sourceUrl: 'https://polyhaven.com/a/vintage_microscope',
   },
-  how: [
-    {
-      label: 'Light',
-      title: 'Light comes from below',
-      text: [
-        'A microscope looks through its specimen, so the light has to come from underneath. The mirror catches daylight from a window and sends it straight up.',
-        'The condenser under the stage gathers that light into a bright, even spot on the slide, which is cut thin enough to see through.',
-      ],
-      angle: [28, 12],
-      fill: 0.62,
-      focus: ['vintage_microscope_mirror_base', 'vintage_microscope_mirror_arm', 'vintage_microscope_condenser'],
-      frame: ['vintage_microscope_mirror_base', 'vintage_microscope_condenser'],
-      carries: 'light',
-      flow: [[-0.58, 0.44, 0.42], [0, 0.18, 0.113], { node: 'vintage_microscope_condenser', at: [0, 0.5, 0.113] }, [0, 0.715, 0.113]],
-      tags: [
-        { node: 'vintage_microscope_mirror_base', text: 'Mirror', at: [0.1, 0.2, 0.2] },
-        { node: 'vintage_microscope_condenser', text: 'Condenser', at: [0.07, 0.55, 0.17] },
-        { node: 'vintage_microscope_rack_mount_support', text: 'Slide on the stage', at: [0.12, 0.72, 0.2] },
-      ],
-    },
-    {
-      label: 'Lenses',
-      title: 'Magnified twice over',
-      text: [
-        'The objective just above the slide forms a magnified image inside the tube. The eyepiece at the top magnifies that image again, like a magnifying glass.',
-        'The two multiply: a 10× objective under a 10× eyepiece gives 100×. Turn the nosepiece to a 40× objective and it’s 400×.',
-      ],
-      angle: [36, 10],
-      fill: 0.72,
-      focus: ['vintage_microscope_revolver', 'vintage_microscope_eye_piece', 'vintage_microscope_condenser', 'vintage_microscope_mirror_base'],
-      frame: ['vintage_microscope_revolver', 'vintage_microscope_eye_piece'],
-      carries: 'light',
-      flow: [
-        [0, 0.715, 0.113],
-        { node: 'vintage_microscope_revolver', at: [0, 0.83, 0.113] },
-        { node: 'vintage_microscope_eye_piece', at: [0, 1.3, 0.113] },
-        { node: 'vintage_microscope_eye_piece', at: [0, 1.72, 0.113] },
-        [0, 1.98, 0.113],
-      ],
-      tags: [
-        { node: 'vintage_microscope_revolver', text: 'Objective: 10×', at: [0.06, 0.84, 0.15] },
-        { node: 'vintage_microscope_eye_piece', text: 'Image inside the tube', at: [0.07, 1.3, 0.15] },
-        { node: 'vintage_microscope_eye_piece', text: 'Eyepiece: 10×', at: [0.07, 1.7, 0.15] },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'How big it looks',
-        caption: 'Each lens multiplies what the one before it made: ×10 and ×10 is 100 times the size the specimen looks to your eye at reading distance.',
-        unit: 'Times as large',
-        scale: 'log',
-        rungs: [{ name: 'Specimen', value: 1, note: '1×' }, { name: 'Objective', value: 10, note: '10×', step: '×10' }, { name: 'Eyepiece', value: 100, note: '100×', step: '×10' }],
-      },
-    },
-    {
-      label: 'Focus',
-      title: 'Focusing: a rack and pinion',
-      text: [
-        'At these magnifications the specimen is sharp only within a hair’s breadth. The focus knobs turn a small gear against a toothed rack on the arm, raising or lowering the whole tube a little at a time until it is.',
-      ],
-      angle: [62, 16],
-      fill: 0.66,
-      focus: ['vintage_microscope_adjustment', 'vintage_microscope_eye_piece', 'vintage_microscope_revolver'],
-      frame: ['vintage_microscope_adjustment', 'vintage_microscope_eye_piece'],
-      tags: [{ node: 'vintage_microscope_adjustment', text: 'Focus knobs', at: [0.17, 1.38, 0] }, { node: 'vintage_microscope_eye_piece', text: 'Tube moves up and down', at: [0.08, 1.05, 0.2] }],
-    },
-  ],
 });

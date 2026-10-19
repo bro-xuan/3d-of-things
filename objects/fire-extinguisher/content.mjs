@@ -35,6 +35,19 @@ const powderMotions = slices.slice(1).map(({ name, y0, y1 }, i) => {
 // The gauge at other temperatures: the nitrogen's absolute pressure goes with its absolute temperature.
 const atTemp = (c) => ((DIAL.charge + 1.013) * (273.15 + c)) / 293.15 - 1.013;
 
+/** What stays solid through the film: what the hand moves, the valve's moving parts, the gauge, and the gas and powder
+ *  with their way out. The tank, the valve's body and the handle are glass, so the stem, the seal and the powder show. */
+const MOVING = ['safety_pin', 'squeeze_lever', 'valve_stem', 'valve_spring', 'gauge', 'nitrogen', 'powder', 'dip_tube', 'hose', 'nozzle'];
+/** The head: the pin, the lever and the valve they work. */
+const HEAD = ['valve_body', 'carry_handle', 'squeeze_lever', 'safety_pin', 'gauge'];
+
+/** The powder's way out: in at the dip tube's mouth, up the tube, past the seal, and down the hose to the nozzle. */
+const powderPath = [
+  at('tube_foot'), at('tube_mid'), at('tube_top'), at('chamber'),
+  { node: 'valve_stem', at: at('seat') }, at('outlet'), at('outlet_end'),
+  at('hose_top'), at('hose_mid'), at('hose_low'), at('nozzle'), at('nozzle_tip'), at('jet'),
+];
+
 writeContent('fire-extinguisher', {
   order: 18,
   title: 'Fire Extinguisher',
@@ -91,109 +104,46 @@ writeContent('fire-extinguisher', {
     { node: 'gauge_needle', axis: [0, 0, 1], pivot: pivot('needle'), control: 'ext_bar', turn: r3(-DIAL.perBar / 360), from: DIAL.charge },
     ...powderMotions,
   ],
-  how: [
+  // "How it works" as an animation: the pin out, the lever squeezed, and the charge out of the hose. The camera starts
+  // on the head and draws back to the whole tank as the powder starts to go.
+  film: [
     {
-      label: 'The idea',
-      title: 'Gas pushes, powder puts it out',
-      text: [
-        'Inside the red tank, nitrogen at nearly ten times the pressure of the air outside sits on top of 3.3 kg of powder. Open the valve and the gas drives the powder up a tube and out of the hose.',
-        'Nothing has to be pumped, lit or switched on: the push was put in when it was filled, and it waits there for years.',
-      ],
-      angle: [-34, 10],
-      fill: 0.82,
-      focus: ['nitrogen', 'powder', 'dip_tube', 'valve_body', 'hose', 'nozzle'],
-      flow: [at('gas_mid'), at('powder_top'), at('tube_foot'), at('tube_mid'), at('tube_top'), at('chamber'), at('outlet'), at('outlet_end'), at('hose_top'), at('hose_mid'), at('hose_low'), at('nozzle'), at('nozzle_tip'), at('jet')],
-      tags: [
-        { node: 'nitrogen', text: 'Nitrogen, 9.6 bar', at: at('gas_face') },
-        { node: 'powder', text: 'Powder, 3.3 kg', at: at('powder_face_at') },
-      ],
+      chapter: 'Pin',
+      caption: 'Pull the pin out of the handle, and the lever is free to move.',
+      duration: 5,
+      angle: [-50, 16],
+      fill: 0.5,
+      focus: MOVING,
+      frame: HEAD,
+      tags: [{ node: 'safety_pin', text: 'pin', at: at('pin_back') }],
+      cues: [{ at: 1, do: 'pin', to: true }],
     },
     {
-      label: 'Push',
-      title: 'Thirty-five grams of gas',
-      text: [
-        'The nitrogen is a litre above the powder and nearly two more in the gaps between its grains: about 35 g of it, pressed to 9.6 bar. It is dry, because damp would cake the powder, and it is inert, so it can wait years without reacting with anything.',
-        `The gauge reads it all the time. Green, from 7 to 9.8 bar, means ready; below that it has leaked. Warmth moves the needle too: ${atTemp(40).toFixed(1)} bar on a 40 °C day, ${atTemp(-20).toFixed(1)} at −20 °C, with nothing lost.`,
+      chapter: 'Squeeze',
+      caption: 'Squeeze the lever and it pushes the stem down, taking the seal off its seat.',
+      duration: 6,
+      angle: [-32, 12],
+      fill: 0.36,
+      focus: MOVING,
+      frame: HEAD,
+      tags: [
+        { node: 'squeeze_lever', text: 'lever', at: at('lever_mid'), ride: true },
+        { node: 'valve_stem', text: 'seal', at: at('seat') },
       ],
-      angle: [-18, 8],
+      cues: [{ at: 1, do: 'squeeze', to: true }],
+    },
+    {
+      chapter: 'Out',
+      caption: 'The gas drives the powder up the dip tube and out of the hose, losing pressure as it goes.',
+      duration: 8,
+      angle: [-16, 8],
       fill: 0.8,
-      focus: ['nitrogen', 'gauge', 'valve_body'],
-      carries: 'air',
-      flows: [
-        [at('gas_mid'), at('powder_top')],
-        [at('gas_mid'), at('spigot'), at('chamber'), at('gauge_tap'), { node: 'gauge', at: at('gauge') }],
-      ],
+      focus: MOVING,
+      flow: powderPath,
       tags: [
-        { node: 'gauge', text: `${DIAL.charge} bar`, at: at('gauge') },
-        { node: 'nitrogen', text: '≈ 35 g of nitrogen', at: at('gas_face') },
+        { node: 'nitrogen', text: 'nitrogen', at: at('gas_top') },
+        { node: 'powder', text: 'powder', at: at('powder_low') },
       ],
-    },
-    {
-      label: 'Up',
-      title: 'Up the dip tube from the bottom',
-      text: [
-        'The gas presses down on the powder’s surface, and the only way out is the dip tube’s mouth, 12 mm off the bottom. Stirred into the gas, the powder flows like a liquid up the 13 mm tube and into the valve.',
-        `So the powder comes out first and the gas behind it. About ${CHARGE.residualKg.toFixed(1)} kg below the tube’s mouth never gets out.`,
-      ],
-      angle: [-40, 6],
-      fill: 0.8,
-      focus: ['powder', 'dip_tube'],
-      flow: [at('powder_top'), at('tube_foot'), at('tube_mid'), at('tube_top'), at('spigot')],
-      tags: [
-        { node: 'dip_tube', text: 'Dip tube, 13 mm', at: at('tube_face') },
-        { node: 'dip_tube', text: 'Mouth, 12 mm off the bottom', at: at('tube_foot') },
-      ],
-    },
-    {
-      label: 'Valve',
-      title: 'Pin out, lever down, seal open',
-      text: [
-        `The safety pin locks the lever. With it out, squeezing turns the lever ${Math.round(LEVER)}° about its pin at the back of the head, and the lever pushes the stem ${STROKE} mm down. The rubber seal on the stem’s foot leaves its seat and the powder rushes past to the hose.`,
-        'Let go, and the spring and the tank’s own pressure push the seal back up: a burst can be stopped and started. Try it, and watch the stem and the spring.',
-      ],
-      angle: [-26, 12],
-      fill: 0.78,
-      focus: ['valve_stem', 'valve_spring', 'squeeze_lever', 'safety_pin'],
-      frame: ['valve_body', 'squeeze_lever', 'safety_pin'],
-      flow: [at('spigot'), at('chamber'), { node: 'valve_stem', at: at('seat') }, at('outlet'), at('outlet_end')],
-      tags: [
-        { node: 'valve_stem', text: 'Seal', at: at('seat') },
-        { node: 'valve_spring', text: 'Spring', at: at('spring') },
-        { node: 'safety_pin', text: 'Pin', at: at('pin_back') },
-      ],
-      try: 'discharge',
-    },
-    {
-      label: 'Empty',
-      title: 'The gas only pushes',
-      text: [
-        'The nitrogen leaves with the powder, so the pressure falls as the tank empties: from 9.6 bar to about 1 bar in eleven seconds, by when the powder has gone. Hold the lever and watch the needle drop and the level fall.',
-        'It is easy to think the gas puts the fire out. It doesn’t: turn the extinguisher upside down and the dip tube’s mouth is in the gas, which rushes out in two or three seconds and leaves every gram of powder behind.',
-      ],
-      angle: [-30, 8],
-      fill: 0.82,
-      focus: ['powder', 'dip_tube', 'gauge', 'valve_body', 'squeeze_lever', 'valve_stem'],
-      flow: [at('powder_top'), at('tube_foot'), at('tube_mid'), at('tube_top'), at('chamber'), at('outlet_end')],
-      tags: [{ node: 'gauge', text: 'Gauge', at: at('gauge') }],
-      chart: {
-        type: 'extinguisher-discharge',
-        title: 'Pressure as it empties',
-        caption: 'The gauge against seconds with the lever held: upright the powder goes first and the pressure falls with it; upside down only the nitrogen comes out. The dot follows the model.',
-      },
-      try: 'squeeze',
-    },
-    {
-      label: 'Out',
-      title: 'Powder on the flames',
-      text: [
-        'At the nozzle the gas expands and throws the powder 4 to 6 m as a cloud. Aimed at the base of the flames and swept from side to side, it settles on the fuel and gets into the flames themselves.',
-        'Monoammonium phosphate breaks the chain of reactions that keeps a flame alight, and on wood, paper or cloth it melts at about 190 °C into a sticky crust that keeps the air off. It doesn’t conduct, so it is safe on electrical fires: A, B and C.',
-      ],
-      angle: [-48, 6],
-      fill: 0.82,
-      focus: ['hose', 'nozzle', 'valve_body'],
-      flow: [at('outlet_end'), at('hose_top'), at('hose_mid'), at('hose_low'), at('nozzle'), at('nozzle_tip'), at('jet')],
-      tags: [{ node: 'nozzle', text: '4–6 m', at: at('nozzle_tip') }],
     },
   ],
   credit: polyHaven('korean_fire_extinguisher_01', 'Korean Fire Extinguisher 01', 'UM JOORIN', {

@@ -78,17 +78,16 @@ Fill this in before any geometry. Every number on the page (sizes, counts, ratio
 
 A new kind, `src/viewer/tapemeasure.ts` (three-free: blade path, drum turns, spring coils and torque, standout), with `src/viewer/strip.ts` (bends the blade and spring meshes along those paths, like the shutter's cloth). Controls: `tape_out` (mm out), `tape_drum` (drum turns), `tape_hook` (0 pushed, 1 hooked), `tape_lock` (0 free, 1 on). Motions: the drum turns with `tape_drum`; the blade (strip) with `tape_out`; the spring (strip) with `tape_drum`; the hook slides with `tape_out` and by its thickness with `tape_hook`; the rivets with `tape_out`; the button (and the brake on it) with `tape_lock`. Experiments: `tape-pull` (slider out to 3 m, let go), `tape-lock` (pull out, lock, let go), `tape-standout` (slider past the standout), `tape-hook` (hooked or pushed). Charts: `tape-spring` (new: the pull on the hook against blade out, its cursor following the drum), `bars` (standout by blade width). Wired in additively: `src/viewer/linkage.ts` (a `strip` motion kind), `src/viewer/Viewer.ts` (the module chosen by the `tape_out` control; `tapeState`, `setTapeOut`, `letGoTape`, `setTapeLock`, `setTapeHook`), `src/types.ts` (`Motion.strip`), `src/charts/index.ts`, `src/pages/tour.ts` (one branch to `src/pages/tapetry.ts`).
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
+
+The mechanism doing its job once, start to finish (references/film.md).
 
 <!-- truth:tour -->
-| # | Label | Shows (focus, flow) | Chart | Try |
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Blade, Drum, Recoil spring, Spring post, End hook; power flow; apart 0.45 |  |  |
-| 2 | Pull | Blade, Drum, End hook, Rivets; power flow; apart 0.45 |  | tape-pull |
-| 3 | Spring | Recoil spring, Drum, Spring post; power flow; apart 0.45 | tape-spring: What the spring pulls with | tape-pull |
-| 4 | Lock | Lock button, Brake shoe, Blade; power flow; apart 0.45 |  | tape-lock |
-| 5 | Curve | Blade, End hook, Rivets | bars: Standout by blade width | tape-standout |
-| 6 | Hook | End hook, Rivets, Blade |  | tape-hook |
+| 0 s | Pull | Pull out 16 cm of blade and the drum turns once, winding the spring inside a turn tighter. | 7 | 0.8 s tape-out → 158 over 4.5 s |
+| 7 s | Lock | Press the lock and a shoe pinches the blade against its guide, so it stays out. | 5 | 1 s tape-lock → true |
+| 12 s | Let go | Let the lock off and the spring unwinds, turning the drum back and reeling the blade in. | 6 | 0.8 s tape-lock → false; 1 s tape-out → 0 over 3.5 s |
 <!-- /truth:tour -->
 
 ## 9. Simplified or left out
