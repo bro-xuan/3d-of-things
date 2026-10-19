@@ -117,6 +117,79 @@ async function checkObject(slug, thing) {
     await page.waitForFunction(() => (window.__viewer ? window.__viewer.tweens.length === 0 : !document.querySelector('[data-moving]')), null, { timeout: 10_000, polling: 50 }).catch(() => {});
     await page.waitForTimeout(extra);
   };
+  /** "How it works" as a film: it opens and plays on its own; each shot is held a little before its end (dev) or
+   *  jumped to from the script (a built copy) and shot, with its caption and tags checked; Esc closes it. */
+  const checkFilm = async (page, film) => {
+    let mark = logs.length;
+    await page.locator('[data-action="how"]').click();
+    await page.waitForSelector('.thing[data-touring]', { timeout: 5000 });
+    await page.waitForTimeout(1500);
+    const dev = await page.evaluate(() => !!window.__film);
+    const total = film.reduce((sum, shot) => sum + shot.duration, 0);
+    record('film', 'length', total >= 12 && total <= 30, `${total.toFixed(1)} s (15–25, 30 at most)`, 'warn');
+    if (dev) {
+      const playing = await page.evaluate(() => window.__film.status);
+      record('film', 'plays on opening', playing.playing && playing.time > 0.3, `playing ${playing.playing}, at ${playing.time.toFixed(2)} s`);
+    }
+    let start = 0;
+    for (const [i, shot] of film.entries()) {
+      mark = logs.length;
+      const where = `${i + 1} "${shot.chapter}: ${shot.caption.slice(0, 40)}"`;
+      if (dev) {
+        await page.evaluate((t) => window.__film.hold(t), start + shot.duration * 0.85);
+        // Flow lines draw themselves in.
+        await settle(page, shot.flow || shot.flows ? 1600 : 300);
+      } else {
+        await page.locator(`.film__line[data-shot="${i}"]`).click();
+        await page.waitForTimeout(Math.min(2500, shot.duration * 600));
+      }
+      const state = await page.evaluate(() => {
+        const tags = [...document.querySelectorAll('.step-tag')].filter((t) => getComputedStyle(t).display !== 'none');
+        const caption = document.querySelector('.film__caption-text');
+        const r = caption?.getBoundingClientRect();
+        return {
+          caption: caption?.textContent ?? '',
+          inside: !!r && r.left >= 0 && r.right <= innerWidth && r.bottom <= innerHeight,
+          tags: tags.length,
+          offstage: tags.filter((t) => t.classList.contains('is-offstage')).map((t) => t.textContent.trim()),
+          chart: !!document.querySelector('.film__figure:not([hidden]) .tour__chart svg, .film__figure:not([hidden]) .tour__chart canvas'),
+        };
+      });
+      record('film', `${where}: caption`, state.caption === shot.caption, `shows "${state.caption.slice(0, 60)}"`);
+      record('film', `${where}: caption on screen`, state.inside, 'the caption runs off the window');
+      record('film', `${where}: caption length`, shot.caption.length <= 110, `${shot.caption.length} characters (110 at most)`, 'warn');
+      const tagsWanted = shot.tags?.length ?? 0;
+      record('film', `${where}: tags`, state.tags === tagsWanted, `${state.tags} of ${tagsWanted} tags shown (a tag on an unknown node is dropped)`);
+      if (state.offstage.length) record('film', `${where}: tags off the stage`, false, state.offstage.join(', '), 'warn');
+      if (shot.chart) record('film', `${where}: chart`, state.chart, `chart ${JSON.stringify(typeof shot.chart === 'string' ? shot.chart : shot.chart.type)} didn't draw`);
+      consoleCheck('film', where, mark);
+      if (!dev) await shoot(page, 'film', `${i + 1} ${shot.chapter}`, state.caption !== shot.caption);
+      start += shot.duration;
+    }
+    if (dev) {
+      // A strip through the whole film at even steps: the camera should glide from frame to frame, never jump.
+      const step = total / Math.max(8, Math.min(16, Math.round(total / 1.5)));
+      for (let t = 0; t <= total + 1e-6; t += step) {
+        await page.evaluate((at) => window.__film.hold(at), Math.min(t, total));
+        await settle(page, 250);
+        const at = `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}.${Math.floor((t % 1) * 10)}`;
+        await shoot(page, 'film', at);
+      }
+    }
+    if (dev) {
+      // Played through from a moment to the end, it stops there.
+      await page.evaluate((t) => { window.__film.hold(t); }, total - 0.4);
+      await page.locator('[data-film="play"]').click();
+      await page.waitForTimeout(1200);
+      const end = await page.evaluate(() => window.__film.status);
+      record('film', 'stops at the end', !end.playing && end.time >= end.total - 0.01, `playing ${end.playing}, at ${end.time.toFixed(2)} of ${end.total} s`);
+    }
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(500);
+    record('film', 'Esc closes the film', !(await page.locator('.thing[data-touring]').count()), 'still open after Esc');
+    await settle(page);
+  };
+
   /** Opens the object page and waits for the model, the opening move and the drawings. */
   const open = async (context) => {
     const page = await context.newPage();
@@ -193,7 +266,9 @@ async function checkObject(slug, thing) {
       await settle(page);
     }
 
-    const steps = thing.how ?? [];
+    const film = thing.film ?? [];
+    if (film.length && sections.has('tour')) await checkFilm(page, film);
+    const steps = film.length ? [] : thing.how ?? [];
     const wantsTour = steps.length && (sections.has('tour') || sections.has('try'));
     if (wantsTour) {
       await page.locator('[data-action="how"]').click();
@@ -331,10 +406,10 @@ async function checkObject(slug, thing) {
       await shoot(page, 'phone', 'Phone at rest');
       const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       record('phone', 'no sideways scroll', wide <= 1, `page is ${wide}px wider than the screen`);
-      if (thing.how?.length) {
+      if (thing.film?.length || thing.how?.length) {
         await page.locator('[data-action="how"]').click();
-        await settle(page, 450);
-        await shoot(page, 'phone', `Phone: ${thing.how[0].label}`);
+        await settle(page, thing.film?.length ? 2500 : 450);
+        await shoot(page, 'phone', `Phone: ${thing.film?.length ? thing.film[0].chapter : thing.how[0].label}`);
       }
       consoleCheck('phone', 'phone', mark);
     } catch (error) {
@@ -360,10 +435,10 @@ async function checkObject(slug, thing) {
     }
   }
 
-  const order = ['rest', 'callouts', 'tour', ...Object.keys(shots).filter((g) => g.startsWith('try ')), 'phone'];
+  const order = ['rest', 'callouts', 'film', 'tour', ...Object.keys(shots).filter((g) => g.startsWith('try ')), 'phone'];
   for (const [n, group] of order.filter((g) => shots[g]?.length).entries()) {
     const file = path.join(out, `${slug}-${n + 1}-${group.replace(/[^a-z0-9]+/gi, '-')}.png`);
-    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' ? 4 : 3, width: group === 'phone' ? 300 : 560, title: `${thing.title} · ${group}` });
+    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' || group === 'film' ? 4 : 3, width: group === 'phone' ? 300 : group === 'film' ? 440 : 560, title: `${thing.title} · ${group}` });
   }
   const failed = checks.filter((c) => c.level === 'fail');
   const warned = checks.filter((c) => c.level === 'warn');

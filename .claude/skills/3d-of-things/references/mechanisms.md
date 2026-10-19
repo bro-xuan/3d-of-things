@@ -51,12 +51,12 @@ Wire it in (there's no registry yet, so these are the places):
 |---|---|
 | `src/viewer/Viewer.ts` | Import it; add a field; choose it in `load()` beside `ReflexCamera` / `FilmCamera` / `AeroCar` by a control name only it uses; tick it in the frame loop; expose its state and actions as methods (like `cameraState`, `fire`); reset it in `setTouring(false)`; dispose it |
 | `src/charts/index.ts` | A getter on `ChartSource` for its state, and its charts' factories in `factories` |
-| `src/pages/tour.ts` | The source object passed to charts, and a `kind === '<name>'` branch in the experiments for each new `try` |
+| `src/pages/film.ts` | A verb in `CUES` for each thing the film should be able to make it do (a number, a switch, a pick or an event), and a row in references/film.md |
 | `src/pages/thing.ts` | The sound button's condition, if it makes sound (and voices in `src/sound.ts`) |
-| `src/types.ts` | The doc comments on `Motion.control` and `Step.try` |
-| `scripts/check-content.mjs` | Nothing: it reads chart and experiment names from the code |
+| `src/types.ts` | The doc comment on `Motion.control` |
+| `scripts/check-content.mjs` | Nothing: it reads cue names from the code |
 
-An experiment must have a readout (`.tour__readout`) that changes when it works, and controls the QA runner can drive: hold buttons (`.button--hold`), sliders (`input[type=range]` in `.tour__slider`), choices (`.tour__choice`) or plain buttons in `.tour__try-actions`. Then `npm run qa` checks it with no new code.
+Reset it in `resetMechanisms()` as well: a film seeking to a moment puts every mechanism back to rest and plays its cues through again (`simulate`), so its `tick(dt)` must be all that moves it.
 
 ## Charts
 

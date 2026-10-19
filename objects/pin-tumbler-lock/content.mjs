@@ -3,7 +3,7 @@
 // every build:   node objects/pin-tumbler-lock/content.mjs
 //
 // The lock's mechanism is src/viewer/pintumbler.ts: it sets the controls the motions below follow (the keys' places, each
-// stack's lift in mm, the plug's angle in degrees). Its numbers, and the bitting the charts below show, come from
+// stack's lift in mm, the plug's angle in degrees). Its numbers, and the bitting the text quotes, come from
 // src/viewer/kw1.json, the same file the build reads.
 import { readFileSync } from 'node:fs';
 import { builtInCode, readHints, space, writeContent } from '../../scripts/kit/content.mjs';
@@ -21,12 +21,9 @@ const stacks = H?.anchors?.stacks ?? [0, 1, 2, 3, 4].map(() => ({ tip: [0, 0.5, 
 const coilShare = H?.coilShare ?? [];
 const RIGHT = KW1.keys.right;
 const WRONG = KW1.keys.wrong;
-const depthIn = (cut) => KW1.depths[cut];
-const pinIn = (cut) => KW1.keyPins[cut];
 const crank = D.throw / Math.SQRT2;
 /** The bolt's travel for the plug's angle (the drive's crank pin from 45° left of the top), as src/viewer/pintumbler.ts has it. */
 const bolt = (deg) => crank * (Math.sin(((deg - 45) * Math.PI) / 180) + Math.SQRT1_2);
-const inch = (v) => v.toFixed(3).replace(/^0/, '');
 
 const PARTS = [
   { node: 'key', label: 'Key', group: 'Key', about: `A brass KW1 key cut ${RIGHT.join('-')}: five cuts 0.150 inch apart, each one of six depths. It slides in to its shoulder and turns with the plug.`, direction: [0, 0, 1], distance: 0.5, window: [0.62, 0.8] },
@@ -47,6 +44,9 @@ const PARTS = [
 
 const STACKS = ['key_pins', 'driver_pins', 'springs'];
 const LOCK = ['plug', ...STACKS];
+/** What stays solid through the film: the key and the pins it lifts, and the parts the turn drives. The plug, the
+ *  housing and the latch's case are glass, so the key's cuts can be seen lifting the pins inside them. */
+const MOVING = ['key', ...STACKS, 'tailpiece', 'drive', 'bolt'];
 
 /** The power's path: from the hand on the key's bow, through the blade and plug, down the tailpiece, round the drive to the bolt. */
 const powerPath = [
@@ -59,6 +59,13 @@ const powerPath = [
   { node: 'bolt', at: at('bolt_back'), ride: true },
   { node: 'bolt', at: at('bolt_face'), ride: true },
 ];
+
+/** The shear line, drawn across the five stacks on the housing (it stays put as the plug turns), a little past each end. */
+const shearLine = (() => {
+  const [a, b] = [stacks[0].shear, stacks[4].shear];
+  const past = (from, to) => from.map((c, i) => +(c + (from[i] - to[i]) * 0.18).toFixed(4));
+  return [{ node: 'housing', at: past(a, b) }, { node: 'housing', at: past(b, a) }];
+})();
 
 /** Where a part has got to with the model this far apart (model units), by the viewer's timing: for cameras on parts that have moved. */
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
@@ -118,90 +125,54 @@ writeContent('pin-tumbler-lock', {
       ...coilShare.map((share, k) => ({ node: `coil_${n}_${k}`, axis: [0, 1, 0], control: `lock-pin-${n}`, slide: [0, +(perMm * share).toFixed(6), 0] })),
     ]),
   ],
-  how: [
+  // "How it works" as an animation: the key out, in, turned, and a wrong one refused.
+  film: [
     {
-      label: 'The idea',
-      title: 'Pins across a gap hold the plug',
-      text: [
-        'The plug turns in a hole in the housing. Five stacks of pins sit in holes drilled across both, each a key pin under a driver pin, pushed down by a spring. The plug turns only when the split in every stack lies on the gap between plug and housing: the shear line.',
-        'With the right key in, as here, all five splits are on it. The chart cuts through the stacks down the keyway; it moves as the model does.',
+      chapter: 'The key',
+      caption: 'Slide the key in. Each cut lifts a pair of pins to its own height.',
+      duration: 6,
+      angle: [-114, 10],
+      fill: 0.56,
+      focus: MOVING,
+      frame: [...LOCK, 'key'],
+      hide: ['wrong_key'],
+      tags: [
+        { node: 'springs', text: 'springs' },
+        { node: 'driver_pins', text: 'top pins' },
+        { node: 'key_pins', text: 'bottom pins' },
       ],
-      angle: [80, 12],
-      focus: [...LOCK, 'key'],
-      chart: 'lock-pins',
+      cues: [
+        { at: 0, do: 'insert', to: 0 },
+        { at: 0.5, do: 'insert', to: 1, over: 4.5 },
+      ],
     },
     {
-      label: 'Pin stacks',
-      title: 'Without the key, the drivers lock it',
-      text: [
-        'Pull the key out and the springs push every stack down until the key pins rest on a step in the keyway. Each driver is then half in the plug and half in the housing, pinning one to the other.',
-        'Slide it back in slowly: the pins ride up the tip’s ramp, over the cuts and down into them, and only at the shoulder does every split reach the line.',
-      ],
-      angle: [84, 10],
-      focus: [...STACKS, 'key'],
-      try: 'lock-insert',
-      chart: 'lock-pins',
-    },
-    {
-      label: 'The key',
-      title: 'Its cuts are heights',
-      text: [
-        'A KW1 key has room for five cuts, 0.247 inch from the shoulder to the first and 0.150 inch apart. Each is one of six depths, from 0.329 inch above the bottom edge for a 1 to 0.214 for a 6, in steps of 0.023 inch: about the thickness of a sheet of card.',
-        `This one is cut ${RIGHT.join('-')}. Neighbouring cuts may differ by no more than four steps, or the cutter would take away the cut beside: that rule leaves 6,306 of the 7,776 combinations.`,
-      ],
-      angle: [90, 4],
-      focus: ['key', 'key_pins'],
-      chart: {
-        type: 'bars',
-        title: `This key’s cuts, ${RIGHT.join('-')}`,
-        caption: 'How much blade each cut leaves under its pin, inches from the bottom edge. A higher number is a deeper cut.',
-        unit: 'Inches above the bottom edge',
-        bars: RIGHT.map((cut, i) => ({ label: `${i + 1}`, value: depthIn(cut), note: `cut ${cut}` })),
-      },
-    },
-    {
-      label: 'The shear line',
-      title: 'The key only lifts each split to the line',
-      text: [
-        'The key doesn’t work anything inside. The drivers lock the plug by sitting across its surface, and all the key does is lift each stack until the split between its pins lies exactly on that surface. A deeper cut has a longer key pin over it, so cut and pin add up to 0.501 inch in every stack.',
-        'That is also why a key one step off is no key at all: its pin stops 0.58 mm off the line, and a pin that crosses by more than about a tenth of a millimetre holds the plug.',
-      ],
-      angle: [76, 18],
-      fill: 0.6,
-      focus: ['key_pins', 'driver_pins', 'springs'],
-      chart: {
-        type: 'bars',
-        title: `Key pins for ${RIGHT.join('-')}`,
-        caption: 'Each pin is as much longer as its cut is deeper, so every split lands 0.501 inch above the key’s bottom edge.',
-        unit: 'Key pin length, inches',
-        bars: RIGHT.map((cut, i) => ({ label: `${i + 1}`, value: pinIn(cut), note: `#${cut} + ${inch(depthIn(cut))}` })),
-      },
+      chapter: 'The key',
+      caption: 'With the right key, the gap in every pair lines up with the edge of the plug.',
+      duration: 5,
+      angle: [-98, 14],
+      fill: 0.5,
+      focus: MOVING,
+      frame: LOCK,
+      hide: ['wrong_key'],
+      flow: shearLine,
       tags: [{ node: 'driver_pins', text: 'shear line', at: stacks[4].shear }],
     },
     {
-      label: 'Turn it',
-      title: 'The right key turns; two steps off and it won’t',
-      text: [
-        `Try the wrong key: the same blank cut ${WRONG.join('-')}. Its second cut is two steps too deep, so that driver stays 1.17 mm down in the plug; its fourth is two steps too shallow, so that key pin pokes 1.17 mm up into the housing. Either one is enough.`,
-        'With no key all five drivers hold it. With the right key nothing does, and the plug turns as far as your wrist takes it.',
-      ],
-      angle: [74, 16],
-      focus: [...STACKS, 'key', 'wrong_key'],
-      try: 'lock-turn',
-      chart: 'lock-pins',
-    },
-    {
-      label: 'The bolt',
-      title: 'Your wrist throws the bolt',
-      text: [
-        'The turn is yours: the key passes it to the plug, the plug to the tailpiece, and the tailpiece to the deadbolt’s drive. The drive’s crank pin swings in a slot in the bolt’s tail and pushes the bolt 25.4 mm out of the door’s edge.',
-        'Hold the button: the bolt moves fastest in the middle of the quarter turn, where the crank pin moves straight across. Turned back, it draws the bolt in again; only then will the key come out.',
-      ],
-      angle: [36, 28],
-      focus: ['key', 'plug', 'tailpiece', 'drive', 'bolt', 'latch_case'],
+      chapter: 'Turn',
+      caption: 'Nothing pins the plug now, so it turns with the key and its tailpiece throws the bolt.',
+      duration: 7.5,
+      angle: [-40, 24],
+      fill: 0.74,
+      focus: MOVING,
+      frame: [...LOCK, 'key', 'tailpiece', 'drive', 'bolt'],
+      hide: ['wrong_key'],
       flow: powerPath,
-      try: 'lock-turn',
-      chart: 'lock-bolt',
+      tags: [
+        { node: 'plug', text: 'plug' },
+        { node: 'bolt', text: 'bolt' },
+      ],
+      cues: [{ at: 1, do: 'turn', to: 90, over: 4.5 }],
     },
   ],
   credit: builtInCode(

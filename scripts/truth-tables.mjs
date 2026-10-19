@@ -68,10 +68,17 @@ function experiment(step) {
   if (step.try === 'run' && step.count?.length) return `run, counting ${step.count.map((c) => c.label).join(', ')}`;
   return step.try;
 }
-const tour = table(
-  ['#', 'Label', 'Shows (focus, flow)', 'Chart', 'Try'],
-  (thing.how ?? []).map((s, i) => [i + 1, s.label, shows(s), chart(s.chart), experiment(s)]),
-);
+const cues = (shot) => (shot.cues ?? []).map((c) => `${c.at} s ${c.do}${c.to !== undefined ? ` → ${c.to}` : ''}${c.over ? ` over ${c.over} s` : ''}`).join('; ');
+let clock = 0;
+const tour = thing.film?.length
+  ? table(
+      ['At', 'Chapter', 'Caption', 'Seconds', 'Cues'],
+      thing.film.map((s) => [`${(clock += s.duration) - s.duration} s`, s.chapter, s.caption, s.duration, cues(s)]),
+    )
+  : table(
+      ['#', 'Label', 'Shows (focus, flow)', 'Chart', 'Try'],
+      (thing.how ?? []).map((s, i) => [i + 1, s.label, shows(s), chart(s.chart), experiment(s)]),
+    );
 
 /** Replaces the first table in the section under the heading that starts `## <n>.` (or adds one after its heading). */
 function replaceTable(text, n, body) {
@@ -95,4 +102,4 @@ let sheet = readFileSync(sheetFile, 'utf8');
 sheet = replaceTable(sheet, 6, parts);
 sheet = replaceTable(sheet, 8, tour);
 writeFileSync(sheetFile, sheet);
-console.log(`${path.relative(ROOT, sheetFile)}: ${thing.parts?.length ?? 0} parts, ${thing.how?.length ?? 0} tour steps`);
+console.log(`${path.relative(ROOT, sheetFile)}: ${thing.parts?.length ?? 0} parts, ${thing.film?.length ? `a film of ${clock} s in ${thing.film.length} shots` : `${thing.how?.length ?? 0} tour steps`}`);

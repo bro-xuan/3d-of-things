@@ -186,6 +186,38 @@ export interface Step {
   settings?: { focus?: number; aperture?: number; speed?: number; slide?: 'in' | 'out' };
 }
 
+/** Something the mechanism does during a shot of the film, at a time from the shot's start: a key slides in, a lever is
+ *  squeezed, a shutter fires. A number moves to `to` over `over` seconds (eased; at once without `over`), from where the
+ *  last cue left it; anything else happens at once and the mechanism plays it out. The verbs, and what each one takes,
+ *  are in src/pages/film.ts (`CUES`). */
+export interface Cue {
+  at: number;
+  do: string;
+  to?: number | boolean | string;
+  over?: number;
+}
+
+/** One shot of "How it works" as a film: a few seconds of the mechanism at work, seen from one place, with one line of
+ *  caption. Shots play one after another like a short film; the visitor can pause, scrub and replay it. A shot frames,
+ *  focuses, ghosts, draws flow lines and tags parts the way a step does. */
+export interface Shot extends Pick<Step, 'angle' | 'fill' | 'camera' | 'focus' | 'frame' | 'hide' | 'explode' | 'flow' | 'flows' | 'carries' | 'tags' | 'chart'> {
+  /** The chapter it belongs to, on the film's timeline ("The key"). Shots in a row with the same chapter share one. */
+  chapter: string;
+  /** What happens, in one line under the model while it plays: a cause and its effect, under ~100 characters. */
+  caption: string;
+  /** Seconds, at normal speed. */
+  duration: number;
+  /** Spinning parts run through the shot (anything a crank or motor turns); false holds them still. Defaults to true. */
+  run?: boolean;
+  /** How fast the mechanism runs: 1 is real time, less is slow motion. Defaults to 1. */
+  rate?: number;
+  /** Spinning parts turning faster or slower than their own speed through the shot, by node: a belt on other pulleys,
+   *  a wash drum on spin, one wheel of a pair going faster in a bend. */
+  spin?: Record<string, number>;
+  /** What the mechanism does during the shot. Whatever it's left doing carries on into the next. */
+  cues?: Cue[];
+}
+
 /** A point on a flow path: in model space, riding with a node if one is named (and turning with it, with `ride`,
  *  for a point on a crank that goes round). */
 export type FlowPoint = Vec3 | { node: string; at: Vec3; ride?: boolean };
@@ -247,8 +279,11 @@ export interface Thing {
   slowMotion?: { rate: number; explode?: number };
   /** How long "Take it apart" takes, in milliseconds (default 1300). */
   explodeDuration?: number;
-  /** "How it works": the mechanism explained one stage at a time. */
+  /** "How it works", the old way: the mechanism one stage at a time, as steps to click through. A `film` takes over. */
   how?: Step[];
+  /** "How it works": the mechanism doing its job once, start to finish, as a short film with a caption for each shot
+   *  (references/film.md). */
+  film?: Shot[];
   /** Nozzles that blow jets (the Roadster's thrusters). */
   jets?: Jet[];
   credit: Credit;

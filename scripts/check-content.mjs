@@ -28,6 +28,7 @@ const exists = (file) => access(file).then(() => true, () => false);
 const CATEGORIES = await categoryIds();
 const CHARTS = await chartNames();
 const EXPERIMENTS = await experimentNames();
+const CUES = await cueNames();
 
 /** Category ids from src/content.ts, so a new category only has to be added there. */
 async function categoryIds() {
@@ -54,6 +55,15 @@ async function chartNames() {
 }
 
 /** Experiment names (`try`) handled in src/pages/tour.ts. */
+/** The verbs a film's cues can use: the keys of `CUES` in src/pages/film.ts. */
+async function cueNames() {
+  const src = await readFile(path.join(ROOT, 'src/pages/film.ts'), 'utf8');
+  const body = src.slice(src.indexOf('export const CUES'), src.indexOf('\n};', src.indexOf('export const CUES')));
+  const names = new Set();
+  for (const m of body.matchAll(/^\s+'?([a-z][a-z-]*)'?: \{ kind:/gm)) names.add(m[1]);
+  return names;
+}
+
 async function experimentNames() {
   const src = await readFile(path.join(ROOT, 'src/pages/tour.ts'), 'utf8');
   const names = new Set();
@@ -185,7 +195,36 @@ function checkThing(slug, thing, model, orders) {
     if (step.try && EXPERIMENTS.size && !EXPERIMENTS.has(step.try)) err(where, `no experiment "${step.try}" in src/pages/tour.ts`);
     if (step.explode !== undefined && !(step.explode >= 0 && step.explode <= 1)) err(where, 'explode must be 0–1');
   });
-  if (!thing.how?.length) warn('how', 'no "How it works" tour');
+  if (!thing.how?.length && !thing.film?.length) warn('film', 'no "How it works" film');
+  if (thing.how?.length && thing.film?.length) warn('how', 'has a film and the old steps too: delete `how`');
+
+  // How it works, as a film (references/film.md)
+  let filmTime = 0;
+  (thing.film ?? []).forEach((shot, i) => {
+    const where = `film[${i}] "${shot.chapter}"`;
+    if (!shot.chapter || !shot.caption) err(where, 'needs a chapter and a caption');
+    if (shot.caption?.length > 110) warn(where, `caption is ${shot.caption.length} characters: keep it to one line (110)`);
+    if (!(shot.duration >= 3 && shot.duration <= 10)) warn(where, `lasts ${shot.duration} s: a shot is 3–10 s`);
+    filmTime += shot.duration ?? 0;
+    for (const key of ['focus', 'frame', 'hide']) for (const name of shot[key] ?? []) node(`${where} ${key}`, name);
+    for (const name of Object.keys(shot.spin ?? {})) node(`${where} spin`, name);
+    for (const tag of shot.tags ?? []) { node(`${where} tag "${tag.text}"`, tag.node); if (tag.at) onModel(`${where} tag "${tag.text}"`, tag.at); }
+    for (const flow of [shot.flow ?? [], ...(shot.flows ?? [])]) {
+      for (const p of flow) {
+        if (Array.isArray(p)) onModel(`${where} flow`, p, 1);
+        else { node(`${where} flow`, p.node); onModel(`${where} flow`, p.at, 1); }
+      }
+    }
+    for (const cue of shot.cues ?? []) {
+      if (CUES.size && !CUES.has(cue.do)) err(where, `no cue "${cue.do}" in src/pages/film.ts`);
+      if (!(cue.at >= 0 && cue.at + (cue.over ?? 0) <= shot.duration + 1e-6)) warn(where, `cue "${cue.do}" runs past the shot (at ${cue.at} + ${cue.over ?? 0} s of ${shot.duration} s)`);
+    }
+    if (typeof shot.chart === 'string' && CHARTS.size && !CHARTS.has(shot.chart)) err(where, `no chart "${shot.chart}" in src/charts`);
+    if (shot.explode !== undefined && !(shot.explode >= 0 && shot.explode <= 1)) err(where, 'explode must be 0–1');
+  });
+  if (thing.film?.length && !(filmTime >= 12 && filmTime <= 30)) warn('film', `lasts ${filmTime.toFixed(1)} s: a film is 15–25 s, 30 at most`);
+  const focusSets = new Set((thing.film ?? []).map((shot) => JSON.stringify(shot.focus ?? null)));
+  if (focusSets.size > 2) warn('film', `${focusSets.size} different focus sets: keep one (two at most), so parts don't flick between solid and glass`);
 
   for (const [i, jet] of (thing.jets ?? []).entries()) { node(`jets[${i}]`, jet.node); onModel(`jets[${i}]`, jet.at, 0.3); }
 
@@ -204,6 +243,7 @@ function checkThing(slug, thing, model, orders) {
 if (listOnly) {
   console.log(`charts (${CHARTS.size}): ${[...CHARTS].sort().join(', ')}`);
   console.log(`experiments (${EXPERIMENTS.size}): ${[...EXPERIMENTS].sort().join(', ')}`);
+  console.log(`film cues (${CUES.size}): ${[...CUES].sort().join(', ')}`);
   console.log(`categories: ${[...CATEGORIES].join(', ')}`);
   process.exit(0);
 }

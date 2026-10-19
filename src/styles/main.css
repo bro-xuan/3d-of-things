@@ -2293,6 +2293,228 @@ main[data-handover] .sheet > * {
   }
 }
 
+/* ------------------------------------------------------------ the film */
+
+/* "How it works" as an animation: a caption under the model like a subtitle, a bar along the stage's foot to play,
+   pause and scrub it by chapter, and the sheet's card as its script. */
+.film__page {
+  display: grid;
+  gap: 1rem;
+}
+
+.film__script,
+.film__script ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.film__script {
+  gap: 0.9rem;
+}
+
+.film__part-name {
+  margin: 0 0 0.3rem;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.2 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.film__line {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem 0.4rem 0.6rem;
+  border: 0;
+  border-left: 2px solid var(--rule);
+  background: none;
+  color: var(--ink-3);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 200ms,
+    border-color 200ms,
+    background-color 200ms;
+}
+
+.film__line:hover {
+  background: var(--paper-sunk);
+  color: var(--ink-2);
+}
+
+.film__line[aria-current] {
+  border-left-color: var(--accent-strong);
+  background: var(--accent-wash);
+  color: var(--ink);
+}
+
+.film__at {
+  padding-top: 0.15rem;
+  font: 500 0.8rem/1.4 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.film__said {
+  font-size: 1rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* The caption: one line of what's happening, under the model, over the bar. */
+.film__caption {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--stage-pad) + 5.4rem);
+  z-index: 3;
+  width: min(calc(100% - 2 * var(--stage-pad)), 44rem);
+  translate: -50% 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.film__caption[hidden],
+.film__bar[hidden] {
+  display: none;
+}
+
+.film__caption-text {
+  display: inline-block;
+  margin: 0;
+  padding: 0.55rem 1.1rem 0.6rem;
+  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--paper-raised) 90%, transparent);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.film__bar {
+  position: absolute;
+  right: var(--stage-pad);
+  bottom: var(--stage-pad);
+  left: var(--stage-pad);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.45rem 0.7rem 0.45rem 0.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 1.6rem;
+  background: color-mix(in oklch, var(--paper-raised) 92%, transparent);
+  box-shadow: var(--shadow-soft);
+  animation: card-in 380ms var(--ease-out) both;
+}
+
+.film__play {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper-raised);
+  cursor: pointer;
+}
+
+.film__play:hover {
+  background: oklch(0.33 0.02 60);
+}
+
+.film__play svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* The chapters, each as long as it lasts, inked in as the film plays through them. */
+.film__track {
+  display: flex;
+  flex: 1;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.45rem 0 0.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.film__track:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 0.25rem;
+}
+
+.film__chapter {
+  display: grid;
+  flex-basis: 0;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.film__chapter-bar {
+  position: relative;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--rule-strong);
+  overflow: hidden;
+}
+
+.film__chapter-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-strong);
+  transform: scaleX(var(--done, 0));
+  transform-origin: left;
+}
+
+.film__chapter-name {
+  overflow: hidden;
+  color: var(--ink-3);
+  font: 500 0.8rem/1.2 var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.film__chapter.is-on .film__chapter-name {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.film__time {
+  flex: none;
+  color: var(--ink-2);
+  font: 500 0.85rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.film__speed {
+  flex: none;
+  min-width: 2.75rem;
+  min-height: 2.25rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: 600 0.85rem/1 var(--font-mono);
+  cursor: pointer;
+}
+
+.film__speed:hover {
+  border-color: var(--ink-2);
+  color: var(--ink);
+}
+
 /* Charts: ink on the card's paper, hairline grids, notes in italics. */
 .chart {
   display: block;
@@ -3232,6 +3454,29 @@ main[data-handover] .sheet > * {
   /* The tour's page comes up to just under the model. */
   .tour {
     scroll-margin-top: calc(var(--header-h) + 56svh + 1.25rem);
+  }
+
+  /* The film's bar runs along the bottom of the screen too, and its caption sits at the model's foot. */
+  .film__bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    gap: 0.6rem;
+    padding: 0.5rem max(0.75rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+    border-width: 1px 0 0;
+    border-radius: 0;
+    background: var(--paper-raised);
+    box-shadow: 0 -0.4rem 1.2rem -0.9rem oklch(0.25 0.02 60 / 0.35);
+    animation-name: bar-up;
+  }
+
+  .film__caption {
+    bottom: 0.75rem;
+  }
+
+  .film__time {
+    display: none;
   }
 
   /* The step bar runs along the bottom of the screen, where a thumb rests, and the page keeps clear of it. */

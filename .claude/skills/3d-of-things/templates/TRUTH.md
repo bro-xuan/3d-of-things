@@ -2,7 +2,7 @@
 
 Tier __TIER__ · slug `__SLUG__` · started __DATE__
 
-Fill this in before any geometry. Every number on the page (sizes, counts, ratios, timings) and every step of the tour comes from here, and the generator and the content builder read the same constants. Keep it short: tables and one-liners.
+Fill this in before any geometry. Every number on the page (sizes, counts, ratios, timings) and every shot of the film comes from here, and the generator and the content builder read the same constants. Keep it short: tables and one-liners.
 
 ## 1. The object
 
@@ -36,7 +36,7 @@ source → transmission → control → output. One line each, naming the parts.
 
 ## 5. The misconception
 
-"People think …; in fact …, because …". Goes in: callout / step …
+"People think …; in fact …, because …". Goes in: a callout.
 
 ## 6. Parts, grouped in chain order
 
@@ -48,11 +48,13 @@ source → transmission → control → output. One line each, naming the parts.
 
 What moves and what drives it: time (`speed`, `clock`), a control (name and range), a crank or cam. Which existing motion kinds, experiments and charts it reuses, and anything new (a new mechanism needs a viewer module: references/mechanisms.md).
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | | | |
+| 0 s | | | | |
 
 ## 9. Simplified or left out
 

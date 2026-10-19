@@ -26,7 +26,7 @@ __PARTS__
   ],
   annotations: [],
   motion: [],
-  how: [],
+  film: [],
   credit: polyHaven('__PH_ID__', '__PH_NAME__', '__PH_AUTHORS__'),
 __BUILD__});
 
