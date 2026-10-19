@@ -1,0 +1,858 @@
+{
+  "order": 22,
+  "title": "Ceiling Fan",
+  "hook": "An inside-out motor: the windings hang still on the shaft and the outside turns round them, blades and all.",
+  "category": "home",
+  "summary": [
+    "A ceiling fan keeps people cool for the power of a light bulb, by moving air over them instead of chilling it. Its motor is an induction motor turned inside out: the coils stay still on a shaft hanging from the ceiling, and the steel shell round them turns and carries the blades, with no gears in between.",
+    "Mains comes down the rod to a cup under the motor, where a pull-chain switch, a capacitor and a reverse switch sit. The stator inside the housing has 36 teeth and two windings: the main winding on every other tooth, and the auxiliary winding, fed through the capacitor, on the teeth between. Round them turns the rotor, a steel can lined with laminated steel and 44 aluminium bars, on two ball bearings.",
+    "The capacitor makes the auxiliary winding’s current peak a quarter of a cycle before the main winding’s, so the north and south poles step round the stator: a field turning at 400 rpm. It drives currents round the rotor’s bars and drags the rotor after it, at 151 rpm on high; the four blades, pitched at 13.7°, push the air down. On this model the field, the rotor and the blades turn at those speeds."
+  ],
+  "model": "models/ceiling-fan.glb",
+  "viewAngle": [
+    -30,
+    14
+  ],
+  "explodeAngle": [
+    -30,
+    16
+  ],
+  "explodeDuration": 2800,
+  "facts": [
+    {
+      "label": "Speeds",
+      "value": "75, 107 and 151 rpm"
+    },
+    {
+      "label": "Power",
+      "value": "12, 24 and 51 W"
+    },
+    {
+      "label": "Field",
+      "value": "18 poles, 400 rpm at 60 Hz"
+    },
+    {
+      "label": "Blade pitch",
+      "value": "13.7°"
+    },
+    {
+      "label": "Real size",
+      "value": "146 cm across, 52 cm ceiling to cap"
+    }
+  ],
+  "parts": [
+    {
+      "node": "canopy",
+      "label": "Canopy and downrod",
+      "group": "Mains",
+      "about": "The canopy covers the box in the ceiling the fan hangs from; the mains comes down inside the hollow rod. Neither moves.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "coupling_cover",
+      "label": "Coupling cover",
+      "group": "Mains",
+      "about": "Hides the joint where the downrod’s foot is pinned to the motor’s shaft. It stays still while the housing just below it turns.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.1473,
+      "stage": 1
+    },
+    {
+      "node": "switch_housing",
+      "label": "Switch cup",
+      "group": "Switches",
+      "about": "Hangs from the bottom of the fixed shaft, under the turning motor, so its switches stay put. Less than 2 mm separates it from the rotor.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.2026,
+      "stage": 0
+    },
+    {
+      "node": "speed_switch",
+      "label": "Pull-chain switch",
+      "group": "Switches",
+      "about": "Each pull steps it round: high, medium, low, off. Each speed puts a different capacitor in series with the motor, or none.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "capacitor",
+      "label": "Capacitor",
+      "group": "Switches",
+      "about": "Three capacitors in one block of metallised plastic film: 4.5, 5 and 6 µF at 250 V. One runs the auxiliary winding; the others slow the motor.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "reverse_switch",
+      "label": "Reverse switch",
+      "group": "Switches",
+      "about": "Swaps which winding the capacitor feeds, so the field, the rotor and the blades turn the other way and lift the air instead.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "switch_cap",
+      "label": "Switch cap",
+      "group": "Switches",
+      "about": "Closes the cup. The switch plate inside carries the pull-chain switch and the capacitor; the chain comes out through it.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.4235,
+      "stage": 0
+    },
+    {
+      "node": "shaft",
+      "label": "Shaft",
+      "group": "Stator",
+      "about": "Hollow and fixed: it hangs from the downrod, carries the stator, and the motor’s leads run down inside it to the switch cup.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "stator",
+      "label": "Stator core",
+      "group": "Stator",
+      "about": "A stack of thin steel sheets, 188 mm across and 20 mm thick, with 36 teeth, held on the shaft by an aluminium hub. The red and blue band round it is the field, drawn: north and south poles at one instant.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "main_winding",
+      "label": "Main winding",
+      "group": "Stator",
+      "about": "18 coils of enamelled copper, on every other tooth, wound so that neighbours make opposite poles. It takes the mains straight from the switch.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "aux_winding",
+      "label": "Auxiliary winding",
+      "group": "Stator",
+      "about": "18 coils on the teeth in between, fed through the capacitor (red here to tell them apart). Their current peaks a quarter of a cycle early.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "rotor",
+      "label": "Rotor",
+      "group": "Rotor",
+      "about": "A steel can round the stator, lined with a ring of laminated steel, on two 6202 ball bearings. The blade irons bolt to its underside.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.1197,
+      "stage": 3
+    },
+    {
+      "node": "cage",
+      "label": "Squirrel cage",
+      "group": "Rotor",
+      "about": "44 aluminium bars through the rotor’s ring, joined by a ring at each end. No wire reaches them: the field makes the currents in them.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "motor_housing",
+      "label": "Motor housing",
+      "group": "Rotor",
+      "about": "The painted cover, with the rotor’s lid and its top bearing inside. It turns with the rotor, at up to 151 rpm.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0.0414,
+      "stage": 2
+    },
+    {
+      "node": "blade_1",
+      "label": "Blade 1",
+      "group": "Blades",
+      "about": "Each of the four blades is screwed to a steel blade iron that holds it at 13.7°, leading edge high, so it pushes air down as it turns.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.0083,
+      "stage": 1,
+      "then": {
+        "direction": [
+          0.088,
+          0,
+          0.996
+        ],
+        "distance": 0.3038
+      }
+    },
+    {
+      "node": "blade_2",
+      "label": "Blade 2",
+      "group": "Blades",
+      "about": "One of four, a quarter turn on from blade 1, on its own blade iron.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.0083,
+      "stage": 1,
+      "then": {
+        "direction": [
+          -0.996,
+          0,
+          0.088
+        ],
+        "distance": 0.3038
+      }
+    },
+    {
+      "node": "blade_3",
+      "label": "Blade 3",
+      "group": "Blades",
+      "about": "One of four, a quarter turn on from blade 2, on its own blade iron.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.0083,
+      "stage": 1,
+      "then": {
+        "direction": [
+          -0.084,
+          0,
+          -0.996
+        ],
+        "distance": 0.3038
+      }
+    },
+    {
+      "node": "blade_4",
+      "label": "Blade 4",
+      "group": "Blades",
+      "about": "One of four, a quarter turn on from blade 3, on its own blade iron.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.0083,
+      "stage": 1,
+      "then": {
+        "direction": [
+          0.996,
+          0,
+          -0.084
+        ],
+        "distance": 0.3038
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Pull chain",
+      "text": "Each pull steps the switch: high, medium, low, off. On low a 5 µF capacitor in series takes up about half the 120 volts and the fan draws 12 W; on high nothing is in the way and it draws 51 W.",
+      "node": "speed_switch",
+      "position": [
+        0.0268,
+        0.1584,
+        0.0471
+      ],
+      "camera": {
+        "position": [
+          -0.3038,
+          0.3368,
+          1.2463
+        ],
+        "target": [
+          0.0857,
+          0.1768,
+          0.1762
+        ]
+      }
+    },
+    {
+      "title": "Capacitor",
+      "text": "A capacitor’s current runs ahead of its voltage. Through it, the auxiliary winding’s current peaks a quarter of a cycle, about 4 ms, before the main winding’s.",
+      "node": "capacitor",
+      "position": [
+        -0.0671,
+        0.192,
+        -0.0007
+      ],
+      "explode": 1,
+      "camera": {
+        "position": [
+          -0.5151,
+          0.7232,
+          0.6515
+        ],
+        "target": [
+          -0.0089,
+          0.192,
+          0.0482
+        ]
+      }
+    },
+    {
+      "title": "Two windings",
+      "text": "Main coils on every other tooth, auxiliary coils between, 10° apart. With 18 poles, 10° is a quarter of a cycle: two currents a quarter of a cycle apart, in coils a quarter of a cycle apart.",
+      "node": "main_winding",
+      "position": [
+        -0.0128,
+        0.2914,
+        0.0673
+      ],
+      "explode": 1,
+      "camera": {
+        "position": [
+          -0.2098,
+          0.4413,
+          0.7956
+        ],
+        "target": [
+          0.0473,
+          0.7149,
+          0.0892
+        ]
+      }
+    },
+    {
+      "title": "Rotating field",
+      "text": "Red north, blue south, nine of each. Every half cycle the pattern moves on one pole, 120 times a second, so the field goes round at 400 rpm.",
+      "node": "stator",
+      "position": [
+        -0.0008,
+        0.3048,
+        0.0862
+      ],
+      "explode": 1,
+      "camera": {
+        "position": [
+          -0.1415,
+          0.8946,
+          0.8586
+        ],
+        "target": [
+          0.061,
+          0.7283,
+          0.1028
+        ]
+      }
+    },
+    {
+      "title": "Squirrel cage",
+      "text": "The field sweeps through 44 aluminium bars and drives currents round them through the end rings; in the field those currents are pushed sideways, so the rotor follows. It never catches up: at 151 rpm it slips 62% behind.",
+      "node": "cage",
+      "position": [
+        -0.0072,
+        0.3048,
+        0.0884
+      ],
+      "explode": 1,
+      "camera": {
+        "position": [
+          -0.1482,
+          0.8993,
+          0.8775
+        ],
+        "target": [
+          0.0585,
+          0.6086,
+          0.106
+        ]
+      }
+    },
+    {
+      "title": "Inside out",
+      "text": "In most motors the rotor spins inside the coils. Here the can round them turns, on two ball bearings, and the blade irons bolt straight to it: no gears, no belt.",
+      "node": "rotor",
+      "position": [
+        -0.0008,
+        0.2763,
+        0.0821
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -0.4476,
+          0.08,
+          1.3268
+        ],
+        "target": [
+          0.0935,
+          0.3057,
+          0.1665
+        ]
+      }
+    },
+    {
+      "title": "Blades",
+      "text": "Four blades at 13.7°, leading edge high. Turning anticlockwise seen from below at 151 rpm, tips at 11.6 m/s, they push a column of air down into the room.",
+      "node": "blade_1",
+      "ride": true,
+      "position": [
+        0.0169,
+        0.2493,
+        0.407
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -0.7066,
+          1.1158,
+          1.8804
+        ],
+        "target": [
+          0.1922,
+          0.2391,
+          0.3236
+        ]
+      }
+    },
+    {
+      "title": "It doesn’t cool the air",
+      "text": "A fan cools people, not rooms: all 51 W it draws ends up as heat in the room. Air moving at 0.5 m/s takes heat off skin and dries sweat faster, so it feels about 2 °C cooler. In an empty room, switch it off.",
+      "node": "motor_housing",
+      "position": [
+        -0.0008,
+        0.3057,
+        0.1225
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -1.1527,
+          1.0473,
+          2.1024
+        ],
+        "target": [
+          0.1565,
+          0.3057,
+          0.2326
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "rotor",
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "pivot": [
+        -0.0008,
+        0.3048,
+        -0.0007
+      ],
+      "speed": 2.5167
+    },
+    {
+      "node": "motor_housing",
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "pivot": [
+        -0.0008,
+        0.3048,
+        -0.0007
+      ],
+      "speed": 2.5167
+    },
+    {
+      "node": "field",
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "pivot": [
+        -0.0008,
+        0.3048,
+        -0.0007
+      ],
+      "speed": 6.6667
+    }
+  ],
+  "motionLabel": "Switch on",
+  "film": [
+    {
+      "chapter": "Current",
+      "caption": "120 V comes down to the switch cup, then up to the windings: one direct, one through the capacitor.",
+      "duration": 5,
+      "camera": {
+        "position": [
+          -1.5595,
+          -0.1298,
+          1.8585
+        ],
+        "target": [
+          0,
+          0.2112,
+          0
+        ]
+      },
+      "rate": 0.05,
+      "focus": [
+        "shaft",
+        "stator",
+        "main_winding",
+        "aux_winding",
+        "cage",
+        "speed_switch",
+        "capacitor",
+        "reverse_switch"
+      ],
+      "spin": {
+        "rotor": 0,
+        "motor_housing": 0,
+        "field": 0
+      },
+      "flows": [
+        [
+          [
+            -0.0008,
+            0.6003,
+            -0.0007
+          ],
+          [
+            -0.0008,
+            0.4714,
+            -0.0007
+          ],
+          [
+            -0.0008,
+            0.3425,
+            -0.0007
+          ],
+          [
+            -0.0008,
+            0.2412,
+            -0.0007
+          ],
+          {
+            "node": "speed_switch",
+            "at": [
+              0.0268,
+              0.191,
+              0.0471
+            ]
+          }
+        ],
+        [
+          {
+            "node": "speed_switch",
+            "at": [
+              0.0268,
+              0.191,
+              0.0471
+            ]
+          },
+          {
+            "node": "capacitor",
+            "at": [
+              -0.0671,
+              0.192,
+              -0.0007
+            ]
+          },
+          [
+            -0.0008,
+            0.2412,
+            -0.0007
+          ],
+          [
+            -0.0008,
+            0.3048,
+            -0.0007
+          ],
+          [
+            -0.0008,
+            0.3181,
+            0.0683
+          ]
+        ],
+        [
+          [
+            -0.0008,
+            0.3048,
+            -0.0007
+          ],
+          [
+            -0.0128,
+            0.3181,
+            0.0673
+          ]
+        ]
+      ],
+      "tags": [
+        {
+          "node": "capacitor",
+          "text": "capacitor",
+          "at": [
+            -0.0671,
+            0.192,
+            -0.0007
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Field",
+      "caption": "The capacitor puts the two currents a quarter-cycle apart, so the poles march round: a field at 400 rpm.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          -0.8298,
+          -0.1298,
+          2.2798
+        ],
+        "target": [
+          0,
+          0.2112,
+          0
+        ]
+      },
+      "rate": 0.05,
+      "focus": [
+        "shaft",
+        "stator",
+        "main_winding",
+        "aux_winding",
+        "cage",
+        "speed_switch",
+        "capacitor",
+        "reverse_switch"
+      ],
+      "spin": {
+        "rotor": 0.25,
+        "motor_housing": 0.25,
+        "field": 1
+      },
+      "tags": [
+        {
+          "node": "stator",
+          "text": "rotating field",
+          "at": [
+            0.0657,
+            0.3048,
+            0.0551
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Rotor",
+      "caption": "It sweeps through the cage’s bars; the currents it drives in them drag the rotor after it at 151 rpm.",
+      "duration": 6,
+      "camera": {
+        "position": [
+          0,
+          -0.1298,
+          2.4262
+        ],
+        "target": [
+          0,
+          0.2112,
+          0
+        ]
+      },
+      "rate": 0.05,
+      "focus": [
+        "shaft",
+        "stator",
+        "main_winding",
+        "aux_winding",
+        "cage",
+        "speed_switch",
+        "capacitor",
+        "reverse_switch"
+      ],
+      "tags": [
+        {
+          "node": "cage",
+          "text": "cage",
+          "at": [
+            0.0828,
+            0.3048,
+            0.0305
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Air",
+      "caption": "Pitched at 13.7°, leading edge high, the four blades push a column of air down into the room.",
+      "duration": 5,
+      "camera": {
+        "position": [
+          0.8334,
+          0.4673,
+          2.2896
+        ],
+        "target": [
+          0,
+          0.2112,
+          0
+        ]
+      },
+      "rate": 0.05,
+      "focus": [
+        "shaft",
+        "stator",
+        "main_winding",
+        "aux_winding",
+        "cage",
+        "speed_switch",
+        "capacitor",
+        "reverse_switch",
+        "blade_1",
+        "blade_2",
+        "blade_3",
+        "blade_4"
+      ],
+      "carries": "air",
+      "flows": [
+        [
+          [
+            0.3377,
+            0.4438,
+            0.3378
+          ],
+          [
+            0.3377,
+            0.2412,
+            0.3378
+          ],
+          [
+            0.3377,
+            0.0755,
+            0.3378
+          ]
+        ],
+        [
+          [
+            -0.3394,
+            0.4438,
+            0.3378
+          ],
+          [
+            -0.3394,
+            0.2412,
+            0.3378
+          ],
+          [
+            -0.3394,
+            0.0755,
+            0.3378
+          ]
+        ],
+        [
+          [
+            -0.3394,
+            0.4438,
+            -0.3393
+          ],
+          [
+            -0.3394,
+            0.2412,
+            -0.3393
+          ],
+          [
+            -0.3394,
+            0.0755,
+            -0.3393
+          ]
+        ],
+        [
+          [
+            0.3377,
+            0.4438,
+            -0.3393
+          ],
+          [
+            0.3377,
+            0.2412,
+            -0.3393
+          ],
+          [
+            0.3377,
+            0.0755,
+            -0.3393
+          ]
+        ]
+      ]
+    }
+  ],
+  "credit": {
+    "title": "Ceiling Fan",
+    "author": "Ulan Cabanilla",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/ceiling_fan",
+    "extra": {
+      "label": "Built for this site",
+      "text": "The shell cut open, and the blades mirrored so they pitch like a US fan’s. The motor (fixed hollow shaft, stator with its two windings, rotor with its cage, two bearings) and the switch cup’s pull-chain switch, capacitor and reverse switch, at typical sizes; the 18 poles, 44 bars and stator size are estimates, and the windings are drawn as solid coils. Speeds and watts are the maker’s figures for a 52-inch Hampton Bay Bayfield; the red and blue band is the field, drawn."
+    }
+  },
+  "build": {
+    "augment": "objects/ceiling-fan/augment.mjs",
+    "hints": "objects/ceiling-fan/hints.json"
+  }
+}
