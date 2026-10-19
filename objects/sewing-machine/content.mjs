@@ -31,11 +31,9 @@ const RATE = 0.35;
  *  camera only goes round its head, where the stitch is made. */
 const WHOLE = ['bed', 'balance_wheel', 'spool', 'face_plate'];
 const FILL = 0.62;
-/** The hook's beak, going round with it, and the bobbin it takes the loop round: on through both of the hook's shots. */
-const HOOK_TAGS = [
-  { node: 'hook', text: 'beak', at: at('beak'), ride: true },
-  { node: 'bobbin', text: 'bobbin', at: at('bobbin') },
-];
+/** The hook, its tag riding round on the beak, on through both of the hook's shots. (The bobbin sits inside it: a tag of
+ *  its own would cover this one.) */
+const HOOK_TAGS = [{ node: 'hook', text: 'hook', at: at('beak'), ride: true }];
 
 writeContent('sewing-machine', {
   order: 17,
