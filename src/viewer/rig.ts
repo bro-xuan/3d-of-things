@@ -326,8 +326,11 @@ export class Mechanism {
   private life = 1;
   /** The balance's phase (radians): locked to the beat, except while it swings free with the fork out. */
   private phase = 0;
+  /** Beats a second: a watch's six, or what a motion's `beats` says (a seconds pendulum beats once a second). */
+  private readonly perSecond: number;
 
   constructor(motions: Motion[], resolve: Resolve, rigs: Rigs) {
+    this.perSecond = motions.find((m) => m.beats)?.beats ?? BEATS_PER_SECOND;
     const linked: { motion: Motion; rig: NodeRig }[] = [];
     for (const motion of motions) {
       // Parts on a control (a camera's focus, its shutter) are moved by the Linkage instead.
@@ -466,10 +469,15 @@ export class Mechanism {
     }
   }
 
+  /** Beats in one turn of a hand, at this clock's beat. */
+  private perTurn(hand: Hand): number {
+    return (BEATS_PER_TURN[hand] * this.perSecond) / BEATS_PER_SECOND;
+  }
+
   /** Beats a second while running free: the spring's pull spins the train up, then dies away as the hours run out. */
   private looseSpeed(t: number, from: number): number {
     const [rise, fall] = [0.35, 1.5];
-    const total = from * 3600 * BEATS_PER_SECOND;
+    const total = from * 3600 * this.perSecond;
     return (total / (fall - (rise * fall) / (rise + fall))) * (1 - Math.exp(-t / rise)) * Math.exp(-t / fall);
   }
 
@@ -516,14 +524,14 @@ export class Mechanism {
       loose.t += dt;
       const speed = this.looseSpeed(loose.t, loose.from);
       loose.beats += speed * dt;
-      this.reserve = Math.max(0, loose.from * (1 - loose.beats / (loose.from * 3600 * BEATS_PER_SECOND)));
+      this.reserve = Math.max(0, loose.from * (1 - loose.beats / (loose.from * 3600 * this.perSecond)));
       const cap = SPIN_CAP * Math.PI * 2;
       const spin = (rig: NodeRig, perBeat: number) => {
         const w = Math.min(Math.abs(perBeat) * speed * Math.PI * 2, cap) * -Math.sign(perBeat);
         this.free.set(rig, (this.free.get(rig) ?? 0) + w * dt);
       };
-      for (const { rig, train } of this.trains) spin(rig, train / BEATS_PER_TURN.second);
-      for (const { rig, hand } of this.hands) spin(rig, 1 / BEATS_PER_TURN[hand]);
+      for (const { rig, train } of this.trains) spin(rig, train / this.perTurn('second'));
+      for (const { rig, hand } of this.hands) spin(rig, 1 / this.perTurn(hand));
     } else if (loose) {
       let settled = true;
       for (const [rig, turned] of this.free) {
@@ -561,7 +569,7 @@ export class Mechanism {
     this.wall = now.getTime();
     if (target < 1 || !this.catchUp) this.lag += elapsed - this.rate * dt;
     else this.lag = this.lag < 1e-3 ? 0 : this.lag * Math.exp(-dt / 0.3);
-    const beat = (secondsOfDay(now) - this.lag) * BEATS_PER_SECOND;
+    const beat = (secondsOfDay(now) - this.lag) * this.perSecond;
     if (Math.floor(beat) > Math.floor(this.beat) && Math.floor(beat) - Math.floor(this.beat) < 3) this.onBeat?.(Math.floor(beat));
     this.beat = beat;
     const beats = trainBeats(beat);
@@ -569,7 +577,7 @@ export class Mechanism {
     // The balance swings with the beat; with the fork out it swings on its own, dying away. A spent spring lets it settle.
     const driven = !stopped || this.held;
     this.life += ((driven ? 1 : 0) - this.life) * (1 - Math.exp(-dt / (driven ? 0.6 : 1.1)));
-    if (this.loose && !this.loose.back) this.phase += Math.PI * BEATS_PER_SECOND * dt;
+    if (this.loose && !this.loose.back) this.phase += Math.PI * this.perSecond * dt;
     else this.phase = Math.PI * beat;
     const lively = (rest: number) => ((amplitudeFor(this.reserve, (rest * 180) / Math.PI) * Math.PI) / 180) * this.life;
 
@@ -580,8 +588,8 @@ export class Mechanism {
     };
     const free = (rig: NodeRig) => this.free.get(rig) ?? 0;
     // A positive angle turns anticlockwise about the axis, so clockwise travel is negative.
-    for (const { rig, hand, rest } of this.hands) turn(rig, rest - (beats / BEATS_PER_TURN[hand]) * Math.PI * 2 + free(rig));
-    for (const { rig, train, inside } of this.trains) if (visible || !inside) turn(rig, -train * (beats / BEATS_PER_TURN.second) * Math.PI * 2 + free(rig));
+    for (const { rig, hand, rest } of this.hands) turn(rig, rest - (beats / this.perTurn(hand)) * Math.PI * 2 + free(rig));
+    for (const { rig, train, inside } of this.trains) if (visible || !inside) turn(rig, -train * (beats / this.perTurn('second')) * Math.PI * 2 + free(rig));
     for (const { rig, swing, amplitude, inside } of this.swings) {
       if (!visible && inside) continue;
       turn(rig, swing === 'balance' ? lively(amplitude) * Math.sin(this.phase) : amplitude * palletLean(beat));
