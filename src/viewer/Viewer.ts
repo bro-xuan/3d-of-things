@@ -40,7 +40,6 @@ import { FilmCamera, type CameraState } from './filmcamera';
 import { ReflexCamera, type ReflexState } from './reflexcamera';
 import { Linkage } from './linkage';
 import { AeroCar, type AeroState, type FlightKind } from './aerocar';
-import { PinLock, type KeyName, type LockState } from './pinlock';
 import { TapeMeasure, type BladeLayout, type TapeState } from './tapemeasure';
 import { Extinguisher, type ExtinguisherState } from './extinguisher';
 import { Jets } from './jets';
@@ -160,8 +159,6 @@ export class Viewer {
   private cameraBody?: FilmCamera | ReflexCamera;
   /** A car's suction fans and thrusters, if it has them: they set the fans', skirts' and wing's controls, and fly it. */
   private aero?: AeroCar;
-  /** A pin tumbler lock's key, pins and plug, if this is one: they set the keys', pins' and plug's controls. */
-  private pinLock?: PinLock;
   private tape?: TapeMeasure;
   /** A stored-pressure extinguisher's pin, lever and charge, if it is one: they set its controls as it empties. */
   private extinguisher?: Extinguisher;
@@ -341,7 +338,6 @@ export class Viewer {
     if (this.linkage.has('mirror')) this.cameraBody = new ReflexCamera(this.linkage);
     else if (this.linkage.has('curtain1') || this.linkage.has('focus')) this.cameraBody = new FilmCamera(this.linkage);
     if (this.linkage.has('skirts')) this.aero = new AeroCar(this.linkage);
-    if (this.linkage.has('lockTurn')) this.pinLock = new PinLock(this.linkage);
     const blade = this.linkage.has('tape_out') ? this.linkage.stripLayout('tape-blade') : undefined;
     if (blade) this.tape = new TapeMeasure(this.linkage, blade as BladeLayout);
     if (this.linkage.has('ext_lever')) this.extinguisher = new Extinguisher(this.linkage);
@@ -958,7 +954,6 @@ export class Viewer {
     this.hold(false);
     this.wind(false);
     this.aero?.reset();
-    this.pinLock?.reset();
     this.tape?.reset();
     this.extinguisher?.reset();
   }
@@ -1158,28 +1153,6 @@ export class Viewer {
     }
     if (this.jets?.update(state, f?.height ?? 0, dt)) moved = true;
     return moved;
-  }
-
-  // ------------------------------------------------------------- a lock
-
-  /** What a pin tumbler lock's key, pins and plug are doing, for charts and readouts; null if this isn't one. */
-  get lockState(): LockState | null {
-    return this.pinLock?.state ?? null;
-  }
-
-  /** Slides the key in the lock to this far out (mm; 0 is all the way in). */
-  setKeyOut(mm: number): void {
-    this.pinLock?.setOut(mm);
-  }
-
-  /** Holds the key turned, or lets it go. */
-  turnKey(on: boolean): void {
-    this.pinLock?.setTurning(on);
-  }
-
-  /** Puts this key in the lock, changing keys first if the other is in. */
-  chooseKey(key: KeyName): void {
-    this.pinLock?.choose(key);
   }
 
   // ------------------------------------------------------------- a tape measure
@@ -1550,7 +1523,6 @@ export class Viewer {
     const turned = !!this.mechanism?.tick(dt, this.now(), this.explodeValue > 0 || !!this.looks?.seeThrough);
     this.cameraBody?.tick(dt);
     if (this.aero && this.tickAero(dt)) this.dirty = true;
-    this.pinLock?.tick(dt);
     this.tape?.tick(dt);
     if (this.extinguisher?.tick(dt)) this.dirty = true;
     if (this.linkage?.apply() || turned) {

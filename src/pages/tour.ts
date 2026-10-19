@@ -13,7 +13,6 @@ import { FLOOR, G, LOW_AIR, MASS, corneringG } from '../viewer/aerocar';
 import { tapeTry } from './tapetry';
 // Only types: the viewer arrives with three.js, after the page is up.
 import type { Viewer } from '../viewer/Viewer';
-import { lockTry } from './locktry';
 
 /** Slow motion, for steps that run at full speed, is this fraction of real time. */
 const SLOW = 1 / 16;
@@ -260,7 +259,6 @@ export class Tour {
         state: () => this.viewer?.mechanismState ?? null,
         camera: () => this.viewer?.cameraState ?? null,
         aero: () => this.viewer?.aeroState ?? null,
-        lock: () => this.viewer?.lockState ?? null,
         extinguisher: () => this.viewer?.extinguisherState ?? null,
         angleOf: (node) => this.viewer?.angleOf(node) ?? 0,
         time: () => this.viewer?.runTime ?? 0,
@@ -721,9 +719,6 @@ export class Tour {
         this.undoTry = () => this.viewer?.refillAir();
       }
       button(icons.reset, 'Refill the tanks', () => this.viewer?.refillAir());
-    } else if (kind === 'lock-insert' || kind === 'lock-turn' || kind === 'lock-keys') {
-      // A pin tumbler lock's key: src/pages/locktry.ts.
-      this.undoTry = lockTry(kind, host, readout, () => this.viewer, holdButton);
     } else if (kind === 'tape-pull' || kind === 'tape-lock' || kind === 'tape-standout' || kind === 'tape-hook') {
       // A tape measure's blade, lock and hook (src/pages/tapetry.ts).
       this.undoTry = tapeTry(kind, host, readout, () => this.viewer);
