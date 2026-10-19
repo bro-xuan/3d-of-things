@@ -66,21 +66,21 @@ The page gives no groups; the order is the page's.
 ## 7. Mechanism map
 
 - **Time:** three `speed` spins about the vertical (y) axis, each −1.5 turns a second (90 rpm, far below the page's 1,400 rpm): Motor pulley, Spindle pulley, Chuck & bit. `motionLabel` "Switch it on".
-- **Control:** the `speeds` experiment in step 2 (Belt): choices 1–5 scale the `spin` nodes (Spindle pulley, Chuck & bit) by 0.39–2.56, and the readout gives each position's note. The Motor pulley keeps its speed, and the V-belt does not move between grooves.
-- **Charts:** generic `bars` "Spindle speed" in step 2, `follow: "selected"`, so the chosen position's bar is picked out.
-- **Flows:** `power` in all three steps: motor up to the Motor pulley; Motor pulley, V-belt, Spindle pulley; Feed handles down to the bit.
-- **Not animated:** the feed (rack and pinion, spring), the Depth stop, the Table and the Belt guard.
-- **Nothing new:** generic spins, `speeds` and `bars`.
+- **Belt position:** measured from the model's vertices, the V-belt sits in the Motor pulley's second-smallest groove (rim 56 mm, the belt about 44 mm across in it) and the Spindle pulley's second-largest (rim 90 mm, the belt about 79 mm across): position 2 of the five, small driving big, about 0.6 of the motor's speed (the page's 840 rpm). The motions turn both pulleys at the same −1.5, so the film slows the Spindle pulley and the Chuck & bit to 0.6 with `spin`; the belt can't move between grooves, so the film shows no other speed.
+- **Film:** the spins run at real time through all three shots. Every shot frames the whole press at one size; the camera only goes round. Solid: the pulleys, the V-belt, the Chuck & bit and the Table the work is clamped to (which also keeps the glass of the column and base, far from the head, from fading away); the Belt guard, the head and the motor's casing are glass.
+- **Flows:** `power`, one path through the whole film: the motor up to the Motor pulley, along the V-belt to the Spindle pulley, down the spindle to the bit's tip.
+- **Not animated:** the feed (rack and pinion, spring), the Depth stop, the Table and the Belt guard; so the film shows the drive, not a hole being drilled.
+- **Nothing new:** generic spins and the `power` flow.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | Motor | Motor pulley, Spindle pulley, V-belt, Chuck & bit; power flow |  |  |
-| 2 | Belt | Motor pulley, Spindle pulley, V-belt, Chuck & bit; power flow | bars: Spindle speed | speeds: 1 / 2 / 3 / 4 / 5 |
-| 3 | Feed | Feed handles, Chuck & bit, Depth stop; power flow |  |  |
-
-Three steps on the page.
+| 0 s | Motor | The motor at the back spins the stepped pulley on its shaft, at one steady speed. | 6 |  |
+| 6 s | Belt | The V-belt wedges into a groove of each pulley and carries the turn forward to the spindle. | 6 |  |
+| 12 s | Spindle | A small groove drives a bigger one, so the bit turns slower than the motor, about 840 rpm. | 7 |  |
 
 ## 9. Simplified or left out
 

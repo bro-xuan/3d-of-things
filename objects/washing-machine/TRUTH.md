@@ -149,8 +149,8 @@ source → transmission → control → output. One line each, naming the parts.
 | Suspension | `bearings` | Bearings | Two ball bearings in the tub’s hub carry the drum’s shaft, sealed against the water inside. | – |
 | Suspension | `springs` | Springs | The tub hangs from the cabinet’s top on two springs. They let it swing a few millimetres while the drum spins, so the cabinet doesn’t. | – |
 | Suspension | `dampers` | Dampers | Two friction struts under the tub. They soak up the swinging, most of all as the drum speeds up through the speed where the tub would rock hardest. | – |
-| Suspension | `counterweight` | Counterweight | A block of concrete on the tub’s top, about 8 kg. It makes the swinging mass heavy, so an uneven load shakes it less. | – |
-| Suspension | `front_weight` | Front counterweight | A second block round the tub’s mouth, about 11 kg, which also brings the swinging mass’s centre forward, under the door. | – |
+| Suspension | `counterweight` | Counterweight | A block of concrete on the tub’s top, about 12.5 kg. It makes the swinging mass heavy, so an uneven load shakes it less. | – |
+| Suspension | `front_weight` | Front counterweight | A second block round the tub’s mouth, about 12.5 kg, which also brings the swinging mass’s centre forward, under the door. | – |
 | Suspension | `bellows` | Door seal | A rubber bellows from the tub’s mouth to the cabinet’s front. It keeps the water in and lets the tub move while the cabinet stands still. | – |
 | Water out | `drain_pump` | Drain pump | A small pump under the front, with a filter you can unscrew behind the flap to catch coins and buttons. | – |
 | Water out | `pump_impeller` | Impeller | Four vanes spun by the pump’s motor fling the water out to the drain hose. | time, 180 rpm |
@@ -165,20 +165,20 @@ source → transmission → control → output. One line each, naming the parts.
 ## 7. Mechanism map
 
 - **Time** drives it all. The drum and its pulley turn at 54 rpm (0.9 turns a second, the wash tumble); the motor's rotor at 10.77 times that through the belt; the drain pump's impeller at 3 turns a second (a two-pole synchronous motor on 50 Hz turns at 3,000 rpm [calc]; slowed so it can be seen).
-- **Reused:** `speed` spins; the `run` experiment (Drive) and `speeds` (Tumble or spin: 54, 90, 800 and 1,400 rpm, with `rate` 0.15 so the spin can be followed); generic charts `timing` (the programme), `ladder` (motor to drum, and a log ladder of drum speeds) and `bars` (Heat, Suspension, Water out); flows `power` and `water`.
+- **Film:** filling with the drum still (`run: false`), then the wash at 54 rpm with the pump's impeller held (`spin` 0), then the spin: the drum, its pulley and the motor at 1,400 ÷ 54 = 25.9 times the wash speed, shown at 0.15× (`rate`) so the drum turns 3.5 times a second and can be followed, the impeller at its own 3 turns a second. Every shot frames the whole cabinet at one size, and the camera only goes round; the cabinet, the tub, the motor's casing and the pump's body are glass. The clothes and the water aren't modelled: the flows show the water's way in and out.
+- **Reused:** `speed` spins, `run`, `spin` and `rate`; flows `power` and `water`.
 - **New:** the `water` flow (teal) and the `home` category. The suspension is static: springs and dampers don't stretch and the tub doesn't sway, since that would need a mechanism module of its own.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Drum, Spider and shaft, Tub, front half, Tub, back half | timing: A 40 °C cotton wash |  |
-| 2 | Water in | Inlet valve, Hoses, Drawer housing, Detergent drawer; water flow |  |  |
-| 3 | Heat | Heater | bars: Minutes to heat the water |  |
-| 4 | Drive | Motor, Motor’s rotor, Belt, Drum pulley, Spider and shaft; power flow | ladder: Turns a minute, motor to drum | run, counting Motor, Drum |
-| 5 | Tumble or spin | Drum, Spider and shaft; at 0.15× speed | ladder: How hard the wall pushes | speeds: 54 rpm / 90 rpm / 800 rpm / 1,400 rpm |
-| 6 | Suspension | Springs, Dampers, Counterweight, Front counterweight, Tub, front half, Tub, back half | bars: How far the tub shakes at full spin |  |
-| 7 | Water out | Drain pump, Impeller, Hoses, Tub, front half; water flow | bars: Water left in the clothes |  |
+| 0 s | Fill | Water from the valve runs through the detergent drawer and carries the powder into the tub. | 5 |  |
+| 5 s | Wash | The motor under the tub drives the drum by a belt, turning 10.8 times for each turn of the drum. | 6 |  |
+| 11 s | Wash | At 54 rpm its three ridges lift the clothes up the side and drop them back through the water. | 6 |  |
+| 17 s | Spin | At 1,400 rpm the water flies out through the holes, and the pump sends it down the drain. | 6 |  |
 
 ## 9. Simplified or left out
 

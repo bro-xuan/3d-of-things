@@ -5,6 +5,26 @@
 //   node objects/hand-drill/content.mjs
 import { writeContent } from '../../scripts/kit/content.mjs';
 
+/** What stays solid through the film: the crank and its wheel, the two pinions, the chuck and bit. The frame is glass. */
+const MOVING = ['vintage_hand_drill_crank', 'vintage_hand_drill_cog1', 'vintage_hand_drill_cog2', 'vintage_hand_drill_head'];
+/** Every shot frames the whole drill, top handle to bit, on parts whose box doesn't change as they turn (the crank's
+ *  handle would swing it about), at one size: the camera only goes round. */
+const WHOLE = ['vintage_hand_drill', 'vintage_hand_drill_head'];
+const FILL = 0.68;
+
+/** The power's path: from the hand on the handle, round the crank to its axle, down the wheel to where its teeth meet the
+ *  pinion, and down the spindle through the chuck to the bit's tip. */
+const powerPath = [
+  { node: 'vintage_hand_drill_crank', at: [0.212, 0.508, 0.262], ride: true },
+  { node: 'vintage_hand_drill_crank', at: [0.08, 0.72, 0.2], ride: true },
+  { node: 'vintage_hand_drill_crank', at: [-0.014, 0.908, 0.16], ride: true },
+  { node: 'vintage_hand_drill_crank', at: [-0.014, 0.8, 0.062] },
+  { node: 'vintage_hand_drill_cog2', at: [-0.013, 0.69, 0.062] },
+  { node: 'vintage_hand_drill_cog2', at: [-0.013, 0.689, -0.006] },
+  { node: 'vintage_hand_drill_head', at: [-0.013, 0.5, -0.006] },
+  { node: 'vintage_hand_drill_head', at: [-0.013, 0.03, -0.006] },
+];
+
 writeContent('hand-drill', {
   order: 1,
   title: 'Hand Drill',
@@ -59,6 +79,48 @@ writeContent('hand-drill', {
     { node: 'vintage_hand_drill_cog1', axis: [0, 1, 0], pivot: [-0.013, 1.144, -0.006], speed: 1.3333 },
   ],
   motionLabel: 'Turn the crank',
+  // "How it works" as an animation: the crank turns the wheel, its teeth spin the pinion, the pinion the bit.
+  film: [
+    {
+      chapter: 'Crank',
+      caption: 'Your hand on the crank turns the big wheel round, once for every turn of the handle.',
+      duration: 6,
+      angle: [-55, 12],
+      fill: FILL,
+      focus: MOVING,
+      frame: WHOLE,
+      flow: powerPath,
+      tags: [{ node: 'vintage_hand_drill_crank', text: 'handle', at: [0.212, 0.508, 0.262], ride: true }],
+    },
+    {
+      chapter: 'Gears',
+      caption: 'Its 80 face teeth turn the 24-tooth pinion on the spindle 3⅓ times for every turn.',
+      duration: 7,
+      angle: [-110, 14],
+      fill: FILL,
+      focus: MOVING,
+      frame: WHOLE,
+      flow: powerPath,
+      tags: [
+        { node: 'vintage_hand_drill_crank', text: '80 teeth', at: [-0.2, 0.86, 0.06] },
+        { node: 'vintage_hand_drill_cog2', text: '24 teeth', at: [-0.07, 0.66, -0.006] },
+      ],
+    },
+    {
+      chapter: 'Bit',
+      caption: 'The chuck turns with the spindle, so the bit spins 3⅓ times as fast as your hand.',
+      duration: 6,
+      angle: [-155, 10],
+      fill: FILL,
+      focus: MOVING,
+      frame: WHOLE,
+      flow: powerPath,
+      tags: [
+        { node: 'vintage_hand_drill_cog2', text: '24 teeth', at: [-0.07, 0.66, -0.006] },
+        { node: 'vintage_hand_drill_head', text: 'bit', at: [0, 0.12, 0] },
+      ],
+    },
+  ],
   annotations: [
     {
       title: 'Crank handle',
@@ -112,87 +174,4 @@ writeContent('hand-drill', {
     source: 'Poly Haven',
     sourceUrl: 'https://polyhaven.com/a/vintage_hand_drill',
   },
-  how: [
-    {
-      label: 'Your arm',
-      title: 'Your arm is the motor',
-      text: [
-        'The crank arm is a lever: the further its handle sits from the axle, the more turning force each push gives the big wheel. One turn of your hand is one turn of the wheel.',
-        'Everything else in the drill only changes that turn: how fast it goes, and which way it points.',
-      ],
-      angle: [-14, 12],
-      fill: 0.7,
-      focus: ['vintage_hand_drill_crank'],
-      frame: ['vintage_hand_drill_crank'],
-      rate: 0.5,
-      flow: [
-        { node: 'vintage_hand_drill_crank', at: [0.212, 0.508, 0.262], ride: true },
-        { node: 'vintage_hand_drill_crank', at: [0.08, 0.72, 0.2], ride: true },
-        { node: 'vintage_hand_drill_crank', at: [-0.014, 0.908, 0.16], ride: true },
-      ],
-      tags: [
-        { node: 'vintage_hand_drill_crank', text: 'Your hand', at: [0.212, 0.508, 0.262], ride: true },
-        { node: 'vintage_hand_drill_crank', text: 'Axle: 1 turn per turn', at: [-0.014, 0.908, 0.16] },
-      ],
-    },
-    {
-      label: 'Gears',
-      title: '80 teeth turn 24',
-      text: [
-        'The big wheel carries 80 teeth on its back face. They mesh with a pinion of 24 on the spindle, which has to turn 80 ÷ 24 = 3⅓ times to let one full turn of teeth go by.',
-        'The second pinion, at the top, drives nothing. It only keeps the wheel’s teeth pressed into mesh.',
-      ],
-      angle: [150, 14],
-      fill: 0.72,
-      focus: ['vintage_hand_drill_crank', 'vintage_hand_drill_cog2', 'vintage_hand_drill_cog1'],
-      frame: ['vintage_hand_drill_crank', 'vintage_hand_drill_cog2', 'vintage_hand_drill_cog1'],
-      flow: [
-        { node: 'vintage_hand_drill_crank', at: [-0.014, 0.908, 0.06] },
-        { node: 'vintage_hand_drill_crank', at: [-0.014, 0.8, 0.062] },
-        { node: 'vintage_hand_drill_cog2', at: [-0.013, 0.69, 0.062] },
-        { node: 'vintage_hand_drill_cog2', at: [-0.013, 0.689, -0.006] },
-      ],
-      tags: [
-        { node: 'vintage_hand_drill_crank', text: '80 teeth', at: [-0.2, 0.86, 0.06] },
-        { node: 'vintage_hand_drill_cog2', text: '24 teeth: 3⅓ turns', at: [-0.07, 0.66, -0.006] },
-        { node: 'vintage_hand_drill_cog1', text: 'Idler: drives nothing', at: [-0.07, 1.16, -0.006] },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'Turns, gear to gear',
-        caption: 'One turn of the crank lets 80 teeth go by; the 24-tooth pinion needs 3⅓ turns for that. Hold the button and count.',
-        unit: 'Turns, for one turn of the crank',
-        ticks: [0, 1, 2, 3, 4],
-        rungs: [{ name: 'Crank', value: 1, note: '80 teeth', node: 'vintage_hand_drill_crank' }, { name: 'Pinion & bit', value: 3.33, note: '24 teeth', step: '×3⅓', node: 'vintage_hand_drill_head' }],
-      },
-      try: 'run',
-      count: [{ node: 'vintage_hand_drill_crank', label: 'Crank' }, { node: 'vintage_hand_drill_head', label: 'Bit' }],
-    },
-    {
-      label: 'The bit',
-      title: 'Speed for force',
-      text: [
-        'The chuck turns with the pinion, so the bit spins 3⅓ times for each turn of your hand, with less than a third of the twisting force.',
-        'That suits small holes in wood, where speed matters more than force. The push that makes the bit bite comes from you, leaning on the handle at the top.',
-      ],
-      angle: [24, 8],
-      fill: 0.62,
-      focus: ['vintage_hand_drill_cog2', 'vintage_hand_drill_head'],
-      frame: ['vintage_hand_drill_cog2', 'vintage_hand_drill_head'],
-      flow: [
-        { node: 'vintage_hand_drill_cog2', at: [-0.013, 0.689, -0.006] },
-        { node: 'vintage_hand_drill_head', at: [-0.013, 0.5, -0.006] },
-        { node: 'vintage_hand_drill_head', at: [-0.013, 0.3, -0.006] },
-        { node: 'vintage_hand_drill_head', at: [-0.013, 0.03, -0.006] },
-      ],
-      tags: [{ node: 'vintage_hand_drill_head', text: 'Chuck: jaws grip the bit', at: [0.03, 0.42, 0.05] }, { node: 'vintage_hand_drill_head', text: 'Bit: 3⅓ turns', at: [0, 0.12, 0] }],
-      chart: {
-        type: 'bars',
-        title: 'The trade',
-        caption: 'Gears can’t make work out of nothing: what the bit gains in speed, it loses in force. Here it turns 3⅓ times as fast, with under a third of your twist.',
-        unit: 'At the bit, compared with your hand',
-        bars: [{ label: 'Speed', value: 3.33, note: '×3⅓' }, { label: 'Turning force', value: 0.3, note: '÷3⅓' }],
-      },
-    },
-  ],
 });

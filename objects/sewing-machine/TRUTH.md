@@ -113,19 +113,20 @@ source → transmission → control → output. One line each, naming the parts.
 - **Rockers** (new use of `crank` + `rocks`, no viewer change): a crank with a rod of 0.002 model units only turns its part, by asin(throw/rod × sin(angle + phase)), and slides it under 0.25 mm along its own pivot. Used for the take-up lever (±14°, peaking 40° after the needle's top), the feed rock shaft (its arm moves the bar ±2.1 mm), the feed lifting rock shaft (±1.4°, its arm lifts 1.5 mm) and the forked connection (±0.7°).
 - **Cam** (`cam: arm_shaft`): a hidden driver `feed_lifter` (kit `hiddenDriver`) lifts the feed dog 1.5 mm over 200° of each turn; the dog rides on it and adds its push.
 - **Timing**: the hook meets the needle at 221°, 41° after the bottom, when the needle has risen 2.4 mm (typ. loop rise; the 38 mm link makes the bottom of the stroke dwell); the beak is built at that angle's mirror so the timing is in the geometry.
-- **Reused:** the `run` experiment (Power: stitches; To the hook: stitches and hook turns), generic charts `timing` (one stitch; the loop's trip), `ladder` (turns per stitch) and `bars` (stitch length by setting), the `power` flow.
+- **Film:** one stitch at a time at 0.35× (`rate`), so the shaft turns once in about 5.7 s, the same through every shot. The arm, the bed, the plates and the covers are glass; everything the shaft moves, and the bobbin and its case, are solid. Every shot frames the whole machine at one size, on parts that stay put (the casting, the wheel, the spool), and the camera goes round the front towards the head, where the stitch is made. The thread isn't modelled: the captions say what it does.
+- **Reused:** generic spins, `crank`, `cam` and the `power` flow.
 - **New:** nothing in the viewer. The object's own `casting.mjs` builds the hollow arm from a filleted silhouette with walls left open where shafts pass.
 
-## 8. Tour (5–7 steps)
+## 8. Film (15–25 s, 2–5 shots)
 
-| # | Label | Shows (focus, flow) | Chart | Try |
+The mechanism doing its job once, start to finish (references/film.md).
+
+| At | Chapter | Caption | Seconds | Cues |
 |---|---|---|---|---|
-| 1 | The idea | Needle bar, Needle, Needle-bar link, Take-up lever, Rotating hook, Bobbin case, Bobbin, Feed dog, Arm shaft; apart 0.58; at 0.25× speed | timing: One stitch, slowed down |  |
-| 2 | Power | Motor, Balance wheel, Arm shaft; power flow; apart 0.45 |  | run, counting Stitches |
-| 3 | Needle | Arm shaft, Needle-bar link, Needle bar, Needle, Take-up lever; power flow; apart 0.45; at 0.35× speed |  |  |
-| 4 | To the hook | Arm shaft, Upright shaft, Hook driving shaft, Rotating hook; power flow; apart 0.45 | ladder: Turns, for one stitch | run, counting Stitches, Hook turns |
-| 5 | The stitch | Rotating hook, Bobbin case, Bobbin, Needle, Needle bar, Feed dog; apart 0.58; at 0.12× speed | timing: The loop’s trip round the bobbin |  |
-| 6 | Feed | Arm shaft, Feed connecting rod, Feed forked connection, Feed lifting rock shaft, Feed rock shaft, Feed dog, Stitch regulator; power flow; apart 0.45; at 0.35× speed | bars: Stitch length |  |
+| 0 s | Needle | A crank on the arm shaft drives the needle down through the cloth and back up. | 6 |  |
+| 6 s | Hook | Under the plate the hook turns twice a stitch, and its beak catches the needle’s loop. | 6 |  |
+| 12 s | Hook | It carries the loop right round the bobbin, so the two threads lock inside the cloth. | 6 |  |
+| 18 s | Feed | Then the feed dog rises through the plate, pushes the cloth back one stitch and drops. | 6 |  |
 
 ## 9. Simplified or left out
 

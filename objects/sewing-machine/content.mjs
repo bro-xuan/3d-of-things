@@ -14,7 +14,7 @@ const at = (name) => H?.anchors?.[name] ?? (H ? missing(name) : [0, 0.5, 0]);
 const pivot = (name) => H?.pivots?.[name] ?? (H ? missing(name) : [0, 0.5, 0]);
 const T = H?.turns ?? { arm: 1, upright: 2, drive: 2, hook: -2 };
 const M = H?.motion;
-const S = H?.stitch ?? { stroke: 30, catchDeg: 213, rise: 2.4, lift: 1.5, travel: 4.2, needleOut: 66, takeUpPhase: 50, teeth: { upper: [32, 16] } };
+const S = H?.stitch ?? { takeUpPhase: 50 };
 
 /** Turns a second of the arm shaft: one stitch every two seconds, a slow turn of the hand wheel. */
 const SPEED = 0.5;
@@ -22,38 +22,20 @@ const SPEED = 0.5;
 const off = (direction, mm, window, then) => ({ direction, distance: U(mm), window, ...(then ? { then: { direction: then[0], distance: U(then[1]) } } : {}) });
 const stay = { direction: [0, 1, 0], distance: 0 };
 
-// One stitch, as the timing chart draws it: phase 0 is the arm shaft at rest (needle at the top).
-const N = 72;
-const phases = Array.from({ length: N + 1 }, (_, i) => i / N);
-const r3 = (v) => +v.toFixed(3);
-const rad = (deg) => (deg * Math.PI) / 180;
-const R = S.stroke / 2;
-const LINK = 38;
-const needleY = (t) => R * Math.cos(t) + Math.sqrt(LINK ** 2 - (R * Math.sin(t)) ** 2);
-const [nTop, nBottom] = [needleY(0), needleY(Math.PI)];
-const needle = phases.map((p) => [r3(p), r3((needleY(2 * Math.PI * p) - nBottom) / (nTop - nBottom))]);
-// The take-up lever's eye: a swing of ±14° that peaks 40° after the needle's top.
-const takeUp = (() => {
-  const k = Math.sin(rad(14));
-  const ph = rad(S.takeUpPhase);
-  const y = (t) => Math.sin(Math.asin(k * Math.sin(t + ph)) - Math.asin(k * Math.sin(ph)));
-  const ys = phases.map((p) => y(2 * Math.PI * p));
-  const [lo, hi] = [Math.min(...ys), Math.max(...ys)];
-  return phases.map((p, i) => [r3(p), r3((ys[i] - lo) / (hi - lo))]);
-})();
-// The feed dog's lift (the cam's opening over 200° of the turn) and its push (back while it's up).
-const half = rad(100);
-const openness = (t) => {
-  const a = Math.atan2(Math.sin(t), Math.cos(t));
-  return Math.abs(a) < half ? 0.5 + 0.5 * Math.cos((Math.PI * a) / half) : 0;
-};
-const dogUp = phases.map((p) => [r3(p), r3(openness(2 * Math.PI * p))]);
-const dogBack = phases.map((p) => [r3(p), r3((1 + Math.sin(2 * Math.PI * p)) / 2)]);
-const CATCH = S.catchDeg / 360;
-const CAST = Math.min(0.97, CATCH + 135 / 360);
-
-/** Stitch length for a setting of the regulator, in stitches to the inch. */
-const mm = (spi) => +(25.4 / spi).toFixed(spi > 20 ? 2 : 1);
+/** What stays solid through the film: everything the arm shaft moves, and the bobbin the loop goes round. The arm, the
+ *  bed, the plates and the covers are glass, so the needle, the hook and the feed dog can be seen working inside. */
+const MOVING = ['arm_shaft', 'balance_wheel', 'needle_link', 'needle_bar', 'needle', 'take_up_lever', 'upright_shaft', 'hook_drive_shaft', 'hook', 'bobbin_case', 'bobbin', 'feed_rod', 'feed_fork', 'feed_lift_shaft', 'feed_rock_shaft', 'feed_dog'];
+/** Slow enough to follow one stitch: the arm shaft turns once in about six seconds. */
+const RATE = 0.35;
+/** Every shot frames the whole machine on parts that stay put (the casting, the wheel, the spool), at one size: the
+ *  camera only goes round its head, where the stitch is made. */
+const WHOLE = ['bed', 'balance_wheel', 'spool', 'face_plate'];
+const FILL = 0.62;
+/** The hook's beak, going round with it, and the bobbin it takes the loop round: on through both of the hook's shots. */
+const HOOK_TAGS = [
+  { node: 'hook', text: 'beak', at: at('beak'), ride: true },
+  { node: 'bobbin', text: 'bobbin', at: at('bobbin') },
+];
 
 writeContent('sewing-machine', {
   order: 17,
@@ -133,157 +115,53 @@ writeContent('sewing-machine', {
     { node: 'feed_dog', axis: [0, 0, 1], pivot: pivot('feed_dog'), crank: 'arm_shaft', along: [0, 0, 1], throw: M?.feed.throw ?? 0.008, rod: M?.feed.rod ?? 1, phase: 90 },
   ],
   motionLabel: 'Turn the wheel',
-  how: [
+  // "How it works" as an animation: one stitch, slowed down. The needle goes down, the hook takes its loop round the
+  // bobbin, and the feed dog moves the cloth on.
+  film: [
     {
-      label: 'The idea',
-      title: 'Two threads, locked inside the cloth',
-      text: [
-        'The needle takes a loop of the top thread down through the cloth; under the plate the hook catches it and takes it round the bobbin; the take-up lever pulls it back up with the bobbin thread inside it; the feed dog moves the cloth on. Then again.',
-        `All four are timed by one shaft turning once per stitch. Follow the cursor: the hook meets the needle ${Math.round(S.catchDeg - 180)}° after the bottom of its stroke, when it has risen ${S.rise} mm and the thread has bulged into a loop beside it.`,
-      ],
-      angle: [-35, 22],
-      explode: 0.58,
-      rate: 0.25,
-      focus: ['needle_bar', 'needle', 'needle_link', 'take_up_lever', 'hook', 'bobbin_case', 'bobbin', 'feed_dog', 'arm_shaft'],
-      frame: ['needle_bar', 'needle', 'take_up_lever', 'hook', 'feed_dog'],
-      tags: [
-        { node: 'needle', text: 'needle: 1 stroke', at: at('needle') },
-        { node: 'hook', text: 'hook: 2 turns', at: at('hook') },
-        { node: 'take_up_lever', text: 'take-up', at: at('take_up_eye') },
-      ],
-      chart: {
-        type: 'timing',
-        title: 'One stitch, slowed down',
-        caption: 'Every part, through one turn of the arm shaft. The hook catches the loop just after the needle’s lowest point; the feed only moves the cloth while the needle is out of it.',
-        node: 'arm_shaft',
-        perTurn: 1,
-        bands: [[r3(CATCH), r3(CAST), 'loop round the bobbin']],
-        lanes: [
-          { name: 'Needle', points: needle },
-          { name: 'Take-up lever', points: takeUp },
-          { name: 'Feed dog up', points: dogUp },
-          { name: 'Feed dog back', points: dogBack },
-        ],
-      },
-    },
-    {
-      label: 'Power',
-      title: 'One turn of the wheel, one stitch',
-      text: [
-        'The motor on the back of the arm turns the balance wheel through a pair of gears hidden under its cover; the wheel is fixed to the arm shaft, so a turn of the wheel by hand does just the same. Everything else hangs off that shaft.',
-        'Hold the button and count: each turn of the shaft is one stitch. At full speed the motor runs it at hundreds of stitches a minute; here it turns once every two seconds.',
-      ],
-      angle: [125, 18],
-      explode: 0.45,
-      focus: ['motor', 'balance_wheel', 'arm_shaft'],
-      flow: [at('motor_end'), at('wheel_hub'), at('arm_shaft_right'), at('arm_shaft_mid'), at('crank')],
-      tags: [{ node: 'balance_wheel', text: '1 turn = 1 stitch', at: at('wheel_top') }],
-      try: 'run',
-      count: [{ node: 'arm_shaft', label: 'Stitches' }],
-    },
-    {
-      label: 'Needle',
-      title: 'A crank drives the needle; a lever feeds it thread',
-      text: [
-        'The crank on the arm shaft’s left end swings the link, and the link drives the needle bar through a 30 mm stroke. Beside it the take-up lever rocks: down while the needle and hook need thread, up to pull the stitch tight.',
-        'The top thread comes from the spool, between the tension discs, through the eye of the take-up lever and down to the needle. The needle’s eye goes below the cloth with a loop of it; the needle itself never lets go.',
-      ],
-      angle: [-22, 10],
-      explode: 0.45,
-      rate: 0.35,
-      focus: ['arm_shaft', 'needle_link', 'needle_bar', 'needle', 'take_up_lever'],
+      chapter: 'Needle',
+      caption: 'A crank on the arm shaft drives the needle down through the cloth and back up.',
+      duration: 6,
+      angle: [-12, 14],
+      fill: FILL,
+      rate: RATE,
+      focus: MOVING,
+      frame: WHOLE,
       flow: [at('arm_shaft_mid'), at('crank'), { node: 'needle_link', at: at('link'), ride: true }, { node: 'needle_bar', at: at('needle_bar'), ride: true }, { node: 'needle', at: at('needle_point'), ride: true }],
-      tags: [
-        { node: 'needle_bar', text: '30 mm stroke', at: at('needle_bar') },
-        { node: 'take_up_lever', text: 'take-up lever', at: at('take_up_eye') },
-      ],
+      tags: [{ node: 'needle_bar', text: 'needle bar', at: at('needle_bar') }],
     },
     {
-      label: 'To the hook',
-      title: 'Gears turn the hook twice for every stitch',
-      text: [
-        'At the top of the pillar a bevel gear on the arm shaft drives a gear half its size on the upright shaft. At the bottom a second pair turns the drive along the underside of the bed, and a third pair turns the hook on its vertical shaft.',
-        'Singer’s manual gives the hook two turns to each stroke of the needle bar. One turn catches a loop; on the other the beak passes the needle while it’s up and catches nothing. Count them.',
-      ],
-      angle: [-30, -18],
-      explode: 0.45,
-      focus: ['arm_shaft', 'upright_shaft', 'hook_drive_shaft', 'hook'],
-      flow: [at('arm_shaft_mid'), at('bevel_top'), at('upright'), at('bevel_bottom'), at('drive_mid'), at('hook_gears'), at('hook_axis')],
-      tags: [
-        { node: 'upright_shaft', text: '2 turns a stitch', at: at('upright') },
-        { node: 'hook', text: '2 turns a stitch', at: at('hook') },
-      ],
-      chart: {
-        type: 'ladder',
-        title: 'Turns, for one stitch',
-        caption: `The 2 : 1 is Singer’s; Singer published no tooth counts, so it is drawn here as ${S.teeth.upper[0]} teeth driving ${S.teeth.upper[1]} at the top, and 1 : 1 below.`,
-        unit: 'Turns, for one turn of the arm shaft',
-        ticks: [0, 1, 2],
-        rungs: [
-          { name: 'Arm shaft', value: 1, note: '1 turn', node: 'arm_shaft' },
-          { name: 'Upright shaft', value: Math.abs(T.upright), note: '2 turns', step: '×2', node: 'upright_shaft' },
-          { name: 'Hook driving shaft', value: Math.abs(T.drive), note: '2 turns', step: '×1', node: 'hook_drive_shaft' },
-          { name: 'Hook', value: Math.abs(T.hook), note: '2 turns', step: '×1', node: 'hook' },
-        ],
-      },
-      try: 'run',
-      count: [{ node: 'arm_shaft', label: 'Stitches' }, { node: 'hook', label: 'Hook turns' }],
+      chapter: 'Hook',
+      caption: 'Under the plate the hook turns twice a stitch, and its beak catches the needle’s loop.',
+      duration: 6,
+      angle: [-32, 24],
+      fill: FILL,
+      rate: RATE,
+      focus: MOVING,
+      frame: WHOLE,
+      tags: HOOK_TAGS,
     },
     {
-      label: 'The stitch',
-      title: 'No knot: the hook takes the loop round the bobbin',
-      text: [
-        'It looks as if the needle must carry the thread through and back, or tie a knot underneath. It does neither. As the needle starts back up, the thread beside it bulges into a loop; the hook’s beak catches the loop and carries it right round the bobbin case, the take-up lever pulls it up, and the bobbin thread is left lying inside it.',
-        'The two threads interlock in the middle of the cloth, and neither has a free end: the stitch is a lock, not a knot. That’s why the case sits still in the hook, held by a finger: the loop has to pass all the way round it.',
-      ],
-      angle: [-40, 40],
-      explode: 0.58,
-      rate: 0.12,
-      fill: 0.6,
-      focus: ['hook', 'bobbin_case', 'bobbin', 'needle', 'needle_bar', 'feed_dog'],
-      frame: ['hook', 'bobbin_case', 'needle'],
-      tags: [
-        { node: 'hook', text: 'beak', at: at('beak'), ride: true },
-        { node: 'bobbin', text: 'bobbin thread', at: at('bobbin') },
-      ],
-      chart: {
-        type: 'timing',
-        title: 'The loop’s trip round the bobbin',
-        caption: 'The beak meets the needle just after its lowest point and has the loop round the case before the take-up lever pulls it up.',
-        node: 'arm_shaft',
-        perTurn: 1,
-        bands: [[r3(CATCH), r3(CAST), 'loop round the bobbin']],
-        lanes: [
-          { name: 'Needle', points: needle, notes: [[r3(CATCH), 'caught']] },
-          { name: 'Take-up lever', points: takeUp },
-        ],
-      },
+      chapter: 'Hook',
+      caption: 'It carries the loop right round the bobbin, so the two threads lock inside the cloth.',
+      duration: 6,
+      angle: [-52, 30],
+      fill: FILL,
+      rate: RATE,
+      focus: MOVING,
+      frame: WHOLE,
+      tags: HOOK_TAGS,
     },
     {
-      label: 'Feed',
-      title: 'Up, back, down, forward',
-      text: [
-        'An eccentric on the arm shaft rocks the lifting shaft under the bed, which raises the feed dog’s teeth through the plate; the feed cam and the forked connection rock the other shaft, which pushes the dog back. Up, back, down, forward: it grips the cloth from below and walks it on.',
-        `The stitch regulator sets how far the dog travels, from ${S.travel} mm (6 stitches to the inch, as on this model) down to 0.85 mm. The cloth only moves while the needle is out of it.`,
-      ],
-      angle: [-24, -12],
-      explode: 0.45,
-      rate: 0.35,
-      focus: ['arm_shaft', 'feed_rod', 'feed_fork', 'feed_lift_shaft', 'feed_rock_shaft', 'feed_dog', 'stitch_lever'],
-      flow: [at('feed_cam'), at('feed_fork'), at('rock_shaft'), at('rock_arm'), { node: 'feed_dog', at: at('feed_teeth'), ride: true }],
-      tags: [
-        { node: 'feed_dog', text: `${S.travel} mm a stitch`, at: at('feed_dog') },
-        { node: 'feed_lift_shaft', text: 'lifts', at: at('lift_shaft') },
-        { node: 'feed_rock_shaft', text: 'pushes', at: at('rock_shaft') },
-      ],
-      chart: {
-        type: 'bars',
-        title: 'Stitch length',
-        caption: 'Millimetres per stitch at the regulator’s settings. This model runs at the longest, 6 to the inch.',
-        unit: 'mm a stitch, by stitches to the inch',
-        picked: 0,
-        bars: [6, 8, 10, 12, 16, 20, 30].map((spi) => ({ label: String(spi), value: mm(spi) })),
-      },
+      chapter: 'Feed',
+      caption: 'Then the feed dog rises through the plate, pushes the cloth back one stitch and drops.',
+      duration: 6,
+      angle: [-72, 26],
+      fill: FILL,
+      rate: RATE,
+      focus: MOVING,
+      frame: WHOLE,
+      tags: [{ node: 'feed_dog', text: 'feed dog', at: at('feed_teeth') }],
     },
   ],
   credit: builtInCode(
