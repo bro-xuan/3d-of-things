@@ -1,6 +1,7 @@
 import { Box3, Object3D, Quaternion, Vector3, type Mesh } from 'three';
 import type { Motion, Part } from '../types';
 import { amplitudeFor, BEATS_PER_SECOND, clamp01, easeInOutCubic, FULL_RESERVE, palletLean, REST_RESERVE, trainBeats } from './clockwork';
+import { linkPose, rockerAngle, turnAbout, type V3 } from './fourbar';
 
 export { clamp01, easeInOutCubic };
 
@@ -304,6 +305,8 @@ export class Mechanism {
   /** Pistons and their rods on a crank, and valves on a camshaft's cams. */
   private readonly sliders: { rig: NodeRig; crank: NodeRig; along: Vector3; r: number; l: number; phase: number; rocks: boolean }[] = [];
   private readonly cams: { rig: NodeRig; cam: NodeRig; along: Vector3; lift: number; phase: number; half: number; rest: number }[] = [];
+  /** Treadles rocked by a crank through a link, and the links (src/viewer/fourbar.ts). Points in the rocker's parent's space. */
+  private readonly rockers: { rig: NodeRig; crank: NodeRig; centre: V3; spin: V3; pin: V3; pivot: V3; axis: V3; at: V3; link: number; angle: number; links: NodeRig[] }[] = [];
   /** Slow motion: the clock runs at `rate` of real time and falls behind by `lag` seconds, then catches up. */
   private rate = 1;
   private targetRate = 1;
@@ -325,6 +328,7 @@ export class Mechanism {
   private phase = 0;
 
   constructor(motions: Motion[], resolve: Resolve, rigs: Rigs) {
+    const linked: { motion: Motion; rig: NodeRig }[] = [];
     for (const motion of motions) {
       // Parts on a control (a camera's focus, its shutter) are moved by the Linkage instead.
       if (motion.control) continue;
@@ -347,6 +351,10 @@ export class Mechanism {
       const rig = rigs.get(node);
       rig.axis.copy(rig.vectorToParent(axis).normalize());
       rig.pivot.copy(rig.pointToParent(pivot));
+      if (motion.rocker || motion.coupler) {
+        linked.push({ motion, rig });
+        continue;
+      }
       const driverName = motion.crank ?? motion.cam;
       const driver = driverName ? resolve(driverName) : undefined;
       if (driver) {
@@ -367,6 +375,28 @@ export class Mechanism {
       else if (motion.train !== undefined) this.trains.push({ rig, train: motion.train, inside });
       else if (motion.swing) this.swings.push({ rig, swing: motion.swing, amplitude, inside });
       else this.spins.push({ rig, speed: motion.speed ?? 0.5, factor: 1 });
+    }
+    this.linkUp(linked, resolve, rigs);
+  }
+
+  /** Rockers on their cranks, and their links: the crank's axis and pin taken into the rocker's parent's space. */
+  private linkUp(linked: { motion: Motion; rig: NodeRig }[], resolve: Resolve, rigs: Rigs): void {
+    const v3 = (v: Vector3): V3 => [v.x, v.y, v.z];
+    for (const { motion, rig } of linked) {
+      const crankNode = motion.rocker ? resolve(motion.rocker) : undefined;
+      if (!crankNode || !motion.pin || !motion.at) continue;
+      const crank = rigs.get(crankNode);
+      const toRocker = (local: Vector3) => rig.node.parent!.worldToLocal(crankNode.parent!.localToWorld(local.clone()));
+      const centre = toRocker(crank.pivot);
+      const spin = toRocker(crank.pivot.clone().add(crank.axis)).sub(centre).normalize();
+      const pin = rig.pointToParent(new Vector3(...motion.pin));
+      const at = rig.pointToParent(new Vector3(...motion.at));
+      this.rockers.push({ rig, crank, centre: v3(centre), spin: v3(spin), pin: v3(pin), pivot: v3(rig.pivot), axis: v3(rig.axis), at: v3(at), link: pin.distanceTo(at), angle: 0, links: [] });
+    }
+    for (const { motion, rig } of linked) {
+      if (!motion.coupler) continue;
+      const rocker = this.rockers.find((r) => r.rig.node === resolve(motion.coupler!));
+      if (rocker && rig.node.parent === rocker.rig.node.parent) rocker.links.push(rig);
     }
   }
 
@@ -454,6 +484,20 @@ export class Mechanism {
     }
     // From where the valve was modelled: as open as its cam had it with the camshaft at rest.
     for (const c of this.cams) c.rig.drive.copy(c.along).multiplyScalar(c.lift * (openness(c.cam.angle + c.phase, c.half) - c.rest));
+    // A treadle where its crank has it, and its footman between the two pins.
+    for (const k of this.rockers) {
+      const pin = turnAbout(k.pin, k.centre, k.spin, k.crank.angle);
+      k.angle = rockerAngle(pin, k.pivot, k.axis, k.at, k.link, k.angle);
+      k.rig.angle = k.angle;
+      const foot = turnAbout(k.at, k.pivot, k.axis, k.angle);
+      for (const link of k.links) {
+        const pose = linkPose(k.at, k.pin, foot, pin);
+        link.pivot.set(...k.at);
+        link.axis.set(...pose.axis);
+        link.angle = pose.angle;
+        link.drive.set(...pose.slide);
+      }
+    }
   }
 
   /** Advances by dt seconds; returns whether anything moved. `visible` says whether the inside can be seen. */

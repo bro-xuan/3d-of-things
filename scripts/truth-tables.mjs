@@ -37,6 +37,8 @@ function movesBy(node) {
   const m = motions.find((x) => x.node === node);
   if (m?.crank) return `crank on ${name(m.crank)}`;
   if (m?.cam) return `cam on ${name(m.cam)}`;
+  if (m?.rocker) return `rocked by the crank on ${name(m.rocker)}`;
+  if (m?.coupler) return `link from ${name(m.coupler)} to its crank`;
   if (m?.control) return `control: ${m.control}`;
   if (m?.clock) return `clock: ${m.clock}`;
   if (m?.train !== undefined) return `clock train, ${m.train} turns a minute`;

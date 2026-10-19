@@ -15,6 +15,7 @@ How parts move in the viewer, what already exists, and how to add a kind of mech
 | `wind`, `wind` + `coil`, `pawl` | The keyless works, a mainspring, a click | pocket watch |
 | `crank` (+ `along`, `throw`, `rod`, `phase`, `rocks`) | A piston and its rod on a crank | family car, bicycle pump |
 | `cam` (+ `along`, `lift`, `phase`, `duration`) | A valve on a camshaft | family car, bicycle pump |
+| `rocker` (+ `pin`, `at`) and `coupler` | A treadle rocked by a crank through a link, and the link: a four-bar solved exactly each frame (src/viewer/fourbar.ts), so the link's ends stay on both pins | spinning wheel |
 
 `inside: true` only animates when the inside can be seen; it works for `train` but is ignored for plain spins.
 

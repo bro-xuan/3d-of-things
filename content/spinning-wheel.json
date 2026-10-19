@@ -1,0 +1,893 @@
+{
+  "order": 21,
+  "title": "Spinning Wheel",
+  "hook": "The yarn only winds on because the bobbin turns a little faster than the flyer that twists it.",
+  "category": "gears",
+  "summary": [
+    "Fibre becomes yarn by twist: drawn out thin and twisted, its short fibres grip one another. A hand spindle twists in bursts and then stops while the spinner winds the yarn on. The flyer wheel does both at once and never stops, and from the sixteenth century it spread across Europe.",
+    "On this Saxony wheel the foot rocks a treadle; a wooden rod, the footman, joins it to a crank on the wheel’s axle, and the 60.6 cm wheel keeps itself turning. One long band, doubled into two loops, runs from its rim to two whorls: one on the flyer, the U-shaped arm that puts in the twist, and one on the bobbin, which turns loose on the flyer’s shaft.",
+    "The yarn comes in at the orifice, out through a hole in the side of the shaft, along the flyer’s arm over a hook and onto the bobbin. Each turn of the flyer puts one twist in it. Where the band runs, the bobbin’s whorl is 45 mm across and the flyer’s 48.8 mm, so for each turn of the wheel the flyer turns 12.2 times and the bobbin 13.3: the difference winds the yarn on. Those sizes are measured off this model; the spinner’s hands set the pace."
+  ],
+  "model": "models/spinning-wheel.glb",
+  "viewAngle": [
+    -35,
+    16
+  ],
+  "explodeAngle": [
+    -50,
+    22
+  ],
+  "explodeDuration": 2800,
+  "facts": [
+    {
+      "label": "Type",
+      "value": "Saxony flyer wheel, double drive"
+    },
+    {
+      "label": "Wheel",
+      "value": "60.6 cm, 12 spokes"
+    },
+    {
+      "label": "Ratios",
+      "value": "Flyer 12.2 : 1, bobbin 13.3 : 1"
+    },
+    {
+      "label": "Flyer speed",
+      "value": "About 730 rpm at 60 treadles a minute"
+    },
+    {
+      "label": "Crank",
+      "value": "64 mm throw, footman 57.6 cm"
+    },
+    {
+      "label": "Size",
+      "value": "49 × 97 × 102 cm, without the fibre"
+    }
+  ],
+  "parts": [
+    {
+      "node": "treadle",
+      "label": "Treadle",
+      "group": "Foot",
+      "about": "A triangular frame on the floor, hinged on two pins along its inner bar. The foot rocks it; its far corner carries the footman.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "footman",
+      "label": "Footman",
+      "group": "Foot",
+      "about": "A wooden rod 57.6 cm long from the treadle’s corner up to the crank. It only pulls: the foot pushes the crank down past the bottom and the wheel carries it over the top.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "wheel",
+      "label": "Drive wheel",
+      "group": "Wheel",
+      "about": "Twelve spokes and a rim 60.6 cm across, grooved for the band. Its weight keeps it turning between pushes of the foot, carrying the crank over the points where the footman can’t pull it.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "crank",
+      "label": "Crank",
+      "group": "Wheel",
+      "about": "An iron crank on the axle’s end, 64 mm from the axle to its pin. The footman hangs from the pin.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "uprights",
+      "label": "Uprights",
+      "group": "Wheel",
+      "about": "Four turned posts, two each side, wedged through the bench; the axle turns in bearings at their tops.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "drive_band",
+      "label": "Drive band",
+      "group": "Band",
+      "about": "One cotton cord, about 1.6 mm thick, going twice round the wheel’s rim: one loop on the flyer’s whorl, one on the bobbin’s. It is tied on, and the tension screw tightens both loops at once.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "flyer",
+      "label": "Flyer",
+      "group": "Flyer and bobbin",
+      "about": "A U of wood on a hollow shaft. The yarn enters at the orifice, leaves by a hole in the shaft’s side and runs along an arm over one of its eleven hooks. Every turn of the flyer puts one twist in the yarn.",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.0769,
+      "window": [
+        0.4,
+        0.75
+      ],
+      "then": {
+        "direction": [
+          -1,
+          0,
+          0
+        ],
+        "distance": 0.423
+      }
+    },
+    {
+      "node": "flyer_whorl",
+      "label": "Flyer whorl",
+      "group": "Flyer and bobbin",
+      "about": "A grooved pulley screwed onto the shaft’s back end. The band runs in its 48.8 mm groove; a smaller groove beside it would turn the flyer faster.",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.1538,
+      "window": [
+        0.75,
+        0.88
+      ]
+    },
+    {
+      "node": "bobbin",
+      "label": "Bobbin",
+      "group": "Flyer and bobbin",
+      "about": "It turns loose on the flyer’s shaft, driven by its own whorl, 45 mm in the groove: smaller than the flyer’s, so it turns faster and winds the yarn on.",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.1794,
+      "window": [
+        0.8,
+        0.95
+      ]
+    },
+    {
+      "node": "yarn",
+      "label": "Yarn",
+      "group": "Flyer and bobbin",
+      "about": "A singles yarn of about 4 twists to the inch, from the drafting zone through the orifice and over a hook onto the bobbin.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "fibre",
+      "label": "Fibre",
+      "group": "Flyer and bobbin",
+      "about": "Prepared wool, held in the spinner’s hands (not shown) and drawn out thin as the twist runs up into it.",
+      "direction": [
+        0,
+        0.3,
+        1
+      ],
+      "distance": 0.282,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "leader",
+      "label": "Yarn at the orifice",
+      "group": "Flyer and bobbin",
+      "about": "The yarn between the orifice and the spinner’s hands. It turns with the flyer, and each turn puts in one twist, which runs up into the fibre being drawn out.",
+      "direction": [
+        0,
+        0.3,
+        1
+      ],
+      "distance": 0.282,
+      "window": [
+        0,
+        0.2
+      ]
+    },
+    {
+      "node": "front_maiden",
+      "label": "Front maiden",
+      "group": "Mounting",
+      "about": "The post holding the orifice end in a leather bearing. It turns in the mother-of-all to let the flyer out.",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "distance": 0.0577,
+      "window": [
+        0.2,
+        0.4
+      ],
+      "then": {
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "distance": 0.3589
+      }
+    },
+    {
+      "node": "back_maiden",
+      "label": "Back maiden",
+      "group": "Mounting",
+      "about": "Holds the shaft’s back end in a leather bearing, just behind the whorl.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "mother_of_all",
+      "label": "Mother-of-all",
+      "group": "Mounting",
+      "about": "The bar the maidens stand in, on a post through a slot in the bench. Sliding it away from the wheel tightens the band.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "tension_screw",
+      "label": "Tension screw",
+      "group": "Mounting",
+      "about": "A wooden screw through the end of the bench into the mother-of-all’s post. Turning the knob moves the flyer away from the wheel or towards it.",
+      "direction": [
+        0.0262,
+        0.3074,
+        -0.9512
+      ],
+      "distance": 0.1538,
+      "window": [
+        0,
+        0.25
+      ]
+    },
+    {
+      "node": "table",
+      "label": "Bench",
+      "group": "Frame",
+      "about": "The slanting bench that carries everything: the uprights at its low end, the mother-of-all at its high end.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    },
+    {
+      "node": "legs",
+      "label": "Legs",
+      "group": "Frame",
+      "about": "Three turned legs, the front one long, and a rail along the floor that the treadle hinges against.",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "distance": 0
+    }
+  ],
+  "annotations": [
+    {
+      "title": "Treadle",
+      "text": "The foot rocks the treadle on its hinge. Its far corner, 31.2 cm from the hinge, rises and falls 12.7 cm with the crank.",
+      "node": "treadle",
+      "position": [
+        0.004,
+        0.0812,
+        0.1817
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          3.751,
+          2.9491,
+          -1.5198
+        ],
+        "target": [
+          0.204,
+          0.0812,
+          0.5281
+        ]
+      }
+    },
+    {
+      "title": "Footman and crank",
+      "text": "The footman turns the treadle’s rocking into the crank’s circle, as a connecting rod does in an engine. The crank throws 64 mm, so the wheel turns once for each push.",
+      "node": "footman",
+      "position": [
+        0.2248,
+        0.4139,
+        0.3276
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          5.165,
+          1.2821,
+          0.2969
+        ],
+        "target": [
+          0.2597,
+          0.4139,
+          0.7261
+        ]
+      }
+    },
+    {
+      "title": "Flywheel",
+      "text": "The foot can only pull the crank down. The heavy rim carries it on round, over the top and bottom where the footman has no leverage, so the flyer turns steadily.",
+      "node": "wheel",
+      "position": [
+        0.0579,
+        0.8518,
+        0.6557
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          5.7936,
+          1.8937,
+          2.1545
+        ],
+        "target": [
+          -0.0255,
+          0.8518,
+          1.1284
+        ]
+      }
+    },
+    {
+      "title": "Double drive",
+      "text": "One band, doubled: a loop to each whorl. The rim’s 59.7 cm against whorls of 48.8 and 45 mm gives 12.2 turns of the flyer and 13.3 of the bobbin per turn of the wheel.",
+      "node": "drive_band",
+      "position": [
+        0.0615,
+        1.1176,
+        0.4182
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -4.6253,
+          2.4117,
+          1.6508
+        ],
+        "target": [
+          0.131,
+          1.1176,
+          0.8121
+        ]
+      }
+    },
+    {
+      "title": "Twist",
+      "text": "The flyer turns about 730 times a minute, and the yarn between the orifice and the spinner’s hands turns with it: each turn is one twist, which runs up into the drawn-out fibre and locks it into yarn.",
+      "node": "flyer",
+      "position": [
+        -0.1587,
+        0.8723,
+        -0.3218
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -2.1468,
+          1.804,
+          -3.1893
+        ],
+        "target": [
+          -0.4081,
+          0.8723,
+          -0.1778
+        ]
+      }
+    },
+    {
+      "title": "Not the wheel, the flyer",
+      "text": "The big wheel twists nothing: it only drives. The flyer twists the yarn, and the yarn winds on only because the bobbin turns faster than the flyer. Turning together, they’d twist the yarn but never take it in.",
+      "node": "bobbin",
+      "position": [
+        -0.0002,
+        0.9261,
+        -0.3228
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -1.9777,
+          2.5261,
+          -2.2812
+        ],
+        "target": [
+          -0.1963,
+          0.9261,
+          -0.1582
+        ]
+      }
+    },
+    {
+      "title": "Winding on",
+      "text": "Free to run, the bobbin’s lead would wind on about 20.2 cm of yarn per turn of the wheel. The spinner lets in about 7.8 cm, about 4 twists to the inch, holding the yarn back so the band slips on the bobbin’s whorl.",
+      "node": "bobbin",
+      "position": [
+        0.0644,
+        0.9219,
+        -0.3232
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          0.7977,
+          2.5219,
+          -3.0079
+        ],
+        "target": [
+          0.3165,
+          0.9219,
+          -0.2787
+        ]
+      }
+    },
+    {
+      "title": "Hooks",
+      "text": "The yarn winds on wherever its hook is. The spinner moves it from hook to hook along the arm to fill the bobbin evenly.",
+      "node": "flyer",
+      "position": [
+        0.0028,
+        0.8845,
+        -0.3884
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -1.7475,
+          2.8644,
+          -1.3405
+        ],
+        "target": [
+          -0.1257,
+          0.8845,
+          -0.2049
+        ]
+      }
+    },
+    {
+      "title": "Tension",
+      "text": "Turning the knob screws the mother-of-all away from the wheel, stretching both loops of the band. Tighter, the bobbin slips less and pulls the yarn in harder.",
+      "node": "tension_screw",
+      "position": [
+        0.0927,
+        0.6931,
+        -0.6557
+      ],
+      "explode": 0,
+      "camera": {
+        "position": [
+          -2.0638,
+          2.0612,
+          -3.7509
+        ],
+        "target": [
+          -0.1844,
+          0.6931,
+          -0.4957
+        ]
+      }
+    }
+  ],
+  "motion": [
+    {
+      "node": "wheel",
+      "axis": [
+        0.998,
+        0.0586,
+        0.0229
+      ],
+      "pivot": [
+        0.0579,
+        0.8518,
+        0.2733
+      ],
+      "speed": 1
+    },
+    {
+      "node": "flyer",
+      "axis": [
+        0.9967,
+        0.0808,
+        -0.0062
+      ],
+      "pivot": [
+        -0.1561,
+        0.8726,
+        -0.3218
+      ],
+      "speed": 12.234
+    },
+    {
+      "node": "bobbin",
+      "axis": [
+        0.9967,
+        0.0808,
+        -0.0062
+      ],
+      "pivot": [
+        -0.1561,
+        0.8726,
+        -0.3218
+      ],
+      "speed": 1.04
+    },
+    {
+      "node": "treadle",
+      "axis": [
+        -0.383,
+        0.0222,
+        0.9235
+      ],
+      "pivot": [
+        0.0976,
+        0.0315,
+        -0.2666
+      ],
+      "rocker": "wheel",
+      "pin": [
+        0.1866,
+        0.7777,
+        0.2779
+      ],
+      "at": [
+        0.263,
+        0.0501,
+        0.3773
+      ]
+    },
+    {
+      "node": "footman",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "coupler": "treadle"
+    }
+  ],
+  "motionLabel": "Treadle",
+  "film": [
+    {
+      "chapter": "Treadle",
+      "caption": "Each push of the foot rocks the treadle, and the footman pulls the crank round.",
+      "duration": 5,
+      "angle": [
+        -40,
+        20
+      ],
+      "fill": 0.7,
+      "rate": 0.6,
+      "focus": [
+        "treadle",
+        "footman",
+        "wheel",
+        "crank",
+        "drive_band",
+        "flyer",
+        "flyer_whorl",
+        "bobbin",
+        "yarn",
+        "leader",
+        "fibre"
+      ],
+      "frame": [
+        "wheel",
+        "treadle",
+        "flyer",
+        "fibre",
+        "legs"
+      ],
+      "flow": [
+        [
+          0.004,
+          0.0812,
+          0.1817
+        ],
+        {
+          "node": "treadle",
+          "at": [
+            0.263,
+            0.0501,
+            0.3773
+          ]
+        },
+        {
+          "node": "footman",
+          "at": [
+            0.2248,
+            0.4139,
+            0.3276
+          ]
+        },
+        {
+          "node": "wheel",
+          "at": [
+            0.1866,
+            0.7777,
+            0.2779
+          ],
+          "ride": true
+        }
+      ],
+      "tags": [
+        {
+          "node": "treadle",
+          "text": "treadle",
+          "at": [
+            0.004,
+            0.0812,
+            0.1817
+          ]
+        },
+        {
+          "node": "footman",
+          "text": "footman",
+          "at": [
+            0.2248,
+            0.4139,
+            0.3276
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Band",
+      "caption": "The heavy wheel keeps turning, and one doubled band takes it to the flyer and the bobbin.",
+      "duration": 5,
+      "angle": [
+        -72,
+        14
+      ],
+      "fill": 0.7,
+      "rate": 0.6,
+      "focus": [
+        "treadle",
+        "footman",
+        "wheel",
+        "crank",
+        "drive_band",
+        "flyer",
+        "flyer_whorl",
+        "bobbin",
+        "yarn",
+        "leader",
+        "fibre"
+      ],
+      "frame": [
+        "wheel",
+        "treadle",
+        "flyer",
+        "fibre",
+        "legs"
+      ],
+      "flow": [
+        [
+          0.0491,
+          0.8518,
+          0.6556
+        ],
+        [
+          0.0615,
+          1.1176,
+          0.4182
+        ],
+        [
+          0.0727,
+          1.0307,
+          0.1067
+        ],
+        [
+          0.0839,
+          0.9437,
+          -0.2049
+        ],
+        [
+          0.0847,
+          0.926,
+          -0.3233
+        ]
+      ],
+      "tags": [
+        {
+          "node": "drive_band",
+          "text": "band",
+          "at": [
+            0.0727,
+            1.0307,
+            0.1067
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Twist",
+      "caption": "The flyer turns 12.2 times a turn of the wheel, and each turn twists the yarn once.",
+      "duration": 5,
+      "angle": [
+        -102,
+        16
+      ],
+      "fill": 0.7,
+      "rate": 0.3,
+      "focus": [
+        "treadle",
+        "footman",
+        "wheel",
+        "crank",
+        "drive_band",
+        "flyer",
+        "flyer_whorl",
+        "bobbin",
+        "yarn",
+        "leader",
+        "fibre"
+      ],
+      "frame": [
+        "wheel",
+        "treadle",
+        "flyer",
+        "fibre",
+        "legs"
+      ],
+      "flow": [
+        [
+          -0.3829,
+          0.8542,
+          -0.3204
+        ],
+        [
+          -0.3248,
+          0.8589,
+          -0.3208
+        ],
+        [
+          -0.2299,
+          0.8666,
+          -0.3214
+        ],
+        [
+          -0.1587,
+          0.8723,
+          -0.3218
+        ]
+      ],
+      "carries": "light",
+      "tags": [
+        {
+          "node": "flyer",
+          "text": "flyer",
+          "at": [
+            -0.1393,
+            0.8868,
+            -0.3219
+          ]
+        },
+        {
+          "node": "fibre",
+          "text": "fibre",
+          "at": [
+            -0.3829,
+            0.8542,
+            -0.3204
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": "Wind on",
+      "caption": "Slowed down: the bobbin’s smaller whorl turns it faster than the flyer, so the yarn winds on.",
+      "duration": 6,
+      "angle": [
+        -128,
+        24
+      ],
+      "fill": 0.7,
+      "rate": 0.04,
+      "focus": [
+        "treadle",
+        "footman",
+        "wheel",
+        "crank",
+        "drive_band",
+        "flyer",
+        "flyer_whorl",
+        "bobbin",
+        "yarn",
+        "leader",
+        "fibre"
+      ],
+      "frame": [
+        "wheel",
+        "treadle",
+        "flyer",
+        "fibre",
+        "legs"
+      ],
+      "tags": [
+        {
+          "node": "flyer",
+          "text": "flyer",
+          "at": [
+            0.0453,
+            0.8889,
+            -0.2549
+          ],
+          "ride": true
+        },
+        {
+          "node": "bobbin",
+          "text": "bobbin",
+          "at": [
+            -0.0468,
+            0.9228,
+            -0.3225
+          ],
+          "ride": true
+        }
+      ]
+    }
+  ],
+  "credit": {
+    "title": "Spinning Wheel 01",
+    "author": "Sofia Pahaoja",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "Poly Haven",
+    "sourceUrl": "https://polyhaven.com/a/spinning_wheel_01",
+    "extra": {
+      "label": "Built for this site",
+      "text": "The model’s one mesh sorted into its parts and set turning on its own axles; the yarn, the fibre being drafted and the tension screw’s thread. The drive ratios come from the band’s grooves as modelled; the yarn is drawn at about 4 twists to the inch, and its twist shows as the flyer turns it."
+    }
+  },
+  "build": {
+    "augment": "objects/spinning-wheel/augment.mjs",
+    "hints": "objects/spinning-wheel/hints.json"
+  }
+}

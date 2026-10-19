@@ -167,6 +167,9 @@ function checkThing(slug, thing, model, orders) {
     if (m.pivot) onModel(`${where} pivot`, m.pivot, 0.3);
     if (m.crank) node(`${where} crank`, m.crank);
     if (m.cam) node(`${where} cam`, m.cam);
+    if (m.rocker) node(`${where} rocker`, m.rocker);
+    if (m.coupler) node(`${where} coupler`, m.coupler);
+    for (const key of ['pin', 'at']) if (m[key]) onModel(`${where} ${key}`, m[key], 0.3);
   });
 
   if (!thing.film?.length) warn('film', 'no "How it works" film');

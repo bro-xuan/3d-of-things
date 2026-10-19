@@ -112,6 +112,15 @@ export interface Motion {
   rocks?: boolean;
   lift?: number;
   duration?: number;
+  /** A rocker worked by a crank through a link (a spinning wheel's treadle, a treadle lathe's): instead of turning by
+   *  itself it rocks about `axis` through `pivot`, so that its point `at` stays the link's length from the point `pin`
+   *  on the crank on the node named here (one that spins); both points as they are at rest. src/viewer/fourbar.ts. */
+  rocker?: string;
+  /** The link between a crank and the rocker named here (a footman): it hangs from the rocker's `at` and follows the
+   *  crank's `pin`, as a rigid rod. Give it the same parent as the rocker. */
+  coupler?: string;
+  pin?: Vec3;
+  at?: Vec3;
 }
 
 export interface Fact {
