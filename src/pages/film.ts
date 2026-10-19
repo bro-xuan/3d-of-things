@@ -86,6 +86,8 @@ const DRIFT = 12;
 /** Seconds the camera takes to fly to the film's first view, and to glide back to its path after the visitor has moved it. */
 const INTRO = 1.1;
 const REJOIN = 0.9;
+/** Seconds of film a change of spinning speed takes (a drum going from wash to spin). */
+const SPIN_UP = 1.5;
 /** Speeds to play at, in turn. */
 const SPEEDS = [1, 0.5, 0.25];
 /** Seconds of the model's own time run at once per step when seeking. */
@@ -258,6 +260,9 @@ export class Film {
   private rejoin: { from: CameraPose; t: number } | null = null;
   /** What the model was last given, so a shot that keeps the same focus, path or tags doesn't make them flash. */
   private shown = { focus: '', flow: '', tags: '' };
+  /** Spinning parts' speeds, by node (1 is a part's own speed), and the change under way between two shots' `spin`. */
+  private spinning: Record<string, number> = {};
+  private spinChange: { from: Record<string, number>; to: Record<string, number>; t: number } | null = null;
   private readonly bar: HTMLElement;
   private readonly caption: HTMLElement;
   private readonly track: HTMLElement;
@@ -369,6 +374,8 @@ export class Film {
     this.following = false;
     this.rejoin = null;
     this.shown = { focus: '', flow: '', tags: '' };
+    this.spinning = {};
+    this.spinChange = null;
     this.setPlaying(false);
     this.stopFrames?.();
     this.stopFrames = null;
@@ -515,6 +522,12 @@ export class Film {
     this.time = next;
     const index = this.shotAt(next);
     if (index !== this.index) this.showShot(index);
+    if (this.spinChange) {
+      const change = this.spinChange;
+      change.t = Math.min(1, change.t + (dt * SPEEDS[this.speedIndex]) / SPIN_UP);
+      this.setSpinning(Object.fromEntries(Object.entries(change.to).map(([node, to]) => [node, change.from[node] + (to - change.from[node]) * ease(change.t)])));
+      if (change.t >= 1) this.spinChange = null;
+    }
     if (this.following && this.viewer) {
       let pose = along(this.keys, next);
       if (this.rejoin) {
@@ -589,8 +602,7 @@ export class Film {
       this.shown = { focus, flow, tags };
       viewer.setRate(shot.rate ?? 1);
       if (viewer.canRun) {
-        viewer.setSpinFactor(null);
-        for (const [node, factor] of Object.entries(shot.spin ?? {})) viewer.setSpinFactor([node], factor);
+        this.spinTo(shot.spin ?? {}, instant);
         viewer.setRunning(shot.run !== false);
       }
       viewer.showStep(shot, { instant, camera: false });
@@ -611,6 +623,21 @@ export class Film {
     });
     if (changed) this.root.querySelector('.film__line[aria-current]')?.scrollIntoView({ block: 'nearest', behavior: instant ? 'auto' : 'smooth' });
     this.showChart(shot);
+  }
+
+  /** Spinning parts go to a shot's speeds: at once when seeking, or eased over SPIN_UP as the film plays on. */
+  private spinTo(spin: Record<string, number>, instant: boolean): void {
+    const nodes = [...new Set([...Object.keys(this.spinning), ...Object.keys(spin)])];
+    const from = Object.fromEntries(nodes.map((node) => [node, this.spinning[node] ?? 1]));
+    const to = Object.fromEntries(nodes.map((node) => [node, spin[node] ?? 1]));
+    this.spinChange = null;
+    if (instant || prefersReducedMotion()) this.setSpinning(to);
+    else if (nodes.some((node) => Math.abs(from[node] - to[node]) > 1e-6)) this.spinChange = { from, to, t: 0 };
+  }
+
+  private setSpinning(factors: Record<string, number>): void {
+    this.spinning = factors;
+    for (const [node, factor] of Object.entries(factors)) this.viewer?.setSpinFactor([node], factor);
   }
 
   /** The shot's chart, kept as it is while the next shot wants the same one. */
