@@ -18,6 +18,7 @@ import {
   Spherical,
   Vector2,
   Vector3,
+  Vector4,
   WebGLRenderTarget,
   WebGLRenderer,
   type Material,
@@ -110,6 +111,10 @@ interface Pose {
   position: Vector3;
   target: Vector3;
 }
+
+/** Where `Viewer.still` looks from: square on to a face (right is the side seen from +x, as the drawings' side view),
+ *  or a camera at an azimuth and elevation in degrees (as `viewAngle`) with a vertical field of view. */
+export type StillView = 'front' | 'back' | 'left' | 'right' | 'top' | { azimuth: number; elevation: number; fov: number };
 
 interface Tween {
   kind: string;
@@ -1512,6 +1517,81 @@ export class Viewer {
     if (explode) this.arrange(explode);
     this.lookChanged();
     return Promise.all(canvases.map((canvas) => new Promise<string | null>((resolve) => canvas.toBlob((blob) => resolve(blob ? URL.createObjectURL(blob) : null), 'image/png'))));
+  }
+
+  /** The assembled model drawn as the page draws it, alone on a clear background (no shadow, no paths, no labels),
+   *  for setting beside a photograph of the real thing (scripts/qa/refs.mjs). Seen square on to a face (orthographic,
+   *  framed on the model) or from a camera at an azimuth and elevation (degrees, as `viewAngle`) with a vertical field
+   *  of view, aimed at the model's middle and just far enough off to take it all in. Drawn into a corner of the canvas
+   *  and read straight back, at most the canvas's size: RGBA rows, top first, premultiplied. */
+  still(view: StillView, width: number, height: number): { width: number; height: number; pixels: Uint8Array } {
+    const renderer = this.renderer;
+    const ratio = renderer.getPixelRatio();
+    const buffer = renderer.getDrawingBufferSize(new Vector2());
+    const fit = Math.min(1, buffer.x / width, buffer.y / height);
+    const w = Math.max(1, Math.floor(width * fit));
+    const h = Math.max(1, Math.floor(height * fit));
+    const explode = this.explodeValue;
+    if (explode) this.arrange(0);
+    const box = this.assembledBox;
+    const centre = box.getCenter(new Vector3());
+    let camera: OrthographicCamera | PerspectiveCamera;
+    if (typeof view === 'string') {
+      const faces = {
+        front: [new Vector3(0, 0, 1), new Vector3(0, 1, 0)],
+        back: [new Vector3(0, 0, -1), new Vector3(0, 1, 0)],
+        right: [new Vector3(1, 0, 0), new Vector3(0, 1, 0)],
+        left: [new Vector3(-1, 0, 0), new Vector3(0, 1, 0)],
+        top: [new Vector3(0, 1, 0), new Vector3(0, 0, -1)],
+      } as const;
+      const [from, up] = faces[view];
+      const across = new Vector3().crossVectors(up, from);
+      const size = box.getSize(new Vector3());
+      const half = { x: Math.abs(across.dot(size)) / 2, y: Math.abs(up.dot(size)) / 2 };
+      // A little room round the model, and the rest of the picture's shape filled out.
+      const scale = 1.02 * Math.max(half.x / (w / h), half.y);
+      camera = new OrthographicCamera(-scale * (w / h), scale * (w / h), scale, -scale, 0.01, 20);
+      camera.up.copy(up);
+      camera.position.copy(centre).addScaledVector(from, 6);
+    } else {
+      const direction = new Vector3().setFromSphericalCoords(1, MathUtils.degToRad(90 - view.elevation), MathUtils.degToRad(view.azimuth));
+      camera = new PerspectiveCamera(view.fov, w / h, 0.01, 100);
+      const radius = box.getSize(new Vector3()).length() / 2;
+      const across = 2 * Math.atan(Math.tan(MathUtils.degToRad(view.fov) / 2) * Math.min(1, w / h));
+      camera.position.copy(centre).addScaledVector(direction, (1.02 * radius) / Math.sin(across / 2));
+    }
+    camera.lookAt(centre);
+    camera.updateMatrixWorld(true);
+
+    const hidden = [this.shadow.group, ...this.flows.map((flow) => flow.group)];
+    const visible = hidden.map((object) => object.visible);
+    for (const object of hidden) object.visible = false;
+    this.scene.updateMatrixWorld(true);
+    const viewport = renderer.getViewport(new Vector4());
+    const scissor = renderer.getScissor(new Vector4());
+    const scissorTest = renderer.getScissorTest();
+    renderer.setRenderTarget(null);
+    renderer.setViewport(0, 0, w / ratio, h / ratio);
+    renderer.setScissor(0, 0, w / ratio, h / ratio);
+    renderer.setScissorTest(true);
+    renderer.clear();
+    renderer.render(this.scene, camera);
+    // Read before the browser shows the frame: the canvas doesn't keep its picture after that.
+    const gl = renderer.getContext();
+    const read = new Uint8Array(w * h * 4);
+    gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, read);
+    renderer.setScissorTest(scissorTest);
+    renderer.setScissor(scissor);
+    renderer.setViewport(viewport);
+    hidden.forEach((object, i) => (object.visible = visible[i]));
+    if (explode) this.arrange(explode);
+    this.dirty = true;
+
+    // WebGL rows run bottom to top.
+    const pixels = new Uint8Array(w * h * 4);
+    const row = w * 4;
+    for (let y = 0; y < h; y++) pixels.set(read.subarray((h - 1 - y) * row, (h - y) * row), y * row);
+    return { width: w, height: h, pixels };
   }
 
   /** Runs on every frame (after the mechanism moves, before drawing), until the returned function is called. */

@@ -1,0 +1,24 @@
+{
+  "refs": [
+    {
+      "id": "three-quarter",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Hasselblad_500C.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Hasselblad_500C.jpg",
+      "credit": "Holger Ellgaard, public domain",
+      "view": { "azimuth": -41, "elevation": 9.5, "fov": 33.7 },
+      "ignore": [[640, 0, 1360, 625]],
+      "note": "A 500C, the 500C/M's forerunner: the same body, an 80 mm Planar and an A12-type magazine. Its hood is up and the model's folded, so the hood is left out. The camera was found with \"find\" and checked by eye."
+    },
+    {
+      "id": "left-side",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Hasselblad_500_CM_%28left_side_view%29.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Hasselblad_500_CM_(left_side_view).jpg",
+      "credit": "Kenny Louie, CC BY 2.0",
+      "view": "right",
+      "crop": [0, 0, 2592, 1705],
+      "tolerance": 80,
+      "ignore": [[1380, 150, 2050, 800]],
+      "note": "A 500C/M with an 80 mm lens, from the camera's own left, which is the model's right (seen from +x). No top, front or back face shows, so it is square on. Cropped above the table's reflection; the hood is up, so it is left out."
+    }
+  ]
+}

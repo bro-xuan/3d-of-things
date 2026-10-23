@@ -142,7 +142,7 @@ Then it works through eight stages, each with an exit check:
 1. **Brief**: exactly which object, whether it's new to the site, the energy chain in a line.
 2. **Truth sheet**: sources, real numbers, the energy chain, one misconception to correct, the parts in groups, the film's shots. A research subagent does the digging.
 3. **Scaffold**: `npm run new -- <slug> --tier …` writes the object's folder from templates, builds a first model and page, and checks it, in seconds.
-4. **Model**: the shell cut open, or the whole object generated, with the kit. The build fails if any two parts collide, or if taking it apart would pass one part through another.
+4. **Model**: the shell cut open, or the whole object generated, with the kit. The build fails if any two parts collide, or if taking it apart would pass one part through another. Then the model is set beside photos of the real thing, from the same view, until the two outlines agree.
 5. **Content**: the words and the film, placed by named anchors from the build, never by pasted coordinates.
 6. **Mechanism**: only for a kind the site doesn't have; everything that exists is reused first.
 7. **Check**: `npm run check` and `npm run qa` until both pass and the contact sheets have been read.
@@ -254,6 +254,7 @@ Two checkers, both driven by the content file, so a new object is checked with n
 ```sh
 npm run check                 # every object against its model, no browser: under a second
 npm run qa -- reflex-camera   # callouts, the film, phone: about a minute
+npm run qa -- reflex-camera --ref   # the model beside photos of the real camera, from the same view: ten seconds
 npm run qa -- --all --quick   # every object, three at a time, and the skill's page: under two minutes
 npm run qa -- --skill         # the skill's page: its live watch winds, slows and comes apart
 npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects   # a built or live copy
@@ -266,6 +267,8 @@ npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/obje
 </p>
 
 The model build has its own checks: it fails if any generated part crosses another at rest, or if the content file's explode would pass one part through another.
+
+Those checks ask whether the model agrees with itself; `npm run qa -- <slug> --ref` asks whether it looks like the real thing. It sets the model beside two or three photos of the real object, listed in `objects/<slug>/refs.json`, each from that photo's view and at the same size, and colours where the outlines differ. The idea is Wes Bos's [scan-to-threejs](https://github.com/wesbos/3d-model-anything), which renders a scanned room from where each of its photos was taken.
 
 Every content file is written by its object's builder, so `npm run reproduce` runs them all again and fails if any file comes out different; `npm run reproduce -- --models` rebuilds every model first, the check for a change to the kit. CI (`.github/workflows/ci.yml`) runs the type-check, `npm run check`, `npm run reproduce` and the build on every push and pull request. The browser checks need a GPU and the model rebuild the downloaded sources, so those run locally.
 

@@ -29,11 +29,13 @@ It exits 1 on any error.
 | run | Presses the run button | a spinning part doesn't turn |
 | phone | 390 × 844 at 2×, a touch device: rest and the film's opening | the page scrolls sideways, errors |
 | motion | Reduced motion, taken apart | errors |
+| ref (`--ref`) | Sets the model beside each picture in `refs.json`, from the same view at the same size ("Against the real thing", below) | a picture can't be read or its object can't be told from its background; warns under 85% overlap or past 5% in proportions |
 
 ```sh
 npm run qa -- <slug>                    # everything
 npm run qa -- <slug> --model            # the model only, for the geometry loop (~15 s)
 npm run qa -- <slug> --only tour        # some sections (tour is the film)
+npm run qa -- <slug> --ref              # the model beside photographs of the real thing, from the same view (~10 s)
 npm run qa -- --all --quick             # load, rest and the film for every object (~100 s, 3 at a time)
 npm run qa -- --skill                   # the skill's page: its live watch winds, slows, comes apart; the wheel scrolls (~15 s)
 npm run qa -- <slug> --software         # SwiftShader, to compare
@@ -57,6 +59,35 @@ Read every sheet the run prints. Failed tiles are framed in red, but most of wha
 - **Phone:** the sheet below the stage; nothing cut off; the caption and bar readable.
 
 Zoom into a single shot from `shots/` only where a sheet raises a question.
+
+## Against the real thing (`--ref`)
+
+Every other check asks whether the model agrees with itself. This one asks whether it looks like the object it explains. It follows Wes Bos's scan-to-threejs (github.com/wesbos/3d-model-anything), which renders a scanned room from the pose of every photo taken during the scan and sets each photo beside its render. Our photos come from anywhere, so each one's view is given or found instead of recorded.
+
+`objects/<slug>/refs.json` lists two or three pictures of the real thing (objects/reflex-camera/refs.json is the example; scripts/qa/refs.mjs documents every field):
+
+```json
+{ "refs": [{ "id": "left-side", "url": "https://upload.wikimedia.org/…", "source": "https://commons.wikimedia.org/wiki/File:…",
+             "credit": "Kenny Louie, CC BY 2.0", "view": "right", "ignore": [[1380, 150, 2050, 800]], "note": "…" }] }
+```
+
+- **Pictures:** a plain background, the whole object in frame and nothing in front of it. Good sources are Wikimedia Commons, patent figures and the maker's dimensioned drawings. They are downloaded into `.cache/refs/<slug>/` and never committed, because a reference is only looked at, not shipped. Note the licence in `credit` anyway.
+- **View:** read it off the picture, then pin it.
+  - A picture square on to a face (no other face shows, as in a maker's drawing or a side view taken from far off): `"front"`, `"back"`, `"left"`, `"right"` or `"top"`. Right is the side seen from +x, as in the drawings' side view, so a camera's own left side is the model's `"right"`. When the opposite face fits better, the run says so.
+  - Any other angle: `{ "azimuth", "elevation", "fov" }` in degrees, as `viewAngle`.
+  - Can't tell: `"find"` searches for the camera whose view of the model gives the outline most like the picture's, in about 5 s. It prints the best pose and draws every near tie on the sheet. Pick the right one by eye (which faces show, and how much) and pin it. Narrow the search with `{ "find": { "azimuth": [min, max], "elevation": [min, max] } }` if needed.
+  - Don't trust the search alone. An outline fits from more than one side, and a model with the wrong shape pulls the search towards a view that hides the error: the Hasselblad's too-long lens drew it to a low, wide-angle view from behind.
+- **What the model doesn't show:** `ignore` rectangles (in the picture's pixels) leave out a hand, a strap, an accessory, or a hood that's up in the photo and folded on the model. `crop` cuts off a table's reflection. Raise `tolerance` when the background has stripes or a strong gradient.
+
+The sheet (`<slug>-N-ref.png`) has four tiles per picture: the photo; the model from the same view at the same size; the photo with the model's outline in red; and the difference. In the difference, blue is what the real thing has and the model doesn't, red is what the model has and the real thing doesn't, and the ignored areas are hatched. The model is scaled to the photo's outline by area (`fit` can make it width or height) and moved to the best overlap. So the tiles show shape, not size; size comes from the truth sheet's numbers.
+
+Two numbers help, and the run warns below 85% overlap or past 5% in proportions. Neither is a pass mark: the outline of a photo taken close up has perspective, and a backdrop's shadow can join the object's. Read the difference tile:
+
+- **A band of one colour along a whole side:** a proportion is off (too long, too low).
+- **Blue round a part:** it's too small or missing. **Red:** it's too big or shouldn't be there.
+- **Speckle along the edges:** nothing to fix.
+
+Fix the biggest difference, rebuild and run it again. Stop when what's left is either noise or a simplification the truth sheet names.
 
 ## The browser
 

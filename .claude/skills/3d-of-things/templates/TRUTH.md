@@ -18,6 +18,7 @@ Fill this in before any geometry. Every number on the page (sizes, counts, ratio
 | Model | https://polyhaven.com/a/… or "built in code" | CC0, checked by `npm run models:fetch` |
 | Dimensions | | |
 | Mechanism | service manual, patent, teardown | |
+| Reference pictures | listed in refs.json, for `npm run qa -- <slug> --ref` | each one's licence |
 
 ## 3. The energy chain
 
