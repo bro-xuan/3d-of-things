@@ -20,6 +20,7 @@ Reconstructed on 18 October 2026 from the shipped page (content/reflex-camera.js
 | Mechanism | "the factory service manual's exploded views and release-sequence chart" (credit.extra; the summary says "timing chart"). reflexcamera.ts: the drive key's angles (117°, 268°, 309°) are the manual's, "the times are this model's" | manual not identified further (no title, number or year) |
 | Magazine | "after the Hasselblad A12" (back.mjs header) | code comment only |
 | Shutter blades | outlines "Found by .cache/hasselblad/leafsearch.mjs" (lens.mjs, `SHUTTER`) | a fitting script, git-ignored; not a source |
+| Reference pictures | objects/reflex-camera/refs.json: a 500C from three-quarters in front (Holger Ellgaard) and a 500C/M from its left (Kenny Louie), both on Wikimedia Commons, for `npm run qa -- reflex-camera --ref` | public domain; CC BY 2.0 |
 | Focal-plane comparison | "the rangefinder's cloth curtains", the whole frame open only up to 1/50 s (step 'Flash'; chart 'leaf-shutter') | the site's own rangefinder page |
 
 ## 3. The energy chain
@@ -181,3 +182,5 @@ Solid throughout: the Optical unit, Focusing ring, shutter and iris blades, the 
 Not recorded per stage: built before the procedure, in 1 h 59 of active time (references/procedure.md, "How long it takes": Hasselblad-type SLR, tier C).
 
 19 October 2026: "How it works" became a film (references/film.md), 3 shots, 18 s: focus at 2 m, fire, wind on; the six tour steps, their charts and experiments came off the page.
+
+23 October 2026: first check against photos of the real camera (`npm run qa -- reflex-camera --ref`): 86% and 85% of the outlines overlap, with the hood left out (up in both photos, folded on the model). The lens is the clear difference in both views: square on from the side, it is 34% of the camera's length against the photo's 30%, and its widest ring is 1.35 times its length against 1.72. The real 80 mm Planar is shorter and fatter. Not fixed yet: it needs the Planar C's real dimensions in section 4 first.
