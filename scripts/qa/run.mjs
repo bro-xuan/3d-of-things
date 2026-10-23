@@ -6,7 +6,8 @@
 //   npm run qa -- reflex-camera            # everything, for one object
 //   npm run qa -- --all --quick            # load, rest and the film for every object (regression)
 //   npm run qa -- reflex-camera --model    # the model only: views and explode stages (geometry loop)
-//   npm run qa -- slug --only tour         # some sections: rest, callouts, tour (the film), run, phone, motion
+//   npm run qa -- reflex-camera --ref      # the model beside photographs of the real thing, from the same view (refs.mjs)
+//   npm run qa -- slug --only tour         # some sections: rest, callouts, tour (the film), run, phone, motion, ref
 //   npm run qa -- slug --url http://localhost:5173   # use a running dev server instead of starting one
 //   npm run qa -- --all --deployed --url https://afrodance.fun/3d-of-everything/objects
 //                                          # a built or live copy (no dev hooks): load, rest and the film
@@ -21,6 +22,7 @@ import path from 'node:path';
 import { listThings, ROOT } from '../lib.mjs';
 import { launch, ready, serve, watchConsole } from './browser.mjs';
 import { contactSheet } from './sheet.mjs';
+import { checkRefs } from './refs.mjs';
 import { checkSkill } from './skill.mjs';
 
 const args = process.argv.slice(2);
@@ -35,7 +37,7 @@ if (deployed && !opt('--url')) {
   console.error('--deployed checks a copy that is already served: add --url <the gallery\'s address>.');
   process.exit(2);
 }
-const sections = new Set(opt('--only')?.split(',') ?? (flag('--model') ? ['views'] : flag('--quick') || deployed ? ['rest', 'tour'] : ALL_SECTIONS));
+const sections = new Set(opt('--only')?.split(',') ?? (flag('--model') ? ['views'] : flag('--ref') ? ['ref'] : flag('--quick') || deployed ? ['rest', 'tour'] : ALL_SECTIONS));
 const outRoot = path.resolve(ROOT, opt('--out') ?? '.cache/qa');
 
 // Dev warnings that mean the content file and the model disagree: these fail a check.
@@ -86,6 +88,7 @@ async function checkObject(slug, thing) {
   const sheets = {};
   const shots = {};
   const logs = [];
+  let refs;
   let shotCount = 0;
   // Printed when the object is done, so objects checked side by side don't interleave.
   const lines = [`\n${slug}`];
@@ -243,6 +246,12 @@ async function checkObject(slug, thing) {
       await page.waitForTimeout(200);
     }
 
+    if (sections.has('ref')) {
+      const { tiles, results } = await checkRefs({ page, slug, out, record, lines });
+      (shots.ref ??= []).push(...tiles);
+      refs = results;
+    }
+
     if (sections.has('callouts')) {
       for (const [i, a] of (thing.annotations ?? []).entries()) {
         mark = logs.length;
@@ -327,14 +336,16 @@ async function checkObject(slug, thing) {
     }
   }
 
-  const order = ['rest', 'callouts', 'film', 'tour', 'phone'];
+  const order = ['rest', 'ref', 'callouts', 'film', 'tour', 'phone'];
   for (const [n, group] of order.filter((g) => shots[g]?.length).entries()) {
     const file = path.join(out, `${slug}-${n + 1}-${group.replace(/[^a-z0-9]+/gi, '-')}.png`);
-    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' || group === 'film' ? 4 : 3, width: group === 'phone' ? 300 : group === 'film' ? 440 : 560, title: `${thing.title} · ${group}` });
+    const ref = group === 'ref';
+    const title = ref ? `${thing.title} · against the real thing · blue: only the real thing has it, red: only the model` : `${thing.title} · ${group}`;
+    sheets[group] = await contactSheet(shots[group], file, { columns: group === 'phone' || group === 'film' || ref ? 4 : 3, width: group === 'phone' ? 300 : group === 'film' || ref ? 440 : 560, title });
   }
   const failed = checks.filter((c) => c.level === 'fail');
   const warned = checks.filter((c) => c.level === 'warn');
-  const report = { slug, renderer, gpu, seconds: (Date.now() - t0) / 1000, passed: checks.filter((c) => c.ok).length, failed: failed.length, warnings: warned.length, sheets, checks, console: logs };
+  const report = { slug, renderer, gpu, seconds: (Date.now() - t0) / 1000, passed: checks.filter((c) => c.ok).length, failed: failed.length, warnings: warned.length, sheets, refs, checks, console: logs };
   await writeFile(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
   lines.push(`  ${failed.length ? '✗' : '✓'} ${report.passed} passed, ${failed.length} failed, ${warned.length} warnings · ${report.seconds.toFixed(0)} s`);
   for (const file of Object.values(sheets)) lines.push(`    ${path.relative(process.cwd(), file)}`);

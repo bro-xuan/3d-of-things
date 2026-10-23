@@ -17,11 +17,11 @@ The truth sheet (`objects/<slug>/TRUTH.md`, made by the scaffold) is the plan. E
 
 Start a research subagent as soon as the brief is out, and scaffold while it works:
 
-> Research the **{object}** for an educational 3D teardown and fill sections 1–5 and 9 of `objects/{slug}/TRUTH.md` (read it first; edit no other file). Identify it exactly (for a current product, its latest reveal). Give real dimensions and every number its mechanism runs on (teeth, ratios, focal lengths, timings, pressures, speeds), each with its source (service manuals, patents, maker's specifications, museum records), and the energy chain from source to output, naming the parts. Name one common misconception about how it works and the correction. Note what a teardown would have to simplify. For a model, search Poly Haven (`https://api.polyhaven.com/assets?t=models`, then `/info/<id>`) and report candidates with their asset ids, and whether the parts are separate (if unsure, say so). Licences must be CC0 or CC BY and checkable at the source. Return a short summary with any doubts.
+> Research the **{object}** for an educational 3D teardown and fill sections 1–5 and 9 of `objects/{slug}/TRUTH.md` (read it first; edit no other file). Identify it exactly (for a current product, its latest reveal). Give real dimensions and every number its mechanism runs on (teeth, ratios, focal lengths, timings, pressures, speeds), each with its source (service manuals, patents, maker's specifications, museum records), and the energy chain from source to output, naming the parts. Name one common misconception about how it works and the correction. Note what a teardown would have to simplify. For a model, search Poly Haven (`https://api.polyhaven.com/assets?t=models`, then `/info/<id>`) and report candidates with their asset ids, and whether the parts are separate (if unsure, say so). Licences must be CC0 or CC BY and checkable at the source. Find two or three pictures of the real thing on a plain background, the whole object in frame (Wikimedia Commons, patent figures, the maker's drawings), at least one square on to a side or the front, and give each one's file URL, page, author and licence. Return a short summary with any doubts.
 
 Meanwhile, fill sections 6–8 yourself as the research lands: parts in chain order (8–20 parts, 4–8 groups), the mechanism map, the film's shot list (references/film.md).
 
-**Exit:** sections 1–8 are filled, every number has a source, the model's licence is confirmed (or it's built in code), and the shot list says what moves in each shot with the cues that move it, reusing existing ones where possible.
+**Exit:** sections 1–8 are filled, every number has a source, the model's licence is confirmed (or it's built in code), `objects/<slug>/refs.json` lists the reference pictures (references/qa.md, "Against the real thing"), and the shot list says what moves in each shot with the cues that move it, reusing existing ones where possible.
 
 ## 2. Scaffold (2 min)
 
@@ -39,7 +39,7 @@ It writes `objects/<slug>/` (TRUTH.md, content.mjs, and augment.mjs or generate.
 
 The long stage. Build in passes and look after each one (`npm run qa -- <slug> --model`, ~15 s):
 
-1. **Silhouette.** The outside at true size: the shell, its main masses, the openings. Compare it with photos.
+1. **Silhouette.** The outside at true size: the shell, its main masses, the openings. Then line it up with the real thing: `npm run qa -- <slug> --ref` (~10 s) sets the model beside each reference picture, from the same view at the same size, and colours where they differ. Fix the biggest difference and run it again, until what's left is noise or a simplification the truth sheet names. Done by eye, against a photo taken from another angle, this step let the Hasselblad's lens stay longer and slimmer than the real one.
 2. **Mechanism.** The parts that move, from the truth sheet's numbers, in their real places. Get the motion right before the detail.
 3. **Detail.** What makes it read as a real object at a close look: screws, knurls, engraving, seams, labels, the parts that hold the parts.
 
@@ -51,7 +51,7 @@ Rules:
 - The build fails on clashes and on explode paths that cross. Fix the geometry; add a pair to `CONTACTS` only when the parts truly touch (gears in mesh, a pin in its hole, a part sitting on another). `--no-check` is for a quick look mid-change only.
 - Keep the model under ~3 MB and ~100 nodes (`models:build` prints the size).
 
-**Exit:** `npm run models:build -- <slug>` passes with its checks, the model reads as the real object at rest and apart, and the hints carry every anchor the content needs.
+**Exit:** `npm run models:build -- <slug>` passes with its checks, the `--ref` sheet's differences are fixed or named as simplified, the model reads as the real object at rest and apart, and the hints carry every anchor the content needs.
 
 ## 4. Content (15 min)
 
@@ -112,7 +112,7 @@ Code shared by more than one object is in the kit, `scripts/kit/`. The two cars 
 - `objects/tesla-roadster/2017/` is the 2017 Roadster the page showed before the 2026 car, kept as the car builder's example of a plain electric car. Running its `content.mjs` writes over the live page.
 - The copies of the watch's, the Leica's and the SLR's builders left under `.cache/watch/`, `.cache/camera/` and `.cache/hasselblad/` (outside git) are older than the ones in `objects/` and write the old paths: don't run them.
 
-For any change: edit, `npm run models:build -- <slug>` if the model changed, `node objects/<slug>/content.mjs`, `npm run check -- <slug>`, `npm run qa -- <slug>`, then `npm run qa -- --all --quick` and `npm run reproduce` (with `-- --models` after a change to the kit, which every model built in code shares).
+For any change: edit, `npm run models:build -- <slug>` if the model changed (and `npm run qa -- <slug> --ref` if its outside did), `node objects/<slug>/content.mjs`, `npm run check -- <slug>`, `npm run qa -- <slug>`, then `npm run qa -- --all --quick` and `npm run reproduce` (with `-- --models` after a change to the kit, which every model built in code shares).
 
 ## How long it takes
 
